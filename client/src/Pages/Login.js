@@ -13,32 +13,51 @@ function Login() {
     const [showPassword, setShowPassword] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [passwordIsFocused, setPasswordIsFocused] = useState(false);
+    const [loginIsFocused, setLoginIsFocused] = useState(false);
 
-    const handleFormSubmit = async (event) => {
-        event.preventDefault();
+    const passwordOnFocus = () => {
+        setPasswordIsFocused(true);
+    };
 
-        try {
-            const response = await fetch('https://lk.bstu.ru/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            });
+    const passwordOnBlur = () => {
+        setPasswordIsFocused(false);
+    };
 
-            if (response.ok) {
-                const data = await response.json();
-                console.log(data);
-            } else {
-                console.log(1)
-            }
-        } catch (error) {
-            console.log(2)
-        }
+    const loginOnFocus = () => {
+        setLoginIsFocused(true);
+    };
+
+    const loginOnBlur = () => {
+        setLoginIsFocused(false);
     };
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
+    };
+
+    const passwordLineStyle = () => {
+        if (passwordIsFocused) {
+            return styles.focusPasswordLineStyle
+        } else {
+            return styles.inputLinesStyle
+        }
+    };
+
+    const btnHidePasswordChangeStyle = () => {
+        if (passwordIsFocused) {
+            return styles.focusButtonChangeVisibilityStyle
+        } else {
+            return styles.inputLinesStyle
+        }
+    };
+
+    const loginLineStyle = () => {
+        if (loginIsFocused) {
+            return styles.focusLoginLineStyle
+        } else {
+            return styles.inputLinesStyle
+        }
     };
 
     return (
@@ -60,12 +79,17 @@ function Login() {
                         <h2 className="form-title">Авторизация</h2>
                         <div className="inputs-margin">
                             <Form.Group className="elements-form" controlId="formBasicName">
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Логин"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    className="input-elements"/>
+                                <InputGroup>
+                                    <FormControl
+                                        type="text"
+                                        placeholder="Email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        style={loginLineStyle()}
+                                        onFocus={loginOnFocus}
+                                        onBlur={loginOnBlur}
+                                    />
+                                </InputGroup>
                             </Form.Group>
                         </div>
                         <div className="inputs-margin">
@@ -76,12 +100,15 @@ function Login() {
                                         placeholder="Пароль"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
-                                        className="input-elements"
-                                        style={styles.passwordInputFieldStyle}
+                                        style={passwordLineStyle()}
+                                        onFocus={passwordOnFocus}
+                                        onBlur={passwordOnBlur}
                                     />
                                     <InputGroup.Text
                                         onClick={togglePasswordVisibility}
-                                        style={styles.buttonChangeVisibilityStyle}>
+                                        style={btnHidePasswordChangeStyle()}
+                                        className="btn-hide-password-style"
+                                    >
                                         <img src={showPassword ? eyeClose : eyeOpen} alt="" width="20" height="20"/>
                                     </InputGroup.Text>
                                 </InputGroup>
@@ -90,7 +117,6 @@ function Login() {
                         <div className="btn-margin">
                             <Button variant="primary"
                                     type="submit"
-                                    onClick={handleFormSubmit}
                                     style={styles.formButtonStyle}
                                     className="form-btn">
                                 <h2 className="no-margin">Продолжить</h2>
