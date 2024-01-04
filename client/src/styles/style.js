@@ -1,8 +1,8 @@
 const formButtonStyle = {
     display: "block",
     margin: "0 auto",
-    backgroundColor: "#80DEEA",
-    borderColor: "#80DEEA"
+    backgroundColor: "#6CB2EB",
+    border: "None"
 }
 
 const buttonChangeVisibilityStyle  = {
@@ -40,6 +40,12 @@ const focusButtonChangeVisibilityStyle = {
     transition: "background-color 0.7s, border 0.7s"
 }
 
+const loginIconPadding = {
+    paddingBottom: 0,
+    paddingTop: 0,
+    paddingLeft: "5px",
+    paddingRight: "5px"
+}
 
 export const styles = {
     formButtonStyle: formButtonStyle,
@@ -47,5 +53,6 @@ export const styles = {
     inputLinesStyle: inputLinesStyle,
     focusLoginLineStyle: focusLoginLineStyle,
     focusPasswordLineStyle: focusPasswordLineStyle,
-    focusButtonChangeVisibilityStyle: focusButtonChangeVisibilityStyle
+    focusButtonChangeVisibilityStyle: focusButtonChangeVisibilityStyle,
+    loginIconPadding: loginIconPadding
 };
