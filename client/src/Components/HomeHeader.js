@@ -4,6 +4,7 @@ import logo from '../Images/logo.png'
 import login from '../Images/iconPeople.jpg'
 import '../styles/App.css'
 import {styles} from "../styles/style";
+import copybook from "../Images/copybook.png"
 
 class HomeHeader extends Component {
 
@@ -26,7 +27,15 @@ class HomeHeader extends Component {
                                 style={styles.buttonHomeHeader}
                                 href="/CatalogTest"
                             >
-                                <span className="text-btn-catalog-test">Каталог тестов</span>
+                                <div className="img-btn-catalog-test">
+                                    <img
+                                        src={copybook}
+                                        height="30"
+                                        width="35"
+                                        className='d-inline-block align-top'
+                                        alt='Copybook'
+                                    />
+                                </div>
                             </Nav.Link>
                         </Nav>
                         <Navbar.Collapse id="responsive-navbar-nav">
@@ -36,8 +45,8 @@ class HomeHeader extends Component {
                                 >
                                     <img
                                         src={login}
-                                        height="30"
-                                        width="30"
+                                        height="35"
+                                        width="35"
                                         alt="Login"
                                     />
                                 </Nav.Link>
