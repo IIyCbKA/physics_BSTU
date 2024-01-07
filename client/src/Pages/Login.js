@@ -115,10 +115,12 @@ function Login() {
                             </Form.Group>
                         </div>
                         <div className="btn-margin">
-                            <Button variant="primary"
-                                    type="submit"
-                                    style={styles.formButtonStyle}
-                                    className="form-btn">
+                            <Button
+                                variant="primary"
+                                type="submit"
+                                style={styles.formButtonStyle}
+                                className="form-btn"
+                            >
                                 <h2 className="no-margin">Продолжить</h2>
                             </Button>
                         </div>

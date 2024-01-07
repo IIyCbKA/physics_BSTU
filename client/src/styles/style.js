@@ -40,11 +40,16 @@ const focusButtonChangeVisibilityStyle = {
     transition: "background-color 0.7s, border 0.7s"
 }
 
-const loginIconPadding = {
+const profileIconPadding = {
     paddingBottom: 0,
     paddingTop: 0,
     paddingLeft: "5px",
-    paddingRight: "5px"
+    paddingRight: 0
+}
+
+const logotypePadding = {
+    padding: 0,
+    height: '24px'
 }
 
 export const styles = {
@@ -54,5 +59,6 @@ export const styles = {
     focusLoginLineStyle: focusLoginLineStyle,
     focusPasswordLineStyle: focusPasswordLineStyle,
     focusButtonChangeVisibilityStyle: focusButtonChangeVisibilityStyle,
-    loginIconPadding: loginIconPadding
+    profileIconPadding: profileIconPadding,
+    logotypePadding: logotypePadding,
 };
