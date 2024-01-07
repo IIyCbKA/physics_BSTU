@@ -47,6 +47,11 @@ const loginIconPadding = {
     paddingRight: "5px"
 }
 
+const buttonHomeHeader = {
+    paddingLeft: "1100px",
+    paddingBottom: "10px"
+}
+
 export const styles = {
     formButtonStyle: formButtonStyle,
     buttonChangeVisibilityStyle: buttonChangeVisibilityStyle,
@@ -54,5 +59,6 @@ export const styles = {
     focusLoginLineStyle: focusLoginLineStyle,
     focusPasswordLineStyle: focusPasswordLineStyle,
     focusButtonChangeVisibilityStyle: focusButtonChangeVisibilityStyle,
-    loginIconPadding: loginIconPadding
+    loginIconPadding: loginIconPadding,
+    buttonHomeHeader: buttonHomeHeader
 };

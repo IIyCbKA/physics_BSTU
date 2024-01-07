@@ -72,3 +72,8 @@
     outline: none;
     box-shadow: none;
 }
+
+.text-btn-catalog-test{
+    font-weight: bolder;
+    color: #161616;
+}

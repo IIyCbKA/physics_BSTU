@@ -5,7 +5,8 @@ import login from '../Images/iconPeople.jpg'
 import '../styles/App.css'
 import {styles} from "../styles/style";
 
-class Header extends Component {
+class HomeHeader extends Component {
+
     render() {
         return (
             <div>
@@ -19,12 +20,19 @@ class Header extends Component {
                                 className='d-inline-block align-top'
                                 alt='Logo'
                             />
-                        </Navbar.Brand>
-                        <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
+                        </Navbar.Brand><Navbar.Toggle aria-controls="responsive-navbar-nav"/>
+                        <Nav className="ms-auto">
+                            <Nav.Link
+                                style={styles.buttonHomeHeader}
+                                href="/CatalogTest"
+                            >
+                                <span className="text-btn-catalog-test">Каталог тестов</span>
+                            </Nav.Link>
+                        </Nav>
                         <Navbar.Collapse id="responsive-navbar-nav">
                             <Nav className="ms-auto">
                                 <Nav.Link href="/login"
-                                    style={styles.loginIconPadding}
+                                          style={styles.loginIconPadding}
                                 >
                                     <img
                                         src={login}
@@ -42,4 +50,4 @@ class Header extends Component {
     }
 }
 
-export default Header;
+export default HomeHeader;
