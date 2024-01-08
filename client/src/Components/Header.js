@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {Container, Nav, Navbar} from "react-bootstrap";
 import logo from '../Images/logo.png'
-import login from '../Images/iconPeople.jpg'
+import iconPeople from "../Images/iconPeople.jpg"
 import '../styles/App.css'
 import {styles} from "../styles/style";
+import copybook from "../Images/copybook.png"
 
 class Header extends Component {
     render() {
@@ -11,25 +12,38 @@ class Header extends Component {
             <div>
                 <Navbar fixed='top' collapseOnSelect expand='md'>
                     <Container fluid>
-                        <Navbar.Brand href='/'>
+                        <Navbar.Brand href='/'
+                                      style={styles.logotypePadding}
+                        >
                             <img
                                 src={logo}
-                                height="30"
-                                width="180"
+                                height="24"
+                                width="144"
                                 className='d-inline-block align-top'
                                 alt='Logo'
                             />
                         </Navbar.Brand>
-                        <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
+
                         <Navbar.Collapse id="responsive-navbar-nav">
                             <Nav className="ms-auto">
-                                <Nav.Link href="/login"
-                                    style={styles.loginIconPadding}
+                                <Nav.Link href="/CatalogTest"
+                                    style={styles.btnCatalogTestPadding}
                                 >
                                     <img
-                                        src={login}
-                                        height="30"
-                                        width="30"
+                                        src={copybook}
+                                        height="24px"
+                                        alt="Copybook"
+                                    />
+                                </Nav.Link>
+                            </Nav>
+                            <Nav className="ms-auto">
+                                <Nav.Link href="/login"
+                                          style={styles.profileIconPadding}
+                                >
+                                    <img
+                                        src={iconPeople}
+                                        height="24"
+                                        width="24"
                                         alt="Login"
                                     />
                                 </Nav.Link>
