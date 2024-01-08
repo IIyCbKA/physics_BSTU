@@ -30,6 +30,7 @@ class Header extends Component {
                                           style={styles.btnCatalogTestPadding}
                                 >
                                     <img
+                                        className="img-btn-catalog-test"
                                         src={copybook}
                                         height="22"
                                         alt="Copybook"
