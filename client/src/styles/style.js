@@ -52,13 +52,6 @@ const logotypePadding = {
     height: '24px'
 }
 
-const btnCatalogTestPadding = {
-    paddingBottom: 0,
-    paddingTop: 0,
-    paddingLeft: "1240px",
-    paddingRight: 0
-}
-
 export const styles = {
     formButtonStyle: formButtonStyle,
     buttonChangeVisibilityStyle: buttonChangeVisibilityStyle,
@@ -68,5 +61,4 @@ export const styles = {
     focusButtonChangeVisibilityStyle: focusButtonChangeVisibilityStyle,
     profileIconPadding: profileIconPadding,
     logotypePadding: logotypePadding,
-    btnCatalogTestPadding: btnCatalogTestPadding,
 };
