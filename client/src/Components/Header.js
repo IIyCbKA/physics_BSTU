@@ -23,21 +23,17 @@ class Header extends Component {
                                 alt='Logo'
                             />
                         </Navbar.Brand>
-
                         <Navbar.Collapse id="responsive-navbar-nav">
                             <Nav className="ms-auto">
                                 <Nav.Link href="/CatalogTest"
                                           style={styles.btnCatalogTestPadding}
                                 >
                                     <img
-                                        className="img-btn-catalog-test"
                                         src={copybook}
-                                        height="22"
+                                        height="22px"
                                         alt="Copybook"
                                     />
                                 </Nav.Link>
-                            </Nav>
-                            <Nav className="ms-auto">
                                 <Nav.Link href="/login"
                                           style={styles.profileIconPadding}
                                 >

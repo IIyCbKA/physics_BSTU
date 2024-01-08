@@ -56,7 +56,7 @@ const btnCatalogTestPadding = {
     paddingBottom: 0,
     paddingTop: 0,
     paddingLeft: 0,
-    paddingRight: 0
+    paddingRight: 0,
 }
 
 export const styles = {
