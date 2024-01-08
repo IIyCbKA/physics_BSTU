@@ -55,7 +55,7 @@ const logotypePadding = {
 const btnCatalogTestPadding = {
     paddingBottom: 0,
     paddingTop: 0,
-    paddingLeft: "1240px",
+    paddingLeft: "1290px",
     paddingRight: 0
 }
 
