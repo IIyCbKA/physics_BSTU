@@ -1,5 +1,3 @@
-
-
 import React, {Component} from 'react';
 import {Container, Nav, Navbar} from "react-bootstrap";
 import logo from '../Images/logo.png'
@@ -29,11 +27,11 @@ class Header extends Component {
                         <Navbar.Collapse id="responsive-navbar-nav">
                             <Nav className="ms-auto">
                                 <Nav.Link href="/CatalogTest"
-                                    style={styles.btnCatalogTestPadding}
+                                          style={styles.btnCatalogTestPadding}
                                 >
                                     <img
                                         src={copybook}
-                                        height="24px"
+                                        height="22"
                                         alt="Copybook"
                                     />
                                 </Nav.Link>
