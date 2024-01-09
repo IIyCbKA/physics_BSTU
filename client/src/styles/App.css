@@ -72,4 +72,6 @@
     outline: none;
     box-shadow: none;
 }
-
+.style-container {
+    display: flex;
+}
