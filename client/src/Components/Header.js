@@ -10,7 +10,7 @@ class Header extends Component {
         return (
             <div>
                 <Navbar fixed='top' collapseOnSelect expand='md'>
-                    <Container fluid className="style-container">
+                    <Container fluid >
                         <Navbar.Brand href='/'
                                       style={styles.logotypePadding}
                         >
@@ -29,8 +29,7 @@ class Header extends Component {
                                 >
                                     <img
                                         src={iconTests}
-                                        height="22px"
-                                        width="24px"
+                                        height="21px"
                                         alt="Tests"
                                     />
                                 </Nav.Link>
