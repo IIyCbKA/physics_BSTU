@@ -4,7 +4,7 @@ import logo from '../Images/logo.png'
 import profileIcon from '../Images/profileIconDark.png'
 import '../styles/App.css'
 import {styles} from "../styles/style";
-import iconTests from "../Images/iconTests.png"
+import iconTests from "../Images/iconTest.png"
 class Header extends Component {
     render() {
         return (
