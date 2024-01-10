@@ -5,12 +5,13 @@ import profileIcon from '../Images/profileIconDark.png'
 import '../styles/App.css'
 import {styles} from "../styles/style";
 import iconTests from "../Images/iconTest.png"
+
 class Header extends Component {
     render() {
         return (
             <div>
-                <Navbar fixed='top' collapseOnSelect expand='md'>
-                    <Container fluid >
+                <Navbar fixed='top' collapseOnSelect>
+                    <Container fluid>
                         <Navbar.Brand href='/'
                                       style={styles.logotypePadding}
                         >
@@ -47,6 +48,9 @@ class Header extends Component {
                         </Navbar.Collapse>
                     </Container>
                 </Navbar>
+                <script>
+                    document.querySelector(".burger")
+                </script>
             </div>
         );
     }
