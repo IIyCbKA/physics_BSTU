@@ -72,3 +72,13 @@
     outline: none;
     box-shadow: none;
 }
+
+.menu-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: 14px;
+    font-weight: bold;
+    color: #161616;
+}
