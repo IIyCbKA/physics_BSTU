@@ -1,11 +1,5 @@
 from flask import Flask, render_template, request, json, jsonify, make_response
-from flask_cors import CORS, cross_origin
-SECRET_KEY = 'v7}efa{9I$FjOB9*D&6iiD52ugi;o:W'
-
-app = Flask(__name__)
-CORS(app,
-     resources={r"/data/*": {"origins": "http://localhost:3000"}})
-app.config.from_object(__name__)
+from application import app
 
 # Хранит данные следующим образом:
 # Ключами выступают категории(строка) данных
@@ -30,7 +24,7 @@ RESULT_TITLE = 'result'
 def retRes(result):
     return jsonify({RESULT_TITLE: result})
 
-@app.route("/data/post", methods=["POST", "OPTIONS"])
+@app.route("/api/data/post", methods=["POST"])
 def postData():
     if request.method == "POST":
         val = request.json
@@ -48,7 +42,7 @@ def postData():
     return retRes(False)
 
 
-@app.route("/data/get", methods=["POST"])
+@app.route("/api/data/get", methods=["POST"])
 def getData():
     if request.method == "POST":
         section = request.json.get(SECTION_TITLE)
@@ -64,21 +58,13 @@ def getData():
 
 @app.before_request
 def bfr_user():
-    if request.method == "OPTIONS":
-        response = make_response()
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
-        response.headers.add('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-        response.headers.add('Access-Control-Request-Method', 'GET, POST')
-        response.headers.add('Access-Control-Request-Headers', 'Content-Type')
-        return response
+    pass
 
 
 
 @app.after_request
 def ar_user(response):
     if request.method != "OPTIONS" and response.status_code == 200:
-        #if response.
         if RESULT_TITLE not in response.json.keys():
             newData = response.get_json()
             newData.update({RESULT_TITLE: True})
