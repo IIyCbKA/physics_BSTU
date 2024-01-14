@@ -2,53 +2,53 @@ import React, {Component} from 'react';
 import {Container, Nav, Navbar} from "react-bootstrap";
 import logo from '../Images/logo.png'
 import profileIcon from '../Images/profileIconDark.png'
+import testsIcon from '../Images/testsIcon.png'
 import '../styles/App.css'
 import {styles} from "../styles/style";
-import copybook from "../Images/copybook.png"
 
 class Header extends Component {
     render() {
         return (
-            <div>
-                <Navbar fixed='top' collapseOnSelect expand='md'>
-                    <Container fluid>
-                        <Navbar.Brand href='/'
-                                      style={styles.logotypePadding}
-                        >
-                            <img
-                                src={logo}
-                                height="24"
-                                width="144"
-                                className='d-inline-block align-top'
-                                alt='Logo'
-                            />
-                        </Navbar.Brand>
-                        <Navbar.Collapse id="responsive-navbar-nav">
-                            <Nav className="ms-auto">
-                                <Nav.Link href="/CatalogTest"
-                                          style={styles.btnCatalogTestPadding}
-                                >
-                                    <img
-                                        src={copybook}
-                                        height="22px"
-                                        alt="Copybook"
-                                    />
-                                </Nav.Link>
-                                <Nav.Link href="/login"
-                                          style={styles.profileIconPadding}
-                                >
-                                    <img
-                                        src={profileIcon}
-                                        height="24"
-                                        width="24"
-                                        alt="Login"
-                                    />
-                                </Nav.Link>
-                            </Nav>
-                        </Navbar.Collapse>
-                    </Container>
-                </Navbar>
-            </div>
+            <Navbar fixed='top' collapseOnSelect expand='sm'>
+                <Container fluid>
+                    <Navbar.Brand href='/' style={styles.logotypePadding}>
+                        <img
+                            src={logo}
+                            height="32"
+                            width="240"
+                            className='d-inline-block align-top'
+                            alt='Logo'
+                        />
+                    </Navbar.Brand>
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav"
+                        style={styles.customToggle}
+                    >
+                        <span className="menu-text">Menu</span>
+                    </Navbar.Toggle>
+                    <Navbar.Collapse id="responsive-navbar-nav">
+                        <Nav className="ms-auto">
+                            <Nav.Link href="/tests"
+                                      style={styles.headerIconsPadding}
+                            >
+                                <img
+                                    src={testsIcon}
+                                    height="32"
+                                    width="32"
+                                    alt="Tests"
+                                />
+                            </Nav.Link>
+                            <Nav.Link href="/login" style={styles.headerIconsPadding}>
+                                <img
+                                    src={profileIcon}
+                                    height="32"
+                                    width="32"
+                                    alt="Login"
+                                />
+                            </Nav.Link>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
         );
     }
 }

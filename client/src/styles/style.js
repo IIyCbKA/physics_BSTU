@@ -40,7 +40,7 @@ const focusButtonChangeVisibilityStyle = {
     transition: "background-color 0.7s, border 0.7s"
 }
 
-const profileIconPadding = {
+const headerIconsPadding = {
     paddingBottom: 0,
     paddingTop: 0,
     paddingLeft: "5px",
@@ -49,14 +49,12 @@ const profileIconPadding = {
 
 const logotypePadding = {
     padding: 0,
-    height: '24px'
+    height: '32px',
+    justifyContent: 'center'
 }
 
-const btnCatalogTestPadding = {
-    paddingBottom: 0,
-    paddingTop: 0,
-    paddingLeft: 0,
-    paddingRight: 0,
+const customToggle = {
+    height: '32px'
 }
 
 export const styles = {
@@ -66,11 +64,7 @@ export const styles = {
     focusLoginLineStyle: focusLoginLineStyle,
     focusPasswordLineStyle: focusPasswordLineStyle,
     focusButtonChangeVisibilityStyle: focusButtonChangeVisibilityStyle,
-    profileIconPadding: profileIconPadding,
+    headerIconsPadding: headerIconsPadding,
     logotypePadding: logotypePadding,
-    btnCatalogTestPadding: btnCatalogTestPadding,
+    customToggle: customToggle,
 };
-
-
-
-
