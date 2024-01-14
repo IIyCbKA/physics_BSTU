@@ -16,21 +16,21 @@ class User:
 
 
 def hashPassword(password, salt):
-    return bcrypt.kdf(password, salt, 32, 200)
+    return bcrypt.kdf(password.encode('utf-8'), salt, 32, 200)
 
 
 def initSuperUser():
-    user1_password = b'X$o{d}P-qr%3s!t"0|f8`cz,U.5r][\\/4Pf'
+    user1_password = 'X$o{d}P-qr%3s!t"0|f8`cz,U.5r][/4Pf'
     salt = bcrypt.gensalt(30, b'2a')
     key = hashPassword(user1_password, salt)
-    authUsers['superUser'] = User(key, salt, 'admin')
+    authUsers['superUser'] = User('superUser', salt, key, 'admin')
 
 
 def checkPassword(user: User, password: str):
     return hashPassword(password, user.salt) == user.password
 
 
-@app.route("/api/login")
+@app.route("/api/login", methods=["POST"])
 def login():
     req_data = request.get_json()
     _mail = req_data.get('mail')
@@ -53,7 +53,7 @@ def login():
         return retRes(False), 400
 
     token = jwt.encode({'mail': _mail}, SECRET_KEY)
-    return {'token': token}, 200
+    return {"token": token}, 200
 
 
 

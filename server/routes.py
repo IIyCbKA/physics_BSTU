@@ -24,7 +24,7 @@ RESULT_TITLE = 'result'
 def retRes(result):
     return jsonify({RESULT_TITLE: result})
 
-@app.route("/data/post", methods=["POST", "OPTIONS"])
+@app.route("/api/data/post", methods=["POST"])
 def postData():
     if request.method == "POST":
         val = request.json
@@ -42,7 +42,7 @@ def postData():
     return retRes(False)
 
 
-@app.route("/data/get", methods=["POST"])
+@app.route("/api/data/get", methods=["POST"])
 def getData():
     if request.method == "POST":
         section = request.json.get(SECTION_TITLE)
@@ -56,23 +56,14 @@ def getData():
     return retRes(False)
 
 
-@app.before_request
-def bfr_user():
-    if request.method == "OPTIONS":
-        response = make_response()
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
-        response.headers.add('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-        response.headers.add('Access-Control-Request-Method', 'GET, POST')
-        response.headers.add('Access-Control-Request-Headers', 'Content-Type')
-        return response
-
+# @app.before_request
+# def bfr_user():
+#     pass
 
 
 @app.after_request
 def ar_user(response):
     if request.method != "OPTIONS" and response.status_code == 200:
-        #if response.
         if RESULT_TITLE not in response.json.keys():
             newData = response.get_json()
             newData.update({RESULT_TITLE: True})

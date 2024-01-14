@@ -2,15 +2,9 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { Helmet } from 'react-helmet';
 import React, {useState} from 'react';
 import axios from 'axios'
+import {$host} from '../Routes'
 
-const SERVER = 'http://localhost:5000'
 const DATA_PATH = '/data'
-
-const zip = (a, b) => a.map((k, i) => [k, b[i]]);
-
-const $host = axios.create({
-    baseURL: SERVER
-})
 
 const PostItem = (props) => {
     const [post, setPost] = useState(props.getPost(props.index))
@@ -157,7 +151,7 @@ function DataPage() {
 
         try {
             const response = await $host.post(
-                '/data/post',
+                '/api/data/post',
                 sendData, {
                     headers: {
                         'Content-Type': 'application/json'
@@ -179,7 +173,7 @@ function DataPage() {
 
         try {
             const response = await $host.post(
-                '/data/get',
+                '/api/data/get',
                 searchData, {
                     headers: {
                         'Content-Type': 'application/json'
