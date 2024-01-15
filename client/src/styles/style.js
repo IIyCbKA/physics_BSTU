@@ -58,7 +58,7 @@ const customToggle = {
 }
 
 const customOffcanvas = {
-
+    height: '32px'
 }
 
 export const styles = {

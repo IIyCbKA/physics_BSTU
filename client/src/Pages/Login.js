@@ -8,7 +8,6 @@ import {motion} from "framer-motion";
 import {styles} from "../styles/style";
 import eyeClose from '../Images/eyeClose.png'
 import eyeOpen from '../Images/eyeOpen.png'
-import {user} from '../user/user'
 
 function Login() {
     const [showPassword, setShowPassword] = useState(false);
@@ -60,11 +59,6 @@ function Login() {
             return styles.inputLinesStyle
         }
     };
-
-    const loginClick = (e) => {
-        e.preventDefault()
-        user.auth(email, password)
-    }
 
     return (
         <div>
@@ -121,11 +115,12 @@ function Login() {
                             </Form.Group>
                         </div>
                         <div className="btn-margin">
-                            <Button variant="primary"
-                                    onClick={loginClick}
-                                    type="submit"
-                                    style={styles.formButtonStyle}
-                                    className="form-btn">
+                            <Button
+                                variant="primary"
+                                type="submit"
+                                style={styles.formButtonStyle}
+                                className="form-btn"
+                            >
                                 <h2 className="no-margin">Продолжить</h2>
                             </Button>
                         </div>

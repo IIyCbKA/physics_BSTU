@@ -28,7 +28,6 @@ class Header extends Component {
                     </Navbar.Toggle>
                     <Navbar.Offcanvas
                         aria-controls='basic-navbar-nav'
-                        style={styles.customOffcanvas}
                     >
                         <Offcanvas.Header closeButton>
                             <Offcanvas.Title>Menu</Offcanvas.Title>
