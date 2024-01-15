@@ -1,68 +1,61 @@
-import React, {Component} from 'react';
-import {Container, Nav, Navbar, Offcanvas} from "react-bootstrap";
-import logo from '../Images/logo.png'
-import profileIcon from '../Images/profileIconDark.png'
-import testsIcon from '../Images/iconTest.png'
-import '../styles/App.css'
+import React, {useState} from 'react';
+import {Container, Nav, Navbar, NavbarToggle, NavbarCollapse} from "react-bootstrap";
+import logo from '../Images/logo.png';
+import profileIcon from '../Images/profileIconDark.png';
+import testsIcon from '../Images/iconTest.png';
+import '../styles/App.css';
 import {styles} from "../styles/style";
+import MenuOffcanvas from "../Components/Menu";
 
+function Header() {
+    const [offcanvasShow, setOffcanvasShow] = useState(false);
 
-class Header extends Component {
-    render() {
-        return (
-            <Navbar fixed='top' collapseOnSelect expand='sm'>
-                <Container fluid>
-                    <Navbar.Brand href='/' style={styles.logotypePadding}>
-                        <img
-                            src={logo}
-                            height="32"
-                            width="240"
-                            className='d-inline-block align-top'
-                            alt='Logo'
-                        />
-                    </Navbar.Brand>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav"
-                                   style={styles.customToggle}
-                    >
-                        <span className="menu-text">Menu</span>
-                    </Navbar.Toggle>
-                    <Navbar.Offcanvas
-                        aria-controls='basic-navbar-nav'
-                    >
-                        <Offcanvas.Header closeButton>
-                            <Offcanvas.Title>Menu</Offcanvas.Title>
-                        </Offcanvas.Header>
-                        <Offcanvas.Body>
-                            <Navbar.Collapse id="responsive-navbar-nav">
-                                <Nav className="ms-auto">
-                                    <Nav.Link href="/test"
-                                              style={styles.headerIconsPadding}
-                                    >
-                                        <img
-                                            src={testsIcon}
-                                            height="30"
-                                            width="30"
-                                            alt="test"
-                                        />
-                                    </Nav.Link>
-                                    <Nav.Link href="/login"
-                                              style={styles.headerIconsPadding}
-                                    >
-                                        <img
-                                            src={profileIcon}
-                                            height="30"
-                                            width="30"
-                                            alt="Login"
-                                        />
-                                    </Nav.Link>
-                                </Nav>
-                            </Navbar.Collapse>
-                        </Offcanvas.Body>
-                    </Navbar.Offcanvas>
-                </Container>
-            </Navbar>
-        );
-    }
+    const handleOffcanvasToggle = () => {
+        setOffcanvasShow(!offcanvasShow);
+    };
+
+    const handleOffcanvasClose = () => setOffcanvasShow(false);
+
+    return (
+        <Navbar fixed='top' collapseOnSelect expand='sm' bg='light' variant='light'>
+            <Container fluid>
+                <Navbar.Brand href='/' style={styles.logotypePadding}>
+                    <img
+                        src={logo}
+                        height="32"
+                        width="240"
+                        className='d-inline-block align-top'
+                        alt='Logo'
+                    />
+                </Navbar.Brand>
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={handleOffcanvasToggle}
+                               style={styles.customToggle}>
+                    <span className="menu-text">Menu</span>
+                </Navbar.Toggle>
+                <MenuOffcanvas show={offcanvasShow} handleClose={handleOffcanvasClose}/>
+                <Navbar.Collapse id="responsive-navbar-nav">
+                    <Nav className="ms-auto">
+                        <Nav.Link href="/test" style={styles.headerIconsPadding}>
+                            <img
+                                src={testsIcon}
+                                height="30"
+                                width="30"
+                                alt="test"
+                            />
+                        </Nav.Link>
+                        <Nav.Link href="/login" style={styles.headerIconsPadding}>
+                            <img
+                                src={profileIcon}
+                                height="30"
+                                width="30"
+                                alt="Login"
+                            />
+                        </Nav.Link>
+                    </Nav>
+                </Navbar.Collapse>
+            </Container>
+        </Navbar>
+    )
 }
 
 export default Header;
