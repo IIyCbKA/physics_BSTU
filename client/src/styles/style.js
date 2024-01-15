@@ -40,7 +40,7 @@ const focusButtonChangeVisibilityStyle = {
     transition: "background-color 0.7s, border 0.7s"
 }
 
-const hederIconsPadding = {
+const headerIconsPadding = {
     paddingBottom: 0,
     paddingTop: 0,
     paddingLeft: "5px",
@@ -49,7 +49,16 @@ const hederIconsPadding = {
 
 const logotypePadding = {
     padding: 0,
-    height: '24px',
+    height: '30px',
+    justifyContent: 'center'
+}
+
+const customToggle = {
+    height: '30px'
+}
+
+const customOffcanvas = {
+
 }
 
 export const styles = {
@@ -59,10 +68,8 @@ export const styles = {
     focusLoginLineStyle: focusLoginLineStyle,
     focusPasswordLineStyle: focusPasswordLineStyle,
     focusButtonChangeVisibilityStyle: focusButtonChangeVisibilityStyle,
-    hederIconsPadding: hederIconsPadding,
+    headerIconsPadding: headerIconsPadding,
     logotypePadding: logotypePadding,
+    customToggle: customToggle,
+    customOffcanvas: customOffcanvas,
 };
-
-
-
-

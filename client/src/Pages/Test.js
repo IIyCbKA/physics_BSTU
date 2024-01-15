@@ -1,16 +1,16 @@
-import 'bootstrap/dist/css/bootstrap.min.css'
+import React from 'react';
 import Header from "../Components/Header";
 import {Helmet} from 'react-helmet';
 
-function Home() {
+function Test() {
     return (
         <div>
             <Helmet>
-                <title>Физика</title>
+                <title>Каталог тестов</title>
             </Helmet>
             <Header/>
         </div>
     );
 }
 
-export default Home;
+export default Test;

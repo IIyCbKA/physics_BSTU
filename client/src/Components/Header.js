@@ -1,57 +1,67 @@
 import React, {Component} from 'react';
-import {Container, Nav, Navbar} from "react-bootstrap";
+import {Container, Nav, Navbar, Offcanvas} from "react-bootstrap";
 import logo from '../Images/logo.png'
 import profileIcon from '../Images/profileIconDark.png'
+import testsIcon from '../Images/iconTest.png'
 import '../styles/App.css'
 import {styles} from "../styles/style";
-import iconTests from "../Images/iconTest.png"
+
 
 class Header extends Component {
     render() {
         return (
-            <div>
-                <Navbar fixed='top' collapseOnSelect>
-                    <Container fluid>
-                        <Navbar.Brand href='/'
-                                      style={styles.logotypePadding}
-                        >
-                            <img
-                                src={logo}
-                                height="24"
-                                width="144"
-                                className='d-inline-block align-top'
-                                alt='Logo'
-                            />
-                        </Navbar.Brand>
-                        <Navbar.Collapse id="responsive-navbar-nav">
-                            <Nav className="ms-auto">
-                                <Nav.Link href="/tests"
-                                          style={styles.hederIconsPadding}
-                                >
-                                    <img
-                                        src={iconTests}
-                                        height="21px"
-                                        alt="Tests"
-                                    />
-                                </Nav.Link>
-                                <Nav.Link href="/login"
-                                          style={styles.hederIconsPadding}
-                                >
-                                    <img
-                                        src={profileIcon}
-                                        height="24"
-                                        width="24"
-                                        alt="Login"
-                                    />
-                                </Nav.Link>
-                            </Nav>
-                        </Navbar.Collapse>
-                    </Container>
-                </Navbar>
-                <script>
-                    document.querySelector(".burger")
-                </script>
-            </div>
+            <Navbar fixed='top' collapseOnSelect expand='sm'>
+                <Container fluid>
+                    <Navbar.Brand href='/' style={styles.logotypePadding}>
+                        <img
+                            src={logo}
+                            height="32"
+                            width="240"
+                            className='d-inline-block align-top'
+                            alt='Logo'
+                        />
+                    </Navbar.Brand>
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav"
+                                   style={styles.customToggle}
+                    >
+                        <span className="menu-text">Menu</span>
+                    </Navbar.Toggle>
+                    <Navbar.Offcanvas
+                        aria-controls='basic-navbar-nav'
+                        style={styles.customOffcanvas}
+                    >
+                        <Offcanvas.Header closeButton>
+                            <Offcanvas.Title>Menu</Offcanvas.Title>
+                        </Offcanvas.Header>
+                        <Offcanvas.Body>
+                            <Navbar.Collapse id="responsive-navbar-nav">
+                                <Nav className="ms-auto">
+                                    <Nav.Link href="/test"
+                                              style={styles.headerIconsPadding}
+                                    >
+                                        <img
+                                            src={testsIcon}
+                                            height="30"
+                                            width="30"
+                                            alt="test"
+                                        />
+                                    </Nav.Link>
+                                    <Nav.Link href="/login"
+                                              style={styles.headerIconsPadding}
+                                    >
+                                        <img
+                                            src={profileIcon}
+                                            height="30"
+                                            width="30"
+                                            alt="Login"
+                                        />
+                                    </Nav.Link>
+                                </Nav>
+                            </Navbar.Collapse>
+                        </Offcanvas.Body>
+                    </Navbar.Offcanvas>
+                </Container>
+            </Navbar>
         );
     }
 }
