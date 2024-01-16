@@ -18,3 +18,4 @@ def ar_user(response):
 
         response.headers['Content-Type'] = 'application/json'
     return response
+

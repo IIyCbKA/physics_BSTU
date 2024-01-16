@@ -7,3 +7,4 @@ def login():
     req_data = request.get_json()
     _mail = req_data.get('mail')
     _password = req_data.get('password')
+
