@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import request, jsonify,render_template
 from application import app
 
 RESULT_TITLE = 'result'
@@ -19,3 +19,7 @@ def ar_user(response):
         response.headers['Content-Type'] = 'application/json'
     return response
 
+
+@app.route('/')
+def index():
+    return render_template()
