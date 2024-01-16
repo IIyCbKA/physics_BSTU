@@ -21,8 +21,10 @@ SECTION_TITLE = 'section'
 ID_TITLE = 'id'
 RESULT_TITLE = 'result'
 
+
 def retRes(result):
     return jsonify({RESULT_TITLE: result})
+
 
 @app.route("/api/data/post", methods=["POST"])
 def postData():
@@ -61,7 +63,6 @@ def bfr_user():
     pass
 
 
-
 @app.after_request
 def ar_user(response):
     if request.method != "OPTIONS" and response.status_code == 200:
@@ -77,8 +78,3 @@ def ar_user(response):
 @app.teardown_request
 def tr_user(response):
     return response
-
-
-@app.route('/')
-def index():
-    return render_template()
