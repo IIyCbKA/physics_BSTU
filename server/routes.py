@@ -19,7 +19,3 @@ def ar_user(response):
         response.headers['Content-Type'] = 'application/json'
     return response
 
-
-@app.route('/')
-def index():
-    return render_template()
