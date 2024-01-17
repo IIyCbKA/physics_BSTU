@@ -89,6 +89,11 @@
     padding-left: 8px;
 }
 
+.style-img-offcanvas {
+    position: relative;
+    bottom: 1px;
+}
+
 
 
 

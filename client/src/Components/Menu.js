@@ -12,12 +12,11 @@ function MenuOffcanvas({ show, handleClose }) {
             <Offcanvas.Header closeButton>
                 <Offcanvas.Title className="me-auto">Menu</Offcanvas.Title>
             </Offcanvas.Header>
-            <Offcanvas.Body
-                className='offcanvas.body'
-            >
+            <Offcanvas.Body>
                 <Nav>
                     <Nav.Link href="/login">
                         <img
+                            className="style-img-offcanvas"
                             src={profileIcon}
                             height="24px"
                             width="24px"
@@ -27,6 +26,7 @@ function MenuOffcanvas({ show, handleClose }) {
                     </Nav.Link>
                     <Nav.Link href="/test">
                         <img
+                            className="style-img-offcanvas"
                             src={testsIcon}
                             width="24px"
                             height="24px"
