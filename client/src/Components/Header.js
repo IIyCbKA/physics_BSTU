@@ -17,7 +17,11 @@ function Header() {
     const handleOffcanvasClose = () => setOffcanvasShow(false);
 
     return (
-        <Navbar fixed='top' collapseOnSelect expand='sm' bg='light' variant='light'>
+        <Navbar
+            fixed='top'
+            collapseOnSelect
+            expand='sm'
+        >
             <Container fluid>
                 <Navbar.Brand href='/' style={styles.logotypePadding}>
                     <img
@@ -28,8 +32,11 @@ function Header() {
                         alt='Logo'
                     />
                 </Navbar.Brand>
-                <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={handleOffcanvasToggle}
-                               style={styles.customToggle}>
+                <Navbar.Toggle
+                    aria-controls="responsive-navbar-nav"
+                    onClick={handleOffcanvasToggle}
+                    style={styles.customToggle}
+                >
                     <span className="menu-text">Menu</span>
                 </Navbar.Toggle>
                 <MenuOffcanvas show={offcanvasShow} handleClose={handleOffcanvasClose}/>

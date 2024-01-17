@@ -54,7 +54,7 @@ const logotypePadding = {
 }
 
 const customToggle = {
-    height: '30px'
+    height: '30px',
 }
 
 const customOffcanvas = {
