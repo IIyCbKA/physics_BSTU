@@ -61,6 +61,10 @@ const customOffcanvas = {
     width: '100%'
 }
 
+const styleNavbar = {
+    minWidth: '350px'
+}
+
 export const styles = {
     formButtonStyle: formButtonStyle,
     buttonChangeVisibilityStyle: buttonChangeVisibilityStyle,
@@ -72,4 +76,5 @@ export const styles = {
     logotypePadding: logotypePadding,
     customToggle: customToggle,
     customOffcanvas: customOffcanvas,
+    styleNavbar: styleNavbar,
 };

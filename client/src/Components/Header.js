@@ -21,6 +21,7 @@ function Header() {
             fixed='top'
             collapseOnSelect
             expand='sm'
+            style={styles.styleNavbar}
         >
             <Container fluid>
                 <Navbar.Brand href='/' style={styles.logotypePadding}>
