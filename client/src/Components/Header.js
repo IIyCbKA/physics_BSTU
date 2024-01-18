@@ -9,12 +9,17 @@ import MenuOffcanvas from "../Components/Menu";
 
 function Header() {
     const [offcanvasShow, setOffcanvasShow] = useState(false);
+    const [menuButtonIsFocus, setMenuButtonFocus] = useState(false);
 
     const handleOffcanvasToggle = () => {
         setOffcanvasShow(!offcanvasShow);
     };
 
     const handleOffcanvasClose = () => setOffcanvasShow(false);
+
+    const changeMenuButtonFocus = () => {
+        setMenuButtonFocus(!menuButtonIsFocus);
+    }
 
     return (
         <Navbar
@@ -36,7 +41,8 @@ function Header() {
                 <Navbar.Toggle
                     aria-controls="responsive-navbar-nav"
                     onClick={handleOffcanvasToggle}
-                    style={styles.customToggle}
+                    onFocus={changeMenuButtonFocus}
+                    style={menuButtonIsFocus ? styles.customToggleIsFocus : styles.customToggle}
                 >
                     <span className="menu-text">Menu</span>
                 </Navbar.Toggle>

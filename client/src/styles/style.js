@@ -65,6 +65,11 @@ const styleNavbar = {
     minWidth: '350px'
 }
 
+const customToggleIsFocus = {
+    height: '30px',
+    boxShadow: 'None'
+}
+
 export const styles = {
     formButtonStyle: formButtonStyle,
     buttonChangeVisibilityStyle: buttonChangeVisibilityStyle,
@@ -77,4 +82,5 @@ export const styles = {
     customToggle: customToggle,
     customOffcanvas: customOffcanvas,
     styleNavbar: styleNavbar,
+    customToggleIsFocus: customToggleIsFocus
 };
