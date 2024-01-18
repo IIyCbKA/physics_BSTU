@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Container, Nav, Navbar, NavbarToggle, NavbarCollapse} from "react-bootstrap";
+import {Container, Nav, Navbar} from "react-bootstrap";
 import logo from '../Images/logo.png';
 import profileIcon from '../Images/profileIconDark.png';
 import testsIcon from '../Images/iconTest.png';
@@ -26,8 +26,8 @@ function Header() {
                 <Navbar.Brand href='/' style={styles.logotypePadding}>
                     <img
                         src={logo}
-                        height="32"
-                        width="240"
+                        height="30"
+                        width="200"
                         className='d-inline-block align-top'
                         alt='Logo'
                     />

@@ -12,16 +12,17 @@
 }
 
 .form {
-    width: 96vw;
+    width: 90vw;
     min-width: 276px;
     padding: 20px;
     border-radius: 10px;
 
 }
 
-@media (min-width: 800px) {
+@media (orientation: landscape) {
     .form {
-        width: 24vw;
+        width: 28vw;
+        min-width: 300px;
         margin-left: auto;
         margin-right: auto;
     }
