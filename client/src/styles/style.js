@@ -55,6 +55,7 @@ const logotypePadding = {
 
 const customToggle = {
     height: '30px',
+    boxShadow: 'None'
 }
 
 const customOffcanvas = {
@@ -65,10 +66,6 @@ const styleNavbar = {
     minWidth: '350px'
 }
 
-const customToggleIsFocus = {
-    height: '30px',
-    boxShadow: 'None'
-}
 
 export const styles = {
     formButtonStyle: formButtonStyle,
@@ -81,6 +78,5 @@ export const styles = {
     logotypePadding: logotypePadding,
     customToggle: customToggle,
     customOffcanvas: customOffcanvas,
-    styleNavbar: styleNavbar,
-    customToggleIsFocus: customToggleIsFocus
+    styleNavbar: styleNavbar
 };
