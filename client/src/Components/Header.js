@@ -41,7 +41,7 @@ function Header() {
                     <span className="menu-text">Menu</span>
                 </Navbar.Toggle>
                 <MenuOffcanvas show={offcanvasShow} handleClose={handleOffcanvasClose}/>
-                <Navbar.Collapse id="responsive-navbar-nav">
+                <Navbar.Collapse id="responsive-navbar-nav" className="d-none d-sm-block">
                     <Nav className="ms-auto">
                         <Nav.Link href="/test" style={styles.headerIconsPadding}>
                             <img
