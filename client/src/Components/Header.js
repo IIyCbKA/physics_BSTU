@@ -14,11 +14,8 @@ function Header() {
         setOffcanvasShow(!offcanvasShow);
     };
 
-    const handleOffcanvasClose = () => setOffcanvasShow(false);
-
     return (
         <Navbar
-            fixed='top'
             collapseOnSelect
             expand='sm'
             style={styles.styleNavbar}
@@ -40,7 +37,7 @@ function Header() {
                 >
                     <span className="menu-text">Menu</span>
                 </Navbar.Toggle>
-                <MenuOffcanvas show={offcanvasShow} handleClose={handleOffcanvasClose}/>
+                <MenuOffcanvas show={offcanvasShow} handleClose={handleOffcanvasToggle}/>
                 <Navbar.Collapse id="responsive-navbar-nav" className="d-none d-sm-block">
                     <Nav className="ms-auto">
                         <Nav.Link href="/test" style={styles.headerIconsPadding}>
