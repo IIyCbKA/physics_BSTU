@@ -98,3 +98,13 @@
 .style-title-offcanvas {
     color: #161616;
 }
+
+.position-toggle {
+    margin: 0 Auto !important;
+
+}
+
+.background-darkening {
+    display: none;
+}
+

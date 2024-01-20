@@ -55,11 +55,11 @@ const logotypePadding = {
 
 const customToggle = {
     height: '30px',
-    boxShadow: 'None'
+    boxShadow: 'None',
 }
 
 const customOffcanvas = {
-    width: '100%'
+    width: '100%',
 }
 
 const styleNavbar = {

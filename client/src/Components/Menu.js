@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import {Nav, Offcanvas} from "react-bootstrap";
 import profileIcon from '../Images/profileIconDark.png';
 import testsIcon from '../Images/iconTest.png';
@@ -11,7 +11,8 @@ function MenuOffcanvas({show, handleClose}) {
                 show={show}
                 onHide={handleClose}
                 style={styles.customOffcanvas}
-                className="offcanvas"
+                scroll={true}
+                backdropClassName='background-darkening'
             >
                 <Offcanvas.Header closeButton>
                     <Offcanvas.Title className="me-auto">
