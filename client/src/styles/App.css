@@ -103,3 +103,15 @@
     display: none;
 }
 
+.disk {
+    margin-top: 20px;
+
+    &_btns {
+        display: flex;
+    }
+
+    &_creat {
+        margin-left: 10px;
+    }
+}
+

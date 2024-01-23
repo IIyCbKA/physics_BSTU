@@ -5,6 +5,7 @@ import Home from "./Pages/Home";
 import Login from './Pages/Login';
 import Test from "./Pages/Test";
 import React from 'react';
+import Disk from "./Components/Disk";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/tests" element={<Test />} />
+              <Route path="/" element={<Disk />} />
           </Routes>
       </Router>
   );
