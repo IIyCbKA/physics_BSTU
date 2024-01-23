@@ -84,13 +84,17 @@ function Login() {
                     <Form className="form">
                         <h2 className="form-title">Авторизация</h2>
                         <div className="inputs-margin">
-                            <Form.Group className="elements-form" controlId="formBasicName">
+                            <Form.Group
+                                className="elements-form"
+                                controlId="formBasicName"
+                            >
                                 <InputGroup>
                                     <FormControl
                                         type="text"
                                         placeholder="Email"
                                         value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
+                                        onChange={(e) =>
+                                            setEmail(e.target.value)}
                                         style={loginLineStyle()}
                                         onFocus={loginOnFocus}
                                         onBlur={loginOnBlur}
@@ -99,13 +103,17 @@ function Login() {
                             </Form.Group>
                         </div>
                         <div className="inputs-margin">
-                            <Form.Group className="elements-form" controlId="formBasicPassword">
+                            <Form.Group
+                                className="elements-form"
+                                controlId="formBasicPassword"
+                            >
                                 <InputGroup>
                                     <FormControl
                                         type={showPassword ? 'text' : 'password'}
                                         placeholder="Пароль"
                                         value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
+                                        onChange={(e) =>
+                                            setPassword(e.target.value)}
                                         style={passwordLineStyle()}
                                         onFocus={passwordOnFocus}
                                         onBlur={passwordOnBlur}
@@ -115,7 +123,11 @@ function Login() {
                                         style={btnHidePasswordChangeStyle()}
                                         className="btn-hide-password-style"
                                     >
-                                        <img src={showPassword ? eyeClose : eyeOpen} alt="" width="20" height="20"/>
+                                        <img src={showPassword ? eyeClose : eyeOpen}
+                                             alt=""
+                                             width="20"
+                                             height="20"
+                                        />
                                     </InputGroup.Text>
                                 </InputGroup>
                             </Form.Group>

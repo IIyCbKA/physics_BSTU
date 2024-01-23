@@ -37,10 +37,18 @@ function Header() {
                 >
                     <span className="menu-text">Menu</span>
                 </Navbar.Toggle>
-                <MenuOffcanvas show={offcanvasShow} handleClose={handleOffcanvasToggle}/>
-                <Navbar.Collapse id="responsive-navbar-nav" className="d-none d-sm-block">
+                <MenuOffcanvas
+                    show={offcanvasShow}
+                    handleClose={handleOffcanvasToggle}
+                />
+                <Navbar.Collapse
+                    id="responsive-navbar-nav"
+                    className="d-none d-sm-block"
+                >
                     <Nav className="ms-auto">
-                        <Nav.Link href="/test" style={styles.headerIconsPadding}>
+                        <Nav.Link href="/test"
+                                  style={styles.headerIconsPadding}
+                        >
                             <img
                                 src={testsIcon}
                                 height="30"
@@ -48,7 +56,9 @@ function Header() {
                                 alt="test"
                             />
                         </Nav.Link>
-                        <Nav.Link href="/login" style={styles.headerIconsPadding}>
+                        <Nav.Link href="/login"
+                                  style={styles.headerIconsPadding}
+                        >
                             <img
                                 src={profileIcon}
                                 height="30"
