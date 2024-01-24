@@ -12,7 +12,7 @@ function MenuOffcanvas({show, handleClose}) {
         }, 1100);
         setTimeout(() => {
             setHide(false);
-        }, 1000);
+        }, 1200);
     }
 
     return (

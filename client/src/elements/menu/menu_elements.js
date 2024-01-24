@@ -10,8 +10,8 @@ export function TestsElement({isHidden}) {
             initial={{opacity: isHidden ? 1 : 0}}
             animate={{opacity: isHidden ? 0 : 1}}
             transition={{
-                delay: isHidden ? 0.3 : 1,
-                duration: 0.6
+                delay: isHidden ? 0.4 : 1,
+                duration: 0.8
             }}
         >
             <Nav.Link href="/test">
@@ -35,8 +35,8 @@ export function ProfileElement({isHidden}) {
             initial={{opacity: isHidden ? 1 : 0}}
             animate={{opacity: isHidden ? 0 : 1}}
             transition={{
-                delay: isHidden ? 0 : 1.3,
-                duration: 0.6
+                delay: isHidden ? 0 : 1.4,
+                duration: 0.8
             }}
         >
             <Nav.Link href="/login">
