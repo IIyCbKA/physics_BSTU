@@ -1,7 +1,7 @@
 import React from 'react';
 import {Nav, Offcanvas} from "react-bootstrap";
 import {styles} from "../styles/style";
-import { FirstComponent, SecondComponent } from "../elements/menu/menu_elements";
+import { TestsElement, ProfileElement } from "../elements/menu/menu_elements";
 
 function MenuOffcanvas({show, handleClose}) {
     return (
@@ -20,8 +20,8 @@ function MenuOffcanvas({show, handleClose}) {
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                     <Nav>
-                        <FirstComponent/>
-                        <SecondComponent/>
+                        <TestsElement/>
+                        <ProfileElement/>
                     </Nav>
                 </Offcanvas.Body>
             </Offcanvas>

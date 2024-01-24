@@ -4,7 +4,7 @@ import {motion} from "framer-motion";
 import React from "react";
 import profileIcon from "../../Images/profileIconDark.png";
 
-export function FirstComponent() {
+export function TestsElement() {
     return (
         <motion.div
             initial={{opacity: 0}}
@@ -29,7 +29,7 @@ export function FirstComponent() {
     )
 }
 
-export function SecondComponent() {
+export function ProfileElement() {
     return (
         <motion.div
             initial={{opacity: 0}}
