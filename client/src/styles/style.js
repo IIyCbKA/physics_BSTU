@@ -56,10 +56,14 @@ const logotypePadding = {
 const customToggle = {
     height: '30px',
     boxShadow: 'None',
+    border: 'None'
 }
 
 const customOffcanvas = {
     width: '100%',
+    transitionDuration: '1s',
+    backgroundColor: 'rgba(255, 255, 255, 0.75)',
+    backdropFilter: 'blur(10px)'
 }
 
 const styleNavbar = {
