@@ -5,14 +5,13 @@ import React from "react";
 import profileIcon from "../../Images/profileIconDark.png";
 
 export function TestsElement({isHidden}) {
-    console.log(isHidden)
     return (
         <motion.div
             initial={{opacity: isHidden ? 1 : 0}}
             animate={{opacity: isHidden ? 0 : 1}}
             transition={{
-                delay: isHidden ? 0.5 : 1,
-                duration: 1
+                delay: isHidden ? 0.3 : 1,
+                duration: 0.6
             }}
         >
             <Nav.Link href="/test">
@@ -36,8 +35,8 @@ export function ProfileElement({isHidden}) {
             initial={{opacity: isHidden ? 1 : 0}}
             animate={{opacity: isHidden ? 0 : 1}}
             transition={{
-                delay: isHidden ? 0 : 1.5,
-                duration: 1
+                delay: isHidden ? 0 : 1.3,
+                duration: 0.6
             }}
         >
             <Nav.Link href="/login">
