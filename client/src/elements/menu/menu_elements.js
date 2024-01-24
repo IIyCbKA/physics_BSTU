@@ -4,13 +4,14 @@ import {motion} from "framer-motion";
 import React from "react";
 import profileIcon from "../../Images/profileIconDark.png";
 
-export function TestsElement() {
+export function TestsElement({isHidden}) {
+    console.log(isHidden)
     return (
         <motion.div
-            initial={{opacity: 0}}
-            animate={{opacity: 1}}
+            initial={{opacity: isHidden ? 1 : 0}}
+            animate={{opacity: isHidden ? 0 : 1}}
             transition={{
-                delay: 1,
+                delay: isHidden ? 0.5 : 1,
                 duration: 1
             }}
         >
@@ -29,13 +30,13 @@ export function TestsElement() {
     )
 }
 
-export function ProfileElement() {
+export function ProfileElement({isHidden}) {
     return (
         <motion.div
-            initial={{opacity: 0}}
-            animate={{opacity: 1}}
+            initial={{opacity: isHidden ? 1 : 0}}
+            animate={{opacity: isHidden ? 0 : 1}}
             transition={{
-                delay: 1.5,
+                delay: isHidden ? 0 : 1.5,
                 duration: 1
             }}
         >
