@@ -1,7 +1,7 @@
 import React from 'react';
 import {Nav, Offcanvas} from "react-bootstrap";
 import {styles} from "../styles/style";
-import { FirstComponent, SecondComponent } from "./menu/elements";
+import { FirstComponent, SecondComponent } from "../elements/menu/menu_elements";
 
 function MenuOffcanvas({show, handleClose}) {
     return (
