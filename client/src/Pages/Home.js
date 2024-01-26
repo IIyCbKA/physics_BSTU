@@ -1,8 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Header from "../Components/Header";
 import {Helmet} from 'react-helmet';
-import Counter from "../feathures/counter/Counter";
-import Disk from "../Components/Disk"
 
 function Home() {
     return (
@@ -11,8 +9,6 @@ function Home() {
                 <title>Физика</title>
             </Helmet>
             <Header/>
-            <Counter/>
-            <Disk/>
         </div>
     );
 }
