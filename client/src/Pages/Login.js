@@ -8,7 +8,7 @@ import {motion} from "framer-motion";
 import {styles} from "../styles/style";
 import eyeClose from '../Images/eyeClose.png'
 import eyeOpen from '../Images/eyeOpen.png'
-import {user} from '../user/user'
+import {socket} from '../API/user'
 
 function Login() {
     const [showPassword, setShowPassword] = useState(false);
@@ -63,7 +63,10 @@ function Login() {
 
     const loginClick = (e) => {
         e.preventDefault()
-        user.auth(email, password)
+        console.log('Нажата')
+        socket.emit('login', {
+            mail: 'example@mail.com',
+            password: 'password123' });
     }
 
     return (
