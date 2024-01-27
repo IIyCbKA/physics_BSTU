@@ -5,3 +5,4 @@ bcrypt==4.1.2
 SQLAlchemy==2.0.25
 requests==2.31.0
 psycopg2==2.9.9
+Flask-SocketIO==5.3.6

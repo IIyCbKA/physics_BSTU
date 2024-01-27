@@ -1,23 +1,22 @@
-from flask import request
-from application import app
-from routes import reternResult
-from data.models import *
-from data.db_session import db
+from server.routes import reternResult
+from server.data.models import *
+from server.data.db_session import db
 from typing import Optional
+from server.application import socketio
 import requests
 
 
-@app.route("/api/login", methods=["POST"])
-def login():
-    req_data = request.get_json()
-    _mail = req_data.get('mail')
-    _password = req_data.get('password')
+@socketio.on('login')
+def login(data):
+    _mail: str = data.get('mail')
+    _password: str = data.get('password')
+    print(_mail)
     loginBstu(_mail, _password)
 
     return reternResult(True), 200
 
 
-def loginBstu(login, password):
+def loginBstu(login: str, password: str) -> None:
     login_data = {
         'login': login,
         'password': password
