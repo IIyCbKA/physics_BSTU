@@ -1,19 +1,17 @@
-from server.routes import reternResult
 from server.data.models import *
 from server.data.db_session import db
 from typing import Optional
 from server.application import socketio
+from flask_socketio import emit
 import requests
 
 
 @socketio.on('login')
 def login(data):
-    _mail: str = data.get('mail')
+    _email: str = data.get('email')
     _password: str = data.get('password')
-    print(_mail)
-    loginBstu(_mail, _password)
-
-    return reternResult(True), 200
+    print(_email)
+    loginBstu(_email, _password)
 
 
 def loginBstu(login: str, password: str) -> None:
