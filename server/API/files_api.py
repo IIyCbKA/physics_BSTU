@@ -1,6 +1,6 @@
 from flask import request, jsonify
 from flask_socketio import emit
-from server.application import app
+from server import app
 import os
 
 currentDirectory = os.getcwd()

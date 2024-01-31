@@ -1,5 +1,5 @@
 from flask import request, jsonify
-from application import app
+from server import app
 
 RESULT_TITLE = 'result'
 

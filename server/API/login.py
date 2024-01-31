@@ -1,4 +1,6 @@
-from application import socketio
+from server import socketio
+print('success')
+
 
 @socketio.on('login')
 def login(data):

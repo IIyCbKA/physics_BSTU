@@ -1,5 +1,5 @@
-import login
-from application import app, socketio
+from server import socketio, app
+
 from data.db_session import db
 import os
 

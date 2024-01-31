@@ -1,7 +1,7 @@
 from server.data.models import *
 from server.data.db_session import db
 from typing import Optional
-from server.application import socketio
+from server import socketio
 from flask_socketio import emit
 import requests
 
