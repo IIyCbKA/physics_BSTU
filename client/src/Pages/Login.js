@@ -16,6 +16,7 @@ function Login() {
     const [password, setPassword] = useState('');
     const [passwordIsFocused, setPasswordIsFocused] = useState(false);
     const [loginIsFocused, setLoginIsFocused] = useState(false);
+    const [btnIsFocused, setBtnIsFocused] = useState(false);
 
     const passwordOnFocus = () => {
         setPasswordIsFocused(true);
@@ -61,11 +62,23 @@ function Login() {
         }
     };
 
+    const changeBtnActive = () => {
+        setBtnIsFocused(!btnIsFocused);
+    };
+
+    const btnColor = () => {
+        if (btnIsFocused){
+            return '#64A5D9'
+        } else {
+            return '#6CB2EB'
+        }
+    };
+
     const loginClick = (e) => {
         e.preventDefault();
         socket.emit('login', {
-            'email': 'qwerty123@yandex.ru',
-            'password': 'qwerty123'})
+            'email': email,
+            'password': password})
     };
 
     return (
@@ -138,7 +151,10 @@ function Login() {
                             <Button variant="primary"
                                     onClick={loginClick}
                                     type="submit"
-                                    style={styles.formButtonStyle}
+                                    style={{...styles.formButtonStyle,
+                                        backgroundColor: btnColor()}}
+                                    onMouseEnter={changeBtnActive}
+                                    onMouseLeave={changeBtnActive}
                                     className="form-btn">
                                 <h2 className="no-margin">Продолжить</h2>
                             </Button>
