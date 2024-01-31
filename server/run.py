@@ -1,5 +1,4 @@
 from server import socketio, app
-
 from data.db_session import db
 import os
 

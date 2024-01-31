@@ -11,7 +11,7 @@ def login(data):
     _email: str = data.get('email')
     _password: str = data.get('password')
     print(_email)
-    loginBstu(_email, _password)
+    #loginBstu(_email, _password)
 
 
 def loginBstu(login: str, password: str) -> None:
