@@ -17,6 +17,7 @@ function Login() {
     const [passwordIsFocused, setPasswordIsFocused] = useState(false);
     const [loginIsFocused, setLoginIsFocused] = useState(false);
     const [btnIsFocused, setBtnIsFocused] = useState(false);
+    const [isButtonShaking, setButtonShaking] = useState(false);
 
     const passwordOnFocus = () => {
         setPasswordIsFocused(true);
@@ -79,6 +80,12 @@ function Login() {
         socket.emit('login', {
             'email': email,
             'password': password})
+
+        setButtonShaking(true);
+
+        setTimeout(() => {
+            setButtonShaking(false);
+        }, 1000);
     };
 
     return (
@@ -152,7 +159,8 @@ function Login() {
                                     onClick={loginClick}
                                     type="submit"
                                     style={{...styles.formButtonStyle,
-                                        backgroundColor: btnColor()}}
+                                        backgroundColor: btnColor(),
+                                        animation: isButtonShaking ? "shakeButton 0.25s" : "none" }}
                                     onMouseEnter={changeBtnActive}
                                     onMouseLeave={changeBtnActive}
                                     className="form-btn">

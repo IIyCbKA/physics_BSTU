@@ -1,7 +1,8 @@
 const formButtonStyle = {
     display: "block",
     margin: "0 auto",
-    border: "None"
+    border: "None",
+    boxShadow: 'None'
 }
 
 const buttonChangeVisibilityStyle  = {
