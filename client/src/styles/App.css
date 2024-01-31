@@ -103,18 +103,6 @@
     display: none;
 }
 
-.disk {
-    margin-top: 20px;
-
-    &_btns {
-        display: flex;
-    }
-
-    &_creat {
-        margin-left: 10px;
-    }
-}
-
 @keyframes shakeButton {
     10% { transform: translateX(-1px) translateY(-1px);}
     20% { transform: translateX(1px) translateY(1px);}
