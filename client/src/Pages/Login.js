@@ -18,6 +18,7 @@ function Login() {
     const [loginIsFocused, setLoginIsFocused] = useState(false);
     const [btnIsFocused, setBtnIsFocused] = useState(false);
     const [isButtonShaking, setButtonShaking] = useState(false);
+    const isButtonDisabled = email === '' || password === '';
 
     const passwordOnFocus = () => {
         setPasswordIsFocused(true);
@@ -85,7 +86,7 @@ function Login() {
 
         setTimeout(() => {
             setButtonShaking(false);
-        }, 1000);
+        }, 300);
     };
 
     return (
@@ -163,6 +164,7 @@ function Login() {
                                         animation: isButtonShaking ? "shakeButton 0.3s" : "none" }}
                                     onMouseEnter={changeBtnActive}
                                     onMouseLeave={changeBtnActive}
+                                    disabled={isButtonDisabled}
                                     className="form-btn">
                                 <h2 className="no-margin">Продолжить</h2>
                             </Button>
