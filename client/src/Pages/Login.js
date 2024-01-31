@@ -160,7 +160,7 @@ function Login() {
                                     type="submit"
                                     style={{...styles.formButtonStyle,
                                         backgroundColor: btnColor(),
-                                        animation: isButtonShaking ? "shakeButton 0.25s" : "none" }}
+                                        animation: isButtonShaking ? "shakeButton 0.3s" : "none" }}
                                     onMouseEnter={changeBtnActive}
                                     onMouseLeave={changeBtnActive}
                                     className="form-btn">
