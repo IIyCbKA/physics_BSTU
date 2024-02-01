@@ -82,7 +82,7 @@ function Login() {
         setTimeout(() => {
             setButtonShaking(false);
             setPassword('');
-        }, 300);
+        }, 500);
     });
 
     const loginClick = (e) => {
@@ -164,7 +164,7 @@ function Login() {
                                     type="submit"
                                     style={{...styles.formButtonStyle,
                                         backgroundColor: btnColor(),
-                                        animation: isButtonShaking ? "shakeButton 0.3s" : "none" }}
+                                        animation: isButtonShaking ? "shakeButton 0.5s" : "none" }}
                                     onMouseEnter={changeBtnActive}
                                     onMouseLeave={changeBtnActive}
                                     disabled={isButtonDisabled}
