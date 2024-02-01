@@ -10,8 +10,7 @@ import requests
 def login(data):
     _email: str = data.get('email')
     _password: str = data.get('password')
-    print(_email)
-    #loginBstu(_email, _password)
+    loginBstu(_email, _password)
 
 
 def loginBstu(login: str, password: str) -> None:
@@ -38,6 +37,8 @@ def auth(data: dict) -> None:
             groupInDB: Optional[Groups] = searchGroup(group_name)
             if groupInDB is None:
                 addGroup(group_name)
+    else:
+        emit('incorrect data')
 
 
 def searchStudent(id: str) -> Optional[Students]:
