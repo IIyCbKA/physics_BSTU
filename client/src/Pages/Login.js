@@ -76,7 +76,7 @@ function Login() {
         }
     };
 
-    socket.on('incorrect data', () => {
+    socket.on('incorrect_data', () => {
         setButtonShaking(true);
 
         setTimeout(() => {

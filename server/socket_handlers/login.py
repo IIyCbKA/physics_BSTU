@@ -1,30 +1,24 @@
+from flask_socketio import emit
+from server import socketio
 from server.data.models import *
 from server.data.db_session import db
-from typing import Optional
-from server import socketio
-from flask_socketio import emit
+from typing import Optional, Dict
 import requests
 
 
 @socketio.on('login')
-def login(data):
-    _email: str = data.get('email')
-    _password: str = data.get('password')
-    loginBstu(_email, _password)
-
-
-def loginBstu(login: str, password: str) -> None:
+def loginBstu(data) -> None:
     login_data = {
-        'login': login,
-        'password': password
+        'login': data.get('email'),
+        'password': data.get('password')
     }
 
     response = requests.post('https://lk.bstu.ru/api/login', data=login_data)
-    data: dict = response.json()
+    data: Dict = response.json()
     auth(data)
 
 
-def auth(data: dict) -> None:
+def auth(data: Dict) -> None:
     if data['success']:
         id: str = data['result']['user_info']['default_account_id']
         status: str = data['result']['user_info']['default_account_key']
@@ -38,7 +32,7 @@ def auth(data: dict) -> None:
             if groupInDB is None:
                 addGroup(group_name)
     else:
-        emit('incorrect data')
+        emit('incorrect_data')
 
 
 def searchStudent(id: str) -> Optional[Students]:
@@ -46,7 +40,7 @@ def searchStudent(id: str) -> Optional[Students]:
     return result
 
 
-def addStudent(data: dict) -> None:
+def addStudent(data: Dict) -> None:
     db.add(Students(
         student_id=data['result']['user_info']['default_account_id'],
         surname=data['result']['user_info']['surname'],
