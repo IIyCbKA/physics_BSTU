@@ -76,17 +76,20 @@ function Login() {
         }
     };
 
+    socket.on('incorrect data', () => {
+        setButtonShaking(true);
+
+        setTimeout(() => {
+            setButtonShaking(false);
+            setPassword('');
+        }, 300);
+    });
+
     const loginClick = (e) => {
         e.preventDefault();
         socket.emit('login', {
             'email': email,
             'password': password})
-
-        setButtonShaking(true);
-
-        setTimeout(() => {
-            setButtonShaking(false);
-        }, 300);
     };
 
     return (
