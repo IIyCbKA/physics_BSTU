@@ -33,9 +33,12 @@ def deleteFile(fileName):
 @socketio.on('file_download_request')
 def handleFileDownloadRequest(fileName):
     fullPath = os.path.join(os.path.dirname(os.getcwd()), 'files/', fileName)
-    with open(fullPath, 'rb') as file:
-        fileContent = base64.b64encode(file.read()).decode('utf-8')
-        emit('file', {
-            'file_name': fileName,
-            'file_content': fileContent
-        })
+    try:
+        with open(fullPath, 'rb') as file:
+            fileContent = base64.b64encode(file.read()).decode('utf-8')
+            emit('file', {
+                'file_name': fileName,
+                'file_content': fileContent
+            })
+    except FileNotFoundError:
+        pass
