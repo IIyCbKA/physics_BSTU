@@ -16,7 +16,13 @@ def filesList(path):
 
 @socketio.on('add_file')
 def addFile(data):
-    pass
+    file = data['file']
+    path: str = data['path']  # для бд
+    fileName: str = file.filename  # тоже пойдет в бд
+    # добавить проверку уникальности имени (алгоритм)
+    file.save(os.path.join(os.path.dirname(os.getcwd()), 'files/', fileName))
+    # добавление в бд
+    # emit на обновление списка
 
 
 @socketio.on('delete_file')
