@@ -24,6 +24,8 @@ def deleteFile(fileName):
     fullPath = os.path.join(os.path.dirname(os.getcwd()), 'files/', fileName)
     try:
         os.remove(fullPath)
+        db.query(Files).filter_by(file_name=fileName).delete()
+        db.commit()
     except FileNotFoundError:
         pass
 

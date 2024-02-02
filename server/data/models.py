@@ -33,7 +33,7 @@ class Files(Base):
     __tablename__ = 'files'
 
     file_id = Column(Integer, primary_key=True, autoincrement=True)
-    file_name = Column(String, nullable=False)
+    file_name = Column(String, nullable=False, unique=True)
     path = Column(String, nullable=False)
 
 
