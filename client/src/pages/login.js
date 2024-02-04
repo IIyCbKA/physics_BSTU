@@ -1,14 +1,14 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Header from "../Components/Header";
+import Header from "../components/header";
 import {Helmet} from 'react-helmet';
 import React, {useState} from 'react';
 import {Form, Button, InputGroup, FormControl} from 'react-bootstrap';
-import "../styles/App.css"
+import "../styles/style.css"
 import {motion} from "framer-motion";
 import {styles} from "../styles/style";
-import eyeClose from '../Images/eyeClose.png'
-import eyeOpen from '../Images/eyeOpen.png'
-import {socket} from '../socketClient'
+import eyeClose from '../images/eyeClose.png'
+import eyeOpen from '../images/eyeOpen.png'
+import {socket} from '../socket_client'
 
 function Login() {
     const [showPassword, setShowPassword] = useState(false);

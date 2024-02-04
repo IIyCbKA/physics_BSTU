@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import {Container, Nav, Navbar} from "react-bootstrap";
-import logo from '../Images/logo.png';
-import profileIcon from '../Images/profileIconDark.png';
-import testsIcon from '../Images/iconTest.png';
-import '../styles/App.css';
+import logo from '../images/logo.png';
+import profileIcon from '../images/profileIconDark.png';
+import testsIcon from '../images/iconTest.png';
+import '../styles/style.css';
 import {styles} from "../styles/style";
-import MenuOffcanvas from "../Components/Menu";
+import MenuOffcanvas from "../components/menu";
 
 function Header() {
     const [offcanvasShow, setOffcanvasShow] = useState(false);

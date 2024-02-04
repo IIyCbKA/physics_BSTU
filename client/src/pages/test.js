@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from "../Components/Header";
+import Header from "../components/header";
 import {Helmet} from 'react-helmet';
 
 function Test() {

@@ -1,8 +1,8 @@
 import {Nav} from "react-bootstrap";
-import testsIcon from "../../Images/iconTest.png";
+import testsIcon from "../../images/iconTest.png";
 import {motion} from "framer-motion";
 import React from "react";
-import profileIcon from "../../Images/profileIconDark.png";
+import profileIcon from "../../images/profileIconDark.png";
 
 export function TestsElement({isHidden}) {
     return (

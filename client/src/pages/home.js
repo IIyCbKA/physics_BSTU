@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Header from "../Components/Header";
+import Header from "../components/header";
 import {Helmet} from 'react-helmet';
 
 function Home() {
