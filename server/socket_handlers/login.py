@@ -1,12 +1,12 @@
 from flask_socketio import emit
-from server import socketio
+from server import app, socketio
 from server.data.models import *
 from server.data.db_session import db
 from typing import Optional, Dict
 import requests
 
 
-@socketio.on('login')
+@app.route('api/login', methods=['POST'])
 def loginBstu(data) -> None:
     login_data = {
         'login': data.get('email'),

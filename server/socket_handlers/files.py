@@ -1,5 +1,5 @@
 from flask_socketio import emit
-from server import socketio
+from server import socketio, app
 from server.data.models import *
 from server.data.db_session import db
 from typing import List
@@ -7,14 +7,13 @@ import base64
 import os
 
 
-@socketio.on('files_list_update')
 def filesList(path):
     files: List = db.query(Files).filter(Files.path == path).all()
     filesName: List = [file.file_name for file in files]
     emit('files_list_response', filesName)
 
 
-@socketio.on('add_file')
+@app.route('api/add_file', methods=['POST'])
 def addFile(data):
     file = data['file']
     path: str = data['path']  # для бд
@@ -25,7 +24,7 @@ def addFile(data):
     # emit на обновление списка
 
 
-@socketio.on('delete_file')
+@app.route('api/delete_file', methods=['POST'])
 def deleteFile(fileName):
     fullPath = os.path.join(os.path.dirname(os.getcwd()), 'files/', fileName)
     try:
@@ -36,7 +35,7 @@ def deleteFile(fileName):
         pass
 
 
-@socketio.on('file_download_request')
+@app.route('api/file_download_request', methods=['GET'])
 def handleFileDownloadRequest(fileName):
     fullPath = os.path.join(os.path.dirname(os.getcwd()), 'files/', fileName)
     try:
