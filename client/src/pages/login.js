@@ -9,6 +9,7 @@ import {styles} from "../styles/style";
 import eyeClose from '../images/eyeClose.png'
 import eyeOpen from '../images/eyeOpen.png'
 import {socket} from '../socket_client'
+import {$host} from "../routes";
 
 function Login() {
     const [showPassword, setShowPassword] = useState(false);
@@ -85,11 +86,9 @@ function Login() {
         }, 500);
     });
 
-    const loginClick = (e) => {
-        e.preventDefault();
-        socket.emit('login', {
-            'email': email,
-            'password': password})
+    const loginClick = async (event) => {
+        event.preventDefault();
+        await $host.post('/api/login', {email, password})
     };
 
     return (
