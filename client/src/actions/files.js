@@ -1,24 +1,19 @@
 import {$host} from "../routes";
 
-const FormData = require('form-data')
+const SERVER = 'http://localhost:5000'
 
-export function uploadFile(file, dir_path) {
-    const reader = new FileReader()
-    reader.onload = async (event) => {
-        const fileData = event.target.result
-        try {
-            await $host.post('/api/add_file', {
-                file: fileData,
-                path: dir_path,
-                filename: file.name
-            });
-        } catch (error) {
-            console.log(error);
-        }
+export const uploadFile = async (file, dir_path) => {
+    try{
+        const formData = new FormData()
+        formData.append('file', file)
+        formData.append('path', dir_path)
+        formData.append('filename', file.name)
+        console.log('FormData', formData)
+        const response = await fetch(SERVER + '/api/add_file', 
+            {method: 'POST', body: formData})
+        console.log(response)
     }
-    try {
-        reader.readAsArrayBuffer(file)
-    } catch(e) {
-        console.log(e);
+    catch (e){
+        console.log(e)
     }
 }

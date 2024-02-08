@@ -16,14 +16,14 @@ def filesList(path):
 
 @app.route('/api/add_file', methods=['POST'])
 def addFile():
-    data = request.json
-    file = data.get('file')
-    path: str = data.get('path')  # для бд
-    fileName: str = data.get('filename')  # тоже пойдет в бд
+    path: str = request.form.get('path')  # для бд
+    fileName: str = request.form.get('filename')  # тоже пойдет в бд
+    file = request.files['file']
     # добавить проверку уникальности имени (алгоритм)
-    file.save(os.path.join(os.path.dirname(os.getcwd()), 'files/', fileName))
+    file.save(f"files/{fileName}")  # Save the uploaded file
     # добавление в бд
     # emit на обновление списка
+    return {}, 200
 
 
 @app.route('/api/delete_file', methods=['POST'])
