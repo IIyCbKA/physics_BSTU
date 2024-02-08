@@ -1,3 +1,4 @@
+from flask import request
 from flask_socketio import emit
 from server import app, socketio
 from server.data.models import *
@@ -6,8 +7,9 @@ from typing import Optional, Dict
 import requests
 
 
-@app.route('api/login', methods=['POST'])
-def loginBstu(data) -> None:
+@app.route("/api/login", methods=["POST"])
+def loginBstu():
+    data = request.json
     login_data = {
         'login': data.get('email'),
         'password': data.get('password')
@@ -16,6 +18,8 @@ def loginBstu(data) -> None:
     response = requests.post('https://lk.bstu.ru/api/login', data=login_data)
     data: Dict = response.json()
     auth(data)
+
+    return {}, 200
 
 
 def auth(data: Dict) -> None:
@@ -32,7 +36,7 @@ def auth(data: Dict) -> None:
             if groupInDB is None:
                 addGroup(group_name)
     else:
-        emit('incorrect_data')
+        socketio.emit('incorrect_data')
 
 
 def searchStudent(id: str) -> Optional[Students]:

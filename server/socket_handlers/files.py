@@ -13,7 +13,7 @@ def filesList(path):
     emit('files_list_response', filesName)
 
 
-@app.route('api/add_file', methods=['POST'])
+@app.route('/api/add_file', methods=['POST'])
 def addFile(data):
     file = data['file']
     path: str = data['path']  # для бд
@@ -24,7 +24,7 @@ def addFile(data):
     # emit на обновление списка
 
 
-@app.route('api/delete_file', methods=['POST'])
+@app.route('/api/delete_file', methods=['POST'])
 def deleteFile(fileName):
     fullPath = os.path.join(os.path.dirname(os.getcwd()), 'files/', fileName)
     try:
@@ -35,7 +35,7 @@ def deleteFile(fileName):
         pass
 
 
-@app.route('api/file_download_request', methods=['GET'])
+@app.route('/api/file_download_request', methods=['GET'])
 def handleFileDownloadRequest(fileName):
     fullPath = os.path.join(os.path.dirname(os.getcwd()), 'files/', fileName)
     try:
