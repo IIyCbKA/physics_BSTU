@@ -14,7 +14,7 @@ function Home() {
     return (
         <div>
             <Helmet>
-                <title>Каталог тестов</title>
+                <title>Физика</title>
             </Helmet>
             <Header/>
             <input
