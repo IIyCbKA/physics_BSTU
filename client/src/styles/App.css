@@ -1,4 +1,4 @@
-.form-title{
+.form-title {
     text-align: center;
     color: #161616;
     margin-bottom: 40px;
@@ -55,12 +55,12 @@
     margin-top: 40px;
 }
 
-.nav-link-deactivation{
+.nav-link-deactivation {
     pointer-events: none;
 }
 
 
-.no-margin{
+.no-margin {
     margin: 0;
 }
 
@@ -69,7 +69,7 @@
     box-shadow: none;
 }
 
-.btn-hide-password-style{
+.btn-hide-password-style {
     outline: none;
     box-shadow: none;
 }
@@ -103,15 +103,43 @@
     display: none;
 }
 
-.disk {
-    margin-top: 20px;
+.store-style {
+    position: relative;
+    height: 100vh;
+    width: 95%;
+    margin: 20px auto;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    padding: 30px;
+    border-radius: 9px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-    &_btns {
-        display: flex;
-    }
+.style-text-file {
+    text-align: center;
+    font-size: 13px;
+}
 
-    &_creat {
-        margin-left: 10px;
-    }
+.actions-container {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    background-color: #fff;
+    padding: 8px 0;
+    margin-top: 4px;
+    list-style-type: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.button {
+    padding: 0;
+    width: 100px;
+    border: 0;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    outline: 0;
+    font-size: 20px;
 }
 

@@ -70,6 +70,11 @@ const styleNavbar = {
     minWidth: '350px'
 }
 
+const styleIcon = {
+    textAlign: 'center',
+    fontsize: '1300px',
+
+}
 
 export const styles = {
     formButtonStyle: formButtonStyle,
@@ -82,5 +87,6 @@ export const styles = {
     logotypePadding: logotypePadding,
     customToggle: customToggle,
     customOffcanvas: customOffcanvas,
-    styleNavbar: styleNavbar
+    styleNavbar: styleNavbar,
+    styleIcon: styleIcon
 };
