@@ -1,4 +1,5 @@
 from flask_socketio import emit
+from flask import request
 from server import socketio, app
 from server.data.models import *
 from server.data.db_session import db
@@ -14,10 +15,12 @@ def filesList(path):
 
 
 @app.route('/api/add_file', methods=['POST'])
-def addFile(data):
-    file = data['file']
-    path: str = data['path']  # для бд
-    fileName: str = file.filename  # тоже пойдет в бд
+def addFile():
+    data = request.json
+    file = data.get('file')
+    path: str = data.get('path')  # для бд
+    fileName: str = data.get('filename')  # тоже пойдет в бд
+    print(fileName)
     # добавить проверку уникальности имени (алгоритм)
     file.save(os.path.join(os.path.dirname(os.getcwd()), 'files/', fileName))
     # добавление в бд
