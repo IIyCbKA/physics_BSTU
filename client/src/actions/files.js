@@ -1,6 +1,4 @@
-import {$host} from "../routes";
-
-const SERVER = 'http://localhost:5000'
+import { SERVER } from "../routes"
 
 export const uploadFile = async (file, dir_path) => {
     try{

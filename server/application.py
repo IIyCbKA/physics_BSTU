@@ -1,10 +1,11 @@
+import os;
 from flask import Flask
 from flask_cors import CORS
 from flask_socketio import SocketIO
+from dotenv import load_dotenv
 
-SECRET_KEY = 'v7}efa{9I$FjOB9*D&6iiD52ugi;o:W'
-
+load_dotenv()
 app = Flask(__name__)
-CORS(app)
+CORS(app, cors_allowed_origins=os.getenv('CLIENT_URL'))
 app.config.from_object(__name__)
-socketio = SocketIO(app, cors_allowed_origins="http://localhost:3000")
+socketio = SocketIO(app, cors_allowed_origins=os.getenv('CLIENT_URL'))
