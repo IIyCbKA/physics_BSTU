@@ -1,7 +1,7 @@
 from flask_socketio import emit
 from flask import request
-from server import socketio, app
-from server.constants import *
+from server import app
+from server.settings.constants import *
 from server.data.models import *
 from server.data.db_session import db
 from typing import List
