@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Header from "../components/header";
 import {Helmet} from 'react-helmet';
 import {uploadFile} from '../actions/files'
-
+import Filelist from "../components/Filelist";
 
 function Home() {
     function fileUploadHandler(event) {
@@ -24,6 +24,7 @@ function Home() {
                 id="disk_upload_input"
                 className="disk_upload_input">
             </input>
+            <Filelist/>
         </div>
     );
 }

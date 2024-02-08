@@ -1,10 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import {socket} from "../API/user";
-import {defaultStyles} from 'react-file-icon';  // импортируем стили для иконок по умолчанию
-import {FileIcon} from 'react-file-icon';  // импортируем компонент иконки для файлов
-import iconDownload from "../Images/iconDownload.png";
-import {styles} from "../styles/style";
-import "../styles/App.css"
+import {socket} from "../socket_client";
+import {defaultStyles, FileIcon} from 'react-file-icon';
+import iconDownload from "../images/upload.png";
+import "../styles/style.css"
+
 
 const FileUploader = () => {
     const SentFile = (name, file) => {
@@ -16,10 +15,6 @@ const FileUploader = () => {
 
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [fileUrls, setFileUrls] = useState([]);
-    const [dropdownState, setDropdownState] = useState({open: false});
-
-    const handleDropdownClick = () =>
-        setDropdownState({open: !dropdownState.open});
 
     const handleFileChange = (e) => {
         const files = Array.from(e.target.files);
@@ -58,38 +53,29 @@ const FileUploader = () => {
         <div className="store-style">
             <span><h4>Файлы</h4></span>
             <div className="actions-container">
-                <button
-                    type="button"
-                    className="button"
-                    onClick={handleDropdownClick}
-                >
-                    Действия
-                </button>
-                {dropdownState.open && (
-                    <div className="dropdown">
-                        <input
-                            type="file"
-                            id="fileInput"
-                            style={{display: "none"}}
-                            onChange={handleFileChange}
-                            multiple
+                <div className="dropdown">
+                    <input
+                        type="file"
+                        id="fileInput"
+                        style={{display: "none"}}
+                        onChange={handleFileChange}
+                        multiple
+                    />
+                    <label
+                        htmlFor="fileInput"
+                        style={{
+                            padding: "10px 15px",
+                            cursor: "pointer",
+                            borderRadius: "5px",
+                        }}>
+                        <img
+                            src={iconDownload}
+                            alt="iconDownload"
+                            height="50px"
+                            width="75px"
                         />
-                        <label
-                            htmlFor="fileInput"
-                            style={{
-                                padding: "10px 15px",
-                                cursor: "pointer",
-                                borderRadius: "5px",
-                            }}>
-                            <img
-                                src={iconDownload}
-                                alt="iconDownload"
-                                height="50px"
-                                width="50px"
-                            />
-                        </label>
-                    </div>
-                )}
+                    </label>
+                </div>
             </div>
             <form onSubmit={handleFormSubmit}>
                 <div style={{display: "flex", flexWrap: "wrap", marginTop: "40px"}}>
