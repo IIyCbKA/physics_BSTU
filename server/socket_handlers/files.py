@@ -20,7 +20,6 @@ def addFile():
     file = data.get('file')
     path: str = data.get('path')  # для бд
     fileName: str = data.get('filename')  # тоже пойдет в бд
-    print(fileName)
     # добавить проверку уникальности имени (алгоритм)
     file.save(os.path.join(os.path.dirname(os.getcwd()), 'files/', fileName))
     # добавление в бд
