@@ -40,11 +40,11 @@ function Home() {
             <Header/>
             <div {...getRootProps()}>
                 <input {...getInputProps()} />
-                {isDragActive ?
+                <div className='storage-main'>
+                </div>
+                {isDragActive &&
                     <div className='drop-area'>
-                        Выгрузить файл
-                    </div> :
-                    <div className='storage-main'>
+                        Загрузить файлы в хранилище
                     </div>
                 }
             </div>
