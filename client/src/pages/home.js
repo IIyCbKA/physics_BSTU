@@ -30,6 +30,7 @@ function Home() {
         event.preventDefault()
         event.stopPropagation()
         let files = [...event.dataTransfer.files]
+        console.log(files)
         files.forEach(file => uploadFile(file, '/'))
         setDragEnter(false)
     }
