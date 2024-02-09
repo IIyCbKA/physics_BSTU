@@ -166,3 +166,10 @@
     align-items: center;
     font-size: 40px;
 }
+
+.storage-main {
+    width: calc(100vw - 40px);
+    height: calc(100vh - 46px - 40px);
+    margin: 20px;
+    background-color: #EBF0FF;
+}

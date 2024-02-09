@@ -15,24 +15,23 @@ function Home() {
 
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
-    let cnt = 0
-    socket.on('files_list_response', (data) => {
-        cnt+=1
-        console.log(cnt)
-        console.log(data)
-    });
+    //let cnt = 0
+    //socket.on('files_list_response', (data) => {
+    //    cnt+=1
+    //    console.log(cnt)
+    //    console.log(data)
+    //});
 
-    const getFilesName = async () => {
-        try{
-            await $host.get('/api/get_files', {params: {path: ''}})
-        }
-        catch (e){
-            console.log(e)
-        }
-    }
+    //const getFilesName = async () => {
+    //    try{
+    //        await $host.get('/api/get_files', {params: {path: ''}})
+    //    }
+    //    catch (e){
+    //        console.log(e)
+    //    }
+    //}
 
-    useEffect(() => {getFilesName()}, [])
-
+    //useEffect(() => {getFilesName()}, [])
     return (
         <div>
             <Helmet>
@@ -42,8 +41,11 @@ function Home() {
             <div {...getRootProps()}>
                 <input {...getInputProps()} />
                 {isDragActive ?
-                    <p>Drop the files here ...</p> :
-                    <p>Drag 'n' drop some files here, or click to select files</p>
+                    <div className='drop-area'>
+                        Выгрузить файл
+                    </div> :
+                    <div className='storage-main'>
+                    </div>
                 }
             </div>
         </div>
