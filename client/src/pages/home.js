@@ -2,72 +2,31 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Header from "../components/header";
 import {Helmet} from 'react-helmet';
 import {uploadFile} from '../actions/files'
-import {useState} from "react";
+import {useCallback} from "react";
 import '../styles/style.css'
+import {useDropzone} from 'react-dropzone'
 
 function Home() {
-    const [dragEnter, setDragEnter] = useState(false);
+    const onDrop = useCallback(acceptedFiles => {
+        acceptedFiles.forEach(file => uploadFile(file, '/'));
+    }, []);
 
-    function fileUploadHandler(event) {
-        const files = [...event.target.files]
-        files.forEach(file => uploadFile(file, '/'))
-
-    }
-
-    function dragEnterHandler(event){
-        event.preventDefault()
-        event.stopPropagation()
-        setDragEnter(true)
-    }
-
-    function dragLeaveHandler(event){
-        event.preventDefault()
-        event.stopPropagation()
-        setDragEnter(false)
-    }
-
-    function dropHandler(event) {
-        event.preventDefault()
-        event.stopPropagation()
-        let files = [...event.dataTransfer.files]
-        console.log(files)
-        files.forEach(file => uploadFile(file, '/'))
-        setDragEnter(false)
-    }
+    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
     return (
-        !dragEnter ?
-            <div
-                onDragEnter={dragEnterHandler}
-                onDragLeave={dragLeaveHandler}
-                onDragOver={dragEnterHandler}
-            >
-                <Helmet>
-                    <title>Физика</title>
-                </Helmet>
-                <Header/>
-                <input
-                    onInput={fileUploadHandler}
-                    multiple={true}
-                    type="file"
-                    id="disk_upload_input"
-                    className="disk_upload_input">
-                </input>
+        <div>
+            <Helmet>
+                <title>Физика</title>
+            </Helmet>
+            <Header/>
+            <div {...getRootProps()}>
+                <input {...getInputProps()} />
+                {isDragActive ?
+                    <p>Drop the files here ...</p> :
+                    <p>Drag 'n' drop some files here, or click to select files</p>
+                }
             </div>
-        :
-            <div>
-                <Header/>
-                <div
-                    className='drop-area'
-                    onDragEnter={dragEnterHandler}
-                    onDragLeave={dragLeaveHandler}
-                    onDragOver={dragEnterHandler}
-                    onDrop={dropHandler}
-                >
-                    Перетащите файлы сюда
-                </div>
-            </div>
-
+        </div>
     );
 }
 
