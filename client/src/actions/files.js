@@ -6,7 +6,6 @@ export const uploadFile = async (file, dir_path) => {
         formData.append('file', file)
         formData.append('path', dir_path)
         formData.append('filename', file.name)
-        console.log('FormData', formData)
         const response = await fetch(SERVER + '/api/add_file', 
             {method: 'POST', body: formData})
         console.log(response)

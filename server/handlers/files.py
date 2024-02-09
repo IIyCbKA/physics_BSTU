@@ -1,18 +1,20 @@
 from flask_socketio import emit
-from flask import request
-from server import app
+from flask import request, jsonify
+from server import app, socketio
 from server.settings.constants import *
 from server.data.models import *
 from server.data.db_session import db
-from typing import List
 import base64
 import os
 
-
-def filesList(path):
-    files: List = db.query(Files).filter(Files.path == path).all()
-    filesName: List = [file.file_name for file in files]
-    emit('files_list_response', filesName)
+@app.route('/api/get_files', methods=['GET'])
+def filesList():
+    path = request.args.get('path')
+    #files: List = db.query(Files).filter(Files.path == path).all()
+    #filesName: List = [file.file_name for file in files]
+    filesName = os.listdir(os.path.join('files', path))
+    socketio.emit('files_list_response', filesName)
+    return {}, 200
 
 
 @app.route('/api/add_file', methods=['POST'])
@@ -21,7 +23,12 @@ def addFile():
     fileName: str = request.form.get('filename')  # тоже пойдет в бд
     file = request.files['file']
     # добавить проверку уникальности имени (алгоритм)
-    file.save(os.path.join(PATH_FILES_DIRECTORY, fileName))
+    dir_path = os.path.join('files', path)
+    save_path = os.path.join(dir_path, fileName)
+    file.save(save_path)
+    # filesName = list(iter(os.listdir(dir_path)))
+    # filesName.append(fileName)
+    # socketio.emit('files_list_response', filesName)
     # добавление в бд
     # emit на обновление списка
     return {}, 200
