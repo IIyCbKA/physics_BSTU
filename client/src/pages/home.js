@@ -44,7 +44,9 @@ function Home() {
                 </div>
                 {isDragActive &&
                     <div className='drop-area'>
-                        Загрузить файлы в хранилище
+                        <div className='drop-frame'>
+                            Загрузить файлы в хранилище
+                        </div>
                     </div>
                 }
             </div>
