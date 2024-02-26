@@ -3,6 +3,7 @@ from server.settings.config import *
 from server.data.models import *
 from server.data.db_session import db
 from fastapi.responses import FileResponse
+from starlette.websockets import WebSocket
 from typing import Dict
 import os
 
