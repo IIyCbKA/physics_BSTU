@@ -1,36 +1,37 @@
-from flask_socketio import emit
-from flask import request, jsonify, send_file
-from server import app, socketio
+from server import server
 from server.settings.config import *
 from server.data.models import *
 from server.data.db_session import db
-import base64
+from fastapi.responses import FileResponse
+from typing import Dict
 import os
 
 
 # Отправляет на сервер новый список файлов
-def sendFilesNameList(path):
+async def sendFilesNameList(path):
     filesName = os.listdir(os.path.join('files', path))
-    socketio.emit('files_list_response', filesName)
+    server.emit('files_list_response', filesName)
+
 
 # Роут на получение списка файлов
 # Аргумент path - путь к директории папки
-@app.route('/api/get_files', methods=['GET'])
-def filesList():
-    path = request.args.get('path')
+@server.get('/api/get_files')
+async def filesList(data: Dict):
+    path = data['path']
     #files: List = db.query(Files).filter(Files.path == path).all()
     #filesName: List = [file.file_name for file in files]
     sendFilesNameList(path)
     return {}, 200
 
+
 # Роут на добавление файла
 # В параметрах filename - имя файла, path - путь к нему
 # также передаётся один файл
-@app.route('/api/add_file', methods=['POST'])
-def addFile():
-    path: str = request.form.get('path')  # для бд
-    fileName: str = request.form.get('filename')  # тоже пойдет в бд
-    file = request.files['file']
+@server.post('/api/add_file')
+async def addFile(data: Dict):
+    path: str = data['path']  # для бд
+    fileName: str = data['filename']  # тоже пойдет в бд
+    file = data['file']
     # добавить проверку уникальности имени (алгоритм)
     dir_path = os.path.join(PATH_FILES_DIRECTORY, path)
     save_path = os.path.join(dir_path, fileName)
@@ -41,13 +42,13 @@ def addFile():
     # emit на обновление списка
     return {}, 200
 
+
 # Роут для удаления файла
 # В параметрах filename - имя файла, path - путь к файлу
-@app.route('/api/delete_file', methods=['POST'])
-def deleteFile():
-    data = request.json
-    fileName: str = data.get('filename')
-    path: str = data.get('path')
+@server.post('/api/delete_file')
+async def deleteFile(data: Dict):
+    fileName: str = data['filename']
+    path: str = data['path']
 
     os.remove(os.path.join(PATH_FILES_DIRECTORY, fileName))
 
@@ -66,12 +67,12 @@ def deleteFile():
 
 # Роут для загрузки файла
 # В параметрах filename - имя файла и path - путь км нему
-@app.route('/api/file_download_request', methods=['GET'])
-def handleFileDownloadRequest():
-    fileName = request.args.get('filename')
-    path: str = request.args.get('path')
-    return send_file(os.path.join(PATH_FILES_DIRECTORY, fileName),
-                      as_attachment=True, download_name=fileName)
+@server.get('/api/file_download_request')
+async def handleFileDownloadRequest(data: Dict):
+    fileName: str = data['filename']
+    path: str = data['path']
+    return FileResponse(os.path.join(PATH_FILES_DIRECTORY, fileName),
+                        filename=fileName)
     # fullPath = os.path.join(PATH_FILES_DIRECTORY, fileName)
     # try:
     #     with open(fullPath, 'rb') as file:

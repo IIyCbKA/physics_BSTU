@@ -1,15 +1,12 @@
-from flask import request
-from flask_socketio import emit
-from server import app, socketio
+from server import server
 from server.data.models import *
 from server.data.db_session import db
 from typing import Optional, Dict
 import requests
 
 
-@app.route("/api/login", methods=["POST"])
-def loginBstu():
-    data = request.json
+@server.post("/api/login")
+async def loginBstu(data: Dict):
     login_data = {
         'login': data.get('email'),
         'password': data.get('password')
@@ -36,7 +33,7 @@ def auth(data: Dict) -> None:
             if groupInDB is None:
                 addGroup(group_name)
     else:
-        socketio.emit('incorrect_data')
+        server.emit('incorrect_data')
 
 
 def searchStudent(id: str) -> Optional[Students]:
