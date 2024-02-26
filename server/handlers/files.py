@@ -1,11 +1,12 @@
 from flask_socketio import emit
 from flask import request, jsonify, send_file
 from server import app, socketio
-from server.settings.constants import *
+from server.settings.config import *
 from server.data.models import *
 from server.data.db_session import db
 import base64
 import os
+
 
 # Отправляет на сервер новый список файлов
 def sendFilesNameList(path):
