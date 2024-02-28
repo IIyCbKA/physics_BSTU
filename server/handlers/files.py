@@ -1,4 +1,4 @@
-from server import server
+from server import fastApiServer
 from server.settings.config import *
 from server.data.models import *
 from server.data.db_session import db
@@ -11,12 +11,12 @@ import os
 # Отправляет на сервер новый список файлов
 async def sendFilesNameList(path):
     filesName = os.listdir(os.path.join('files', path))
-    server.emit('files_list_response', filesName)
+    fastApiServer.emit('files_list_response', filesName)
 
 
 # Роут на получение списка файлов
 # Аргумент path - путь к директории папки
-@server.get('/api/get_files')
+@fastApiServer.get('/api/get_files')
 async def filesList(data: Dict):
     path = data['path']
     #files: List = db.query(Files).filter(Files.path == path).all()
@@ -28,7 +28,7 @@ async def filesList(data: Dict):
 # Роут на добавление файла
 # В параметрах filename - имя файла, path - путь к нему
 # также передаётся один файл
-@server.post('/api/add_file')
+@fastApiServer.post('/api/add_file')
 async def addFile(data: Dict):
     path: str = data['path']  # для бд
     fileName: str = data['filename']  # тоже пойдет в бд
@@ -46,7 +46,7 @@ async def addFile(data: Dict):
 
 # Роут для удаления файла
 # В параметрах filename - имя файла, path - путь к файлу
-@server.post('/api/delete_file')
+@fastApiServer.post('/api/delete_file')
 async def deleteFile(data: Dict):
     fileName: str = data['filename']
     path: str = data['path']
@@ -68,7 +68,7 @@ async def deleteFile(data: Dict):
 
 # Роут для загрузки файла
 # В параметрах filename - имя файла и path - путь км нему
-@server.get('/api/file_download_request')
+@fastApiServer.get('/api/file_download_request')
 async def handleFileDownloadRequest(data: Dict):
     fileName: str = data['filename']
     path: str = data['path']

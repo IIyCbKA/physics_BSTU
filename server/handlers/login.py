@@ -1,4 +1,4 @@
-from server import server
+from server import fastApiServer
 from server.data.models import *
 from server.data.db_session import db
 from typing import Optional, Dict
@@ -6,7 +6,7 @@ from starlette.websockets import WebSocket
 import requests
 
 
-@server.post("/api/login")
+@fastApiServer.post("/api/login")
 async def loginBstu(data: Dict):
     login_data = {
         'login': data.get('email'),
@@ -34,7 +34,7 @@ def auth(data: Dict) -> None:
             if groupInDB is None:
                 addGroup(group_name)
     else:
-        server.emit('incorrect_data')
+        fastApiServer.emit('incorrect_data')
 
 
 def searchStudent(id: str) -> Optional[Students]:
