@@ -1,6 +1,6 @@
-from server import fastApiServer
-from server.data.models import *
-from server.data.db_session import db
+from application import fastApiServer
+from data.models import *
+from data.db_session import db
 from typing import Optional, Dict
 from starlette.websockets import WebSocket
 import requests

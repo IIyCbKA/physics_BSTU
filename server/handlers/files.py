@@ -1,7 +1,7 @@
-from server import fastApiServer
-from server.settings.config import *
-from server.data.models import *
-from server.data.db_session import db
+from application import fastApiServer
+from settings.config import *
+from data.models import *
+from data.db_session import db
 from fastapi.responses import FileResponse
 from starlette.websockets import WebSocket
 from typing import Dict
@@ -21,7 +21,7 @@ async def filesList(data: Dict):
     path = data['path']
     #files: List = db.query(Files).filter(Files.path == path).all()
     #filesName: List = [file.file_name for file in files]
-    sendFilesNameList(path)
+    await sendFilesNameList(path)
     return {}, 200
 
 
@@ -38,7 +38,7 @@ async def addFile(data: Dict):
     save_path = os.path.join(dir_path, fileName)
     file.save(save_path)
 
-    sendFilesNameList(path)
+    await sendFilesNameList(path)
     # добавление в бд
     # emit на обновление списка
     return {}, 200
@@ -53,7 +53,7 @@ async def deleteFile(data: Dict):
 
     os.remove(os.path.join(PATH_FILES_DIRECTORY, fileName))
 
-    sendFilesNameList(path)
+    await sendFilesNameList(path)
 
     return {}, 200
 
