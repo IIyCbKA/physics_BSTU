@@ -20,7 +20,10 @@ async def websocket_processing(websocket: WebSocket):
         while True:
             await websocket.receive_text()
     except WebSocketDisconnect:
-        del clients[client_ip]
+        if client_ip in clients.keys():
+            del clients[client_ip]
+    except Exception as e:
+        print(e)
 
 
 # Отправляет на клиент новый список файлов
