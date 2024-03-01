@@ -12,3 +12,8 @@ fastApiServer.add_middleware(
     allow_methods=["*"],  # Разрешаем все HTTP методы
     allow_headers=["*"],  # Разрешаем все заголовки
 )
+
+@fastApiServer.get('/api/temp/')
+async def filesList():
+
+    return {'asd': 45}, 200

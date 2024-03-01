@@ -1,8 +1,8 @@
 import { SERVER, $host } from "../routes"
 
-export const getFilesName = async () => {
+export const getFilesName = async (path) => {
     try{
-        await $host.get('/api/get_files', {params: {path: ''}})
+        await $host.get('/api/get_files' , {params: {path}})
     }
     catch (e){
         console.log(e)
@@ -14,9 +14,10 @@ export const uploadFile = async (file, dir_path) => {
         const formData = new FormData()
         formData.append('file', file)
         formData.append('path', dir_path)
-        formData.append('filename', file.name)
         const response = await fetch(SERVER + '/api/add_file', 
-            {method: 'POST', body: formData})
+            {
+                method: 'POST', 
+                body: formData})
         console.log(response)
     }
     catch (e){

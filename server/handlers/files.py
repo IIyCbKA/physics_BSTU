@@ -3,42 +3,64 @@ from settings.config import *
 from data.models import *
 from data.db_session import db
 from fastapi.responses import FileResponse
-from starlette.websockets import WebSocket
-from typing import Dict
+from fastapi import WebSocket, WebSocketDisconnect, Request, File, UploadFile, Form
+from typing import Dict, Annotated
 import os
 
 
-# Отправляет на сервер новый список файлов
-async def sendFilesNameList(path):
-    filesName = os.listdir(os.path.join('files', path))
-    fastApiServer.emit('files_list_response', filesName)
+clients: Dict = {}
+
+
+@fastApiServer.websocket("/ws")
+async def websocket_processing(websocket: WebSocket):
+    await websocket.accept()
+    client_ip = websocket.client.host
+    clients[client_ip] = websocket
+    try:
+        while True:
+            await websocket.receive_text()
+    except WebSocketDisconnect:
+        del clients[client_ip]
+
+
+# Отправляет на клиент новый список файлов
+async def sendFilesNameList(websocket: WebSocket, path: str):
+    filesName = os.listdir(PATH_FILES_DIRECTORY)
+    await websocket.send_json(filesName)
+
+
+# Отправляет на клиент новый список файлов
+async def sendFilesNameListToAll(path: str):
+    filesName = os.listdir(PATH_FILES_DIRECTORY)
+    for websocket in clients.values():
+        await websocket.send_json(filesName)
 
 
 # Роут на получение списка файлов
 # Аргумент path - путь к директории папки
-@fastApiServer.get('/api/get_files')
-async def filesList(data: Dict):
-    path = data['path']
-    #files: List = db.query(Files).filter(Files.path == path).all()
-    #filesName: List = [file.file_name for file in files]
-    await sendFilesNameList(path)
-    return {}, 200
+@fastApiServer.get('/api/get_files/')
+async def filesList(path: str, request: Request):
+    client_ip = request.client.host
+    if client_ip in clients:
+        await sendFilesNameList(clients[client_ip], path)
+        return {}, 200
+    else:
+        return {"error": "Client not connected"}, 400
 
 
 # Роут на добавление файла
 # В параметрах filename - имя файла, path - путь к нему
 # также передаётся один файл
 @fastApiServer.post('/api/add_file')
-async def addFile(data: Dict):
-    path: str = data['path']  # для бд
-    fileName: str = data['filename']  # тоже пойдет в бд
-    file = data['file']
-    # добавить проверку уникальности имени (алгоритм)
-    dir_path = os.path.join(PATH_FILES_DIRECTORY, path)
-    save_path = os.path.join(dir_path, fileName)
-    file.save(save_path)
+async def addFile(file: Annotated[UploadFile, File()],
+                  path: Annotated[str, Form()]):
+    filename: str = file.filename  # для бд
+    # # добавить проверку уникальности имени (алгоритм)
+    save_path = os.path.join(PATH_FILES_DIRECTORY, filename)
+    with open(save_path, "wb") as f:
+        f.write(await file.read())
 
-    await sendFilesNameList(path)
+    await sendFilesNameListToAll(path)
     # добавление в бд
     # emit на обновление списка
     return {}, 200
@@ -53,7 +75,7 @@ async def deleteFile(data: Dict):
 
     os.remove(os.path.join(PATH_FILES_DIRECTORY, fileName))
 
-    await sendFilesNameList(path)
+    await sendFilesNameListToAll(path)
 
     return {}, 200
 
@@ -69,11 +91,11 @@ async def deleteFile(data: Dict):
 # Роут для загрузки файла
 # В параметрах filename - имя файла и path - путь км нему
 @fastApiServer.get('/api/file_download_request')
-async def handleFileDownloadRequest(data: Dict):
-    fileName: str = data['filename']
-    path: str = data['path']
-    return FileResponse(os.path.join(PATH_FILES_DIRECTORY, fileName),
-                        filename=fileName)
+async def handleFileDownloadRequest(filename: str, path: str):
+    print(filename)
+    fpath = os.path.join(PATH_FILES_DIRECTORY, filename)
+    print(fpath)
+    return FileResponse(fpath, filename=filename)
     # fullPath = os.path.join(PATH_FILES_DIRECTORY, fileName)
     # try:
     #     with open(fullPath, 'rb') as file:

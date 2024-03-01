@@ -1,6 +1,5 @@
-import io from 'socket.io-client';
-import { SERVER } from './routes';
+import { SERVER_ADR } from './routes';
 
-const socket = io(SERVER);
+const createSocket = () => new WebSocket('ws://' + SERVER_ADR + '/ws');
 
-export {socket}
+export {createSocket}

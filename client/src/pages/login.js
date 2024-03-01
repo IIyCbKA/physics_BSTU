@@ -8,7 +8,7 @@ import {motion} from "framer-motion";
 import {styles} from "../styles/style";
 import eyeClose from '../images/eyeClose.png'
 import eyeOpen from '../images/eyeOpen.png'
-import {socket} from '../socket_client'
+import {createSocket} from '../socket_client'
 import {$host} from "../routes";
 
 function Login() {
@@ -20,6 +20,8 @@ function Login() {
     const [btnIsFocused, setBtnIsFocused] = useState(false);
     const [isButtonShaking, setButtonShaking] = useState(false);
     const isButtonDisabled = email === '' || password === '';
+
+    const socket = createSocket()
 
     const passwordOnFocus = () => {
         setPasswordIsFocused(true);

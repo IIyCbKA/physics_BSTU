@@ -5,11 +5,11 @@ import {uploadFile, downloadFile, deleteFile, getFilesName} from '../actions/fil
 import {useCallback, useEffect, useState} from "react";
 import '../styles/style.css'
 import {useDropzone} from 'react-dropzone'
-import { socket } from '../socket_client';
+import { createSocket } from '../socket_client';
 
 function Home() {
     const onDrop = useCallback(acceptedFiles => {
-        acceptedFiles.forEach(file => uploadFile(file, ''));
+        acceptedFiles.forEach(file => uploadFile(file, '/'));
     }, []);
 
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
@@ -19,25 +19,33 @@ function Home() {
     // Список имён вложенных директорий 
     const [directoriesPath, setDirectoriesPath] = useState([])
 
-    socket.on('files_list_response', (data) => {
-        setFilesName(data)
-    });
+    const socket = createSocket()
+
+    socket.onmessage = (event) => {
+        setFilesName(JSON.parse(event.data))
+    }
 
     // Получает список файлов при загрузке страницы
-    useEffect(() => {getFilesName()}, [])
+    useEffect(() => {
+        //socket.send('')
+        getFilesName('/')
+    }, [])
 
     // Выводит в консоль список файлов при его изменении
     // Только для тестирования
-    useEffect(() => {console.log(filesName)}, [filesName]);
+    useEffect(() => {
+        console.log(filesName)
+    }, [filesName]);
 
     // Загружает первый в списке файл с сервера
     const downloadClick = () => {
-        downloadFile(filesName[0], '')
+        console.log(filesName[0])
+        downloadFile(filesName[0], '/')
     }
 
     // Удаляет первый в списке файл с сервера
     const deleteFileClick = () => {
-        deleteFile(filesName[0], '')
+        deleteFile(filesName[0], '/')
     }
 
     return (
