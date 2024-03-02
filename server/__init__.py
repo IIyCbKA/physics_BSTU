@@ -1,4 +1,4 @@
-import settings.config
-import application
-import handlers.login
-import handlers.files
+import server.settings.config
+import server.application
+import server.handlers.login
+import server.handlers.files

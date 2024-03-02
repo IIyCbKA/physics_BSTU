@@ -1,7 +1,7 @@
-from application import fastApiServer
-from settings.config import *
-from data.models import *
-from data.db_session import db
+from server.application import fastApiServer
+from server.settings.config import *
+from server.data.models import *
+from server.data.db_session import db
 from fastapi.responses import FileResponse
 from fastapi import WebSocket, WebSocketDisconnect, Request, File, UploadFile, Form
 from typing import Dict, Annotated

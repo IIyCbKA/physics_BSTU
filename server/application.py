@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from settings.config import CLIENT_URL
+from server.settings.config import CLIENT_URL
 
 fastApiServer = FastAPI()
 
@@ -12,6 +12,7 @@ fastApiServer.add_middleware(
     allow_methods=["*"],  # Разрешаем все HTTP методы
     allow_headers=["*"],  # Разрешаем все заголовки
 )
+
 
 @fastApiServer.get('/api/temp/')
 async def filesList():
