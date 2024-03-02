@@ -15,7 +15,12 @@ clients: Dict = {}
 async def websocket_processing(websocket: WebSocket):
     await websocket.accept()
     client_ip = websocket.client.host
+
+    if client_ip not in clients.keys():
+        await sendFilesNameList(websocket, '/')
+
     clients[client_ip] = websocket
+
     try:
         while True:
             await websocket.receive_text()
