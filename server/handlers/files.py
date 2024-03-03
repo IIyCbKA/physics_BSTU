@@ -2,6 +2,7 @@ from server.application import fastApiServer
 from server.settings.config import *
 from server.data.models import *
 from server.data.db_session import db
+from server.handlers.schemas import *
 from fastapi.responses import FileResponse
 from fastapi import WebSocket, WebSocketDisconnect, Request, File, UploadFile, Form
 from typing import Dict, Annotated
@@ -47,11 +48,10 @@ async def sendFilesNameListToAll(path: str):
 # Роут на получение списка файлов
 # Аргумент path - путь к директории папки
 @fastApiServer.get('/api/get_files/')
-async def filesList(path: str, request: Request):
+async def filesList(data: GetFilesData, request: Request):
     client_ip = request.client.host
     if client_ip in clients:
-        await sendFilesNameList(clients[client_ip], path)
-        return {}, 200
+        await sendFilesNameList(clients[client_ip], data.path)
     else:
         return {"error": "Client not connected"}, 400
 
