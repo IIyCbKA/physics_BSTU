@@ -3,14 +3,15 @@ from server.data.models import *
 from server.data.db_session import db
 from typing import Optional, Dict
 from starlette.websockets import WebSocket
+from server.handlers.schemas import *
 import requests
 
 
 @fastApiServer.post("/api/login")
-async def loginBstu(data: Dict):
+async def loginBstu(data: LoginData):
     login_data = {
-        'login': data.get('email'),
-        'password': data.get('password')
+        'login': data.email,
+        'password': data.password
     }
 
     response = requests.post('https://lk.bstu.ru/api/login', data=login_data)
