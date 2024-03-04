@@ -25,3 +25,11 @@ class DeleteFileData(BaseModel):
 class FileDownloadRequestData(BaseModel):
     filename: str
     path: str
+
+
+class UserModel(BaseModel):
+    user_id: int
+    surname: str
+    name: str
+    patronymic: str
+    status: str

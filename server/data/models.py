@@ -30,7 +30,7 @@ class Students(Base):
 
     student_id: int = Column(Integer, ForeignKey('users.user_id'),
                              primary_key=True, unique=True, nullable=False)
-    group_id: str = Column(Integer, ForeignKey('groups.group_id'),
+    group_id: int = Column(Integer, ForeignKey('groups.group_id'),
                            nullable=False)
 
 
