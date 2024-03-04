@@ -4,8 +4,8 @@ from server.data.models import *
 from server.data.db_session import db
 from server.handlers.schemas import *
 from fastapi.responses import FileResponse
-from fastapi import WebSocket, WebSocketDisconnect, Request, File, UploadFile, Form
-from typing import Dict, Annotated
+from fastapi import WebSocket, WebSocketDisconnect, Request
+from typing import Dict
 import os
 
 
@@ -60,15 +60,14 @@ async def filesList(data: GetFilesData, request: Request):
 # В параметрах filename - имя файла, path - путь к нему
 # также передаётся один файл
 @fastApiServer.post('/api/add_file')
-async def addFile(file: Annotated[UploadFile, File()],
-                  path: Annotated[str, Form()]):
-    filename: str = file.filename  # для бд
+async def addFile(data: AddFileData):
+    filename: str = data.file.filename  # для бд
     # # добавить проверку уникальности имени (алгоритм)
     save_path = os.path.join(PATH_FILES_DIRECTORY, filename)
     with open(save_path, "wb") as f:
-        f.write(await file.read())
+        f.write(await data.file.read())
 
-    await sendFilesNameListToAll(path)
+    await sendFilesNameListToAll(data.path)
     # добавление в бд
     # emit на обновление списка
     return {}, 200
@@ -77,13 +76,10 @@ async def addFile(file: Annotated[UploadFile, File()],
 # Роут для удаления файла
 # В параметрах filename - имя файла, path - путь к файлу
 @fastApiServer.post('/api/delete_file')
-async def deleteFile(data: Dict):
-    fileName: str = data['filename']
-    path: str = data['path']
+async def deleteFile(data: DeleteFileData):
+    os.remove(os.path.join(PATH_FILES_DIRECTORY, data.fileName))
 
-    os.remove(os.path.join(PATH_FILES_DIRECTORY, fileName))
-
-    await sendFilesNameListToAll(path)
+    await sendFilesNameListToAll(data.path)
 
     return {}, 200
 
@@ -97,13 +93,13 @@ async def deleteFile(data: Dict):
 
 
 # Роут для загрузки файла
-# В параметрах filename - имя файла и path - путь км нему
+# В параметрах filename - имя файла и path - путь к нему
 @fastApiServer.get('/api/file_download_request')
-async def handleFileDownloadRequest(filename: str, path: str):
-    print(filename)
-    fpath = os.path.join(PATH_FILES_DIRECTORY, filename)
+async def handleFileDownloadRequest(data: FileDownloadRequestData):
+    print(data.filename)
+    fpath = os.path.join(PATH_FILES_DIRECTORY, data.filename)
     print(fpath)
-    return FileResponse(fpath, filename=filename)
+    return FileResponse(fpath, filename=data.filename)
     # fullPath = os.path.join(PATH_FILES_DIRECTORY, fileName)
     # try:
     #     with open(fullPath, 'rb') as file:
