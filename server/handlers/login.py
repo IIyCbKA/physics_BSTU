@@ -33,10 +33,9 @@ def auth(data: Dict) -> None:
 
     if not searchUser(userData.id):
         addUser(userData)
-
         if userData.status == 'student':
             groupName: str = data['result']['user_info']['accounts'][0]
-            groupID: int = searchGroup(groupName)
+            groupID: int = getGroupID(groupName)
             if groupID == -1:
                 addGroup(groupName)
             addStudent(userData.user_id, groupID)
@@ -49,7 +48,7 @@ def searchUser(id: str) -> bool:
     return result is True
 
 
-def searchGroup(name: str) -> int:
+def getGroupID(name: str) -> int:
     result = db.query(Groups).filter_by(group_name=name).first()
     return result[0] if result else -1
 
