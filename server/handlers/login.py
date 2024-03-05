@@ -1,9 +1,11 @@
 from server.application import fastApiServer
 from server.data.models import *
 from server.data.db_session import db
-from typing import Optional, Dict
-from starlette.websockets import WebSocket
 from server.handlers.schemas import *
+
+from fastapi.responses import JSONResponse
+from starlette.websockets import WebSocket
+from typing import Dict
 import requests
 
 
@@ -19,7 +21,7 @@ async def loginBstu(data: LoginData):
     if reqResult['success']:
         auth(reqResult)
 
-    return {}, 200
+    return JSONResponse(content={}, status_code=200)
 
 
 def auth(data: Dict) -> None:

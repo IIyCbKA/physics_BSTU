@@ -3,8 +3,10 @@ from server.settings.config import *
 from server.data.models import *
 from server.data.db_session import db
 from server.handlers.schemas import *
-from fastapi.responses import FileResponse
-from fastapi import WebSocket, WebSocketDisconnect, Request
+
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi import WebSocket, WebSocketDisconnect, Request, HTTPException
+from starlette import status
 from typing import Dict
 import os
 
@@ -47,13 +49,13 @@ async def sendFilesNameListToAll(path: str):
 
 # Роут на получение списка файлов
 # Аргумент path - путь к директории папки
-@fastApiServer.get('/api/get_files/')
-async def filesList(data: GetFilesData, request: Request):
-    client_ip = request.client.host
+@fastApiServer.post('/disk/{path:path}')
+async def filesList(path: str, request: Request):
+    path = '/' + path
+    client_ip: str = request.client.host
     if client_ip in clients:
-        await sendFilesNameList(clients[client_ip], data.path)
-    else:
-        return {"error": "Client not connected"}, 400
+        await sendFilesNameList(clients[client_ip], path)
+    # что-то вернуть
 
 
 # Роут на добавление файла
@@ -70,7 +72,7 @@ async def addFile(data: AddFileData):
     await sendFilesNameListToAll(data.path)
     # добавление в бд
     # emit на обновление списка
-    return {}, 200
+    return JSONResponse(content={}, status_code=200)
 
 
 # Роут для удаления файла
@@ -81,7 +83,7 @@ async def deleteFile(data: DeleteFileData):
 
     await sendFilesNameListToAll(data.path)
 
-    return {}, 200
+    return JSONResponse(content={}, status_code=200)
 
     # fullPath = os.path.join(PATH_FILES_DIRECTORY, fileName)
     # try:
