@@ -6,6 +6,8 @@ import {useCallback, useEffect, useState} from "react";
 import '../styles/style.css'
 import {useDropzone} from 'react-dropzone'
 import { createSocket } from '../socket_client';
+import {$host} from "../routes";
+import { useLocation } from 'react-router-dom';
 
 function Home() {
     const onDrop = useCallback(acceptedFiles => {
@@ -14,39 +16,43 @@ function Home() {
 
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
+    const location = useLocation();
+    // нормально сделать
+    $host.post(location.pathname);
+
     // Список строк с именами файлов по текущему пути
-    const [filesName, setFilesName] = useState([])
+    //const [filesName, setFilesName] = useState([])
     // Список имён вложенных директорий 
-    const [directoriesPath, setDirectoriesPath] = useState([])
+    //const [directoriesPath, setDirectoriesPath] = useState([])
 
-    const socket = createSocket()
+    //const socket = createSocket()
 
-    socket.onmessage = (event) => {
-        setFilesName(JSON.parse(event.data))
-    }
+    //socket.onmessage = (event) => {
+    //    setFilesName(JSON.parse(event.data))
+    //}
 
     // Получает список файлов при загрузке страницы
-    useEffect(() => {
-        //socket.send('')
-        
-    }, [])
+    //useEffect(() => {
+    //    //socket.send('')
+    //
+    //}, [])
 
     // Выводит в консоль список файлов при его изменении
     // Только для тестирования
-    useEffect(() => {
-        console.log(filesName)
-    }, [filesName]);
+    //useEffect(() => {
+    //    console.log(filesName)
+    //}, [filesName]);
 
     // Загружает первый в списке файл с сервера
-    const downloadClick = () => {
-        console.log(filesName[0])
-        downloadFile(filesName[0], '/')
-    }
+    //const downloadClick = () => {
+    //    console.log(filesName[0])
+    //    downloadFile(filesName[0], '/')
+    //}
 
     // Удаляет первый в списке файл с сервера
-    const deleteFileClick = () => {
-        deleteFile(filesName[0], '/')
-    }
+    //const deleteFileClick = () => {
+    //    deleteFile(filesName[0], '/')
+    //}
 
     return (
         <div>
@@ -54,8 +60,6 @@ function Home() {
                 <title>Физика</title>
             </Helmet>
             <Header/>
-            <button onClick={downloadClick}>Get first</button>
-            <button onClick={deleteFileClick}>Delete first</button>
             <div {...getRootProps()}>
                 <input {...getInputProps()} />
                 <div className='storage-main'>
