@@ -17,6 +17,7 @@ function Home() {
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
     const location = useLocation();
+    console.log(location.pathname);
     // нормально сделать
     $host.post(location.pathname);
 
