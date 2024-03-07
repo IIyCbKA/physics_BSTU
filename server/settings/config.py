@@ -11,3 +11,7 @@ DB_PORT = os.environ.get("DB_PORT")
 DB_NAME = os.environ.get("DB_NAME")
 
 CLIENT_URL = os.environ.get("CLIENT_URL")
+
+MINIO_ADR = os.environ.get("MINIO_ADR")
+MINIO_ACCESS_KEY = os.environ.get("MINIO_ACCESS_KEY")
+MINIO_SECRET_KEY = os.environ.get("MINIO_SECRET_KEY")
