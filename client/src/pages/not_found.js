@@ -10,11 +10,10 @@ export default function NotFound() {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                height: '100vh'
+                height: '100vh',
+                textAlign: 'center'
             }}>
-                <div style={{textAlign: 'center'}}>
-                    <h2>Page<br/><strong>Not found</strong></h2>
-                </div>
+                <h2>Page<br/><strong>Not found</strong></h2>
             </div>
         </div>
     );
