@@ -17,9 +17,14 @@ function Home() {
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
     const location = useLocation();
-    console.log(location.pathname);
-    // нормально сделать
-    $host.post(location.pathname);
+    useEffect(() => {
+        let path = location.pathname;
+        if (!path.endsWith('/')){
+            path += '/';
+        }
+
+        $host.post(path);
+    }, [location.pathname]);
 
     // Список строк с именами файлов по текущему пути
     //const [filesName, setFilesName] = useState([])
