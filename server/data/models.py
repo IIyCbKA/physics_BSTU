@@ -48,8 +48,8 @@ class Tasks(Base):
     task_name: str = Column(String(255), nullable=False)
 
 
-class Files(Base):
-    __tablename__ = 'files'
+class StorageFiles(Base):
+    __tablename__ = 'storage_files'
 
     file_id: int = Column(Integer, primary_key=True, autoincrement=True)
     file_name: str = Column(String, nullable=False, unique=True)
@@ -59,7 +59,7 @@ class Files(Base):
 class Works(Base):
     __tablename__ = 'works'
 
-    file_id: int = Column(Integer, primary_key=True, nullable=False)
+    work_file_id: int = Column(Integer, primary_key=True, autoincrement=True)
     task_id: int = Column(Integer, ForeignKey('tasks.task_id'), nullable=False)
     student_id: int = Column(Integer, ForeignKey('students.student_id'),
                              nullable=False)
