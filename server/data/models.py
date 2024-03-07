@@ -52,8 +52,22 @@ class StorageFiles(Base):
     __tablename__ = 'storage_files'
 
     file_id: int = Column(Integer, primary_key=True, autoincrement=True)
-    file_name: str = Column(String, nullable=False, unique=True)
+    file_name: str = Column(String, nullable=False)
     path: str = Column(String, nullable=False)
+    __table_args__ = (
+        UniqueConstraint('file_name', 'path'),
+    )
+
+
+class Dirs(Base):
+    __tablename__ = 'dirs'
+
+    dir_id: int = Column(Integer, primary_key=True, autoincrement=True)
+    dir_name: str = Column(String, nullable=False)
+    path: str = Column(String, nullable=False)
+    __table_args__ = (
+        UniqueConstraint('dir_name', 'path'),
+    )
 
 
 class Works(Base):

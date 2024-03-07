@@ -51,11 +51,9 @@ async def sendFilesNameListToAll(path: str):
 # Аргумент path - путь к директории папки
 @fastApiServer.post('/disk{path:path}')
 async def filesList(path: str, request: Request):
-    if path == '':
-        path = '/'
     print(path)
     client_ip: str = request.client.host
-    await sendFilesNameList(clients[client_ip], path)
+    #await sendFilesNameList(clients[client_ip], path)
 
 
 # Роут на добавление файла

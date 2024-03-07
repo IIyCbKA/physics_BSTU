@@ -8,10 +8,6 @@ class LoginData(BaseModel):
     password: str
 
 
-class GetFilesData(BaseModel):
-    path: str
-
-
 class AddFileData(BaseModel):
     file: Annotated[UploadFile, File()]
     path: Annotated[str, Form()]
