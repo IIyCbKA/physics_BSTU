@@ -61,15 +61,13 @@ async def filesList(path: str, request: Request):
 # также передаётся один файл
 @fastApiServer.post('/api/add_file')
 async def addFile(data: AddFileData):
-    filename: str = data.file.filename  # для бд
-    # # добавить проверку уникальности имени (алгоритм)
+    filename: str = data.file.filename
+    # добавить проверку уникальности имениa
     save_path = os.path.join(PATH_FILES_DIRECTORY, filename)
     with open(save_path, "wb") as f:
         f.write(await data.file.read())
 
     await sendFilesNameListToAll(data.path)
-    # добавление в бд
-    # emit на обновление списка
     return JSONResponse(content={}, status_code=200)
 
 
