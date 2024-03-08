@@ -2,10 +2,12 @@ import { SERVER, $host } from "../routes"
 
 export const getFilesName = async (path) => {
     try{
-        await $host.get('/api/get_files' , {params: {path}})
+        const response = await $host.get(path , {params: {path}})
+        return response.data
     }
     catch (e){
         console.log(e)
+        return []
     }
 }
 
@@ -18,19 +20,14 @@ export const uploadFile = async (file, dir_path) => {
             {
                 method: 'POST', 
                 body: formData})
-        console.log(response)
     }
     catch (e){
         console.log(e)
     }
 }
 
-export const downloadFile = async (filename, dir_path) => {
-    const params = new URLSearchParams();
-    params.append('filename', filename);
-    params.append('path', dir_path);
-
-    const url = `${SERVER}/api/file_download_request?${params.toString()}`;
+export const downloadFile = async (fileName, dir_path) => {
+    const url = `${SERVER}/api/download${dir_path}${fileName}`;
 
     fetch(url, {
         method: 'GET',
@@ -42,16 +39,18 @@ export const downloadFile = async (filename, dir_path) => {
         const a = document.createElement('a');
         a.style.display = 'none';
         a.href = url;
-        a.download = filename;
+        a.download = fileName;
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);
     }).catch(e => console.log(e));
 }
 
-export const deleteFile = async (filename, dir_path) => {
+export const deleteFile = async (fileName, dir_path) => {
+    console.log('fileName =', fileName)
+    console.log('path =', dir_path)
     try{
-        await $host.post('/api/delete_file', {filename, path: dir_path})
+        await $host.post('/api/delete_file', {fileName, path: dir_path})
     }
     catch(e){
         console.log(e)

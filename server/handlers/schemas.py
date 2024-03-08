@@ -18,11 +18,6 @@ class DeleteFileData(BaseModel):
     path: str
 
 
-class FileDownloadRequestData(BaseModel):
-    filename: str
-    path: str
-
-
 class UserModel(BaseModel):
     user_id: int
     surname: str

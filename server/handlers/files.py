@@ -18,10 +18,6 @@ clients: Dict = {}
 async def websocket_processing(websocket: WebSocket):
     await websocket.accept()
     client_ip = websocket.client.host
-
-    if client_ip not in clients.keys():
-        await sendFilesNameList(websocket, '/')
-
     clients[client_ip] = websocket
 
     try:
@@ -34,40 +30,47 @@ async def websocket_processing(websocket: WebSocket):
         print(e)
 
 
+# Возвращает список файлов и папок по текущему пути path
+def getFilesNameList(path: str):
+    # !!! функция должна возвращать список файлов по пути из базы данных
+    return os.listdir(PATH_FILES_DIRECTORY)
+
+
 # Отправляет на клиент новый список файлов
 async def sendFilesNameList(websocket: WebSocket, path: str):
-    filesName = os.listdir(PATH_FILES_DIRECTORY)
-    await websocket.send_json(filesName)
+    await websocket.send_json(getFilesNameList(path))
 
 
 # Отправляет на клиент новый список файлов
 async def sendFilesNameListToAll(path: str):
-    filesName = os.listdir(PATH_FILES_DIRECTORY)
     for websocket in clients.values():
-        await websocket.send_json(filesName)
+        await sendFilesNameList(websocket, path)
 
 
 # Роут на получение списка файлов
 # Аргумент path - путь к директории папки
-@fastApiServer.post('/disk{path:path}')
-async def filesList(path: str, request: Request):
-    print(path)
-    client_ip: str = request.client.host
-    #await sendFilesNameList(clients[client_ip], path)
+@fastApiServer.get('/disk{path:path}')
+async def filesList(path: str):
+    filesName = getFilesNameList(path)
+    print(filesName)
+    return JSONResponse(content=filesName, status_code=200)
 
 
 # Роут на добавление файла
 # В параметрах filename - имя файла, path - путь к нему
 # также передаётся один файл
 @fastApiServer.post('/api/add_file')
-async def addFile(data: AddFileData):
-    filename: str = data.file.filename
+async def addFile(file: Annotated[UploadFile, File()],
+                  path: Annotated[str, Form()]):
+    filename: str = file.filename
     # добавить проверку уникальности имениa
+    # !!! следующую строчку за комментамми заменить
+    # Нужно добавить файл в БД и дать ему правильное имя
     save_path = os.path.join(PATH_FILES_DIRECTORY, filename)
     with open(save_path, "wb") as f:
-        f.write(await data.file.read())
+        f.write(await file.read())
 
-    await sendFilesNameListToAll(data.path)
+    await sendFilesNameListToAll(path)
     return JSONResponse(content={}, status_code=200)
 
 
@@ -75,36 +78,31 @@ async def addFile(data: AddFileData):
 # В параметрах filename - имя файла, path - путь к файлу
 @fastApiServer.post('/api/delete_file')
 async def deleteFile(data: DeleteFileData):
-    os.remove(os.path.join(PATH_FILES_DIRECTORY, data.fileName))
-
-    await sendFilesNameListToAll(data.path)
-
-    return JSONResponse(content={}, status_code=200)
-
-    # fullPath = os.path.join(PATH_FILES_DIRECTORY, fileName)
-    # try:
-    #     os.remove(fullPath)
-    #     db.query(Files).filter_by(file_name=fileName).delete()
-    #     db.commit()
-    # except FileNotFoundError:
-    #     pass
+    try:
+        # !!! Заменить строчку. Нужно удалить файл с правильным
+        # именем и удалить запись о нём из БД
+        os.remove(os.path.join(PATH_FILES_DIRECTORY, data.fileName))
+        await sendFilesNameListToAll(data.path)
+        return JSONResponse(content={}, status_code=200)
+    except FileNotFoundError:
+        return JSONResponse(content={'Error': 'File not found'}, status_code=500)
+    except Exception as e:
+        return JSONResponse(content={'Error': e}, status_code=500)
 
 
-# Роут для загрузки файла
-# В параметрах filename - имя файла и path - путь к нему
-@fastApiServer.get('/api/file_download_request')
-async def handleFileDownloadRequest(data: FileDownloadRequestData):
-    print(data.filename)
-    fpath = os.path.join(PATH_FILES_DIRECTORY, data.filename)
-    print(fpath)
-    return FileResponse(fpath, filename=data.filename)
-    # fullPath = os.path.join(PATH_FILES_DIRECTORY, fileName)
-    # try:
-    #     with open(fullPath, 'rb') as file:
-    #         fileContent = base64.b64encode(file.read()).decode('utf-8')
-    #         emit('file', {
-    #             'file_name': fileName,
-    #             'file_content': fileContent
-    #         })
-    # except FileNotFoundError:
-    #     pass
+# Роут для загрузки файла.
+# path cодержит путь к файлу и его имя
+@fastApiServer.get('/api/download/disk{path:path}')
+async def handleFileDownloadRequest(path: str):
+    try:
+        print(path)
+        border = path.rfind('/') + 1
+        fileName = path[border:]
+        dirPath = path[:border]
+        # !!! Заменить строчку. Нужно вернуть файл с правильным именем
+        fpath = os.path.join(PATH_FILES_DIRECTORY, fileName)
+        return FileResponse(fpath, filename=fileName)
+    except FileNotFoundError:
+        return JSONResponse(content={'Error': 'File not found'}, status_code=500)
+    except Exception as e:
+        return JSONResponse(content={'Error': e}, status_code=500)
