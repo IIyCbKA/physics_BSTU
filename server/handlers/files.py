@@ -2,6 +2,8 @@ from server.application import fastApiServer
 from server.settings.config import *
 from server.data.models import *
 from server.data.db_session import db
+from server.data.functions.files import *
+from server.storage.functions.storage import *
 from server.handlers.schemas import *
 
 from fastapi.responses import FileResponse, JSONResponse
@@ -30,12 +32,6 @@ async def websocket_processing(websocket: WebSocket):
         print(e)
 
 
-# Возвращает список файлов и папок по текущему пути path
-def getFilesNameList(path: str):
-    # !!! функция должна возвращать список файлов по пути из базы данных
-    return os.listdir(PATH_FILES_DIRECTORY)
-
-
 # Отправляет на клиент новый список файлов
 async def sendFilesNameList(websocket: WebSocket, path: str):
     await websocket.send_json(getFilesNameList(path))
@@ -60,17 +56,16 @@ async def filesList(path: str):
 # В параметрах filename - имя файла, path - путь к нему
 # также передаётся один файл
 @fastApiServer.post('/api/add_file')
-async def addFile(file: Annotated[UploadFile, File()],
-                  path: Annotated[str, Form()]):
-    filename: str = file.filename
-    # добавить проверку уникальности имениa
-    # !!! следующую строчку за комментамми заменить
-    # Нужно добавить файл в БД и дать ему правильное имя
-    save_path = os.path.join(PATH_FILES_DIRECTORY, filename)
-    with open(save_path, "wb") as f:
-        f.write(await file.read())
+async def addFile(data: AddFileData):
+    fileID: int = addFileToDB(data)
+    if fileID == -1:
+        return JSONResponse(content={'error': 'File with that name already '
+                                              'exists'}, status_code=200)
+    if not addFileToStorage(data.file, fileID):
+        return JSONResponse(content={'error': 'The file could not be uploaded'},
+                            status_code=200)
 
-    await sendFilesNameListToAll(path)
+    await sendFilesNameListToAll(data.path)
     return JSONResponse(content={}, status_code=200)
 
 
@@ -85,7 +80,8 @@ async def deleteFile(data: DeleteFileData):
         await sendFilesNameListToAll(data.path)
         return JSONResponse(content={}, status_code=200)
     except FileNotFoundError:
-        return JSONResponse(content={'Error': 'File not found'}, status_code=500)
+        return JSONResponse(content={'Error': 'File not found'},
+                            status_code=500)
     except Exception as e:
         return JSONResponse(content={'Error': e}, status_code=500)
 
@@ -103,6 +99,7 @@ async def handleFileDownloadRequest(path: str):
         fpath = os.path.join(PATH_FILES_DIRECTORY, fileName)
         return FileResponse(fpath, filename=fileName)
     except FileNotFoundError:
-        return JSONResponse(content={'Error': 'File not found'}, status_code=500)
+        return JSONResponse(content={'Error': 'File not found'},
+                            status_code=500)
     except Exception as e:
         return JSONResponse(content={'Error': e}, status_code=500)
