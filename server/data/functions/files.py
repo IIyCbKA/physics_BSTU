@@ -21,9 +21,10 @@ def getFilesNameList(path: str) -> dict:
     return {'dirs': dirsList, 'files': filesList}
 
 
-def addFileToDB(data: AddFileData) -> int:
+def addFileToDB(file: Annotated[UploadFile, File()],
+                path: Annotated[str, Form()]) -> int:
     try:
-        newFile = StorageFiles(file_name=data.file.filename, path=data.path)
+        newFile = StorageFiles(file_name=file.filename, path=path)
         db.add(newFile)
         db.commit()
         return newFile.file_id

@@ -56,16 +56,17 @@ async def filesList(path: str):
 # В параметрах filename - имя файла, path - путь к нему
 # также передаётся один файл
 @fastApiServer.post('/api/add_file')
-async def addFile(data: AddFileData):
-    fileID: int = addFileToDB(data)
+async def addFile(file: Annotated[UploadFile, File()],
+                  path: Annotated[str, Form()]):
+    fileID: int = addFileToDB(file, path)
     if fileID == -1:
         return JSONResponse(content={'error': 'File with that name already '
                                               'exists'}, status_code=500)
-    if not addFileToStorage(data.file, fileID):
+    if not addFileToStorage(file, fileID):
         return JSONResponse(content={'error': 'The file could not be uploaded'},
                             status_code=500)
 
-    await sendFilesNameListToAll(data.path)
+    await sendFilesNameListToAll(path)
     return JSONResponse(content={}, status_code=200)
 
 
