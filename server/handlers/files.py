@@ -60,10 +60,10 @@ async def addFile(data: AddFileData):
     fileID: int = addFileToDB(data)
     if fileID == -1:
         return JSONResponse(content={'error': 'File with that name already '
-                                              'exists'}, status_code=200)
+                                              'exists'}, status_code=500)
     if not addFileToStorage(data.file, fileID):
         return JSONResponse(content={'error': 'The file could not be uploaded'},
-                            status_code=200)
+                            status_code=500)
 
     await sendFilesNameListToAll(data.path)
     return JSONResponse(content={}, status_code=200)
