@@ -16,3 +16,11 @@ def addFileToStorage(file: Annotated[UploadFile, File()], id: int) -> bool:
         return True
     except Exception:
         return False
+
+
+def getFileObject(path: str):
+    try:
+        fileObject = minio_client.get_object('storage', path)
+        return fileObject
+    except Exception:
+        return None

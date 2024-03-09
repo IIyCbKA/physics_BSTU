@@ -7,7 +7,6 @@ from server.handlers.schemas import *
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi import WebSocket, WebSocketDisconnect, File, UploadFile, Form
 from typing import Dict, Annotated
-from starlette.requests import Request
 import os
 
 
@@ -67,7 +66,7 @@ async def addFile(file: Annotated[UploadFile, File()],
                             status_code=500)
 
     await sendFilesNameListToAll(path)
-    return JSONResponse(content={}, status_code=200)
+    return JSONResponse(content={}, status_code=201)
 
 
 # Роут для удаления файла
@@ -75,32 +74,31 @@ async def addFile(file: Annotated[UploadFile, File()],
 @fastApiServer.post('/api/delete_file')
 async def deleteFile(data: DeleteFileData):
     try:
-        # !!! Заменить строчку. Нужно удалить файл с правильным
-        # именем и удалить запись о нём из БД
-        os.remove(os.path.join(PATH_FILES_DIRECTORY, data.fileName))
-        await sendFilesNameListToAll(data.path)
-        return JSONResponse(content={}, status_code=200)
-    except FileNotFoundError:
-        return JSONResponse(content={'Error': 'File not found'},
-                            status_code=500)
+        if deleteFileFromDB(data.filename, data.path):
+            await sendFilesNameListToAll(data.path)
+            return JSONResponse(content={}, status_code=200)
+        else:
+            return JSONResponse(content={'Error': 'File not found'},
+                                status_code=404)
+
     except Exception as e:
         return JSONResponse(content={'Error': e}, status_code=500)
 
 
-# Роут для загрузки файла.
+# Роут для загрузки файла
 # path cодержит путь к файлу и его имя
 @fastApiServer.get('/api/download/disk{path:path}')
 async def handleFileDownloadRequest(path: str):
     try:
-        print(path)
         border = path.rfind('/') + 1
-        fileName = path[border:]
-        dirPath = path[:border]
-        # !!! Заменить строчку. Нужно вернуть файл с правильным именем
-        fpath = os.path.join(PATH_FILES_DIRECTORY, fileName)
-        return FileResponse(fpath, filename=fileName)
-    except FileNotFoundError:
+        fileName: str = path[border:]
+        dirPath: str = path[:border]
+        fileID: int = getFileID(fileName, dirPath)
+        if fileID != -1:
+            file = getFileObject(f'files/{fileID}.{fileName.split(".")[-1]}')
+            if file is not None:
+                return FileResponse(file, filename=fileName)
         return JSONResponse(content={'Error': 'File not found'},
-                            status_code=500)
+                            status_code=404)
     except Exception as e:
         return JSONResponse(content={'Error': e}, status_code=500)
