@@ -13,7 +13,7 @@ def getFiles(path: str) -> list:
 
 def getDirs(path: str) -> list:
     result = db.query(Dirs.dir_name).filter_by(path=path).all()
-    return result
+    return [row[0] for row in result]
 
 
 # Возвращает список файлов и папок по текущему пути path
