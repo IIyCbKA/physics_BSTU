@@ -78,7 +78,7 @@ async def deleteFile(data: DeleteFileData):
         fileID: int = getFileID(data.fileName, data.path)
         if fileID != -1:
             deleteFileFromDB(data.fileName, data.path)
-            deleteFileObject(f'files/{fileID}')
+            deleteFileObject(f'files/{fileID}.{data.fileName.split(".")[-1]}')
             await sendFilesNameListToAll(data.path)
             return JSONResponse(content={}, status_code=200)
 
@@ -92,6 +92,9 @@ async def deleteFile(data: DeleteFileData):
 # path cодержит путь к файлу и его имя
 @fastApiServer.get('/api/download/disk{path:path}')
 async def handleFileDownloadRequest(path: str):
+    async def file_iterator():
+        yield data
+
     try:
         border = path.rfind('/') + 1
         fileName: str = path[border:]
@@ -101,8 +104,6 @@ async def handleFileDownloadRequest(path: str):
             file = getFileObject(f'files/{fileID}.{fileName.split(".")[-1]}')
             if file is not None:
                 data = file.read()
-                async def file_iterator():
-                    yield data
 
                 return StreamingResponse(file_iterator())
 
