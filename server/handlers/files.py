@@ -1,15 +1,13 @@
 from server.application import fastApiServer
 from server.settings.config import *
-from server.data.models import *
-from server.data.db_session import db
 from server.data.functions.files import *
 from server.storage.functions.storage import *
 from server.handlers.schemas import *
 
 from fastapi.responses import FileResponse, JSONResponse
-from fastapi import WebSocket, WebSocketDisconnect, Request, HTTPException
-from starlette import status
-from typing import Dict
+from fastapi import WebSocket, WebSocketDisconnect, File, UploadFile, Form
+from typing import Dict, Annotated
+from starlette.requests import Request
 import os
 
 
@@ -58,11 +56,13 @@ async def filesList(path: str):
 @fastApiServer.post('/api/add_file')
 async def addFile(file: Annotated[UploadFile, File()],
                   path: Annotated[str, Form()]):
+    path = path.replace('/disk', '', 1)
     fileID: int = addFileToDB(file, path)
     if fileID == -1:
         return JSONResponse(content={'error': 'File with that name already '
                                               'exists'}, status_code=500)
     if not addFileToStorage(file, fileID):
+        deleteFileFromDB(file.filename, path)
         return JSONResponse(content={'error': 'The file could not be uploaded'},
                             status_code=500)
 

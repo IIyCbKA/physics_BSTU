@@ -9,8 +9,7 @@ def addFileToStorage(file: Annotated[UploadFile, File()], id: int) -> bool:
     fileData = file.file.read()
     bucketName: str = "storage"
     folderName: str = "files"
-    fileName: str = str(id) + file.content_type
-
+    fileName: str = f"{id}.{file.filename.split('.')[-1]}"
     try:
         minio_client.put_object(bucketName, f"{folderName}/{fileName}",
                                 BytesIO(fileData), len(fileData))

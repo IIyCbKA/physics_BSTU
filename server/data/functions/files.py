@@ -1,12 +1,14 @@
 from server.data.models import *
 from server.data.db_session import db
-from server.handlers.schemas import *
+
 from sqlalchemy.exc import IntegrityError
+from fastapi import File, UploadFile, Form
+from typing import Annotated
 
 
 def getFiles(path: str) -> list:
     result = db.query(StorageFiles.file_name).filter_by(path=path).all()
-    return result
+    return [row[0] for row in result]
 
 
 def getDirs(path: str) -> list:
@@ -31,3 +33,8 @@ def addFileToDB(file: Annotated[UploadFile, File()],
     except IntegrityError:
         db.rollback()
         return -1
+
+
+def deleteFileFromDB(fileName: str, path: str):
+    db.query(StorageFiles).filter_by(file_name=fileName, path=path).delete()
+    db.commit()
