@@ -75,6 +75,7 @@ async def addFile(file: Annotated[UploadFile, File()],
 @fastApiServer.post('/api/delete_file')
 async def deleteFile(data: DeleteFileData):
     try:
+        path = data.path.replace('/disk/', '/', 1)
         # !!! Заменить строчку. Нужно удалить файл с правильным
         # именем и удалить запись о нём из БД
         os.remove(os.path.join(PATH_FILES_DIRECTORY, data.fileName))
