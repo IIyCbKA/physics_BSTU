@@ -75,13 +75,15 @@ async def addFile(file: Annotated[UploadFile, File()],
 async def deleteFile(data: DeleteFileData):
     try:
         data.path = data.path.replace('/disk', '', 1)
-        if deleteFileFromDB(data.filename, data.path):
-            await sendFilesNameListToAll(data.path)
-            return JSONResponse(content={}, status_code=200)
-        else:
-            return JSONResponse(content={'Error': 'File not found'},
-                                status_code=404)
+        fileID: int = getFileID(data.fileName, data.path)
+        if fileID != -1:
+            deleteFileFromDB(data.fileName, data.path)
+            if deleteFileObject(f'files/{fileID}'):
+                await sendFilesNameListToAll(data.path)
+                return JSONResponse(content={}, status_code=200)
 
+        return JSONResponse(content={'Error': 'File not found'},
+                            status_code=404)
     except Exception as e:
         return JSONResponse(content={'Error': e}, status_code=500)
 
@@ -96,7 +98,7 @@ async def handleFileDownloadRequest(path: str):
         dirPath: str = path[:border]
         fileID: int = getFileID(fileName, dirPath)
         if fileID != -1:
-            file = getFileObject(f'files/{fileID}.{fileName.split(".")[-1]}')
+            file = getFileObject(f'files/{fileID}')
             if file is not None:
                 return FileResponse(file, filename=fileName)
         return JSONResponse(content={'Error': 'File not found'},
