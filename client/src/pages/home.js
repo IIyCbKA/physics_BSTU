@@ -12,15 +12,12 @@ function Home() {
     // Список строк с именами файлов и директорий по текущему пути
     const [dirsName, setDirsName] = useState([])
     const [filesName, setFilesName] = useState([])
-    const [locationPath, setLocationPath] = useState('')
     
     const location = useLocation();
     const path = location.pathname.endsWith('/') ? location.pathname:
         location.pathname + '/';
 
     useEffect(() => {
-        setLocationPath(path)
-
         getFilesName(path)
             .then(result => {
                 setFilesName(result.files);

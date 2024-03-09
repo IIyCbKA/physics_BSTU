@@ -13,7 +13,7 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/" element={<Navigate to="/disk/" />} />
-                <Route path="/disk*" element={<Home />} />
+                <Route path="/disk/*" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/tests" element={<Test />} />
                 <Route path="*" element={<NotFound />} />
