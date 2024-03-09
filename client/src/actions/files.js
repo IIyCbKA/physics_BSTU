@@ -28,6 +28,8 @@ export const uploadFile = async (file, dir_path) => {
 
 export const downloadFile = async (fileName, dir_path) => {
     const url = `${SERVER}/api/download${dir_path}${fileName}`;
+    
+    console.log(url)
 
     fetch(url, {
         method: 'GET',

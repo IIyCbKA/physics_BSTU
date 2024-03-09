@@ -10,6 +10,7 @@ import { useLocation } from 'react-router-dom';
 
 function Home() {
     // Список строк с именами файлов и директорий по текущему пути
+    const [dirsName, setDirsName] = useState([])
     const [filesName, setFilesName] = useState([])
     const [locationPath, setLocationPath] = useState('')
     
@@ -22,7 +23,8 @@ function Home() {
 
         getFilesName(path)
             .then(result => {
-                setFilesName(result);
+                setFilesName(result.files);
+                setDirsName(result.dirs);
             })
             .catch(error => {
                 console.error('Error fetching files:', error);
@@ -41,7 +43,9 @@ function Home() {
     const socket = createSocket()
 
     socket.onmessage = (event) => {
-       setFilesName(JSON.parse(event.data))
+        const data = JSON.parse(event.data)
+        setFilesName(data.files)
+        setDirsName(data.dirs)
     }
 
     // Получает список файлов при загрузке страницы
@@ -52,17 +56,22 @@ function Home() {
     // Выводит в консоль список файлов при его изменении
     // Только для тестирования
     useEffect(() => {
-       console.log(filesName)
+       console.log('files:', filesName)
     }, [filesName]);
+    
+    useEffect(() => {
+       console.log('dirs:', dirsName)
+    }, [dirsName]);
 
     // Загружает первый в списке файл с сервера
     const downloadClick = () => {
-       downloadFile(filesName[0], locationPath)
+        console.log(filesName[0])
+        downloadFile(filesName[0], path)
     }
 
     // Удаляет первый в списке файл с сервера
     const deleteFileClick = () => {
-       deleteFile(filesName[0], locationPath)
+       deleteFile(filesName[0], path)
     }
 
     return (
