@@ -36,7 +36,8 @@ def addFileToDB(file: Annotated[UploadFile, File()],
 
 
 def deleteFileFromDB(fileName: str, path: str) -> bool:
-    file = db.query(StorageFiles).filter_by(file_name=fileName, path=path)
+    file = db.query(StorageFiles).filter_by(file_name=fileName,
+                                            path=path).first()
     if file:
         db.delete(file)
         db.commit()
