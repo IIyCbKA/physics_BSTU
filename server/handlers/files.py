@@ -74,6 +74,7 @@ async def addFile(file: Annotated[UploadFile, File()],
 @fastApiServer.post('/api/delete_file')
 async def deleteFile(data: DeleteFileData):
     try:
+        data.path = data.path.replace('/disk', '', 1)
         if deleteFileFromDB(data.filename, data.path):
             await sendFilesNameListToAll(data.path)
             return JSONResponse(content={}, status_code=200)
