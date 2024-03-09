@@ -35,14 +35,12 @@ def addFileToDB(file: Annotated[UploadFile, File()],
         return -1
 
 
-def deleteFileFromDB(fileName: str, path: str) -> bool:
+def deleteFileFromDB(fileName: str, path: str):
     file = db.query(StorageFiles).filter_by(file_name=fileName,
                                             path=path).first()
     if file:
         db.delete(file)
         db.commit()
-        return True
-    return False
 
 
 def getFileID(fileName: str, path: str) -> int:

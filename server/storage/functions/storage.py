@@ -24,3 +24,11 @@ def getFileObject(path: str):
         return fileObject
     except Exception:
         return None
+
+
+def deleteFileObject(path):
+    try:
+        minio_client.remove_object('storage', path)
+        return True
+    except Exception:
+        return False
