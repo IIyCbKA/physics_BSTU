@@ -14,12 +14,10 @@ function Home() {
     const [locationPath, setLocationPath] = useState('')
     
     const location = useLocation();
-    let path = location.pathname;
-    if (!path.endsWith('/')){
-        path += '/';
-    }
+    const path = location.pathname.endsWith('/') ? location.pathname:
+        location.pathname + '/';
+
     useEffect(() => {
-        console.log(path)
         setLocationPath(path)
 
         getFilesName(path)
