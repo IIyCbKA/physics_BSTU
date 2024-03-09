@@ -6,26 +6,20 @@ import {useCallback, useEffect, useState} from "react";
 import '../styles/style.css'
 import {useDropzone} from 'react-dropzone'
 import { createSocket } from '../socket_client';
-import {$host} from "../routes";
 import { useLocation } from 'react-router-dom';
 
 function Home() {
-    const onDrop = useCallback(acceptedFiles => {
-        acceptedFiles.forEach(file => uploadFile(file, location));
-    }, []);
-
-    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
-    
     // Список строк с именами файлов и директорий по текущему пути
     const [filesName, setFilesName] = useState([])
     const [locationPath, setLocationPath] = useState('')
     
     const location = useLocation();
+    let path = location.pathname;
+    if (!path.endsWith('/')){
+        path += '/';
+    }
     useEffect(() => {
-        let path = location.pathname;
-        if (!path.endsWith('/')){
-            path += '/';
-        }
+        console.log(path)
         setLocationPath(path)
 
         getFilesName(path)
@@ -36,9 +30,13 @@ function Home() {
                 console.error('Error fetching files:', error);
             });
         
-    }, [location.pathname]);
+    }, [path]);
 
-    
+    const onDrop = useCallback(acceptedFiles => {
+        acceptedFiles.forEach(file => uploadFile(file, path));
+    }, [path]);
+
+    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
     // Список имён вложенных директорий
     //const [directoriesPath, setDirectoriesPath] = useState([])
 
