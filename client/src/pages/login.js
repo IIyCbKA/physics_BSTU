@@ -9,7 +9,8 @@ import {styles} from "../styles/style";
 import eyeClose from '../images/eyeClose.png'
 import eyeOpen from '../images/eyeOpen.png'
 import {createSocket} from '../socket_client'
-import {$host} from "../routes";
+import {login} from '../actions/user'
+import {useDispatch} from "react-redux";
 
 function Login() {
     const [showPassword, setShowPassword] = useState(false);
@@ -20,6 +21,7 @@ function Login() {
     const [btnIsFocused, setBtnIsFocused] = useState(false);
     const [isButtonShaking, setButtonShaking] = useState(false);
     const isButtonDisabled = email === '' || password === '';
+    const dispatch = useDispatch()
 
     const socket = createSocket()
 
@@ -88,10 +90,6 @@ function Login() {
         }, 500);
     });
 
-    const loginClick = async (event) => {
-        event.preventDefault();
-        await $host.post('/api/login', {email, password})
-    };
 
     return (
         <div>
@@ -161,7 +159,8 @@ function Login() {
                         </div>
                         <div className="btn-margin">
                             <Button variant="primary"
-                                    onClick={loginClick}
+                                    onClick={() => dispatch(login(email,
+                                        password))}
                                     type="submit"
                                     style={{...styles.formButtonStyle,
                                         backgroundColor: btnColor(),
