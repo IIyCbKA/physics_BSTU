@@ -1,8 +1,8 @@
 import {motion} from "framer-motion";
 import {Form} from "react-bootstrap";
 import React, {useState} from "react";
-import LoginLine, {email} from "../elements/login/login_line";
-import PasswordLine, {password} from "../elements/login/password_line";
+import LoginLine from "../elements/login/login_line";
+import PasswordLine from "../elements/login/password_line";
 import LoginBtn from "../elements/login/login_btn";
 import {login} from "../actions/user";
 import {useDispatch} from "react-redux";
@@ -10,6 +10,7 @@ import {useDispatch} from "react-redux";
 export default function LoginForm(){
     const [password, setPassword] = useState(''); //export
     const [email, setEmail] = useState(''); //export
+    const isButtonDisabled = email === '' || password === '';
     const dispatch = useDispatch()
 
     return (
@@ -33,6 +34,7 @@ export default function LoginForm(){
                         onChange={(e) => setPassword(e.target.value)}
                     />
                     <LoginBtn
+                        value={isButtonDisabled}
                         onClick={() => dispatch(login(email, password))}
                         setPassword={setPassword}
                     />
