@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore , combineReducers} from '@reduxjs/toolkit';
 import userReducer from "./user_reducer";
 import fileReducer from "./file_reducer";
 
@@ -12,10 +12,10 @@ function loggerMiddleware(store){
 }
 
 
-const rootReducer = {
+const rootReducer = combineReducers({
     user: userReducer,
-    file: fileReducer
-}
+    file: fileReducer,
+})
 
 export const store = configureStore({
     reducer: rootReducer,
