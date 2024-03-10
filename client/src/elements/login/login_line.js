@@ -2,9 +2,7 @@ import {Form, FormControl, InputGroup} from "react-bootstrap";
 import React, {useState} from "react";
 import {styles} from "../../styles/style";
 
-export const [email, setEmail] = useState('');
-
-export default function LoginLine() {
+export default function LoginLine(props) {
     const [loginIsFocused, setLoginIsFocused] = useState(false);
 
     const loginOnFocus = () => {
@@ -33,9 +31,8 @@ export default function LoginLine() {
                     <FormControl
                         type="text"
                         placeholder="Email"
-                        value={email}
-                        onChange={(e) =>
-                            setEmail(e.target.value)}
+                        value={props.value}
+                        onChange={props.onChange}
                         style={loginLineStyle()}
                         onFocus={loginOnFocus}
                         onBlur={loginOnBlur}

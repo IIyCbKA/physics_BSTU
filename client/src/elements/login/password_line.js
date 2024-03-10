@@ -4,9 +4,7 @@ import eyeOpen from "../../images/eyeOpen.png";
 import React, {useState} from "react";
 import {styles} from "../../styles/style";
 
-export const [password, setPassword] = useState('');
-
-export default function PasswordLine(){
+export default function PasswordLine(props){
     const [showPassword, setShowPassword] = useState(false);
     const [passwordIsFocused, setPasswordIsFocused] = useState(false);
 
@@ -48,9 +46,8 @@ export default function PasswordLine(){
                     <FormControl
                         type={showPassword ? 'text' : 'password'}
                         placeholder="Пароль"
-                        value={password}
-                        onChange={(e) =>
-                            setPassword(e.target.value)}
+                        value={props.value}
+                        onChange={props.onChange}
                         style={passwordLineStyle()}
                         onFocus={passwordOnFocus}
                         onBlur={passwordOnBlur}

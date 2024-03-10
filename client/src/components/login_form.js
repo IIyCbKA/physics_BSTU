@@ -1,11 +1,17 @@
 import {motion} from "framer-motion";
 import {Form} from "react-bootstrap";
-import React from "react";
-import LoginLine from "../elements/login/login_line";
-import PasswordLine from "../elements/login/password_line";
+import React, {useState} from "react";
+import LoginLine, {email} from "../elements/login/login_line";
+import PasswordLine, {password} from "../elements/login/password_line";
 import LoginBtn from "../elements/login/login_btn";
+import {login} from "../actions/user";
+import {useDispatch} from "react-redux";
 
 export default function LoginForm(){
+    const [password, setPassword] = useState(''); //export
+    const [email, setEmail] = useState(''); //export
+    const dispatch = useDispatch()
+
     return (
         <div className="form-container">
             <motion.div
@@ -18,9 +24,18 @@ export default function LoginForm(){
             >
                 <Form className="form">
                     <h2 className="form-title">Авторизация</h2>
-                    <LoginLine/>
-                    <PasswordLine/>
-                    <LoginBtn/>
+                    <LoginLine
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <PasswordLine
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <LoginBtn
+                        onClick={() => dispatch(login(email, password))}
+                        setPassword={setPassword}
+                    />
                 </Form>
             </motion.div>
         </div>

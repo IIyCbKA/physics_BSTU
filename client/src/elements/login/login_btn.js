@@ -3,24 +3,22 @@ import {login} from "../../actions/user";
 import {styles} from "../../styles/style";
 import React, {useState} from "react";
 import {useDispatch} from "react-redux";
-import {email} from "./login_line";
-import {password, setPassword} from "./password_line";
 
-const dispatch = useDispatch()
-const isButtonDisabled = email === '' || password === '';
-const [btnIsFocused, setBtnIsFocused] = useState(false);
-const [isButtonShaking, setButtonShaking] = useState(false);
 
-function incorrectData(){
-    setButtonShaking(true);
+export default function LoginBtn(props){
+    //const isButtonDisabled = email === '' || password === '';
+    const [btnIsFocused, setBtnIsFocused] = useState(false);
+    const [isButtonShaking, setButtonShaking] = useState(false);
 
-    setTimeout(() => {
-        setButtonShaking(false);
-        setPassword('');
-    }, 500);
-}
+    function incorrectData(){
+        setButtonShaking(true);
 
-export default function LoginBtn(){
+        setTimeout(() => {
+            setButtonShaking(false);
+            props.setPassword('');
+        }, 500);
+    }
+
     const changeBtnActive = () => {
         setBtnIsFocused(!btnIsFocused);
     };
@@ -36,16 +34,16 @@ export default function LoginBtn(){
     return (
         <div className="btn-margin">
             <Button variant="primary"
-                    onClick={() => dispatch(login(email, password))}
                     type="submit"
                     style={{
                         ...styles.formButtonStyle,
                         backgroundColor: btnColor(),
                         animation: isButtonShaking ? "shakeButton 0.5s" : "none"
                     }}
+                    onClick={props.onClick}
                     onMouseEnter={changeBtnActive}
                     onMouseLeave={changeBtnActive}
-                    disabled={isButtonDisabled}
+                    //disabled={isButtonDisabled}
                     className="form-btn">
                 <h2 className="no-margin">Продолжить</h2>
             </Button>
