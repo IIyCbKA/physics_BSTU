@@ -1,15 +1,10 @@
-import { configureStore , combineReducers} from '@reduxjs/toolkit';
+import {
+    configureStore,
+    combineReducers,
+} from '@reduxjs/toolkit';
 import userReducer from "./user_reducer";
 import fileReducer from "./file_reducer";
-
-
-function loggerMiddleware(store){
-    return function (next){
-        return function (action){
-            console.log(store, next, action)
-        }
-    }
-}
+import {thunk} from "redux-thunk";
 
 
 const rootReducer = combineReducers({
@@ -17,8 +12,8 @@ const rootReducer = combineReducers({
     file: fileReducer,
 })
 
+
 export const store = configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(loggerMiddleware)
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk)
 })
