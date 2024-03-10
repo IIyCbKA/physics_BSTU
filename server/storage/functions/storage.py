@@ -9,7 +9,7 @@ def addFileToStorage(file: Annotated[UploadFile, File()], id: int) -> bool:
     fileData = file.file.read()
     bucketName: str = "storage"
     folderName: str = "files"
-    fileName: str = str(id)
+    fileName: str = f"{id}.{file.filename.split('.')[-1]}"
     try:
         minio_client.put_object(bucketName, f"{folderName}/{fileName}",
                                 BytesIO(fileData), len(fileData))
@@ -26,9 +26,8 @@ def getFileObject(path: str):
         return None
 
 
-def deleteFileObject(path):
+def deleteFileObject(path: str):
     try:
         minio_client.remove_object('storage', path)
-        return True
     except Exception:
-        return False
+        pass

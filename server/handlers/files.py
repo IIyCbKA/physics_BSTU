@@ -4,7 +4,7 @@ from server.data.functions.files import *
 from server.storage.functions.storage import *
 from server.handlers.schemas import *
 
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi import WebSocket, WebSocketDisconnect, File, UploadFile, Form
 from typing import Dict, Annotated
 import os
@@ -78,9 +78,9 @@ async def deleteFile(data: DeleteFileData):
         fileID: int = getFileID(data.fileName, data.path)
         if fileID != -1:
             deleteFileFromDB(data.fileName, data.path)
-            if deleteFileObject(f'files/{fileID}'):
-                await sendFilesNameListToAll(data.path)
-                return JSONResponse(content={}, status_code=200)
+            deleteFileObject(f'files/{fileID}.{data.fileName.split(".")[-1]}')
+            await sendFilesNameListToAll(data.path)
+            return JSONResponse(content={}, status_code=200)
 
         return JSONResponse(content={'Error': 'File not found'},
                             status_code=404)
@@ -92,15 +92,21 @@ async def deleteFile(data: DeleteFileData):
 # path cодержит путь к файлу и его имя
 @fastApiServer.get('/api/download/disk{path:path}')
 async def handleFileDownloadRequest(path: str):
+    async def file_iterator():
+        yield data
+
     try:
         border = path.rfind('/') + 1
         fileName: str = path[border:]
         dirPath: str = path[:border]
         fileID: int = getFileID(fileName, dirPath)
         if fileID != -1:
-            file = getFileObject(f'files/{fileID}')
+            file = getFileObject(f'files/{fileID}.{fileName.split(".")[-1]}')
             if file is not None:
-                return FileResponse(file, filename=fileName)
+                data = file.read()
+
+                return StreamingResponse(file_iterator())
+
         return JSONResponse(content={'Error': 'File not found'},
                             status_code=404)
     except Exception as e:
