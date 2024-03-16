@@ -12,7 +12,7 @@ class DeleteFileData(BaseModel):
 
 
 class UserModel(BaseModel):
-    user_id: int
+    userID: int
     surname: str
     name: str
     patronymic: str
@@ -22,3 +22,7 @@ class UserModel(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str
+
+
+class TokenData(BaseModel):
+    userID: int | None = None

@@ -2,11 +2,16 @@ from server.application import fastApiServer
 from server.data.functions.users import *
 from server.settings.config import *
 
+from fastapi import Depends, HTTPException
 from fastapi.responses import JSONResponse
+from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from datetime import datetime, timedelta, timezone
-from typing import Dict
+from typing import Annotated
 import requests
+
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
 @fastApiServer.post("/api/login")
@@ -17,7 +22,7 @@ async def loginBstu(data: LoginData):
     }
 
     response = requests.post('https://lk.bstu.ru/api/login', data=login_data)
-    requestResult: Dict = response.json()
+    requestResult: dict = response.json()
 
     if requestResult['success']:
         responseData: dict = auth(requestResult)
@@ -26,30 +31,31 @@ async def loginBstu(data: LoginData):
     return JSONResponse(content={'success': False}, status_code=401)
 
 
-def auth(data: Dict) -> Dict:
+def auth(data: dict) -> dict:
     userData: UserModel = UserModel(
-        user_id=data['result']['user_info']['default_account_id'],
+        userID=data['result']['user_info']['default_account_id'],
         surname=data['result']['user_info']['surname'],
         name=data['result']['user_info']['name'],
         patronymic=data['result']['user_info']['patronymic'],
         status=data['result']['user_info']['default_account_key']
     )
 
-    if not searchUser(userData.id):
+    if not searchUser(userData.userID):
         addUser(userData)
         if userData.status == 'student':
             groupName: str = data['result']['user_info']['accounts'][0]
             groupID: int = getGroupID(groupName)
             if groupID == -1:
                 addGroup(groupName)
-            addStudent(userData.user_id, groupID)
+            addStudent(userData.userID, groupID)
         else:
-            addEmployee(userData.user_id)
+            addEmployee(userData.userID)
 
     accessTokenExpires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    userToken: str = createAccessToken({}, accessTokenExpires)
+    userToken: str = createAccessToken({'userID': userData.userID},
+                                       accessTokenExpires)
 
-    return {"success": True, "user": {"id": userData.user_id},
+    return {"success": True, "user": {"id": userData.userID},
             "token": userToken}
 
 
@@ -62,3 +68,24 @@ def createAccessToken(data: dict, expiresDelta: timedelta | None = None):
     toEncode.update({"exp": expire})
     encodedJWT = jwt.encode(toEncode, SECRET_KEY, algorithm=ALGORITHM)
     return encodedJWT
+
+
+async def getCurrentUser(token: Annotated[str, Depends(oauth2_scheme)]):
+    credentials_exception = HTTPException(
+        status_code=401,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        userID: int = payload.get("userID")
+        if userID is None:
+            raise credentials_exception
+        tokenData = TokenData(userID=userID)
+    except JWTError:
+        raise credentials_exception
+    user: bool = searchUser(tokenData.userID)
+    if user is False:
+        raise credentials_exception
+    return userID

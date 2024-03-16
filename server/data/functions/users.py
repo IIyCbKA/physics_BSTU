@@ -3,7 +3,7 @@ from server.data.db_session import db
 from server.handlers.schemas import *
 
 
-def searchUser(id: str) -> bool:
+def searchUser(id: int) -> bool:
     result = db.query(Users).filter_by(user_id=id).first()
     return result is True
 
