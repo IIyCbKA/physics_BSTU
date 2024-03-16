@@ -17,3 +17,8 @@ class UserModel(BaseModel):
     name: str
     patronymic: str
     status: str
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str

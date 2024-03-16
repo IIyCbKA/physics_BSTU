@@ -1,7 +1,10 @@
 from server.application import fastApiServer
 from server.data.functions.users import *
+from server.settings.config import *
 
 from fastapi.responses import JSONResponse
+from jose import JWTError, jwt
+from datetime import datetime, timedelta, timezone
 from typing import Dict
 import requests
 
@@ -14,14 +17,16 @@ async def loginBstu(data: LoginData):
     }
 
     response = requests.post('https://lk.bstu.ru/api/login', data=login_data)
-    reqResult: Dict = response.json()
-    if reqResult['success']:
-        auth(reqResult)
+    requestResult: Dict = response.json()
 
-    return JSONResponse(content={}, status_code=200)
+    if requestResult['success']:
+        responseData: dict = auth(requestResult)
+        return JSONResponse(content={responseData}, status_code=200)
+
+    return JSONResponse(content={'success': False}, status_code=401)
 
 
-def auth(data: Dict) -> None:
+def auth(data: Dict) -> Dict:
     userData: UserModel = UserModel(
         user_id=data['result']['user_info']['default_account_id'],
         surname=data['result']['user_info']['surname'],
@@ -40,3 +45,19 @@ def auth(data: Dict) -> None:
             addStudent(userData.user_id, groupID)
         else:
             addEmployee(userData.user_id)
+
+    accessTokenExpires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    userToken: str = createAccessToken({}, accessTokenExpires)
+
+    return {"user": {"id": userData.user_id}, "token": userToken}
+
+
+def createAccessToken(data: dict, expiresDelta: timedelta | None = None):
+    toEncode = data.copy()
+    if expiresDelta:
+        expire = datetime.now(timezone.utc) + expiresDelta
+    else:
+        expire = datetime.now(timezone.utc) + timedelta(minutes=15)
+    toEncode.update({"exp": expire})
+    encodedJWT = jwt.encode(toEncode, SECRET_KEY, algorithm=ALGORITHM)
+    return encodedJWT
