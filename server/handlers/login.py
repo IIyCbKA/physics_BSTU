@@ -49,7 +49,8 @@ def auth(data: Dict) -> Dict:
     accessTokenExpires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     userToken: str = createAccessToken({}, accessTokenExpires)
 
-    return {"user": {"id": userData.user_id}, "token": userToken}
+    return {"success": True, "user": {"id": userData.user_id},
+            "token": userToken}
 
 
 def createAccessToken(data: dict, expiresDelta: timedelta | None = None):
