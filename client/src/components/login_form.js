@@ -12,6 +12,11 @@ export default function LoginForm(){
     const [email, setEmail] = useState(''); //export
     const isButtonDisabled = email === '' || password === '';
     const dispatch = useDispatch()
+    
+    const onClick = (e) => {
+    	e.preventDefault()
+    	dispatch(login(email, password))
+    }
 
     return (
         <div className="form-container">
@@ -35,7 +40,7 @@ export default function LoginForm(){
                     />
                     <LoginBtn
                         value={isButtonDisabled}
-                        onClick={() => dispatch(login(email, password))}
+                        onClick={onClick}
                         setPassword={setPassword}
                     />
                 </Form>
