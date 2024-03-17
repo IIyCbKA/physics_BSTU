@@ -21,7 +21,9 @@ async def loginBstu(data: LoginData):
         'password': data.password
     }
 
-    response = requests.post('https://lk.bstu.ru/api/login', data=login_data)
+    response = requests.post('https://lk.bstu.ru/api/login',
+                             data=login_data)
+
     requestResult: dict = response.json()
 
     if requestResult['success']:
@@ -43,10 +45,11 @@ def auth(data: dict) -> dict:
     if getUser(userData.userID) is None:
         addUser(userData)
         if userData.status == 'student':
-            groupName: str = data['result']['user_info']['accounts'][0]
+            groupName: str = data['result']['user_info']['accounts'][0][
+                'data']['group']['name']
             groupID: int = getGroupID(groupName)
             if groupID == -1:
-                addGroup(groupName)
+                groupID = addGroup(groupName)
             addStudent(userData.userID, groupID)
         else:
             addEmployee(userData.userID)
@@ -86,10 +89,10 @@ async def getCurrentUser(token: Annotated[str, Depends(oauth2_scheme)]):
     except JWTError:
         raise credentials_exception
     # !!!проверить это
-    userData: dict | None = getUserDict(tokenData.userID)
+    userData: dict | None = getUserModel(tokenData.userID)
     if userData is None:
         raise credentials_exception
-    return UserModel(**userData)
+    return userData
 
 
 async def getCurrentActiveUser(

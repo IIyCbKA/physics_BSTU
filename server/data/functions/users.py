@@ -8,20 +8,20 @@ def getUser(id: int) -> tuple | None:
     return result if result else None
 
 
-def getUserDict(id: int) -> dict | None:
-    result = getUser(id)
+def getUserModel(id: int) -> UserModel | None:
+    result: tuple | None = getUser(id)
     if result is None:
         return None
 
-    resultDict = {
-        'userID': result[0],
-        'surname': result[1],
-        'name': result[2],
-        'patronymic': result[3],
-        'status': result[4]
-    }
+    resultModel: UserModel = UserModel(
+        userID=result[0],
+        surname=result[1],
+        name=result[2],
+        patronymic=result[3],
+        status=result[4]
+    )
 
-    return resultDict
+    return resultModel
 
 
 def getGroupID(name: str) -> int:
@@ -30,15 +30,21 @@ def getGroupID(name: str) -> int:
 
 
 def addUser(data: UserModel) -> None:
-    # !!!проверить это
-    db.add(Users(*data))
+    db.add(Users(
+        user_id=data.userID,
+        surname=data.surname,
+        name=data.name,
+        patronymic=data.patronymic,
+        status=data.status
+    ))
     db.commit()
 
 
-def addGroup(groupName: str) -> None:
-    # !!!проверить это
-    db.add(Groups(*groupName))
+def addGroup(groupName: str) -> int:
+    newGroup = Groups(group_name=groupName)
+    db.add(newGroup)
     db.commit()
+    return newGroup.group_id
 
 
 def addStudent(studentID: int, groupID: int) -> None:
