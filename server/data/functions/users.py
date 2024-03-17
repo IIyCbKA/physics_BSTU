@@ -3,9 +3,25 @@ from server.data.db_session import db
 from server.handlers.schemas import *
 
 
-def searchUser(id: int) -> bool:
+def getUser(id: int) -> tuple | None:
     result = db.query(Users).filter_by(user_id=id).first()
-    return result is True
+    return result if result else None
+
+
+def getUserDict(id: int) -> dict | None:
+    result = getUser(id)
+    if result is None:
+        return None
+
+    resultDict = {
+        'userID': result[0],
+        'surname': result[1],
+        'name': result[2],
+        'patronymic': result[3],
+        'status': result[4]
+    }
+
+    return resultDict
 
 
 def getGroupID(name: str) -> int:
@@ -14,20 +30,14 @@ def getGroupID(name: str) -> int:
 
 
 def addUser(data: UserModel) -> None:
-    db.add(Users(
-        user_id=data.user_id,
-        surname=data.surname,
-        name=data.name,
-        patronymic=data.patronymic,
-        status=data.status
-    ))
+    # !!!проверить это
+    db.add(Users(*data))
     db.commit()
 
 
 def addGroup(groupName: str) -> None:
-    db.add(Groups(
-        group_name=groupName
-    ))
+    # !!!проверить это
+    db.add(Groups(*groupName))
     db.commit()
 
 

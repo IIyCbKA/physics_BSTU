@@ -40,7 +40,7 @@ def auth(data: dict) -> dict:
         status=data['result']['user_info']['default_account_key']
     )
 
-    if not searchUser(userData.userID):
+    if getUser(userData.userID) is None:
         addUser(userData)
         if userData.status == 'student':
             groupName: str = data['result']['user_info']['accounts'][0]
@@ -85,7 +85,16 @@ async def getCurrentUser(token: Annotated[str, Depends(oauth2_scheme)]):
         tokenData = TokenData(userID=userID)
     except JWTError:
         raise credentials_exception
-    user: bool = searchUser(tokenData.userID)
-    if user is False:
+    # !!!проверить это
+    userData: dict | None = getUserDict(tokenData.userID)
+    if userData is None:
         raise credentials_exception
-    return userID
+    return UserModel(**userData)
+
+
+async def getCurrentActiveUser(
+        currentUser: Annotated[UserModel, Depends(getCurrentUser)]):
+    # !!!тут проблема с disabled
+    if currentUser.disabled:
+        raise HTTPException(status_code=400, detail="Inactive user")
+    return currentUser
