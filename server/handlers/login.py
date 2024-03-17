@@ -28,7 +28,7 @@ async def loginBstu(data: LoginData):
 
     if requestResult['success']:
         responseData: dict = auth(requestResult)
-        return JSONResponse(content={responseData}, status_code=200)
+        return JSONResponse(content=responseData, status_code=200)
 
     return JSONResponse(content={'success': False}, status_code=401)
 
@@ -88,7 +88,6 @@ async def getCurrentUser(token: Annotated[str, Depends(oauth2_scheme)]):
         tokenData = TokenData(userID=userID)
     except JWTError:
         raise credentials_exception
-    # !!!проверить это
     userData: dict | None = getUserModel(tokenData.userID)
     if userData is None:
         raise credentials_exception
