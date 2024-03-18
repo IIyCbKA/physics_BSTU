@@ -7,7 +7,7 @@ export const login = (email, password) => {
             const response = await $host.post('/api/login',
                 {email, password})
 
-            if (response.status === 200){
+            if (response.data.success === true){
                 console.log(response.data)
                 dispatch(setUser(response.data.user))
                 localStorage.setItem('token', response.data.token)
