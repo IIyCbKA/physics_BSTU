@@ -2,7 +2,7 @@ from server.application import fastApiServer
 from server.data.functions.users import *
 from server.settings.config import *
 
-from fastapi import Depends, HTTPException, Request
+from fastapi import Depends, HTTPException
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
@@ -62,22 +62,27 @@ def auth(data: dict) -> dict:
         else:
             addEmployee(userData.userID)
 
-    accessTokenExpires = timedelta(minutes=15)
-    userToken: str = createAccessToken({'userID': userData.userID}, accessTokenExpires)
+    accessTokenExpires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    refreshTokenExpires = timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS)
+    userToken: str = createToken({'userID': userData.userID},
+                                 accessTokenExpires)
+    refreshToken: str = createToken({'userID': userData.userID},
+                                    refreshTokenExpires)
 
     return {"success": True, "user": {"id": userData.userID},
-            "token": userToken}
+            "token": userToken, "refresh_token": refreshToken}
 
 
-def createAccessToken(data: dict, expiresDelta: timedelta | None = None):
+def createToken(data: dict, expiresDelta: timedelta | None = None):
     toEncode = data.copy()
     if expiresDelta:
         expire = datetime.now(timezone.utc) + expiresDelta
     else:
-        expire = datetime.now(timezone.utc) + timedelta(minutes=15)
+        expire = datetime.now(timezone.utc) + timedelta(minutes=30)
     toEncode.update({"exp": expire})
     encodedJWT = jwt.encode(toEncode, SECRET_KEY, algorithm=ALGORITHM)
     return encodedJWT
+
 
 async def getCurrentUser(token: Annotated[str, Depends(oauth2_scheme)]):
     credentials_exception = HTTPException(
@@ -99,8 +104,8 @@ async def getCurrentUser(token: Annotated[str, Depends(oauth2_scheme)]):
         raise credentials_exception
 
     accessTokenExpires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    userToken: str = createAccessToken({'userID': userData.userID},
-                                       accessTokenExpires)
+    userToken: str = createToken({'userID': userData.userID},
+                                 accessTokenExpires)
 
     return {"user": {"id": userData.userID}, "token": userToken}
 
@@ -111,3 +116,16 @@ async def getAuthToken(userInfo: Annotated[dict, Depends(getCurrentUser)]):
         return JSONResponse(content=userInfo, status_code=200)
     else:
         return JSONResponse(content={'token loss'}, status_code=401)
+
+
+@fastApiServer.get("/api/auth_refresh_token")
+async def getAuthRefreshToken(userInfo: Annotated[dict, Depends(getCurrentUser)]):
+    if userInfo != 'null':
+        refreshTokenExpires = timedelta(minutes=REFRESH_TOKEN_EXPIRE_DAYS)
+        newRefreshToken: str = createToken({'userID':
+                                            userInfo['user']['id']},
+                                           refreshTokenExpires)
+        userInfo['refresh_token'] = newRefreshToken
+        return JSONResponse(content=userInfo, status_code=200)
+    else:
+        return JSONResponse(content={'refresh token loss'}, status_code=401)
