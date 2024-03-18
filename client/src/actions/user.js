@@ -1,18 +1,18 @@
 import {$host} from "../routes";
 import {setUser} from "../reducers/user_reducer";
+import Cookies from 'js-cookie';
 
 export const login = (email, password) => {
     return async (dispatch) => {
         try{
-            console.log(123);
             const response = await $host.post('/api/login',
                 {email, password})
-            console.log(456)
 
             if (response.data.success === true){
                 console.log(response.data)
                 dispatch(setUser(response.data.user))
                 localStorage.setItem('token', response.data.token)
+                Cookies.set('refresh_token', response.data.refresh_token)
             } else {
                 console.log(response.data)
             }
@@ -28,8 +28,11 @@ export const auth = () =>{
     return async (dispatch) => {
         try{
             const token = localStorage.getItem('token')
-            if (token == null)
+            if (token == null){
+                dispatch(refreshTokenAuth())
                 return
+            }
+
             const response = await $host.get('/api/auth_token',
                 {headers: {
                         Authorization: `Bearer ${token}`}
@@ -41,12 +44,37 @@ export const auth = () =>{
                 dispatch(setUser(response.data.user))
                 localStorage.setItem('token', response.data.token)
             } else {
-                localStorage.removeItem('token')
-                console.log(response.data)
+                dispatch(refreshTokenAuth())
             }
         } catch (e) {
-            console.log(e)
-            localStorage.removeItem('token')
+            dispatch(refreshTokenAuth())
         }
     }
 };
+
+
+const refreshTokenAuth = () => {
+    return async (dispatch) => {
+        try{
+            const refreshToken = Cookies.get('refresh_token')
+
+            if (refreshToken == null){
+                return
+            }
+            const response = await $host.get('/api/auth_refresh_token',
+                {headers: {
+                        Authorization: `Bearer ${refreshToken}`}
+                })
+
+            if (response.status === 200){
+                dispatch(setUser(response.data.user))
+                localStorage.setItem('token', response.data.token)
+                Cookies.set('refresh_token', response.data.refresh_token)
+            } else {
+                Cookies.remove('refresh_token')
+            }
+        } catch (e){
+            Cookies.remove('refresh_token')
+        }
+    }
+}
