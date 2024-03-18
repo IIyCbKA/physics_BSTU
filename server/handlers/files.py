@@ -7,8 +7,9 @@ from server.handlers.schemas import *
 from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi import WebSocket, WebSocketDisconnect, File, UploadFile, Form
 from typing import Dict, Annotated
+from fastapi import Depends
 import os
-
+from server.handlers.login import getCurrentUser
 
 clients: Dict = {}
 
@@ -43,7 +44,7 @@ async def sendFilesNameListToAll(path: str):
 # Роут на получение списка файлов
 # Аргумент path - путь к директории папки
 @fastApiServer.get('/disk{path:path}')
-async def filesList(path: str):
+async def filesList(path: str, user: Annotated[dict, Depends(getCurrentUser)]):
     filesName = getFilesNameList(path)
     print(filesName)
     return JSONResponse(content=filesName, status_code=200)

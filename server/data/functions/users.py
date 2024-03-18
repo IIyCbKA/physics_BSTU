@@ -14,11 +14,11 @@ def getUserModel(id: int) -> UserModel | None:
         return None
 
     resultModel: UserModel = UserModel(
-        userID=result[0],
-        surname=result[1],
-        name=result[2],
-        patronymic=result[3],
-        status=result[4]
+        userID=result.user_id,
+        surname=result.surname,
+        name=result.name,
+        patronymic=result.patronymic,
+        status=result.status
     )
 
     return resultModel

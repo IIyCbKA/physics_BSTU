@@ -23,6 +23,7 @@ function Home() {
             .then(result => {
                 setFilesName(result.files);
                 setDirsName(result.dirs);
+                console.log(result)
             })
             .catch(error => {
                 console.error('Error fetching files:', error);

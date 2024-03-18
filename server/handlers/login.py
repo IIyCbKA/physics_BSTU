@@ -25,6 +25,7 @@ async def loginBstu(data: LoginData):
                              data=login_data)
 
     requestResult: dict = response.json()
+    # requestResult: dict = {'success': True}
 
     if requestResult['success']:
         responseData: dict = auth(requestResult)
@@ -41,6 +42,13 @@ def auth(data: dict) -> dict:
         patronymic=data['result']['user_info']['patronymic'],
         status=data['result']['user_info']['default_account_key']
     )
+    # userData: UserModel = UserModel(
+    #     userID=123123,
+    #     surname='surname',
+    #     name='name',
+    #     patronymic='patronymic',
+    #     status='student'
+    # )
 
     if getUser(userData.userID) is None:
         addUser(userData)
@@ -54,9 +62,8 @@ def auth(data: dict) -> dict:
         else:
             addEmployee(userData.userID)
 
-    accessTokenExpires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    userToken: str = createAccessToken({'userID': userData.userID},
-                                       accessTokenExpires)
+    accessTokenExpires = timedelta(minutes=15)
+    userToken: str = createAccessToken({'userID': userData.userID}, accessTokenExpires)
 
     return {"success": True, "user": {"id": userData.userID},
             "token": userToken}
@@ -72,8 +79,6 @@ def createAccessToken(data: dict, expiresDelta: timedelta | None = None):
     encodedJWT = jwt.encode(toEncode, SECRET_KEY, algorithm=ALGORITHM)
     return encodedJWT
 
-
-@fastApiServer.get("/api/auth_token")
 async def getCurrentUser(token: Annotated[str, Depends(oauth2_scheme)]):
     credentials_exception = HTTPException(
         status_code=401,
@@ -97,5 +102,12 @@ async def getCurrentUser(token: Annotated[str, Depends(oauth2_scheme)]):
     userToken: str = createAccessToken({'userID': userData.userID},
                                        accessTokenExpires)
 
-    return JSONResponse(content={"user": {"id": userData.userID},
-                                 "token": userToken}, status_code=200)
+    return {"user": {"id": userData.userID}, "token": userToken}
+
+
+@fastApiServer.get("/api/auth_token")
+async def getAuthToken(userInfo: Annotated[dict, Depends(getCurrentUser)]):
+    if userInfo != 'null':
+        return JSONResponse(content=userInfo, status_code=200)
+    else:
+        return JSONResponse(content={'token loss'}, status_code=401)

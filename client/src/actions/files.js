@@ -2,7 +2,7 @@ import { SERVER, $host } from "../routes"
 
 export const getFilesName = async (path) => {
     try{
-        const response = await $host.get(path , {params: {path}})
+        const response = await $host.get(path , {params: {path}, headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}})
         return response.data
     }
     catch (e){
