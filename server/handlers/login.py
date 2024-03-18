@@ -2,7 +2,7 @@ from server.application import fastApiServer
 from server.data.functions.users import *
 from server.settings.config import *
 
-from fastapi import Depends, HTTPException
+from fastapi import Depends, HTTPException, Request
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
@@ -73,6 +73,7 @@ def createAccessToken(data: dict, expiresDelta: timedelta | None = None):
     return encodedJWT
 
 
+@fastApiServer.post("/api/auth_token")
 async def getCurrentUser(token: Annotated[str, Depends(oauth2_scheme)]):
     credentials_exception = HTTPException(
         status_code=401,
@@ -88,15 +89,7 @@ async def getCurrentUser(token: Annotated[str, Depends(oauth2_scheme)]):
         tokenData = TokenData(userID=userID)
     except JWTError:
         raise credentials_exception
-    userData: dict | None = getUserModel(tokenData.userID)
+    userData: UserModel | None = getUserModel(tokenData.userID)
     if userData is None:
         raise credentials_exception
     return userData
-
-
-async def getCurrentActiveUser(
-        currentUser: Annotated[UserModel, Depends(getCurrentUser)]):
-    # !!!тут проблема с disabled
-    if currentUser.disabled:
-        raise HTTPException(status_code=400, detail="Inactive user")
-    return currentUser
