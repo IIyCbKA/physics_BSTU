@@ -97,6 +97,5 @@ async def getCurrentUser(token: Annotated[str, Depends(oauth2_scheme)]):
     userToken: str = createAccessToken({'userID': userData.userID},
                                        accessTokenExpires)
 
-    return JSONResponse(content={"success": True,
-                                 "user": {"id": userData.userID},
+    return JSONResponse(content={"user": {"id": userData.userID},
                                  "token": userToken}, status_code=200)
