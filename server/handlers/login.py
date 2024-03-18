@@ -92,4 +92,10 @@ async def getCurrentUser(token: Annotated[str, Depends(oauth2_scheme)]):
     userData: UserModel | None = getUserModel(tokenData.userID)
     if userData is None:
         raise credentials_exception
-    return userData
+
+    accessTokenExpires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    userToken: str = createAccessToken({'userID': userData.userID},
+                                       accessTokenExpires)
+
+    return {"success": True, "user": {"id": userData.userID},
+            "token": userToken}
