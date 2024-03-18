@@ -73,7 +73,7 @@ def createAccessToken(data: dict, expiresDelta: timedelta | None = None):
     return encodedJWT
 
 
-@fastApiServer.post("/api/auth_token")
+@fastApiServer.get("/api/auth_token")
 async def getCurrentUser(token: Annotated[str, Depends(oauth2_scheme)]):
     credentials_exception = HTTPException(
         status_code=401,
