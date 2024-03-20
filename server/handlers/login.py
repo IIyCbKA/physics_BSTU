@@ -31,7 +31,10 @@ async def loginBstu(data: LoginData):
         responseData: dict = auth(requestResult)
         return JSONResponse(content=responseData, status_code=200)
 
-    return JSONResponse(content={'success': False}, status_code=401)
+    raise HTTPException(
+        status_code=401,
+        detail="Could not login",
+    )
 
 
 def auth(data: dict) -> dict:
@@ -87,7 +90,7 @@ def createToken(data: dict, expiresDelta: timedelta | None = None):
 async def getCurrentUser(token: Annotated[str, Depends(oauth2_scheme)]):
     credentials_exception = HTTPException(
         status_code=401,
-        detail="Could not validate credentials",
+        detail="Could not validate credentials by token",
         headers={"WWW-Authenticate": "Bearer"},
     )
 
@@ -115,7 +118,10 @@ async def getAuthToken(userInfo: Annotated[dict, Depends(getCurrentUser)]):
     if userInfo != 'null':
         return JSONResponse(content=userInfo, status_code=200)
     else:
-        return JSONResponse(content={'token loss'}, status_code=401)
+        raise HTTPException(
+            status_code=401,
+            detail="Could not validate credentials by token",
+        )
 
 
 @fastApiServer.get("/api/auth_refresh_token")
@@ -128,4 +134,7 @@ async def getAuthRefreshToken(userInfo: Annotated[dict, Depends(getCurrentUser)]
         userInfo['refresh_token'] = newRefreshToken
         return JSONResponse(content=userInfo, status_code=200)
     else:
-        return JSONResponse(content={'refresh token loss'}, status_code=401)
+        raise HTTPException(
+            status_code=401,
+            detail="Could not validate credentials by refresh token",
+        )
