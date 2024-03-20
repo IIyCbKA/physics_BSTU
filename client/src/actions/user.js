@@ -33,10 +33,7 @@ export const auth = () =>{
                 return
             }
 
-            const response = await $host.get('/api/auth_token',
-                {headers: {
-                        Authorization: `Bearer ${token}`}
-                })
+            const response = await $host.get('/api/auth_token')
 
             console.log('status', response.status)
             if (response.status === 200){
@@ -61,10 +58,7 @@ const refreshTokenAuth = () => {
             if (refreshToken == null){
                 return
             }
-            const response = await $host.get('/api/auth_refresh_token',
-                {headers: {
-                        Authorization: `Bearer ${refreshToken}`}
-                })
+            const response = await $host.get('/api/auth_refresh_token')
 
             if (response.status === 200){
                 dispatch(setUser(response.data.user))

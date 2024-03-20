@@ -55,7 +55,8 @@ async def filesList(path: str, user: Annotated[dict, Depends(getCurrentUser)]):
 # также передаётся один файл
 @fastApiServer.post('/api/add_file')
 async def addFile(file: Annotated[UploadFile, File()],
-                  path: Annotated[str, Form()]):
+                  path: Annotated[str, Form()],
+                  user: Annotated[dict, Depends(getCurrentUser)]):
     path = path.replace('/disk', '', 1)
     fileID: int = addFileToDB(file, path)
     if fileID == -1:
@@ -73,7 +74,7 @@ async def addFile(file: Annotated[UploadFile, File()],
 # Роут для удаления файла
 # В параметрах filename - имя файла, path - путь к файлу
 @fastApiServer.post('/api/delete_file')
-async def deleteFile(data: DeleteFileData):
+async def deleteFile(data: DeleteFileData, user: Annotated[dict, Depends(getCurrentUser)]):
     try:
         data.path = data.path.replace('/disk', '', 1)
         fileID: int = getFileID(data.fileName, data.path)
@@ -92,7 +93,7 @@ async def deleteFile(data: DeleteFileData):
 # Роут для загрузки файла
 # path cодержит путь к файлу и его имя
 @fastApiServer.get('/api/download/disk{path:path}')
-async def handleFileDownloadRequest(path: str):
+async def handleFileDownloadRequest(path: str, user: Annotated[dict, Depends(getCurrentUser)]):
     async def file_iterator():
         yield data
 

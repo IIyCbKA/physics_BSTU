@@ -43,6 +43,7 @@ function Home() {
         const data = JSON.parse(event.data)
         setFilesName(data.files)
         setDirsName(data.dirs)
+        console.log(data)
     }
 
     return (
