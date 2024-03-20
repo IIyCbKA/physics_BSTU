@@ -7,4 +7,5 @@ const $host = axios.create({
     baseURL: SERVER
 })
 
+
 export {$host}

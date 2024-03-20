@@ -1,4 +1,4 @@
-import {$host} from "../routes";
+import {$host} from "../server_files/server_connect";
 import {setUser} from "../reducers/user_reducer";
 import Cookies from 'js-cookie';
 

@@ -1,4 +1,4 @@
-import { SERVER, $host } from "../routes"
+import { SERVER, $host } from "../server_files/server_connect"
 
 export const getFilesName = async (path) => {
     try{
