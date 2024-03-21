@@ -58,7 +58,10 @@ const refreshTokenAuth = () => {
             if (refreshToken == null){
                 return
             }
-            const response = await $host.get('/api/auth_refresh_token')
+            const response = await $host.get('/api/auth_refresh_token',
+                {headers: {
+                        Authorization: `Bearer ${refreshToken}`}
+                })
 
             if (response.status === 200){
                 dispatch(setUser(response.data.user))

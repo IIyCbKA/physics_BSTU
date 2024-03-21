@@ -11,7 +11,7 @@ $host.interceptors.response.use(
         const originalRequest = error.config;
 
         if (error.response.status === 401 && !originalRequest._retry &&
-            error.response.detail === 'Could not validate credentials by token') {
+            error.response.data.detail === 'Could not validate credentials by token') {
             originalRequest._retry = true;
 
             const refreshToken = Cookies.get('refresh_token');
