@@ -186,3 +186,66 @@
     margin: 20px;
     background-color: #EBF0FF;
 }
+
+.file-area{
+    width: 104px;
+    height: 144px;
+    padding: 12px;
+}
+
+.item-icon{
+    width: 80px;
+    height: 80px;
+    align-items: flex-end;
+    display: flex;
+    flex-shrink: 0;
+    justify-content: center;
+    order: 0;
+}
+
+.item-info{
+    width: 80px;
+    height: 40px;
+    padding: 0;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.item-title{
+    height: 28px;
+    word-break: break-all;
+    line-height: 14px;
+    text-align: center;
+}
+
+.clamped-text{
+    display: inline-block;
+    word-break: break-all;
+    white-space: pre-line;
+    font: 13px / 14px "YS Text", sans-serif;
+    max-width: 80px;
+}
+
+.icon-wrapper{
+    position: relative;
+}
+
+.file-icon{
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.file-icon::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
