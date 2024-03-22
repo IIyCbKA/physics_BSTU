@@ -7,7 +7,7 @@ export default function File({name, type}){
     const iconClass = fileType + '-icon'
 
     return(
-        <div className="file-area">
+        <div className="file-area" onClick={(e) => e.stopPropagation()}>
             <div className="item-icon">
                 <div className="icon-wrapper">
                     <span className={'file-icon file-icon-size icon-contain ' +

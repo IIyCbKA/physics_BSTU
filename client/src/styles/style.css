@@ -182,7 +182,7 @@
 
 .storage-main {
     width: calc(100vw - 40px);
-    height: calc(100vh - 46px - 40px);
+    min-height: calc(100vh - 46px - 40px);
     margin: 20px;
     background-color: #EBF0FF;
 }
@@ -191,6 +191,12 @@
     width: 104px;
     height: 144px;
     padding: 12px;
+    transition: background-color 0.3s;
+    border-radius: 8px;
+}
+
+.file-area:hover {
+    background-color: #E1E6F5;
 }
 
 .item-icon{
@@ -313,4 +319,26 @@
 
 .other-icon{
     background-image: url("../elements/disk/icons/other_icon.png");
+}
+
+.root-content-inner{
+    padding: 0 24px;
+    min-height: calc(100vh - 86px);
+}
+
+.root-content-container{
+    flex: 0 1 100%;
+    min-width: 0;
+}
+
+.client-listing{
+    flex-grow: 1;
+}
+
+.listing-items{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
 }

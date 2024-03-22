@@ -20,7 +20,7 @@ function Home() {
         {id: 1233, name: '18.docx', type: 'docx'},
         {id: 1223, name: '19.pdf', type: 'pdf'},
         {id: 312312, name: 'main', type: 'folder'}
-    ].map(file => <File name={file.name} type={file.type} key={file.id}/>)
+    ]
 
     const location = useLocation();
     const path = location.pathname.endsWith('/') ? location.pathname:
@@ -63,7 +63,19 @@ function Home() {
             <div {...getRootProps()}>
                 <input {...getInputProps()} />
                 <div className='storage-main'>
-                    {fileList}
+                    <div className="root-content-inner">
+                        <div className="root-content-container">
+                            <div className="client-listing">
+                                <div className="listing-items">
+                                    {fileList.map(file => (
+                                        <File name={file.name}
+                                              type={file.type}
+                                              key={file.id}/>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 {isDragActive &&
                     <div className='drop-area'>
