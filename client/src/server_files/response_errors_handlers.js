@@ -21,7 +21,7 @@ $host.interceptors.response.use(
                 });
 
             if (response.status === 200){
-                const newToken = response.data.token;
+                const newToken = response.data.user.token;
                 localStorage.setItem('token', newToken);
                 Cookies.set('refresh_token', response.data.refresh_token)
                 originalRequest.headers.Authorization = `Bearer ${newToken}`;

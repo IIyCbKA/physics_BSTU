@@ -2,7 +2,7 @@ from server.application import fastApiServer
 from server.data.functions.users import *
 from server.settings.config import *
 
-from fastapi import Depends, HTTPException
+from fastapi import Depends, HTTPException, Request
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
@@ -12,7 +12,6 @@ import requests
 
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-
 
 @fastApiServer.post("/api/login")
 async def loginBstu(data: LoginData):
@@ -87,13 +86,8 @@ def createToken(data: dict, expiresDelta: timedelta | None = None):
     return encodedJWT
 
 
-async def getCurrentUser(token: Annotated[str, Depends(oauth2_scheme)]):
-    credentials_exception = HTTPException(
-        status_code=401,
-        detail="Could not validate credentials by token",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-
+async def getCurrentUserCommon(token: str,
+                               credentials_exception: HTTPException):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         userID: int = payload.get("userID")
@@ -106,11 +100,32 @@ async def getCurrentUser(token: Annotated[str, Depends(oauth2_scheme)]):
     if userData is None:
         raise credentials_exception
 
+    return {"user": {"id": userData.userID}}
+
+async def getCurrentUser(token: Annotated[str, Depends(oauth2_scheme)]):
+    credentials_exception = HTTPException(
+        status_code=401,
+        detail="Could not validate credentials by token",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+
+    return await getCurrentUserCommon(token, credentials_exception)
+
+async def getCurrentUserRefresh(token: Annotated[str, Depends(oauth2_scheme)]):
+    credentials_exception = HTTPException(
+        status_code=401,
+        detail="Could not update refresh token",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    userInfo = await getCurrentUserCommon(token, credentials_exception)
+
     accessTokenExpires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    userToken: str = createToken({'userID': userData.userID},
+    userToken: str = createToken({'userID': userInfo["user"]["id"]},
                                  accessTokenExpires)
 
-    return {"user": {"id": userData.userID}, "token": userToken}
+    userInfo['user']['token'] = userToken
+
+    return userInfo
 
 
 @fastApiServer.get("/api/auth_token")
@@ -125,7 +140,8 @@ async def getAuthToken(userInfo: Annotated[dict, Depends(getCurrentUser)]):
 
 
 @fastApiServer.get("/api/auth_refresh_token")
-async def getAuthRefreshToken(userInfo: Annotated[dict, Depends(getCurrentUser)]):
+async def getAuthRefreshToken(
+        userInfo: Annotated[dict, Depends(getCurrentUserRefresh)]):
     if userInfo != 'null':
         refreshTokenExpires = timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS)
         newRefreshToken: str = createToken({'userID':
