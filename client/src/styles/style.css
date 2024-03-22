@@ -249,3 +249,59 @@
     background-repeat: no-repeat;
     background-position: 50%;
 }
+
+.folder-icon{
+    background-image: url("../elements/disk/icons/folder_icon.png");
+}
+
+.docx-icon{
+    background-image: url("../elements/disk/icons/docx_icon.png")
+}
+
+.doc-icon{
+    background-image: url("../elements/disk/icons/docx_icon.png");
+}
+
+.png-icon{
+    background-image: url("../elements/disk/icons/image_icon.png");
+}
+
+.jpeg-icon{
+    background-image: url("../elements/disk/icons/image_icon.png");
+}
+
+.jpg-icon{
+    background-image: url("../elements/disk/icons/image_icon.png");
+}
+
+.pdf-icon{
+    background-image: url("../elements/disk/icons/pdf_icon.png");
+}
+
+.xls-icon{
+    background-image: url("../elements/disk/icons/xlsx_icon.png");
+}
+
+.xlsx-icon{
+    background-image: url("../elements/disk/icons/xlsx_icon.png");
+}
+
+.rar-icon{
+    background-image: url("../elements/disk/icons/archive_icon.png");
+}
+
+.zip-icon{
+    background-image: url("../elements/disk/icons/archive_icon.png");
+}
+
+.pptx-icon{
+    background-image: url("../elements/disk/icons/pptx_icon.png");
+}
+
+.mp4-icon{
+    background-image: url("../elements/disk/icons/video_icon.png");
+}
+
+.other-icon{
+    background-image: url("../elements/disk/icons/other_icon.png");
+}
