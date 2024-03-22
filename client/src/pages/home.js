@@ -7,12 +7,15 @@ import '../styles/style.css'
 import {useDropzone} from 'react-dropzone'
 import { createSocket } from '../socket_client';
 import {useLocation} from 'react-router-dom';
+import File from "../elements/disk/file";
 
 
 function Home() {
     // Список строк с именами файлов и директорий по текущему пути
     const [dirsName, setDirsName] = useState([])
     const [filesName, setFilesName] = useState([])
+    // для тестирования
+    const fileList = ['17.docx', '18.docx'].map(fileName => <File name={fileName} type={'docx'} key={fileName}/>)
 
     const location = useLocation();
     const path = location.pathname.endsWith('/') ? location.pathname:
@@ -55,6 +58,7 @@ function Home() {
             <div {...getRootProps()}>
                 <input {...getInputProps()} />
                 <div className='storage-main'>
+                    {fileList}
                 </div>
                 {isDragActive &&
                     <div className='drop-area'>
