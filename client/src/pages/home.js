@@ -14,8 +14,13 @@ function Home() {
     // Список строк с именами файлов и директорий по текущему пути
     const [dirsName, setDirsName] = useState([])
     const [filesName, setFilesName] = useState([])
+
     // для тестирования
-    const fileList = ['17.docx', '18.docx'].map(fileName => <File name={fileName} type={'docx'} key={fileName}/>)
+    const fileList = [{id: 12123, name: '17.docx', type: 'docx'},
+        {id: 1233, name: '18.docx', type: 'docx'},
+        {id: 1223, name: '19.pdf', type: 'pdf'},
+        {id: 312312, name: 'main', type: 'folder'}
+    ].map(file => <File name={file.name} type={file.type} key={file.id}/>)
 
     const location = useLocation();
     const path = location.pathname.endsWith('/') ? location.pathname:

@@ -230,6 +230,11 @@
     position: relative;
 }
 
+.file-icon-size{
+    height: 80px;
+    width: 80px;
+}
+
 .file-icon{
     position: relative;
     display: inline-block;
@@ -248,6 +253,10 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-position: 50%;
+}
+
+.icon-contain{
+    background-size: contain;
 }
 
 .folder-icon{

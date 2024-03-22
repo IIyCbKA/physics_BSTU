@@ -10,8 +10,8 @@ export default function File({name, type}){
         <div className="file-area">
             <div className="item-icon">
                 <div className="icon-wrapper">
-                    <span className={'file-icon ' + iconClass}>
-                    </span>
+                    <span className={'file-icon file-icon-size icon-contain ' +
+                        iconClass}></span>
                 </div>
             </div>
             <div className="item-info">
