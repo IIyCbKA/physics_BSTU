@@ -127,7 +127,7 @@ async def getAuthToken(userInfo: Annotated[dict, Depends(getCurrentUser)]):
 @fastApiServer.get("/api/auth_refresh_token")
 async def getAuthRefreshToken(userInfo: Annotated[dict, Depends(getCurrentUser)]):
     if userInfo != 'null':
-        refreshTokenExpires = timedelta(minutes=REFRESH_TOKEN_EXPIRE_DAYS)
+        refreshTokenExpires = timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS)
         newRefreshToken: str = createToken({'userID':
                                             userInfo['user']['id']},
                                            refreshTokenExpires)
