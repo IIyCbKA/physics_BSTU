@@ -19,7 +19,8 @@ function Home() {
     const fileList = [{id: 12123, name: '17.docx', type: 'docx'},
         {id: 1233, name: '18.docx', type: 'docx'},
         {id: 1223, name: '19.pdf', type: 'pdf'},
-        {id: 312312, name: 'main', type: 'folder'}
+        {id: 312312, name: 'main', type: 'folder'},
+        {id: 3235, name: '20.jpg', type: 'jpg'}
     ]
 
     const location = useLocation();
@@ -60,7 +61,7 @@ function Home() {
                 <title>Физика</title>
             </Helmet>
             <Header/>
-            <div {...getRootProps()}>
+            <div {...getRootProps()} className="storage">
                 <input {...getInputProps()} />
                 <div className='storage-main'>
                     <div className="root-content-inner">

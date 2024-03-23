@@ -180,11 +180,20 @@
     color: white;
 }
 
+.storage{
+    display: flex;
+}
+
 .storage-main {
     width: calc(100vw - 40px);
     min-height: calc(100vh - 46px - 40px);
+    min-width: 310px;
     margin: 20px;
     background-color: #EBF0FF;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 .file-area{
@@ -193,6 +202,7 @@
     padding: 12px;
     transition: background-color 0.3s;
     border-radius: 8px;
+    margin-bottom: 4px;
 }
 
 .file-area:hover {
@@ -324,6 +334,10 @@
 .root-content-inner{
     padding: 0 24px;
     min-height: calc(100vh - 86px);
+    display: flex;
+    flex-grow: 1;
+    box-sizing: border-box;
+    position: relative;
 }
 
 .root-content-container{
@@ -336,9 +350,9 @@
 }
 
 .listing-items{
-    display: flex;
-    justify-content: space-between;
     flex-direction: row;
     flex-wrap: wrap;
+    display: flex;
+    justify-content: space-between;
     width: 100%;
 }
