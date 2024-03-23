@@ -1,5 +1,3 @@
-import Cookies from "js-cookie";
-import {logout} from "../reducers/user_reducer";
 import {$host} from "./server_connect";
 
 
