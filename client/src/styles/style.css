@@ -332,7 +332,7 @@
 }
 
 .root-content-inner{
-    padding: 0 24px;
+    padding: 20px;
     min-height: calc(100vh - 86px);
     display: flex;
     flex-grow: 1;
@@ -350,9 +350,8 @@
 }
 
 .listing-items{
-    flex-direction: row;
-    flex-wrap: wrap;
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+    display: grid;
+    grid-gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+    justify-items: center;
 }
