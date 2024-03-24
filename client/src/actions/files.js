@@ -28,15 +28,12 @@ export const uploadFile = async (file, dir_path) => {
 }
 
 export const downloadFile = async (fileName, fileID) => {
-    const url = `${SERVER}/api/download/${fileID}}`;
+    const url = `${SERVER}/api/download/${fileID}`
     
-    console.log(url)
-
-    fetch(url, {
-        method: 'GET',
+    $host.get(url, {
         responseType: 'blob'
     }).then(response => {
-        return response.blob();
+        return response.data;
     }).then(blob => {
         const url = window.URL.createObjectURL(new Blob([blob]));
         const a = document.createElement('a');
