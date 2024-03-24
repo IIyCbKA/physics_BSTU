@@ -1,6 +1,7 @@
+import Cookies from 'js-cookie';
+
 const SET_USER = 'SET_USER'
 const LOGOUT = 'LOGOUT'
-
 
 const defaultState = {
     currentUser: {},
@@ -18,6 +19,7 @@ export default function userReducer(state = defaultState, action){
 
         case LOGOUT:
             localStorage.removeItem('token')
+            Cookies.remove('refresh_token')
             return {
                 ...state,
                 currentUser: {},

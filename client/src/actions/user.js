@@ -26,7 +26,7 @@ export const login = (email, password) => {
 };
 
 
-export const auth = () =>{
+export const auth = () => {
     return async (dispatch) => {
         try{
             const response = await $host.get('/api/auth_token')
