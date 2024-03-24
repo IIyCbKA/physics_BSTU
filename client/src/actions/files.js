@@ -27,8 +27,8 @@ export const uploadFile = async (file, dir_path) => {
     }
 }
 
-export const downloadFile = async (fileName, dir_path) => {
-    const url = `${SERVER}/api/download${dir_path}${fileName}`;
+export const downloadFile = async (fileName, fileID) => {
+    const url = `${SERVER}/api/download/${fileID}}`;
     
     console.log(url)
 
@@ -49,11 +49,10 @@ export const downloadFile = async (fileName, dir_path) => {
     }).catch(e => console.log(e));
 }
 
-export const deleteFile = async (fileName, dir_path) => {
-    console.log('fileName =', fileName)
-    console.log('path =', dir_path)
+
+export const deleteFile = async (file_id) => {
     try{
-        await $host.post('/api/delete_file', {fileName, path: dir_path})
+        await $host.post('/api/delete_file', {fileID: file_id})
     }
     catch(e){
         console.log(e)
