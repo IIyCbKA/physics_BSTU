@@ -18,7 +18,6 @@ function Home() {
         dispatch(setPath(path))
     }, [path]);
 
-
     return (
         <div>
             <Helmet>
