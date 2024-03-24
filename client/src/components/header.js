@@ -6,6 +6,7 @@ import testsIcon from '../images/iconTest.png';
 import '../styles/style.css';
 import {styles} from "../styles/style";
 import MenuOffcanvas from "../components/menu";
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 function Header() {
     const [offcanvasShow, setOffcanvasShow] = useState(false);

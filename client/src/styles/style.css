@@ -333,7 +333,7 @@
 
 .root-content-inner{
     padding: 20px;
-    min-height: calc(100vh - 86px);
+    min-height: calc(100vh - 102px);
     display: flex;
     flex-grow: 1;
     box-sizing: border-box;
