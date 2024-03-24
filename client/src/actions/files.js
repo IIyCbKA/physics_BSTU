@@ -1,15 +1,15 @@
 import { SERVER, $host } from "../server_files/server_connect"
+import {setFiles} from "../reducers/file_reducer";
 
-export const getFilesName = async (path) => {
-    try{
-        const response = await $host.get(path)
-        return response.data
+export const getFilesName = (path) =>
+    async (dispatch) => {
+    try {
+        const response = await $host.get(path);
+        dispatch(setFiles(response.data.files));
+    } catch (e) {
+        console.log(e);
     }
-    catch (e){
-        console.log(e)
-        return []
-    }
-}
+};
 
 export const uploadFile = async (file, dir_path) => {
     try{

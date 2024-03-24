@@ -3,7 +3,7 @@ import {Helmet} from 'react-helmet';
 import {getFilesName} from '../actions/files'
 import React, {useEffect} from "react";
 import {useLocation} from 'react-router-dom';
-import {setFiles, setPath} from "../reducers/file_reducer";
+import {setPath} from "../reducers/file_reducer";
 import {useDispatch} from "react-redux";
 import Storage from "../components/storage";
 
@@ -14,13 +14,7 @@ function Home() {
         location.pathname + '/';
 
     useEffect(() => {
-        getFilesName(path)
-            .then(result => {
-                dispatch(setFiles(result.files))
-            })
-            .catch(error => {
-                console.error('Error fetching files:', error);
-            });
+        getFilesName(path)(dispatch)
         dispatch(setPath(path))
     }, [path]);
 
