@@ -7,8 +7,7 @@ class LoginData(BaseModel):
 
 
 class DeleteFileData(BaseModel):
-    fileName: str
-    path: str
+    fileID: int
 
 
 class UserModel(BaseModel):
@@ -26,3 +25,10 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     userID: int | None = None
+
+
+class FileModel(BaseModel):
+    fileID: int
+    fileName: str
+    fileType: str
+    path: str

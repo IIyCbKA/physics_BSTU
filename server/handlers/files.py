@@ -1,14 +1,12 @@
 from server.application import fastApiServer
-from server.settings.config import *
 from server.data.functions.files import *
 from server.storage.functions.storage import *
 from server.handlers.schemas import *
 
-from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from fastapi import WebSocket, WebSocketDisconnect, File, UploadFile, Form
 from typing import Dict, Annotated
 from fastapi import Depends
-import os
 from server.handlers.login import getCurrentUser
 
 clients: Dict = {}
@@ -45,8 +43,7 @@ async def sendFilesNameListToAll(path: str):
 # Аргумент path - путь к директории папки
 @fastApiServer.get('/disk{path:path}')
 async def filesList(path: str, user: Annotated[dict, Depends(getCurrentUser)]):
-    filesName = getFilesNameList(path)
-    print(filesName)
+    filesName: dict = getFilesNameList(path)
     return JSONResponse(content=filesName, status_code=200)
 
 
@@ -58,12 +55,12 @@ async def addFile(file: Annotated[UploadFile, File()],
                   path: Annotated[str, Form()],
                   user: Annotated[dict, Depends(getCurrentUser)]):
     path = path.replace('/disk', '', 1)
-    fileID: int = addFileToDB(file, path)
-    if fileID == -1:
+    fileModel: FileModel | None = addFileToDB(file, path)
+    if fileModel is None:
         return JSONResponse(content={'error': 'File with that name already '
                                               'exists'}, status_code=500)
-    if not addFileToStorage(file, fileID):
-        deleteFileFromDB(file.filename, path)
+    if not addFileToStorage(file, fileModel.fileID, fileModel.fileType):
+        deleteFileFromDB(fileModel.fileID)
         return JSONResponse(content={'error': 'The file could not be uploaded'},
                             status_code=500)
 
@@ -76,12 +73,11 @@ async def addFile(file: Annotated[UploadFile, File()],
 @fastApiServer.post('/api/delete_file')
 async def deleteFile(data: DeleteFileData, user: Annotated[dict, Depends(getCurrentUser)]):
     try:
-        data.path = data.path.replace('/disk', '', 1)
-        fileID: int = getFileID(data.fileName, data.path)
-        if fileID != -1:
-            deleteFileFromDB(data.fileName, data.path)
-            deleteFileObject(f'files/{fileID}.{data.fileName.split(".")[-1]}')
-            await sendFilesNameListToAll(data.path)
+        fileInfo: FileModel | None = getFileInfo(data.fileID)
+        if fileInfo is not None:
+            deleteFileFromDB(fileInfo.fileID)
+            deleteFileObject(fileInfo.fileID, fileInfo.fileType)
+            await sendFilesNameListToAll(fileInfo.path)
             return JSONResponse(content={}, status_code=200)
 
         return JSONResponse(content={'Error': 'File not found'},
@@ -92,18 +88,15 @@ async def deleteFile(data: DeleteFileData, user: Annotated[dict, Depends(getCurr
 
 # Роут для загрузки файла
 # path cодержит путь к файлу и его имя
-@fastApiServer.get('/api/download/disk{path:path}')
-async def handleFileDownloadRequest(path: str, user: Annotated[dict, Depends(getCurrentUser)]):
+@fastApiServer.get('/api/download/{fileID}')
+async def handleFileDownloadRequest(fileID: str, user: Annotated[dict, Depends(getCurrentUser)]):
     async def file_iterator():
         yield data
 
     try:
-        border = path.rfind('/') + 1
-        fileName: str = path[border:]
-        dirPath: str = path[:border]
-        fileID: int = getFileID(fileName, dirPath)
-        if fileID != -1:
-            file = getFileObject(f'files/{fileID}.{fileName.split(".")[-1]}')
+        fileModel: FileModel | None = getFileInfo(int(fileID))
+        if (fileModel is not None) and (fileModel.fileType != 'folder'):
+            file = getFileObject(fileModel.fileID, fileModel.fileType)
             if file is not None:
                 data = file.read()
 
