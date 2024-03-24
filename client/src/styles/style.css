@@ -182,18 +182,19 @@
 
 .storage{
     display: flex;
+    margin: 20px;
 }
 
 .storage-main {
     width: calc(100vw - 40px);
     min-height: calc(100vh - 46px - 40px);
     min-width: 310px;
-    margin: 20px;
     background-color: #EBF0FF;
     padding: 8px;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    border-radius: 8px;
 }
 
 .file-area{

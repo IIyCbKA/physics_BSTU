@@ -1,5 +1,6 @@
 import { SERVER, $host } from "../server_files/server_connect"
 import {setFiles} from "../reducers/file_reducer";
+import { saveAs } from 'file-saver';
 
 export const getFilesName = (path) =>
     async (dispatch) => {
@@ -29,20 +30,12 @@ export const uploadFile = async (file, dir_path) => {
 
 export const downloadFile = async (fileName, fileID) => {
     const url = `${SERVER}/api/download/${fileID}`
-    
+
     $host.get(url, {
         responseType: 'blob'
     }).then(response => {
-        return response.data;
-    }).then(blob => {
-        const url = window.URL.createObjectURL(new Blob([blob]));
-        const a = document.createElement('a');
-        a.style.display = 'none';
-        a.href = url;
-        a.download = fileName;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
+        const blob = new Blob([response.data]);
+        saveAs(blob, fileName);
     }).catch(e => console.log(e));
 }
 
