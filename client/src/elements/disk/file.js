@@ -31,9 +31,14 @@ export default function File(props){
         })
     }
 
+    const handleClick = (event) => {
+        event.stopPropagation()
+    };
+
     return(
         <div className="file-area"
              onContextMenu={handleContextMenu}
+             onClick={handleClick}
         >
             <div className="item-icon">
                 <div className="icon-wrapper">
