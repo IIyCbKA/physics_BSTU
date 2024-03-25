@@ -20,7 +20,7 @@ $host.interceptors.response.use(
             if (localStorage.getItem('token'))
                 localStorage.removeItem('token')
 
-            store.dispatch(refreshTokenAuth())
+            await store.dispatch(refreshTokenAuth())
 
             const token = localStorage.getItem('token')
             if (token){
