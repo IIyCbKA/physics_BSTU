@@ -1,8 +1,6 @@
 import '../../styles/style.css'
-import {downloadFile, deleteFile} from "../../actions/files";
-import { Menu, Item, useContextMenu } from 'react-contexify';
-import 'react-contexify/ReactContexify.css';
-
+import { useContextMenu } from 'react-contexify';
+import ContextMenu from "./file_context_menu";
 
 export default function File(props){
     const typesList = ['folder', 'docx', 'doc', 'png', 'jpg', 'jpeg', 'pdf',
@@ -13,14 +11,6 @@ export default function File(props){
     const { show } = useContextMenu({
         id: props.id,
     });
-
-    const onDownload = async () => {
-        await downloadFile(props.name, props.id)
-    }
-
-    const onDelete = async () => {
-        await deleteFile(props.id)
-    }
 
     function handleContextMenu(event){
         show({
@@ -56,11 +46,7 @@ export default function File(props){
                     </span>
                 </div>
             </div>
-
-            <Menu id={props.id}>
-                <Item id="download" onClick={onDownload}>Download</Item>
-                <Item id="delete" onClick={onDelete}>Delete</Item>
-            </Menu>
+            <ContextMenu id={props.id} name={props.name}/>
         </div>
     )
 }

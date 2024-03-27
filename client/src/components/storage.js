@@ -29,16 +29,18 @@ export default function Storage(){
     }
 
     return (
-        <div {...getRootProps()} className="storage">
-            <input {...getInputProps()} />
-            <Disk/>
-            {isDragActive &&
-                <div className='drop-area'>
-                    <div className='drop-frame'>
-                        Загрузить файлы в хранилище
+        <div className="around-storage">
+            <div { ...getRootProps()} className="storage">
+                <input {...getInputProps()} />
+                <Disk/>
+                {isDragActive &&
+                    <div className='drop-area'>
+                        <div className='drop-frame'>
+                            Загрузить файлы в хранилище
+                        </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
     )
 }

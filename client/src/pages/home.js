@@ -19,7 +19,7 @@ function Home() {
     }, [path]);
 
     return (
-        <div>
+        <div className="disk-page">
             <Helmet>
                 <title>Хранилище</title>
             </Helmet>

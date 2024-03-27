@@ -182,19 +182,18 @@
 
 .storage{
     display: flex;
-    margin: 20px;
 }
 
 .storage-main {
+    background-color: #FFFFFF;
     width: calc(100vw - 40px);
     min-height: calc(100vh - 46px - 40px);
     min-width: 310px;
-    background-color: #EBF0FF;
     padding: 8px;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    border-radius: 8px;
+    border-radius: 16px;
 }
 
 .file-area{
@@ -207,7 +206,7 @@
 }
 
 .file-area:hover {
-    background-color: #E1E6F5;
+    background-color: #F0F5FF;
 }
 
 .item-icon{
@@ -277,59 +276,55 @@
 }
 
 .folder-icon{
-    background-image: url("../elements/disk/icons/folder_icon.png");
+    background-image: url("../elements/disk/icons/folder_icon128.png");
 }
 
 .docx-icon{
-    background-image: url("../elements/disk/icons/docx_icon.png")
+    background-image: url("../elements/disk/icons/word_icon128.png")
 }
 
 .doc-icon{
-    background-image: url("../elements/disk/icons/docx_icon.png");
+    background-image: url("../elements/disk/icons/word_icon128.png");
 }
 
 .png-icon{
-    background-image: url("../elements/disk/icons/image_icon.png");
+    background-image: url("../elements/disk/icons/image_icon128.png");
 }
 
 .jpeg-icon{
-    background-image: url("../elements/disk/icons/image_icon.png");
+    background-image: url("../elements/disk/icons/image_icon128.png");
 }
 
 .jpg-icon{
-    background-image: url("../elements/disk/icons/image_icon.png");
+    background-image: url("../elements/disk/icons/image_icon128.png");
 }
 
 .pdf-icon{
-    background-image: url("../elements/disk/icons/pdf_icon.png");
+    background-image: url("../elements/disk/icons/pdf_icon128.png");
 }
 
 .xls-icon{
-    background-image: url("../elements/disk/icons/xlsx_icon.png");
+    background-image: url("../elements/disk/icons/excel_icon128.png");
 }
 
 .xlsx-icon{
-    background-image: url("../elements/disk/icons/xlsx_icon.png");
+    background-image: url("../elements/disk/icons/excel_icon128.png");
 }
 
 .rar-icon{
-    background-image: url("../elements/disk/icons/archive_icon.png");
+    background-image: url("../elements/disk/icons/archive_icon128.png");
 }
 
 .zip-icon{
-    background-image: url("../elements/disk/icons/archive_icon.png");
+    background-image: url("../elements/disk/icons/archive_icon128.png");
 }
 
 .pptx-icon{
-    background-image: url("../elements/disk/icons/pptx_icon.png");
-}
-
-.mp4-icon{
-    background-image: url("../elements/disk/icons/video_icon.png");
+    background-image: url("../elements/disk/icons/presentation_icon128.png");
 }
 
 .other-icon{
-    background-image: url("../elements/disk/icons/other_icon.png");
+    background-image: url("../elements/disk/icons/other_icon128.png");
 }
 
 .root-content-inner{
@@ -355,4 +350,20 @@
     grid-gap: 8px;
     grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
     justify-items: center;
+}
+
+.disk-page{
+    background-color: #EBF0FF;
+}
+
+.menu-item-icon{
+    height: 32px;
+    width: 32px;
+    padding: 6px;
+    margin-right: 6px;
+}
+
+.around-storage{
+    background-color: #EBF0FF;
+    padding: 20px;
 }
