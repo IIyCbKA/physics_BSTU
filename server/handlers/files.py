@@ -8,35 +8,17 @@ from fastapi import WebSocket, WebSocketDisconnect, File, UploadFile, Form
 from typing import Dict, Annotated
 from fastapi import Depends
 from server.handlers.login import getCurrentUser
-
-clients: Dict = {}
-
-
-@fastApiServer.websocket("/ws")
-async def websocket_processing(websocket: WebSocket):
-    await websocket.accept()
-    client_ip = websocket.client.host
-    clients[client_ip] = websocket
-
-    try:
-        while True:
-            await websocket.receive_text()
-    except WebSocketDisconnect:
-        if client_ip in clients.keys():
-            del clients[client_ip]
-    except Exception as e:
-        print(e)
-
+from server.socketManager import sockets
+#getFilesName
 
 # Отправляет на клиент новый список файлов
-async def sendFilesNameList(websocket: WebSocket, path: str):
-    await websocket.send_json(getFilesNameList(path))
+async def sendFilesNameList(ip: str, path: str):
+    await sockets.sendMessage('getFilesName', getFilesNameList(path), ip)
 
 
 # Отправляет на клиент новый список файлов
 async def sendFilesNameListToAll(path: str):
-    for websocket in clients.values():
-        await sendFilesNameList(websocket, path)
+    await sockets.sendMessage('getFilesName', getFilesNameList(path))
 
 
 # Роут на получение списка файлов
@@ -53,13 +35,20 @@ async def filesList(path: str, user: Annotated[dict, Depends(getCurrentUser)]):
 @fastApiServer.post('/api/create_folder')
 async def createFolder(data: FolderData,
                        user: Annotated[dict, Depends(getCurrentUser)]):
-    pass
+    # добавить код добавления папки в БД
+
+    await sendFilesNameListToAll(data.path)
 
 
+# Роут на удаление папки. В параметрах:
+# data.folderName: имя создаваемой папки
+# data.path: путь к папке
 @fastApiServer.post('/api/delete_folder')
 async def deleteFolder(data: FolderData,
                        user: Annotated[dict, Depends(getCurrentUser)]):
-    pass
+    # добавить код удаления папки из бд
+
+    await sendFilesNameListToAll(data.path)
 
 
 # Роут на добавление файла
