@@ -2,12 +2,15 @@ import '../../styles/style.css'
 import { useContextMenu } from 'react-contexify';
 import ContextMenuFile from "./file_context_menu";
 import {minimizeStr} from "../../actions/strings";
+import {useSelector} from "react-redux";
 
 export default function File(props){
     const typesList = ['folder', 'docx', 'doc', 'png', 'jpg', 'jpeg', 'pdf',
                        'xls', 'xlsx', 'rar', 'zip', 'pptx', 'mp4']
     const fileType = typesList.includes(props.type) ? props.type : 'other';
     const iconClass = fileType + '-icon'
+
+    const path = useSelector(state => state.file.path)
 
     const { show } = useContextMenu({
         id: props.id,
@@ -25,6 +28,8 @@ export default function File(props){
 
     const handleClick = (event) => {
         event.stopPropagation()
+        if (fileType === 'folder')
+            window.location.href = path + props.name + '\\';
     };
 
     return(
