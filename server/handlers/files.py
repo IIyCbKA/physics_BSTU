@@ -34,7 +34,7 @@ async def filesList(path: str, user: Annotated[dict, Depends(getCurrentUser)]):
 @fastApiServer.post('/api/create_folder')
 async def createFolder(data: FolderData,
                        user: Annotated[dict, Depends(getCurrentUser)]):
-    path = data.path.replace('/disk', '', 1)
+    data.path = data.path.replace('/disk', '', 1)
     fileModel: FileModel | None = addFileToDB(data.folderName,
                                               'folder',
                                               data.path)
@@ -42,7 +42,7 @@ async def createFolder(data: FolderData,
         return JSONResponse(content={'error': 'Folder was not added'},
                             status_code=500)
 
-    await sendFilesNameListToAll(path)
+    await sendFilesNameListToAll(data.path)
     return JSONResponse(content={}, status_code=201)
 
 
