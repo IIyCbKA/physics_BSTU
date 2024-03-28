@@ -1,6 +1,7 @@
 import '../../styles/style.css'
 import { useContextMenu } from 'react-contexify';
 import ContextMenuFile from "./file_context_menu";
+import {minimizeStr} from "../../actions/strings";
 
 export default function File(props){
     const typesList = ['folder', 'docx', 'doc', 'png', 'jpg', 'jpeg', 'pdf',
@@ -43,7 +44,7 @@ export default function File(props){
                         className="clamped-text"
                         aria-hidden={true}
                         title={props.name}
-                    >{props.name}
+                    >{minimizeStr(props.name, 30, 2)}
                     </span>
                 </div>
             </div>
