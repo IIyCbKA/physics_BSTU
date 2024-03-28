@@ -3,8 +3,6 @@ from server.data.db_session import db
 from server.handlers.schemas import FileModel
 
 from sqlalchemy.exc import IntegrityError
-from fastapi import File, UploadFile, Form
-from typing import Annotated
 
 
 # Возвращает список файлов и папок по текущему пути path
@@ -17,16 +15,14 @@ def getFilesNameList(path: str) -> dict:
                        'type': row[2]} for row in result]}
 
 
-def addFileToDB(file: Annotated[UploadFile, File()],
-                path: Annotated[str, Form()]) -> FileModel | None:
+def addFileToDB(fileName: str, fileType: str, path: str) -> FileModel | None:
     try:
-        fileType: str = file.filename.split('.')[-1]
-        newFile = Files(file_name=file.filename, file_type=fileType, path=path)
+        newFile = Files(file_name=fileName, file_type=fileType, path=path)
         db.add(newFile)
         db.commit()
         fileModel: FileModel = FileModel(
             fileID=newFile.file_id,
-            fileName=file.filename,
+            fileName=fileName,
             fileType=fileType,
             path=path
         )

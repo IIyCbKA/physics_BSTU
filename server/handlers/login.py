@@ -102,6 +102,7 @@ async def getCurrentUserCommon(token: str,
 
     return {"user": {"id": userData.userID}}
 
+
 async def getCurrentUser(token: Annotated[str, Depends(oauth2_scheme)]):
     credentials_exception = HTTPException(
         status_code=401,
@@ -110,6 +111,7 @@ async def getCurrentUser(token: Annotated[str, Depends(oauth2_scheme)]):
     )
 
     return await getCurrentUserCommon(token, credentials_exception)
+
 
 async def getCurrentUserRefresh(token: Annotated[str, Depends(oauth2_scheme)]):
     credentials_exception = HTTPException(

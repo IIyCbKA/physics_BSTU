@@ -35,9 +35,15 @@ async def filesList(path: str, user: Annotated[dict, Depends(getCurrentUser)]):
 async def createFolder(data: FolderData,
                        user: Annotated[dict, Depends(getCurrentUser)]):
     path = data.path.replace('/disk', '', 1)
-    # добавить код добавления папки в БД
+    fileModel: FileModel | None = addFileToDB(data.folderName,
+                                              'folder',
+                                              data.path)
+    if fileModel is None:
+        return JSONResponse(content={'error': 'Folder was not added'},
+                            status_code=500)
 
     await sendFilesNameListToAll(path)
+    return JSONResponse(content={}, status_code=201)
 
 
 # Роут на удаление папки. В параметрах:
@@ -59,15 +65,20 @@ async def deleteFolder(data: FolderData,
 async def addFile(file: Annotated[UploadFile, File()],
                   path: Annotated[str, Form()],
                   user: Annotated[dict, Depends(getCurrentUser)]):
+    error: JSONResponse = JSONResponse(content={'error':
+                                       'File was not added'},
+                                       status_code=500)
+
     path = path.replace('/disk', '', 1)
-    fileModel: FileModel | None = addFileToDB(file, path)
+    fileName: str = file.filename
+    fileType: str = file.filename.split('.')[-1]
+    fileModel: FileModel | None = addFileToDB(fileName, fileType, path)
     if fileModel is None:
-        return JSONResponse(content={'error': 'File with that name already '
-                                              'exists'}, status_code=500)
+        return error
+
     if not addFileToStorage(file, fileModel.fileID, fileModel.fileType):
         deleteFileFromDB(fileModel.fileID)
-        return JSONResponse(content={'error': 'The file could not be uploaded'},
-                            status_code=500)
+        return error
 
     await sendFilesNameListToAll(path)
     return JSONResponse(content={}, status_code=201)
