@@ -67,13 +67,19 @@ const customOffcanvas = {
 }
 
 const styleNavbar = {
-    minWidth: '350px'
+    minWidth: '350px',
+    paddingTop: '14px',
+    paddingBottom: '0px'
 }
 
 const styleIcon = {
     textAlign: 'center',
     fontsize: '1300px',
 
+}
+
+const styleContainerHeader = {
+    padding: '0 30px'
 }
 
 export const styles = {
@@ -88,5 +94,6 @@ export const styles = {
     customToggle: customToggle,
     customOffcanvas: customOffcanvas,
     styleNavbar: styleNavbar,
-    styleIcon: styleIcon
+    styleIcon: styleIcon,
+    styleContainerHeader: styleContainerHeader
 };

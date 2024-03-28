@@ -21,7 +21,7 @@ function Header() {
             expand='sm'
             style={styles.styleNavbar}
         >
-            <Container fluid>
+            <Container fluid style={styles.styleContainerHeader}>
                 <Navbar.Brand href='/' style={styles.logotypePadding}>
                     <img
                         src={logo}
