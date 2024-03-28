@@ -20,11 +20,10 @@ export default function Storage(){
 
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
-    socket.onmessage = (event) => {
-        const data = JSON.parse(event.data)
+    socket.onMessage('getFilesName', (data) => {
         dispatch(setFiles(data.files))
         console.log(data)
-    }
+    })
 
     return (
         <div className="around-storage">
