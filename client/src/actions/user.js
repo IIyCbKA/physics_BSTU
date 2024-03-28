@@ -41,14 +41,9 @@ export const auth = () => {
 };
 
 
-export const refreshTokenAuth = () => {
+export const refreshTokenAuth = (refreshToken) => {
     return async (dispatch) => {
         try{
-            const refreshToken = Cookies.get('refresh_token')
-
-            if (refreshToken == null){
-                return
-            }
             const response = await $host.get('/api/auth_refresh_token',
                 {headers: {
                         Authorization: `Bearer ${refreshToken}`}
@@ -60,10 +55,19 @@ export const refreshTokenAuth = () => {
                 Cookies.set('refresh_token', response.data.refresh_token,
                            { expires: REFRESH_TOKEN_EXPIRE_DAYS });
             } else {
-                dispatch(logout())
+                dispatch(cleanUserInfo())
             }
         } catch (e){
-            dispatch(logout())
+            dispatch(cleanUserInfo())
         }
+    }
+}
+
+
+const cleanUserInfo = () => {
+    return async (dispatch) => {
+        localStorage.removeItem('token')
+        Cookies.remove('refresh_token')
+        dispatch(logout())
     }
 }

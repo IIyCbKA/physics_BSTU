@@ -8,8 +8,8 @@ import {login} from "../actions/user";
 import {useDispatch} from "react-redux";
 
 export default function LoginForm(){
-    const [password, setPassword] = useState(''); //export
-    const [email, setEmail] = useState(''); //export
+    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
     const isButtonDisabled = email === '' || password === '';
     const dispatch = useDispatch()
     
