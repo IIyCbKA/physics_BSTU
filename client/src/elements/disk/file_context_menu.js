@@ -5,7 +5,7 @@ import 'react-contexify/ReactContexify.css';
 import {deleteFile, downloadFile} from "../../actions/files";
 import '../../styles/style.css'
 
-export default function ContextMenu(props){
+export default function ContextMenuFile(props){
     const onDownload = async () => {
         await downloadFile(props.name, props.id)
     }

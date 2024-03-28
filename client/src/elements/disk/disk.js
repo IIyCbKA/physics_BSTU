@@ -2,12 +2,29 @@ import File from "./file";
 import React from "react";
 import {useSelector} from "react-redux";
 import '../../styles/style.css'
+import {useContextMenu} from "react-contexify";
+import ContextMenuDisk from "./disk_context_menu";
 
 export default function Disk() {
     const files = useSelector(state => state.file.files)
 
+    const { show } = useContextMenu({
+        id: 'disk-context-menu',
+    });
+
+    function handleDiskContextMenu(event){
+        show({
+            event,
+            props: {
+                key: 'value'
+            }
+        })
+    }
+
     return (
-        <div className='storage-main'>
+        <div className='storage-main'
+            onContextMenu={handleDiskContextMenu}
+        >
             <div className="root-content-inner">
                 <div className="root-content-container">
                     <div className="client-listing">
@@ -23,6 +40,7 @@ export default function Disk() {
                     </div>
                 </div>
             </div>
+            <ContextMenuDisk/>
         </div>
     )
 }

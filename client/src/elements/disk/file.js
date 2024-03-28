@@ -1,6 +1,6 @@
 import '../../styles/style.css'
 import { useContextMenu } from 'react-contexify';
-import ContextMenu from "./file_context_menu";
+import ContextMenuFile from "./file_context_menu";
 
 export default function File(props){
     const typesList = ['folder', 'docx', 'doc', 'png', 'jpg', 'jpeg', 'pdf',
@@ -12,7 +12,8 @@ export default function File(props){
         id: props.id,
     });
 
-    function handleContextMenu(event){
+    function handleFileContextMenu(event){
+        event.stopPropagation();
         show({
             event,
             props: {
@@ -27,7 +28,7 @@ export default function File(props){
 
     return(
         <div className="file-area"
-             onContextMenu={handleContextMenu}
+             onContextMenu={handleFileContextMenu}
              onClick={handleClick}
         >
             <div className="item-icon">
@@ -46,7 +47,7 @@ export default function File(props){
                     </span>
                 </div>
             </div>
-            <ContextMenu id={props.id} name={props.name}/>
+            <ContextMenuFile id={props.id} name={props.name}/>
         </div>
     )
 }
