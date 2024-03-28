@@ -1,14 +1,16 @@
-export const minimizeStr = (s, showLength, afterPoint) => {
-    const len = s.length
-    if (len > showLength){
-        let x = s.lastIndexOf('.')
-        if (x === -1){
-            x = len;
+export const minimizeStr = (string, maxLength, afterPoint) => {
+    const lengthString = string.length
+    if (lengthString > maxLength){
+        let spareSpace = 2
+        let indLastDot = string.lastIndexOf('.')
+        if (indLastDot === -1){
+            indLastDot = lengthString;
         }
-        x -= afterPoint
 
-        s = s.slice(0, showLength - len + x - 1) + "…" + (s.slice(x, len))
+        let indEndName = indLastDot - afterPoint
+        string = string.slice(0, maxLength - lengthString + indEndName -
+                spareSpace) + "…" + (string.slice(indEndName, lengthString))
     }
 
-    return s
+    return string
 }

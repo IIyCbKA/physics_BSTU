@@ -44,7 +44,7 @@ export default function File(props){
                         className="clamped-text"
                         aria-hidden={true}
                         title={props.name}
-                    >{minimizeStr(props.name, 30, 2)}
+                    >{minimizeStr(props.name, 22, 2)}
                     </span>
                 </div>
             </div>
