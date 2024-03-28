@@ -1,5 +1,4 @@
 import { SERVER_ADR } from './server_files/server_connect';
-import {setFiles} from "./reducers/file_reducer";
 
 class SocketManager{
     constructor(address) {

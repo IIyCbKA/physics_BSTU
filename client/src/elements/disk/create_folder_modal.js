@@ -12,34 +12,28 @@ export default function CreateFolderModal(props){
     }
 
     return (
-        <>{
-            props.show && (
-                <div className="modal-overlay" onClick={stopPropagation}>
-                    <Modal show={props.show}
-                           onHide={props.handleClose}
-                           backdrop="static"
-                           keyboard={false}
-                    >
-                        <Modal.Header closeButton>
-                            <Modal.Title>Modal Title</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <input
-                                type="text"
-                                value={folderName}
-                                onChange={(e) => setFolderName(e.target.value)}
-                                placeholder="Enter folder name"
-
-                            />
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant='secondary'
-                                    onClick={props.handleClose}>Close</Button>
-                        </Modal.Footer>
-                    </Modal>
-                </div>
-            )
-        }
-        </>
-    );
+        <div className="modal-overlay" onClick={stopPropagation}>
+            <Modal show={props.show}
+                   onHide={props.handleClose}
+                   backdrop="static"
+                   keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Modal Title</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <input
+                        type="text"
+                        value={folderName}
+                        onChange={(e) => setFolderName(e.target.value)}
+                        placeholder="Enter folder name"
+                    />
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant='secondary'
+                            onClick={props.handleClose}>Close</Button>
+                </Modal.Footer>
+            </Modal>
+        </div>
+    )
 };

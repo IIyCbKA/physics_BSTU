@@ -23,10 +23,12 @@ export default function ContextMenuDisk(props){
                     Create folder
                 </Item>
             </Menu>
-            <CreateFolderModal
-                show={props.isModalOpen}
-                handleClose={handleCloseModal}
-            />
+            {props.isModalOpen &&
+                <CreateFolderModal
+                    show={props.isModalOpen}
+                    handleClose={handleCloseModal}
+                />
+            }
         </div>
     )
 }
