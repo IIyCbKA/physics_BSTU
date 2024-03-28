@@ -4,19 +4,23 @@ import {getFilesName} from '../actions/files'
 import React, {useEffect} from "react";
 import {useLocation} from 'react-router-dom';
 import {setPath} from "../reducers/file_reducer";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Storage from "../components/storage";
 
 function Home() {
     const dispatch = useDispatch()
+    const pathSel = useSelector(state => state.file.path)
     const location = useLocation();
     const path = location.pathname.endsWith('/') ? location.pathname:
         location.pathname + '/';
 
     useEffect(() => {
-        getFilesName(path)(dispatch)
-        dispatch(setPath(path))
-    }, [path]);
+        const waitFunc = async () => {
+            await dispatch(setPath(path))
+            await getFilesName(path)(dispatch)
+        }
+        waitFunc()
+    }, [pathSel]);
 
     return (
         <div className="disk-page">

@@ -4,28 +4,35 @@ import Login from './pages/login';
 import Test from "./pages/test";
 import NotFound from "./pages/not_found";
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {auth} from "./actions/user";
 
 
 function App() {
     const isAuth = useSelector(state => state.user.isAuth)
+    const [isWaiting, setIsWaiting] = useState(true)
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(auth())
+        const waitFunc = async () => {
+            await dispatch(auth())
+            setIsWaiting(false)
+        }
+
+        waitFunc()
     }, [dispatch])
 
     return (
         <BrowserRouter>
-            {!isAuth &&
+
+            {!isWaiting && !isAuth &&
                 <Routes>
                     <Route path="*" element={<Navigate to="/login" />}/>
                     <Route path="/login" element={<Login />} />
                 </Routes>
             }
 
-            {isAuth &&
+            {!isWaiting && isAuth &&
                 <Routes>
                     <Route path="/disk/*" element={<Home />} />
                     <Route path="/login" element={<Navigate to="/disk/" />}/>
