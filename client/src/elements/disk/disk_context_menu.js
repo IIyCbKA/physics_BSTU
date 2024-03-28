@@ -3,15 +3,13 @@ import iconCreatFolder from "./icons/add_folder_icon128.png";
 import 'react-contexify/ReactContexify.css';
 import '../../styles/style.css'
 import CreateFolderModal from "./create_folder_modal";
-import {useState} from "react";
 
-export default function ContextMenuDisk(){
-    const [isModalOpen, setModalOpen] = useState(false)
+export default function ContextMenuDisk(props){
     const handleCloseModal = () => {
-        setModalOpen(false)
+        props.setModalOpen(false)
     }
     const handleOpenModal = () => {
-        setModalOpen(true)
+        props.setModalOpen(true)
     }
 
     return (
@@ -25,7 +23,10 @@ export default function ContextMenuDisk(){
                     Create folder
                 </Item>
             </Menu>
-            <CreateFolderModal show={isModalOpen} handleClose={handleCloseModal} />
+            <CreateFolderModal
+                show={props.isModalOpen}
+                handleClose={handleCloseModal}
+            />
         </div>
     )
 }
