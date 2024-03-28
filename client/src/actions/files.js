@@ -49,14 +49,6 @@ export const createFolder = async (folderName, path) => {
     }
 }
 
-export const deleteFolder = async (folderName, path) => {
-    try{
-        await $host.post('/api/delete_folder', {folderName, path})
-    }
-    catch(e){
-        console.log(e)
-    }
-}
 
 export const deleteFile = async (file_id) => {
     try{

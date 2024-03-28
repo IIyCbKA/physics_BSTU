@@ -48,7 +48,7 @@ export default function File(props){
                     </span>
                 </div>
             </div>
-            <ContextMenuFile id={props.id} name={props.name}/>
+            <ContextMenuFile id={props.id} name={props.name} type={props.type}/>
         </div>
     )
 }
