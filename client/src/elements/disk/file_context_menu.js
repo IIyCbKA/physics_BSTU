@@ -16,19 +16,21 @@ export default function ContextMenuFile(props){
 
     return (
         <Menu id={props.id}>
-            <Item id={"download"}
-                  onClick={onDownload}
-            >
-                <img src={iconDownload} alt="icon"
-                     className="menu-item-icon"/>
-                Download
-            </Item>
+            {props.type !== 'folder' &&
+                <Item id={"download"}
+                      onClick={onDownload}
+                >
+                    <img src={iconDownload} alt="icon"
+                         className="menu-item-icon"/>
+                    Скачать
+                </Item>
+            }
             <Item id="delete"
                   onClick={onDelete}
             >
                 <img src={iconDelete} alt="icon"
                      className="menu-item-icon"/>
-                Delete
+                Удалить
             </Item>
         </Menu>
     )

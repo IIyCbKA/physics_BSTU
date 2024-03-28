@@ -10,6 +10,7 @@ from fastapi import Depends
 from server.handlers.login import getCurrentUser
 from server.socketManager import sockets
 
+
 # Отправляет на клиент новый список файлов
 async def sendFilesNameList(ip: str, path: str):
     await sockets.sendMessage('getFilesName', getFilesNameList(path), ip)
@@ -46,18 +47,6 @@ async def createFolder(data: FolderData,
     return JSONResponse(content={}, status_code=201)
 
 
-# Роут на удаление папки. В параметрах:
-# data.folderName: имя создаваемой папки
-# data.path: путь к папке
-@fastApiServer.post('/api/delete_folder')
-async def deleteFolder(data: FolderData,
-                       user: Annotated[dict, Depends(getCurrentUser)]):
-    path = data.path.replace('/disk', '', 1)
-    # добавить код удаления папки из бд
-
-    await sendFilesNameListToAll(data.path)
-
-
 # Роут на добавление файла
 # В параметрах filename - имя файла, path - путь к нему
 # также передаётся один файл
@@ -91,8 +80,12 @@ async def deleteFile(data: DeleteFileData, user: Annotated[dict, Depends(getCurr
     try:
         fileInfo: FileModel | None = getFileInfo(data.fileID)
         if fileInfo is not None:
-            deleteFileFromDB(fileInfo.fileID)
-            deleteFileObject(fileInfo.fileID, fileInfo.fileType)
+            if fileInfo.fileType != 'folder':
+                deleteFileFromDB(fileInfo.fileID)
+                deleteFileObject(fileInfo.fileID, fileInfo.fileType)
+            else:
+                searchPath: str = f"{fileInfo.path}{fileInfo.fileName}/%"
+                deleteFolderFromDB(fileInfo.fileID, searchPath)
             await sendFilesNameListToAll(fileInfo.path)
             return JSONResponse(content={}, status_code=200)
 

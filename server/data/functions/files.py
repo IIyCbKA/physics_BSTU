@@ -1,6 +1,7 @@
 from server.data.models import *
 from server.data.db_session import db
 from server.handlers.schemas import FileModel
+from server.storage.functions.storage import *
 
 from sqlalchemy.exc import IntegrityError
 
@@ -53,3 +54,13 @@ def getFileInfo(fileID: int) -> FileModel | None:
         fileInfo = None
 
     return fileInfo
+
+
+def deleteFolderFromDB(folderID: int, searchPath: str):
+    result: list = db.query(Files).filter(Files.path.like(searchPath)).all()
+    for item in result:
+        if item.file_type != 'folder':
+            deleteFileObject(item.file_id, item.file_type)
+        db.delete(item)
+    deleteFileFromDB(folderID)
+    db.commit()
