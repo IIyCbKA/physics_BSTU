@@ -40,6 +40,24 @@ export const downloadFile = async (fileName, fileID) => {
 }
 
 
+export const createFolder = async (folderName, path) => {
+    try{
+        await $host.post('/api/create_folder', {folderName, path})
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+export const deleteFolder = async (folderName, path) => {
+    try{
+        await $host.post('/api/delete_folder', {folderName, path})
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
 export const deleteFile = async (file_id) => {
     try{
         await $host.post('/api/delete_file', {fileID: file_id})

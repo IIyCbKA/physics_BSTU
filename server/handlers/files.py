@@ -47,6 +47,21 @@ async def filesList(path: str, user: Annotated[dict, Depends(getCurrentUser)]):
     return JSONResponse(content=filesName, status_code=200)
 
 
+# Роут на добавление папки. В параметрах:
+# data.folderName: имя создаваемой папки
+# data.path: путь к папке
+@fastApiServer.post('/api/create_folder')
+async def createFolder(data: FolderData,
+                       user: Annotated[dict, Depends(getCurrentUser)]):
+    pass
+
+
+@fastApiServer.post('/api/delete_folder')
+async def deleteFolder(data: FolderData,
+                       user: Annotated[dict, Depends(getCurrentUser)]):
+    pass
+
+
 # Роут на добавление файла
 # В параметрах filename - имя файла, path - путь к нему
 # также передаётся один файл
