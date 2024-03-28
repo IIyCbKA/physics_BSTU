@@ -3,7 +3,7 @@ import React, {useCallback} from "react";
 import {uploadFile} from "../actions/files";
 import {useDropzone} from "react-dropzone";
 import {useSelector} from "react-redux";
-import {createSocket} from "../socket_client";
+import {socket} from "../socket_client";
 import {setFiles} from "../reducers/file_reducer";
 import {useDispatch} from "react-redux";
 import '../styles/style.css'
@@ -19,8 +19,6 @@ export default function Storage(){
     }, [path]);
 
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
-
-    const socket = createSocket()
 
     socket.onmessage = (event) => {
         const data = JSON.parse(event.data)
