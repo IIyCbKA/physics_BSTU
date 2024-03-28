@@ -3,12 +3,21 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
 import {useState} from "react";
 import '../../styles/style.css'
+import {createFolder} from "../../actions/files";
+import {useSelector} from "react-redux";
 
 export default function CreateFolderModal(props){
     const [folderName, setFolderName] = useState('')
 
+    const path = useSelector(state => state.file.path)
+
     const stopPropagation = (event) => {
         event.stopPropagation()
+    }
+
+    const onClick = async (e) => {
+        await createFolder(folderName, path)
+        props.handleClose()
     }
 
     return (
@@ -26,12 +35,12 @@ export default function CreateFolderModal(props){
                         type="text"
                         value={folderName}
                         onChange={(e) => setFolderName(e.target.value)}
-                        placeholder="Enter folder name"
+                        placeholder="Введите имя папки"
                     />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant='secondary'
-                            onClick={props.handleClose}>Close</Button>
+                            onClick={onClick}>Создать</Button>
                 </Modal.Footer>
             </Modal>
         </div>

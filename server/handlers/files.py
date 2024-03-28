@@ -9,7 +9,6 @@ from typing import Dict, Annotated
 from fastapi import Depends
 from server.handlers.login import getCurrentUser
 from server.socketManager import sockets
-#getFilesName
 
 # Отправляет на клиент новый список файлов
 async def sendFilesNameList(ip: str, path: str):
@@ -35,9 +34,10 @@ async def filesList(path: str, user: Annotated[dict, Depends(getCurrentUser)]):
 @fastApiServer.post('/api/create_folder')
 async def createFolder(data: FolderData,
                        user: Annotated[dict, Depends(getCurrentUser)]):
+    path = data.path.replace('/disk', '', 1)
     # добавить код добавления папки в БД
 
-    await sendFilesNameListToAll(data.path)
+    await sendFilesNameListToAll(path)
 
 
 # Роут на удаление папки. В параметрах:
@@ -46,6 +46,7 @@ async def createFolder(data: FolderData,
 @fastApiServer.post('/api/delete_folder')
 async def deleteFolder(data: FolderData,
                        user: Annotated[dict, Depends(getCurrentUser)]):
+    path = data.path.replace('/disk', '', 1)
     # добавить код удаления папки из бд
 
     await sendFilesNameListToAll(data.path)
