@@ -43,7 +43,10 @@ export default function Disk() {
                     </div>
                 </div>
             </div>
-            <ContextMenuDisk isModalOpen={isModalOpen} setModalOpen={setModalOpen}/>
+            <ContextMenuDisk
+                isModalOpen={isModalOpen}
+                setModalOpen={setModalOpen}
+            />
         </div>
     )
 }

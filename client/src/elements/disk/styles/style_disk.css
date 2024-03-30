@@ -89,58 +89,6 @@
     background-size: contain;
 }
 
-.folder-icon{
-    background-image: url("../icons/folder_icon128.png");
-}
-
-.docx-icon{
-    background-image: url("../icons/word_icon128.png")
-}
-
-.doc-icon{
-    background-image: url("../icons/word_icon128.png");
-}
-
-.png-icon{
-    background-image: url("../icons/image_icon128.png");
-}
-
-.jpeg-icon{
-    background-image: url("../icons/image_icon128.png");
-}
-
-.jpg-icon{
-    background-image: url("../icons/image_icon128.png");
-}
-
-.pdf-icon{
-    background-image: url("../icons/pdf_icon128.png");
-}
-
-.xls-icon{
-    background-image: url("../icons/excel_icon128.png");
-}
-
-.xlsx-icon{
-    background-image: url("../icons/excel_icon128.png");
-}
-
-.rar-icon{
-    background-image: url("../icons/archive_icon128.png");
-}
-
-.zip-icon{
-    background-image: url("../icons/archive_icon128.png");
-}
-
-.pptx-icon{
-    background-image: url("../icons/presentation_icon128.png");
-}
-
-.other-icon{
-    background-image: url("../icons/other_icon128.png");
-}
-
 .root-content-inner{
     padding: 20px;
     min-height: calc(100vh - 102px);

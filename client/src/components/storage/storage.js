@@ -21,7 +21,6 @@ export default function Storage(){
 
     socket.onMessage('getFilesName', (data) => {
         dispatch(setFiles(data.files))
-        console.log(data)
     })
 
     return (

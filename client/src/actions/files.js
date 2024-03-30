@@ -21,7 +21,7 @@ export const uploadFile = async (file, dir_path) => {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
-        });
+        })
     }
     catch (e){
         console.log(e)
