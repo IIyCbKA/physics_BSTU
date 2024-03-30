@@ -1,0 +1,10 @@
+.style-text-in-menu {
+    color: #161616;
+    font-weight: 600;
+    padding-left: 8px;
+}
+
+.style-img-offcanvas {
+    position: relative;
+    bottom: 1px;
+}

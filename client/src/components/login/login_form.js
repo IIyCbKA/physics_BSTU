@@ -1,11 +1,12 @@
 import {motion} from "framer-motion";
 import {Form} from "react-bootstrap";
 import React, {useState} from "react";
-import LoginLine from "../elements/login/login_line";
-import PasswordLine from "../elements/login/password_line";
-import LoginBtn from "../elements/login/login_btn";
-import {login} from "../actions/user";
+import LoginLine from "../../elements/login/login_line";
+import PasswordLine from "../../elements/login/password_line";
+import LoginBtn from "../../elements/login/login_btn";
+import {login} from "../../actions/user";
 import {useDispatch} from "react-redux";
+import './styles/style.css'
 
 export default function LoginForm(){
     const [password, setPassword] = useState('');

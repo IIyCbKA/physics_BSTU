@@ -36,6 +36,7 @@ function App() {
                 <Routes>
                     <Route path="/disk/*" element={<Home />} />
                     <Route path="/login" element={<Navigate to="/disk/" />}/>
+                    <Route path="/" element={<Navigate to="/disk/" />}/>
                     <Route path="/tests" element={<Test />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>

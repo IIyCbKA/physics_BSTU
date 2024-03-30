@@ -1,0 +1,29 @@
+.form-title {
+    text-align: center;
+    color: #161616;
+    margin-bottom: 40px;
+}
+
+.form-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.form {
+    width: 90vw;
+    min-width: 276px;
+    padding: 20px;
+    border-radius: 10px;
+
+}
+
+@media (orientation: landscape) {
+    .form {
+        width: 28vw;
+        min-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

@@ -1,8 +1,9 @@
 import {Form, FormControl, InputGroup} from "react-bootstrap";
-import eyeClose from "../../images/eyeClose.png";
-import eyeOpen from "../../images/eyeOpen.png";
+import eyeClose from "./images/eyeClose.png";
+import eyeOpen from "./images/eyeOpen.png";
 import React, {useState} from "react";
-import {styles} from "../../styles/style";
+import {styles} from "./styles/style";
+import './styles/style.css'
 
 export default function PasswordLine(props){
     const [showPassword, setShowPassword] = useState(false);

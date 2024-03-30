@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {Nav, Offcanvas} from "react-bootstrap";
-import {styles} from "../styles/style";
-import { TestsElement, ProfileElement } from "../elements/menu/menu_elements";
+import {styles} from "./styles/style";
+import { TestsElement, ProfileElement } from "../../elements/menu/menu_elements";
+import './styles/style.css'
 
 function MenuOffcanvas({show, handleClose}) {
     const [hidden, setHide] = useState(false);

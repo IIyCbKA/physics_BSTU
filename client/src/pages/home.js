@@ -1,11 +1,11 @@
-import Header from "../components/header";
+import Header from "../components/header/header";
 import {Helmet} from 'react-helmet';
 import {getFilesName} from '../actions/files'
 import React, {useEffect} from "react";
 import {useLocation} from 'react-router-dom';
 import {setPath} from "../reducers/file_reducer";
 import {useDispatch, useSelector} from "react-redux";
-import Storage from "../components/storage";
+import Storage from "../components/storage/storage";
 
 function Home() {
     const dispatch = useDispatch()
@@ -23,7 +23,7 @@ function Home() {
     }, [pathSel]);
 
     return (
-        <div className="disk-page">
+        <div style={{backgroundColor: '#EBF0FF'}}>
             <Helmet>
                 <title>Хранилище</title>
             </Helmet>

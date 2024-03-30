@@ -40,60 +40,11 @@ const focusButtonChangeVisibilityStyle = {
     transition: "background-color 0.7s, border 0.7s"
 }
 
-const headerIconsPadding = {
-    paddingBottom: 0,
-    paddingTop: 0,
-    paddingLeft: "5px",
-    paddingRight: 0
-}
-
-const logotypePadding = {
-    padding: 0,
-    height: '30px',
-    justifyContent: 'center'
-}
-
-const customToggle = {
-    height: '30px',
-    boxShadow: 'None',
-    border: 'None'
-}
-
-const customOffcanvas = {
-    width: '100%',
-    transitionDuration: '1s',
-    backgroundColor: 'rgba(255, 255, 255, 0.75)',
-    backdropFilter: 'blur(10px)'
-}
-
-const styleNavbar = {
-    minWidth: '350px',
-    paddingTop: '14px',
-    paddingBottom: '0px'
-}
-
-const styleIcon = {
-    textAlign: 'center',
-    fontsize: '1300px',
-
-}
-
-const styleContainerHeader = {
-    padding: '0 30px'
-}
-
 export const styles = {
     formButtonStyle: formButtonStyle,
     buttonChangeVisibilityStyle: buttonChangeVisibilityStyle,
     inputLinesStyle: inputLinesStyle,
     focusLoginLineStyle: focusLoginLineStyle,
     focusPasswordLineStyle: focusPasswordLineStyle,
-    focusButtonChangeVisibilityStyle: focusButtonChangeVisibilityStyle,
-    headerIconsPadding: headerIconsPadding,
-    logotypePadding: logotypePadding,
-    customToggle: customToggle,
-    customOffcanvas: customOffcanvas,
-    styleNavbar: styleNavbar,
-    styleIcon: styleIcon,
-    styleContainerHeader: styleContainerHeader
-};
+    focusButtonChangeVisibilityStyle: focusButtonChangeVisibilityStyle
+}

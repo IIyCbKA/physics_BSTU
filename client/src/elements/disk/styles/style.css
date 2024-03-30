@@ -1,0 +1,174 @@
+.storage-main {
+    background-color: #FFFFFF;
+    width: calc(100vw - 40px);
+    min-height: calc(100vh - 44px - 34px);
+    min-width: 390px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    border-radius: 16px;
+}
+
+.file-area{
+    width: 104px;
+    height: 144px;
+    padding: 12px;
+    transition: background-color 0.3s;
+    border-radius: 8px;
+    margin-bottom: 4px;
+}
+
+.file-area:hover {
+    background-color: #F0F5FF;
+}
+
+.item-icon{
+    width: 80px;
+    height: 80px;
+    align-items: flex-end;
+    display: flex;
+    flex-shrink: 0;
+    justify-content: center;
+    order: 0;
+}
+
+.item-info{
+    width: 80px;
+    height: 40px;
+    padding: 0;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.item-title{
+    height: 28px;
+    word-break: break-all;
+    line-height: 14px;
+    text-align: center;
+}
+
+.clamped-text{
+    display: inline-block;
+    word-break: break-all;
+    white-space: pre-line;
+    font: 13px / 14px "YS Text", sans-serif;
+    max-width: 80px;
+}
+
+.icon-wrapper{
+    position: relative;
+}
+
+.file-icon-size{
+    height: 80px;
+    width: 80px;
+}
+
+.file-icon{
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.file-icon::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
+
+.icon-contain{
+    background-size: contain;
+}
+
+.folder-icon{
+    background-image: url("../icons/folder_icon128.png");
+}
+
+.docx-icon{
+    background-image: url("../icons/word_icon128.png")
+}
+
+.doc-icon{
+    background-image: url("../icons/word_icon128.png");
+}
+
+.png-icon{
+    background-image: url("../icons/image_icon128.png");
+}
+
+.jpeg-icon{
+    background-image: url("../icons/image_icon128.png");
+}
+
+.jpg-icon{
+    background-image: url("../icons/image_icon128.png");
+}
+
+.pdf-icon{
+    background-image: url("../icons/pdf_icon128.png");
+}
+
+.xls-icon{
+    background-image: url("../icons/excel_icon128.png");
+}
+
+.xlsx-icon{
+    background-image: url("../icons/excel_icon128.png");
+}
+
+.rar-icon{
+    background-image: url("../icons/archive_icon128.png");
+}
+
+.zip-icon{
+    background-image: url("../icons/archive_icon128.png");
+}
+
+.pptx-icon{
+    background-image: url("../icons/presentation_icon128.png");
+}
+
+.other-icon{
+    background-image: url("../icons/other_icon128.png");
+}
+
+.root-content-inner{
+    padding: 20px;
+    min-height: calc(100vh - 102px);
+    display: flex;
+    flex-grow: 1;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.root-content-container{
+    flex: 0 1 100%;
+    min-width: 0;
+}
+
+.client-listing{
+    flex-grow: 1;
+}
+
+.listing-items{
+    display: grid;
+    grid-gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+    justify-items: center;
+}
+
+.menu-item-icon{
+    height: 32px;
+    width: 32px;
+    padding: 6px;
+    margin-right: 6px;
+}

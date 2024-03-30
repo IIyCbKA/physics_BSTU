@@ -1,6 +1,7 @@
 import {Form, FormControl, InputGroup} from "react-bootstrap";
 import React, {useState} from "react";
-import {styles} from "../../styles/style";
+import {styles} from "./styles/style";
+import './styles/style.css'
 
 export default function LoginLine(props) {
     const [loginIsFocused, setLoginIsFocused] = useState(false);

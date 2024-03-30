@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import {Container, Nav, Navbar} from "react-bootstrap";
-import logo from '../images/logo.png';
-import profileIcon from '../images/profileIconDark.png';
-import testsIcon from '../images/iconTest.png';
-import '../styles/style.css';
-import {styles} from "../styles/style";
-import MenuOffcanvas from "../components/menu";
+import logo from './icons/logo.png';
+import profileIcon from './icons/profileIconDark.png';
+import testsIcon from './icons/iconTest.png';
+import './styles/style.css';
+import {styles} from "./styles/style";
+import MenuOffcanvas from "../menu/menu";
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 function Header() {

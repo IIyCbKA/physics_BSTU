@@ -1,8 +1,8 @@
 import {Item, Menu} from "react-contexify";
 import iconCreatFolder from "./icons/add_folder_icon128.png";
 import 'react-contexify/ReactContexify.css';
-import '../../styles/style.css'
-import CreateFolderModal from "./create_folder_modal";
+import './styles/style.css'
+import CreateFolderModal from "./modal/modal_with_config";
 
 export default function ContextMenuDisk(props){
     const handleCloseModal = () => {

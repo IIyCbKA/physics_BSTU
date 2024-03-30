@@ -1,0 +1,53 @@
+.elements-form {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 80%;
+}
+
+.form-btn {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 80%;
+    height: 65px;
+}
+
+.inputs-margin {
+    margin-bottom: 20px;
+}
+
+.btn-margin {
+    margin-top: 40px;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+.btn-hide-password-style {
+    outline: none;
+    box-shadow: none;
+}
+
+@keyframes shakeButton {
+    10% { transform: translateX(-1px) translateY(-1px);}
+    20% { transform: translateX(1px) translateY(1px);}
+    30% { transform: translateX(0px) translateY(0px);}
+    40% { transform: translateX(-1px) translateY(1px);}
+    50% { transform: translateX(1px) translateY(-1px);}
+    60% { transform: translateX(0px) translateY(0px);}
+    70% { transform: translateX(-1px) translateY(-1px);}
+    80% { transform: translateX(1px) translateY(1px);}
+    90% { transform: translateX(-1px) translateY(-1px);}
+    100% { transform: translateX(0px) translateY(0px);}
+}
+
+.input-group input:focus {
+    outline: none;
+    box-shadow: none;
+}

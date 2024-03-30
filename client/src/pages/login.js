@@ -1,6 +1,6 @@
 import {Helmet} from 'react-helmet';
 import React from 'react';
-import LoginForm from "../components/login_form";
+import LoginForm from "../components/login/login_form";
 
 function Login() {
     return (
