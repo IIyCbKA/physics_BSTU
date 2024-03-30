@@ -1,12 +1,11 @@
 import React, {useState} from 'react';
 import {Container, Nav, Navbar} from "react-bootstrap";
 import logo from './icons/logo.png';
-import profileIcon from './icons/profileIconDark.png';
-import testsIcon from './icons/iconTest.png';
-import './styles/style.css';
-import {styles} from "./styles/style";
+import './styles/style_header.css';
+import {styles} from "./styles/style_header";
 import MenuOffcanvas from "../menu/menu";
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { FormOutlined, UserOutlined } from '@ant-design/icons'
 
 function Header() {
     const [offcanvasShow, setOffcanvasShow] = useState(false);
@@ -36,7 +35,7 @@ function Header() {
                     onClick={handleOffcanvasToggle}
                     style={styles.customToggle}
                 >
-                    <span className="menu-text">Menu</span>
+                    <span className="btn-menu-text">Menu</span>
                 </Navbar.Toggle>
                 <MenuOffcanvas
                     show={offcanvasShow}
@@ -48,24 +47,14 @@ function Header() {
                 >
                     <Nav className="ms-auto">
                         <Nav.Link href="/test"
-                                  style={styles.headerIconsPadding}
+                                  style={styles.headerIconsForm}
                         >
-                            <img
-                                src={testsIcon}
-                                height="30"
-                                width="30"
-                                alt="test"
-                            />
+                            <FormOutlined style={styles.headerIconStyle}/>
                         </Nav.Link>
                         <Nav.Link href="/login"
-                                  style={styles.headerIconsPadding}
+                                  style={styles.headerIconsForm}
                         >
-                            <img
-                                src={profileIcon}
-                                height="30"
-                                width="30"
-                                alt="Login"
-                            />
+                            <UserOutlined style={styles.headerIconStyle}/>
                         </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>

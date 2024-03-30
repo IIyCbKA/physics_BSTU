@@ -1,7 +1,7 @@
 import {Button} from "react-bootstrap";
-import {styles} from "./styles/style";
+import {styles} from "./styles/style_login";
 import React, {useState} from "react";
-import './styles/style.css'
+import './styles/style_login.css'
 
 
 export default function LoginBtn(props){

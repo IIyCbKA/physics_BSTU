@@ -1,9 +1,8 @@
 import {Form, FormControl, InputGroup} from "react-bootstrap";
-import eyeClose from "./images/eyeClose.png";
-import eyeOpen from "./images/eyeOpen.png";
 import React, {useState} from "react";
-import {styles} from "./styles/style";
-import './styles/style.css'
+import {styles} from "./styles/style_login";
+import './styles/style_login.css'
+import {EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons'
 
 export default function PasswordLine(props){
     const [showPassword, setShowPassword] = useState(false);
@@ -58,11 +57,10 @@ export default function PasswordLine(props){
                         style={btnHidePasswordChangeStyle()}
                         className="btn-hide-password-style"
                     >
-                        <img src={showPassword ? eyeClose : eyeOpen}
-                             alt=""
-                             width="20"
-                             height="20"
-                        />
+                        {showPassword ?
+                            <EyeInvisibleOutlined style={styles.iconEye}/> :
+                            <EyeOutlined style={styles.iconEye}/>
+                        }
                     </InputGroup.Text>
                 </InputGroup>
             </Form.Group>

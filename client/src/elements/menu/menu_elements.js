@@ -1,9 +1,9 @@
 import {Nav} from "react-bootstrap";
-import testsIcon from "../../components/header/icons/iconTest.png";
 import {motion} from "framer-motion";
 import React from "react";
-import profileIcon from "../../components/header/icons/profileIconDark.png";
-import './styles/style.css'
+import { FormOutlined, UserOutlined } from '@ant-design/icons';
+import './styles/style_menu_elements.css'
+import {styles} from "./styles/style_menu_elements";
 
 export function TestsElement({isHidden}) {
     return (
@@ -15,14 +15,8 @@ export function TestsElement({isHidden}) {
                 duration: 0.8
             }}
         >
-            <Nav.Link href="/test">
-                <img
-                    className="style-img-offcanvas"
-                    src={testsIcon}
-                    width="24px"
-                    height="24px"
-                    alt="tests"
-                />
+            <Nav.Link href="/tests" style={styles.navItems}>
+                <FormOutlined style={styles.iconStyle}/>
                 <span
                     className="style-text-in-menu"> Tests</span>
             </Nav.Link>
@@ -40,14 +34,8 @@ export function ProfileElement({isHidden}) {
                 duration: 0.8
             }}
         >
-            <Nav.Link href="/login">
-                <img
-                    className="style-img-offcanvas"
-                    src={profileIcon}
-                    height="24px"
-                    width="24px"
-                    alt="logo"
-                />
+            <Nav.Link href="/login" style={styles.navItems}>
+                <UserOutlined style={styles.iconStyle}/>
                 <span
                     className="style-text-in-menu"> Account</span>
             </Nav.Link>

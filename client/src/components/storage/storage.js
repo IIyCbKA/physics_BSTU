@@ -6,7 +6,7 @@ import {useSelector} from "react-redux";
 import {socket} from "../../socket_client";
 import {setFiles} from "../../reducers/file_reducer";
 import {useDispatch} from "react-redux";
-import './styles/style.css'
+import './styles/style_storage.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 export default function Storage(){

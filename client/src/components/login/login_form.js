@@ -6,7 +6,7 @@ import PasswordLine from "../../elements/login/password_line";
 import LoginBtn from "../../elements/login/login_btn";
 import {login} from "../../actions/user";
 import {useDispatch} from "react-redux";
-import './styles/style.css'
+import './styles/style_login_form.css'
 
 export default function LoginForm(){
     const [password, setPassword] = useState('');

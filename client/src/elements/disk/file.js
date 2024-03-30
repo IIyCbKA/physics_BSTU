@@ -1,4 +1,4 @@
-import './styles/style.css'
+import './styles/style_disk.css'
 import { useContextMenu } from 'react-contexify';
 import ContextMenuFile from "./file_context_menu";
 import {minimizeStr} from "../../actions/strings";

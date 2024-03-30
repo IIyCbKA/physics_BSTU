@@ -3,7 +3,7 @@ import {Modal} from "antd";
 import {useState} from "react";
 import {useSelector} from "react-redux";
 import {createFolder} from "../../../actions/files";
-import './styles/style.css'
+import './styles/style_modal.css'
 import HeaderModal from "./header_modal";
 
 export default function ModalWindow(props){
@@ -16,7 +16,7 @@ export default function ModalWindow(props){
     }
 
     const handleOk = async () => {
-        //await createFolder(folderName, path)
+        await createFolder(folderName, path)
         handleCancel()
     }
 

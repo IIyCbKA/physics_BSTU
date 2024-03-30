@@ -1,8 +1,9 @@
-const headerIconsPadding = {
+const headerIconsForm = {
     paddingBottom: 0,
     paddingTop: 0,
     paddingLeft: "5px",
-    paddingRight: 0
+    paddingRight: 0,
+    height: '30px'
 }
 
 const logotypePadding = {
@@ -24,13 +25,20 @@ const styleNavbar = {
 }
 
 const styleContainerHeader = {
-    padding: '0 30px'
+    padding: '0 30px',
+    height: '30px'
+}
+
+const headerIconStyle = {
+    fontSize: '30px',
+    color: '#161616'
 }
 
 export const styles = {
-    headerIconsPadding: headerIconsPadding,
+    headerIconsForm: headerIconsForm,
     logotypePadding: logotypePadding,
     customToggle: customToggle,
     styleNavbar: styleNavbar,
-    styleContainerHeader: styleContainerHeader
+    styleContainerHeader: styleContainerHeader,
+    headerIconStyle: headerIconStyle
 }

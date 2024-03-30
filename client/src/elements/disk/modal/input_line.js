@@ -1,7 +1,7 @@
 import {Form, FormControl, InputGroup} from "react-bootstrap";
 import React, {useState} from "react";
-import {styles} from "./styles/style";
-import './styles/style.css'
+import {styles} from "./styles/style_modal";
+import './styles/style_modal.css'
 
 export default function InputLine(props) {
     const [inputIsFocused, setInputIsFocused] = useState(false);
@@ -25,7 +25,7 @@ export default function InputLine(props) {
     return (
         <div className="inputs-margin">
             <Form.Group
-                className="elements-form"
+                className="modal-input"
                 controlId="formBasicName"
             >
                 <InputGroup>

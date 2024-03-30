@@ -40,11 +40,17 @@ const focusButtonChangeVisibilityStyle = {
     transition: "background-color 0.7s, border 0.7s"
 }
 
+const iconEye = {
+    fontSize: '20px',
+    color: '#7F7F7F'
+}
+
 export const styles = {
     formButtonStyle: formButtonStyle,
     buttonChangeVisibilityStyle: buttonChangeVisibilityStyle,
     inputLinesStyle: inputLinesStyle,
     focusLoginLineStyle: focusLoginLineStyle,
     focusPasswordLineStyle: focusPasswordLineStyle,
-    focusButtonChangeVisibilityStyle: focusButtonChangeVisibilityStyle
+    focusButtonChangeVisibilityStyle: focusButtonChangeVisibilityStyle,
+    iconEye: iconEye
 }

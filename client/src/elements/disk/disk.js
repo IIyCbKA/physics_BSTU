@@ -1,7 +1,7 @@
 import File from "./file";
 import React, {useState} from "react";
 import {useSelector} from "react-redux";
-import './styles/style.css'
+import './styles/style_disk.css'
 import {useContextMenu} from "react-contexify";
 import ContextMenuDisk from "./disk_context_menu";
 
