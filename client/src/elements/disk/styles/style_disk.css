@@ -113,10 +113,3 @@
     grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
     justify-items: center;
 }
-
-.menu-item-icon{
-    height: 32px;
-    width: 32px;
-    padding: 6px;
-    margin-right: 6px;
-}

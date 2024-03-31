@@ -1,9 +1,9 @@
 import {Item, Menu} from "react-contexify";
-import iconDownload from "./icons/dowload_icon94.png";
-import iconDelete from "./icons/icons8-trash-can-48.png";
 import 'react-contexify/ReactContexify.css';
 import {deleteFile, downloadFile} from "../../actions/files";
 import './styles/style_disk.css'
+import {CloudDownloadOutlined, DeleteOutlined} from "@ant-design/icons";
+import {styles} from "./styles/style_disk";
 
 export default function ContextMenuFile(props){
     const onDownload = async () => {
@@ -20,17 +20,15 @@ export default function ContextMenuFile(props){
                 <Item id={"download"}
                       onClick={onDownload}
                 >
-                    <img src={iconDownload} alt="icon"
-                         className="menu-item-icon"/>
-                    Скачать
+                    <CloudDownloadOutlined style={styles.styleContextIcon}/>
+                        Скачать
                 </Item>
             }
             <Item id="delete"
                   onClick={onDelete}
             >
-                <img src={iconDelete} alt="icon"
-                     className="menu-item-icon"/>
-                Удалить
+                <DeleteOutlined style={styles.styleContextIcon}/>
+                    Удалить
             </Item>
         </Menu>
     )
