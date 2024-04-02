@@ -1,33 +1,13 @@
 import File from "./file";
-import React, {useState} from "react";
+import React from "react";
 import {useSelector} from "react-redux";
 import './styles/style_disk.css'
-import {useContextMenu} from "react-contexify";
-import ContextMenuDisk from "./disk_context_menu";
+import AddButton from "./add_button/add_button";
 
 export default function Disk() {
     const files = useSelector(state => state.file.files)
-    const [isModalOpen, setModalOpen] = useState(false)
-
-    const { show } = useContextMenu({
-        id: 'disk-context-menu',
-    });
-
-    function handleDiskContextMenu(event){
-        if (!isModalOpen){
-            show({
-                event,
-                props: {
-                    key: 'value'
-                }
-            })
-        }
-    }
-
     return (
-        <div className='storage-main'
-            onContextMenu={handleDiskContextMenu}
-        >
+        <div className='storage-main'>
             <div className="root-content-inner">
                 <div className="root-content-container">
                     <div className="client-listing">
@@ -39,14 +19,11 @@ export default function Disk() {
                                       key={file.id}
                                 />
                             ))}
+                            <AddButton />
                         </div>
                     </div>
                 </div>
             </div>
-            <ContextMenuDisk
-                isModalOpen={isModalOpen}
-                setModalOpen={setModalOpen}
-            />
         </div>
     )
 }

@@ -34,13 +34,6 @@ const styleOtherIcon = {
     color: '#161616'
 }
 
-const styleContextIcon = {
-    fontSize: '24px',
-    marginRight: '10px',
-    marginLeft: '6px',
-    color: '#161616'
-}
-
 export const styles = {
     styleFolderIcon: {...styleCommonIconFile, ...styleFolderIcon},
     styleDocIcon: {...styleCommonIconFile, ...styleDocIcon},
@@ -50,5 +43,4 @@ export const styles = {
     styleArchiveIcon: {...styleCommonIconFile, ...styleArchiveIcon},
     stylePresentationIcon: {...styleCommonIconFile, ...stylePresentationIcon},
     styleOtherIcon: {...styleCommonIconFile, ...styleOtherIcon},
-    styleContextIcon: styleContextIcon
 }

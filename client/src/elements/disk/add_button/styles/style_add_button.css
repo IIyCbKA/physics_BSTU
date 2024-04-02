@@ -1,0 +1,8 @@
+.add-button-area{
+    width: 104px;
+    height: 144px;
+    padding: 12px;
+    transition: background-color 0.3s;
+    border-radius: 8px;
+    margin-bottom: 4px;
+}

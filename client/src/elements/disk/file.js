@@ -1,6 +1,6 @@
 import './styles/style_disk.css'
 import { useContextMenu } from 'react-contexify';
-import ContextMenuFile from "./file_context_menu";
+import ContextMenuFile from "./context_menus/file_context_menu";
 import {minimizeStr} from "../../actions/strings";
 import {useSelector} from "react-redux";
 import {
