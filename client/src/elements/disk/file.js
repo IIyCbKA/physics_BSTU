@@ -39,22 +39,30 @@ export default function File(props){
         id: props.id,
     });
 
+    const showContextMenu = (event) => {
+        show({
+            event,
+            props: {
+                key: 'value'
+            }
+        })
+    }
+
     const handleFileClick = (event) => {
         event.stopPropagation();
-        clickCount += 1
-        setTimeout(() => {
-            if (clickCount === 1) {
-                show({
-                    event,
-                    props: {
-                        key: 'value'
-                    }
-                })
-            } else if (clickCount > 1 && props.type === 'folder'){
-                window.location.href = path + props.name + '\\';
-            }
-            clickCount = 0
-        }, 300);
+        if (props.type === 'folder'){
+            clickCount += 1
+            setTimeout(() => {
+                if (clickCount === 1) {
+                    showContextMenu(event)
+                } else if (clickCount > 1){
+                    window.location.href = path + props.name + '\\';
+                }
+                clickCount = 0
+            }, 300);
+        } else{
+            showContextMenu(event)
+        }
     }
 
     return(
