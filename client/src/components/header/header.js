@@ -26,7 +26,7 @@ function Header() {
                         src={logo}
                         height="30"
                         width="200"
-                        className='d-inline-block align-top'
+                        className='d-inline-block align-top none-select'
                         alt='Logo'
                     />
                 </Navbar.Brand>

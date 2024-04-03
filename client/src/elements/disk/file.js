@@ -33,31 +33,33 @@ const components = {
 
 export default function File(props){
     const path = useSelector(state => state.file.path)
+    let clickCount = 0;
 
     const { show } = useContextMenu({
         id: props.id,
     });
 
-    function handleFileContextMenu(event){
+    const handleFileClick = (event) => {
         event.stopPropagation();
-        show({
-            event,
-            props: {
-                key: 'value'
+        clickCount += 1
+        setTimeout(() => {
+            if (clickCount === 1) {
+                show({
+                    event,
+                    props: {
+                        key: 'value'
+                    }
+                })
+            } else if (clickCount > 1 && props.type === 'folder'){
+                window.location.href = path + props.name + '\\';
             }
-        })
+            clickCount = 0
+        }, 300);
     }
-
-    const handleClick = (event) => {
-        event.stopPropagation()
-        if (props.type === 'folder')
-            window.location.href = path + props.name + '\\';
-    };
 
     return(
         <div className="file-area"
-             onContextMenu={handleFileContextMenu}
-             onClick={handleClick}
+             onClick={handleFileClick}
         >
             <div className="item-icon">
                 <div className="icon-wrapper">

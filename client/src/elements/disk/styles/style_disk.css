@@ -54,6 +54,7 @@
     white-space: pre-line;
     font: 13px / 14px "YS Text", sans-serif;
     max-width: 80px;
+    user-select: none;
 }
 
 .icon-wrapper{

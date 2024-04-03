@@ -7,3 +7,7 @@
     font-weight: bold;
     color: #161616;
 }
+
+.none-select{
+    user-select: none;
+}
