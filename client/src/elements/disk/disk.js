@@ -3,6 +3,7 @@ import React from "react";
 import {useSelector} from "react-redux";
 import './styles/style_disk.css'
 import AddButton from "./add_button/add_button";
+import GoBackButton from "./go_back_button/go_back_button";
 
 export default function Disk() {
     const files = useSelector(state => state.file.files)
@@ -12,6 +13,7 @@ export default function Disk() {
                 <div className="root-content-container">
                     <div className="client-listing">
                         <div className="listing-items">
+                            <GoBackButton/>
                             {files.map(file => (
                                 <File name={file.name}
                                       type={file.type}
