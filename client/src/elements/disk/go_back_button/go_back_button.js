@@ -2,11 +2,12 @@ import './styles/style_go_back_button.css'
 import {styles} from './styles/style_go_back_button'
 import {FolderOpenOutlined} from "@ant-design/icons";
 
-export default function GoBackButton(){
+export default function GoBackButton({backPath}){
     const text = '..'
 
     const handleDoubleClick = (event) => {
         event.stopPropagation();
+        window.location.href = backPath;
     };
 
     return(

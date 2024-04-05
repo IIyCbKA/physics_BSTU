@@ -14,3 +14,15 @@ export const minimizeStr = (string, maxLength, afterPoint) => {
 
     return string
 }
+
+export const getAfterDiskPath = (path) => {
+    const disk_str = 'disk/'
+    return path.slice(path.indexOf(disk_str) + disk_str.length)
+}
+
+export const getLastDirectory = (path) => {
+    if (getAfterDiskPath(path) === '')
+        return ''
+
+    return path.slice(0, path.lastIndexOf('/', path.length - 2) + 1)
+}
