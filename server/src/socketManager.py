@@ -1,10 +1,11 @@
-from fastapi import WebSocket, WebSocketDisconnect, File, UploadFile, Form
-from server.application import fastApiServer
+from fastapi import WebSocket, WebSocketDisconnect
+from src.application import fastApiServer
 
 
 class SocketError(Exception):
     def __init__(self, detail: str):
         self.detail = detail
+
 
 class SocketManager:
     def __init__(self):

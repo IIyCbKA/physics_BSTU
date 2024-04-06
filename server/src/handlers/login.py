@@ -1,8 +1,8 @@
-from server.application import fastApiServer
-from server.data.functions.users import *
-from server.settings.config import *
+from src.application import fastApiServer
+from src.data.functions.users import *
+from src.settings.config import *
 
-from fastapi import Depends, HTTPException, Request
+from fastapi import Depends, HTTPException
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
@@ -12,6 +12,7 @@ import requests
 
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
 
 @fastApiServer.post("/api/login")
 async def loginBstu(data: LoginData):

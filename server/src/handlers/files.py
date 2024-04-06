@@ -1,14 +1,14 @@
-from server.application import fastApiServer
-from server.data.functions.files import *
-from server.storage.functions.storage import *
-from server.handlers.schemas import *
+from src.application import fastApiServer
+from src.data.functions.files import *
+from src.storage.functions.storage import *
+from src.handlers.schemas import *
 
 from fastapi.responses import JSONResponse, StreamingResponse
-from fastapi import WebSocket, WebSocketDisconnect, File, UploadFile, Form
-from typing import Dict, Annotated
+from fastapi import File, UploadFile, Form
+from typing import Annotated
 from fastapi import Depends
-from server.handlers.login import getCurrentUser
-from server.socketManager import sockets
+from src.handlers.login import getCurrentUser
+from src.socketManager import sockets
 
 
 # Отправляет на клиент новый список файлов

@@ -1,6 +1,5 @@
 from minio import Minio
-from server.settings.config import *
-
+from src.settings.config import *
 
 minio_client = Minio(MINIO_ADR,
                      access_key=MINIO_ACCESS_KEY,

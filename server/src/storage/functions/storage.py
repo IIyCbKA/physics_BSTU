@@ -1,4 +1,4 @@
-from server.storage.storage_client import minio_client
+from src.storage.storage_client import minio_client
 
 from fastapi import File, UploadFile
 from io import BytesIO

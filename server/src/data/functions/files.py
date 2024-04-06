@@ -1,7 +1,7 @@
-from server.data.models import *
-from server.data.db_session import db
-from server.handlers.schemas import FileModel
-from server.storage.functions.storage import *
+from src.data.models import *
+from src.data.db_session import db
+from src.handlers.schemas import FileModel
+from src.storage.functions.storage import *
 
 from sqlalchemy.exc import IntegrityError
 

@@ -1,6 +1,6 @@
-from server.data.models import *
-from server.data.db_session import db
-from server.handlers.schemas import *
+from src.data.models import *
+from src.data.db_session import db
+from src.handlers.schemas import *
 
 
 def getUser(id: int) -> tuple | None:

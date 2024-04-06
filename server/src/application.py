@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from server.settings.config import CLIENT_URL
+from src.settings.config import CLIENT_URL
 
 fastApiServer = FastAPI()
 
