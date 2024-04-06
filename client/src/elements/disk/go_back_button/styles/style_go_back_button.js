@@ -1,6 +1,6 @@
 const icon = {
     fontSize: '80px',
-    color: '#A9A9A9'
+    color: 'rgba(169, 169, 169, 0.4)'
 }
 
 export const styles = {
