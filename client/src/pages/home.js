@@ -16,7 +16,7 @@ function Home() {
 
     useEffect(() => {
         const waitFunc = async () => {
-            await dispatch(setPath(path))
+            await dispatch(setPath(decodeURIComponent(path)))
             await getFilesName(path)(dispatch)
         }
         waitFunc()

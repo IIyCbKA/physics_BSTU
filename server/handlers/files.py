@@ -9,7 +9,6 @@ from typing import Dict, Annotated
 from fastapi import Depends
 from server.handlers.login import getCurrentUser
 from server.socketManager import sockets
-from urllib.parse import quote
 
 
 # Отправляет на клиент новый список файлов
@@ -26,8 +25,7 @@ async def sendFilesNameListToAll(path: str):
 # Аргумент path - путь к директории папки
 @fastApiServer.get('/disk{path:path}')
 async def filesList(path: str, user: Annotated[dict, Depends(getCurrentUser)]):
-    enc_path = quote(path, encoding='utf-8')
-    filesName: dict = getFilesNameList(enc_path)
+    filesName: dict = getFilesNameList(path)
     return JSONResponse(content=filesName, status_code=200)
 
 
