@@ -11,7 +11,6 @@ WORKDIR /app
 
 COPY . /app
 
-EXPOSE 5432
 EXPOSE 5000
 
 CMD ["uvicorn", "src.application:fastApiServer", "--port", "5000"]
