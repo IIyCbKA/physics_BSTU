@@ -3,11 +3,12 @@ version: '3.1'
 services:
   db:
     build: ./db-files
+    hostname: db
     restart: always
     env_file:
       - ./server/src/settings/.env
     ports:
-      - "5433:5433"
+      - "5432:5432"
     volumes:
       - postgresVolume:/var/lib/postgresql/data
 
