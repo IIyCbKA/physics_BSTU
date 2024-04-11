@@ -72,8 +72,10 @@ def auth(data: dict) -> dict:
     refreshToken: str = createToken({'userID': userData.userID},
                                     refreshTokenExpires)
 
-    return {"success": True, "user": {"id": userData.userID},
-            "token": userToken, "refresh_token": refreshToken}
+    return {"success": True,
+            "user": {"id": userData.userID, "status": userData.status},
+            "token": userToken,
+            "refresh_token": refreshToken}
 
 
 def createToken(data: dict, expiresDelta: timedelta | None = None):
@@ -101,7 +103,7 @@ async def getCurrentUserCommon(token: str,
     if userData is None:
         raise credentials_exception
 
-    return {"user": {"id": userData.userID}}
+    return {"user": {"id": userData.userID, "status": userData.status}}
 
 
 async def getCurrentUser(token: Annotated[str, Depends(oauth2_scheme)]):
