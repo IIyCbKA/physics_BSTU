@@ -21,7 +21,7 @@ function Header() {
             style={styles.styleNavbar}
         >
             <Container fluid style={styles.styleContainerHeader}>
-                <Navbar.Brand href='/' style={styles.logotypePadding}>
+                <Navbar.Brand href='/disk/' style={styles.logotypePadding}>
                     <img
                         src={logo}
                         height="30"
@@ -51,7 +51,7 @@ function Header() {
                         >
                             <FormOutlined style={styles.headerIconStyle}/>
                         </Nav.Link>
-                        <Nav.Link href="/login"
+                        <Nav.Link href="/account"
                                   style={styles.headerIconsForm}
                         >
                             <UserOutlined style={styles.headerIconStyle}/>

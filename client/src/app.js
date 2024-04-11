@@ -6,6 +6,7 @@ import NotFound from "./pages/not_found";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {auth} from "./actions/user";
+import Account from "./pages/account";
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
                     <Route path="/login" element={<Navigate to="/disk/" />}/>
                     <Route path="/" element={<Navigate to="/disk/" />}/>
                     <Route path="/tests" element={<Test />} />
+                    <Route path="/account" element={<Account />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             }

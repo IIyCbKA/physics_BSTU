@@ -34,7 +34,7 @@ export function ProfileElement({isHidden}) {
                 duration: 0.8
             }}
         >
-            <Nav.Link href="/login" style={styles.navItems}>
+            <Nav.Link href="/account" style={styles.navItems}>
                 <UserOutlined style={styles.iconStyle}/>
                 <span
                     className="style-text-in-menu"> Account</span>
