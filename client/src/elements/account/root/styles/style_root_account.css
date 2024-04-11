@@ -1,7 +1,7 @@
 .account-main {
     background-color: #FFFFFF;
     width: calc(100vw - 40px);
-    min-height: calc(100vh - 44px - 34px - 16px);
+    min-height: calc(100vh - 44px - 34px);
     min-width: 390px;
     padding: 8px;
     display: flex;
@@ -12,7 +12,7 @@
 
 .account-root-content-inner{
     padding: 20px;
-    min-height: calc(100vh - 44px - 34px - 16px - 40px);
+    min-height: calc(100vh - 44px - 34px - 16px);
     display: flex;
     flex-grow: 1;
     box-sizing: border-box;
