@@ -1,20 +1,15 @@
-import {Helmet} from 'react-helmet';
+import React from 'react';
+import { Button, Result } from 'antd';
 
-export default function NotFound() {
+export default function NotFound () {
     return (
         <div>
-            <Helmet>
-                <title>404 Not Found</title>
-            </Helmet>
-            <div style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: '100vh',
-                textAlign: 'center'
-            }}>
-                <h2>Page<br/><strong>Not found</strong></h2>
-            </div>
+            <Result
+                status="404"
+                title="404"
+                subTitle="Sorry, the page you visited does not exist."
+                extra={<Button type="primary" href="/disk/">На главную</Button>}
+            />
         </div>
     );
 }
