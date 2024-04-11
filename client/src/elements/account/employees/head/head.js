@@ -1,6 +1,6 @@
 import './styles/emplyee_head.css'
 import AccountEmployeeNavigateBtn
-    from "../../../elements/account/navigate_button/button";
+    from "../../navigate_button/button";
 import {useState} from "react";
 
 
@@ -19,7 +19,7 @@ export default function EmployeeHead(){
             />
 
             <AccountEmployeeNavigateBtn
-                text='Журналы'
+                text='Оценки'
                 selected={onJournalsSelected}
                 changeSelected={changeJournalsSelected}
                 otherSelected={onTasksSelected}

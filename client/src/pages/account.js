@@ -1,11 +1,11 @@
-import EmployeeHead from "../components/account/employees/head";
+import AccountAround from "../components/account/account_around";
 import Header from "../components/header/header";
 
 export default function Account(){
     return (
-        <div>
+        <div style={{backgroundColor: '#EBF0FF'}}>
             <Header/>
-            <EmployeeHead/>
+            <AccountAround/>
         </div>
     )
 }

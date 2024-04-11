@@ -3,7 +3,9 @@ const btnCommonStyle = {
     borderRadius: 0,
     padding: '0 20px',
     backgroundColor: '#FFFFFF',
-    borderBottom: '3px solid #1967D2'
+    borderBottom: '3px solid #1967D2',
+    borderBottomRightRadius: '3px',
+    borderBottomLeftRadius: '3px'
 };
 
 const btnDefaultStyle = {
