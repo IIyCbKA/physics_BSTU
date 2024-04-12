@@ -5,10 +5,12 @@ import './styles/style_disk.css'
 import AddButton from "./add_button/add_button";
 import GoBackButton from "./go_back_button/go_back_button";
 import {getLastDirectory} from "../../actions/strings";
+import {employeeStatus} from "../../reducers/user_reducer";
 
 export default function Disk() {
     const files = useSelector(state => state.file.files)
     const path = useSelector(state => state.file.path)
+    const userStatus = useSelector(state => state.user.currentUser.status)
     const backPath = getLastDirectory(path)
     return (
         <div className='storage-main'>
@@ -25,7 +27,7 @@ export default function Disk() {
                                       key={file.id}
                                 />
                             ))}
-                            <AddButton />
+                            {userStatus === employeeStatus &&  <AddButton/>}
                         </div>
                     </div>
                 </div>

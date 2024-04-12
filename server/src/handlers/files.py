@@ -7,7 +7,7 @@ from fastapi.responses import JSONResponse, StreamingResponse
 from fastapi import File, UploadFile, Form
 from typing import Annotated
 from fastapi import Depends
-from src.handlers.login import getCurrentUser
+from src.handlers.login import getCurrentUser, getCurrentEmployee
 from src.socketManager import sockets
 
 
@@ -34,7 +34,7 @@ async def filesList(path: str, user: Annotated[dict, Depends(getCurrentUser)]):
 # data.path: путь к папке
 @fastApiServer.post('/api/create_folder')
 async def createFolder(data: FolderData,
-                       user: Annotated[dict, Depends(getCurrentUser)]):
+                       user: Annotated[dict, Depends(getCurrentEmployee)]):
     data.path = data.path.replace('/disk', '', 1)
     fileModel: FileModel | None = addFileToDB(data.folderName,
                                               'folder',
@@ -53,7 +53,7 @@ async def createFolder(data: FolderData,
 @fastApiServer.post('/api/add_file')
 async def addFile(file: Annotated[UploadFile, File()],
                   path: Annotated[str, Form()],
-                  user: Annotated[dict, Depends(getCurrentUser)]):
+                  user: Annotated[dict, Depends(getCurrentEmployee)]):
     error: JSONResponse = JSONResponse(content={'error':
                                        'File was not added'},
                                        status_code=500)
@@ -76,7 +76,7 @@ async def addFile(file: Annotated[UploadFile, File()],
 # Роут для удаления файла
 # В параметрах filename - имя файла, path - путь к файлу
 @fastApiServer.post('/api/delete_file')
-async def deleteFile(data: DeleteFileData, user: Annotated[dict, Depends(getCurrentUser)]):
+async def deleteFile(data: DeleteFileData, user: Annotated[dict, Depends(getCurrentEmployee)]):
     try:
         fileInfo: FileModel | None = getFileInfo(data.fileID)
         if fileInfo is not None:

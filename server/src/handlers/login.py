@@ -115,6 +115,17 @@ async def getCurrentUser(token: Annotated[str, Depends(oauth2_scheme)]):
 
     return await getCurrentUserCommon(token, credentials_exception)
 
+async def getCurrentEmployee(userInfo: Annotated[dict, Depends(getCurrentUser)]):
+    credentials_exception = HTTPException(
+        status_code=403,
+        detail="User is not employee",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+
+    if userInfo['user']['status'] != "employee":
+        raise credentials_exception
+
+    return userInfo
 
 async def getCurrentUserRefresh(token: Annotated[str, Depends(oauth2_scheme)]):
     credentials_exception = HTTPException(
