@@ -4,31 +4,31 @@ import ContextMenuFile from "./context_menus/file_context_menu";
 import {minimizeStr} from "../../actions/strings";
 import {useSelector} from "react-redux";
 import {
-    FileExcelOutlined,
-    FileImageOutlined,
-    FileOutlined,
-    FilePdfOutlined,
-    FilePptOutlined,
-    FileWordOutlined,
-    FileZipOutlined,
-    FolderOutlined
+    FileExcelFilled,
+    FileFilled,
+    FileImageFilled,
+    FilePdfFilled,
+    FilePptFilled,
+    FileWordFilled,
+    FileZipFilled,
+    FolderFilled,
 } from "@ant-design/icons";
 import {styles} from './styles/style_disk'
 
 const components = {
-    'folder': <FolderOutlined style={styles.styleFolderIcon}/>,
-    'docx': <FileWordOutlined style={styles.styleDocIcon}/>,
-    'doc': <FileWordOutlined style={styles.styleDocIcon}/>,
-    'png': <FileImageOutlined style={styles.styleImageIcon}/>,
-    'jpg': <FileImageOutlined style={styles.styleImageIcon}/>,
-    'jpeg': <FileImageOutlined style={styles.styleImageIcon}/>,
-    'pdf': <FilePdfOutlined style={styles.stylePdfIcon}/>,
-    'xls': <FileExcelOutlined style={styles.styleExcelIcon}/>,
-    'xlsx': <FileExcelOutlined style={styles.styleExcelIcon}/>,
-    'rar': <FileZipOutlined style={styles.styleArchiveIcon}/>,
-    'zip': <FileZipOutlined style={styles.styleArchiveIcon}/>,
-    'pptx': <FilePptOutlined style={styles.stylePresentationIcon}/>,
-    'other': <FileOutlined style={styles.styleOtherIcon}/>
+    'folder': <FolderFilled style={styles.styleFolderIcon}/>,
+    'docx': <FileWordFilled style={styles.styleDocIcon}/>,
+    'doc': <FileWordFilled style={styles.styleDocIcon}/>,
+    'png': <FileImageFilled style={styles.styleImageIcon}/>,
+    'jpg': <FileImageFilled style={styles.styleImageIcon}/>,
+    'jpeg': <FileImageFilled style={styles.styleImageIcon}/>,
+    'pdf': <FilePdfFilled style={styles.stylePdfIcon}/>,
+    'xls': <FileExcelFilled style={styles.styleExcelIcon}/>,
+    'xlsx': <FileExcelFilled style={styles.styleExcelIcon}/>,
+    'rar': <FileZipFilled style={styles.styleArchiveIcon}/>,
+    'zip': <FileZipFilled style={styles.styleArchiveIcon}/>,
+    'pptx': <FilePptFilled style={styles.stylePresentationIcon}/>,
+    'other': <FileFilled style={styles.styleOtherIcon}/>
 }
 
 export default function File(props){

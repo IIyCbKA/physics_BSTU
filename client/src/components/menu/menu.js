@@ -1,11 +1,16 @@
 import React, {useState} from 'react';
 import {Nav, Offcanvas} from "react-bootstrap";
 import {styles} from "./styles/style_menu";
-import { TestsElement, ProfileElement } from "../../elements/menu/menu_elements";
+import {
+    TestsElement,
+    ProfileElement,
+    LogoutElement
+} from "../../elements/menu/menu_elements";
 import './styles/style_menu.css'
 
 function MenuOffcanvas({show, handleClose}) {
     const [hidden, setHide] = useState(false);
+
     const closeMenu = () => {
         setHide(true);
         setTimeout(() => {
@@ -33,6 +38,7 @@ function MenuOffcanvas({show, handleClose}) {
                 <Nav>
                     <TestsElement isHidden={hidden}/>
                     <ProfileElement isHidden={hidden}/>
+                    <LogoutElement isHidden={hidden}/>
                 </Nav>
             </Offcanvas.Body>
         </Offcanvas>

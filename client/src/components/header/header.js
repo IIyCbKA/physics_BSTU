@@ -5,14 +5,21 @@ import './styles/style_header.css';
 import {styles} from "./styles/style_header";
 import MenuOffcanvas from "../menu/menu";
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { FormOutlined, UserOutlined } from '@ant-design/icons'
+import {FormOutlined, LogoutOutlined, UserOutlined} from '@ant-design/icons'
+import {useDispatch} from "react-redux";
+import {cleanUserInfo} from "../../actions/user";
 
 function Header() {
+    const dispatch = useDispatch()
     const [offcanvasShow, setOffcanvasShow] = useState(false);
 
     const handleOffcanvasToggle = () => {
         setOffcanvasShow(!offcanvasShow);
     };
+
+    const handlerLogoutClick = () => {
+        dispatch(cleanUserInfo())
+    }
 
     return (
         <Navbar
@@ -55,6 +62,11 @@ function Header() {
                                   style={styles.headerIconsForm}
                         >
                             <UserOutlined style={styles.headerIconStyle}/>
+                        </Nav.Link>
+                        <Nav.Link onClick={handlerLogoutClick}
+                                  style={styles.headerIconsForm}
+                        >
+                            <LogoutOutlined style={styles.headerIconStyle}/>
                         </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>

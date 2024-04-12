@@ -31,7 +31,7 @@ const stylePresentationIcon = {
 }
 
 const styleOtherIcon = {
-    color: '#161616'
+    color: '#E6E6E6'
 }
 
 export const styles = {

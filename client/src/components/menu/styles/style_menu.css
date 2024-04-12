@@ -1,4 +1,5 @@
 .style-title-offcanvas {
+    user-select: none;
     color: #161616;
 }
 

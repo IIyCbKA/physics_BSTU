@@ -64,7 +64,7 @@ export const refreshTokenAuth = (refreshToken) => {
 }
 
 
-const cleanUserInfo = () => {
+export const cleanUserInfo = () => {
     return async (dispatch) => {
         localStorage.removeItem('token')
         Cookies.remove('refresh_token')
