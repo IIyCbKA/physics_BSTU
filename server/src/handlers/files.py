@@ -4,7 +4,7 @@ from src.storage.functions.storage import *
 from src.handlers.schemas import *
 
 from fastapi.responses import JSONResponse, StreamingResponse
-from fastapi import File, UploadFile, Form
+from fastapi import File, UploadFile, Form, Request
 from typing import Annotated
 from fastapi import Depends
 from src.handlers.login import getCurrentUser, getCurrentEmployee
@@ -18,13 +18,16 @@ async def sendFilesNameList(ip: str, path: str):
 
 # Отправляет на клиент новый список файлов
 async def sendFilesNameListToAll(path: str):
-    await sockets.sendMessage('getFilesName', getFilesNameList(path))
+    await sockets.sendMessagePath('getFilesName', getFilesNameList(path), path)
 
 
 # Роут на получение списка файлов
 # Аргумент path - путь к директории папки
 @fastApiServer.get('/disk{path:path}')
-async def filesList(path: str, user: Annotated[dict, Depends(getCurrentUser)]):
+async def filesList(path: str,
+                    user: Annotated[dict, Depends(getCurrentUser)],
+                    request: Request):
+    sockets.addPath(request.client.host, path)
     filesName: dict = getFilesNameList(path)
     return JSONResponse(content=filesName, status_code=200)
 

@@ -7,16 +7,41 @@ class SocketError(Exception):
         self.detail = detail
 
 
+class ClientInfo:
+    def __init__(self, ws: WebSocket | None, path: str | None = None):
+        self.ws = ws
+        self.path = path
+
+
 class SocketManager:
     def __init__(self):
-        self.clients = {}
+        self.clients: dict[str, ClientInfo] = {}
+        self.paths: dict[str, dict[str, ClientInfo]] = {}
         self.routes = {}
 
     def addClient(self, ip: str, ws: WebSocket):
-        self.clients[ip] = ws
+        if ip in self.clients.keys():
+            self.clients[ip].ws = ws
+        else:
+            self.clients[ip] = ClientInfo(ws)
+
+    def addPath(self, ip: str, path: str):
+        if ip in self.clients.keys():
+            self.clients[ip].path = path
+        else:
+            self.clients[ip] = ClientInfo(None, path)
+
+        if not (path in self.paths.keys()):
+            self.paths[path] = {}
+
+        self.paths[path][ip] = self.clients[ip]
 
     def removeClient(self, ip):
         if ip in self.clients[ip]:
+            path = self.clients[ip].path
+            if path:
+                if ip in self.paths[path][ip]:
+                    del self.paths[path][ip]
             del self.clients[ip]
 
     def onSocket(self, func: callable, routeName: str):
@@ -33,10 +58,21 @@ class SocketManager:
 
             sendData = {"routeName": routeName, "data": data}
             if not (ip is None):
-                await self.clients[ip].send_json(sendData)
+                if not (self.clients[ip].ws is None):
+                    await self.clients[ip].ws.send_json(sendData)
             else:
-                for websocket in self.clients.values():
-                    await websocket.send_json(sendData)
+                for info in self.clients.values():
+                    if not (info.ws is None):
+                        await (info.ws.send_json(sendData))
+        except Exception as e:
+            print('Exception:', e)
+
+    async def sendMessagePath(self, routeName: str, data: dict, path: str):
+        try:
+            sendData = {"routeName": routeName, "data": data}
+            for info in self.paths[path].values():
+                if not (info.ws is None):
+                    await (info.ws.send_json(sendData))
         except Exception as e:
             print('Exception:', e)
 
