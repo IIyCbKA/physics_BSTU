@@ -1,6 +1,3 @@
-const styleCommonIconFile = {
-    fontSize: '80px'
-}
 
 const styleFolderIcon = {
     color: '#FFB11F'
@@ -34,13 +31,29 @@ const styleOtherIcon = {
     color: '#E6E6E6'
 }
 
+const iconMobile = {
+    fontSize: '40px'
+}
+
+const iconPC = {
+    fontSize: '80px'
+}
+
+const allIcon = {
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex'
+}
+
 export const styles = {
-    styleFolderIcon: {...styleCommonIconFile, ...styleFolderIcon},
-    styleDocIcon: {...styleCommonIconFile, ...styleDocIcon},
-    styleImageIcon: {...styleCommonIconFile, ...styleImageIcon},
-    stylePdfIcon: {...styleCommonIconFile, ...stylePdfIcon},
-    styleExcelIcon: {...styleCommonIconFile, ...styleExcelIcon},
-    styleArchiveIcon: {...styleCommonIconFile, ...styleArchiveIcon},
-    stylePresentationIcon: {...styleCommonIconFile, ...stylePresentationIcon},
-    styleOtherIcon: {...styleCommonIconFile, ...styleOtherIcon},
+    styleFolderIcon: styleFolderIcon,
+    styleDocIcon: styleDocIcon,
+    styleImageIcon: styleImageIcon,
+    stylePdfIcon: stylePdfIcon,
+    styleExcelIcon: styleExcelIcon,
+    styleArchiveIcon: styleArchiveIcon,
+    stylePresentationIcon: stylePresentationIcon,
+    styleOtherIcon: styleOtherIcon,
+    iconMobile: {...iconMobile, ...allIcon},
+    iconPC: {...iconPC, ...allIcon}
 }

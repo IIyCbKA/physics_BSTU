@@ -24,7 +24,7 @@ function Header() {
     return (
         <Navbar
             collapseOnSelect
-            expand='sm'
+            expand='lg'
             style={styles.styleNavbar}
         >
             <Container fluid style={styles.styleContainerHeader}>
@@ -42,7 +42,7 @@ function Header() {
                     onClick={handleOffcanvasToggle}
                     style={styles.customToggle}
                 >
-                    <span className="btn-menu-text">Menu</span>
+                    <span className="btn-menu-text">Меню</span>
                 </Navbar.Toggle>
                 <MenuOffcanvas
                     show={offcanvasShow}
@@ -50,7 +50,7 @@ function Header() {
                 />
                 <Navbar.Collapse
                     id="responsive-navbar-nav"
-                    className="d-none d-sm-block"
+                    className="d-none d-lg-block"
                 >
                     <Nav className="ms-auto">
                         <Nav.Link href="/test"

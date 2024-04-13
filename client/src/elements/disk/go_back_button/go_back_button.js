@@ -12,13 +12,13 @@ export default function GoBackButton({backPath}){
 
     return(
         <div className="go-back-area" onDoubleClick={handleDoubleClick}>
-            <div className='item-icon'>
+            <div className='go-back-item-icon'>
                 <FolderOpenOutlined style={styles.icon}/>
             </div>
-            <div className="item-info">
-                <div className="item-title">
+            <div className="go-back-item-info">
+                <div className="go-back-item-title">
                     <span
-                        className="clamped-text"
+                        className="go-back-clamped-text"
                         aria-hidden={true}
                         title={'Вернуться назад'}
                     >{text}

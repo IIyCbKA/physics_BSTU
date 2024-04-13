@@ -19,7 +19,7 @@ const customToggle = {
 }
 
 const styleNavbar = {
-    minWidth: '430px',
+    minWidth: '390px',
     paddingTop: '14px',
     paddingBottom: '0px'
 }

@@ -3,37 +3,29 @@ import { useContextMenu } from 'react-contexify';
 import ContextMenuFile from "./context_menus/file_context_menu";
 import {minimizeStr} from "../../actions/strings";
 import {useSelector} from "react-redux";
-import {
-    FileExcelFilled,
-    FileFilled,
-    FileImageFilled,
-    FilePdfFilled,
-    FilePptFilled,
-    FileWordFilled,
-    FileZipFilled,
-    FolderFilled,
-} from "@ant-design/icons";
-import {styles} from './styles/style_disk'
-
-const components = {
-    'folder': <FolderFilled style={styles.styleFolderIcon}/>,
-    'docx': <FileWordFilled style={styles.styleDocIcon}/>,
-    'doc': <FileWordFilled style={styles.styleDocIcon}/>,
-    'png': <FileImageFilled style={styles.styleImageIcon}/>,
-    'jpg': <FileImageFilled style={styles.styleImageIcon}/>,
-    'jpeg': <FileImageFilled style={styles.styleImageIcon}/>,
-    'pdf': <FilePdfFilled style={styles.stylePdfIcon}/>,
-    'xls': <FileExcelFilled style={styles.styleExcelIcon}/>,
-    'xlsx': <FileExcelFilled style={styles.styleExcelIcon}/>,
-    'rar': <FileZipFilled style={styles.styleArchiveIcon}/>,
-    'zip': <FileZipFilled style={styles.styleArchiveIcon}/>,
-    'pptx': <FilePptFilled style={styles.stylePresentationIcon}/>,
-    'other': <FileFilled style={styles.styleOtherIcon}/>
-}
+import {useEffect, useState} from "react";
+import {icons} from "./file_icons";
+import {styles} from "./styles/style_disk";
 
 export default function File(props){
+    const [orientation, setOrientation] = useState(window.matchMedia(
+        "(orientation: portrait)").matches ? "portrait" : "landscape");
     const path = useSelector(state => state.file.path)
     let clickCount = 0;
+
+    useEffect(() => {
+        const handleOrientationChange = () => {
+            setOrientation(window.matchMedia("(orientation: portrait)").matches
+                ? "portrait" : "landscape");
+        };
+
+        window.addEventListener("orientationchange", handleOrientationChange);
+
+        return () => {
+            window.removeEventListener("orientationchange",
+                handleOrientationChange);
+        };
+    }, []);
 
     const { show } = useContextMenu({
         id: props.id,
@@ -65,16 +57,27 @@ export default function File(props){
         }
     }
 
+    const iconStyle = () => {
+        if (orientation === 'portrait'){
+            return styles.iconMobile
+        } else{
+            return styles.iconPC
+        }
+    }
+
     return(
         <div className="file-area"
              onClick={handleFileClick}
         >
             <div className="item-icon">
                 <div className="icon-wrapper">
-                    <span className='file-icon file-icon-size icon-contain '>
-                        {props.type in components ?
-                            components[props.type] :
-                            components['other']}
+                    <span
+                        style={iconStyle()}
+                        className='file-icon file-icon-size icon-contain'
+                    >
+                        {props.type in icons ?
+                            icons[props.type] :
+                            icons['other']}
                     </span>
                 </div>
             </div>
