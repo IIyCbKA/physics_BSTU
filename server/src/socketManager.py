@@ -37,10 +37,10 @@ class SocketManager:
         self.paths[path][ip] = self.clients[ip]
 
     def removeClient(self, ip):
-        if ip in self.clients[ip]:
+        if ip in self.clients.keys():
             path = self.clients[ip].path
             if path:
-                if ip in self.paths[path][ip]:
+                if ip in self.paths[path].keys():
                     del self.paths[path][ip]
             del self.clients[ip]
 
