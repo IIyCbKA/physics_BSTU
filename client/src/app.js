@@ -14,8 +14,8 @@ function App() {
     const [isWaiting, setIsWaiting] = useState(true)
     const dispatch = useDispatch()
 
-    const [orientation, setOrientation] = useState(window.matchMedia(
-        "(orientation: portrait)").matches ? "portrait" : "landscape");
+    const [orientation, setOrientation] = useState(window.innerHeight >
+    window.innerWidth ? "portrait" : "landscape");
 
     useEffect(() => {
         const waitFunc = async () => {
@@ -27,18 +27,22 @@ function App() {
     }, [dispatch])
 
     useEffect(() => {
-        const handleOrientationChange = () => {
-            setOrientation(window.matchMedia("(orientation: portrait)").matches
-                ? "portrait" : "landscape");
+        const handleResize = () => {
+            const isPortrait = window.innerHeight > window.innerWidth;
+
+            if (isPortrait && orientation !== "portrait") {
+                setOrientation("portrait");
+            } else if (!isPortrait && orientation !== "landscape") {
+                setOrientation("landscape");
+            }
         };
 
-        window.addEventListener("orientationchange", handleOrientationChange);
+        window.addEventListener("resize", handleResize);
 
         return () => {
-            window.removeEventListener("orientationchange",
-                handleOrientationChange);
+            window.removeEventListener("resize", handleResize);
         };
-    }, []);
+    }, [orientation]);
 
     return (
         <BrowserRouter>
