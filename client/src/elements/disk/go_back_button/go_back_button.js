@@ -1,10 +1,13 @@
 import './styles/style_go_back_button.css'
 import {styles} from './styles/style_go_back_button'
 import {FolderOpenOutlined} from "@ant-design/icons";
+import {useSelector} from "react-redux";
+import {MOBILE_ORIENTATION} from "../../../classes/OrientationListener";
 
 export default function GoBackButton(props){
     const textMobile = 'Вернуться назад'
     const textPC = '..'
+    const orientation = useSelector(state => state.app.orientation)
 
     const handleClick = (event) => {
         event.stopPropagation();
@@ -12,7 +15,7 @@ export default function GoBackButton(props){
     };
 
     const iconStyle = () => {
-        if (props.orientation === 'portrait'){
+        if (orientation === MOBILE_ORIENTATION){
             return styles.iconMobile
         } else{
             return styles.iconPC
@@ -20,7 +23,7 @@ export default function GoBackButton(props){
     }
 
     const btnText = () => {
-        if (props.orientation === 'portrait'){
+        if (orientation === MOBILE_ORIENTATION){
             return textMobile
         } else{
             return textPC

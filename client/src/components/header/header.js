@@ -6,11 +6,13 @@ import {styles} from "./styles/style_header";
 import MenuOffcanvas from "../menu/menu";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {FormOutlined, LogoutOutlined, UserOutlined} from '@ant-design/icons'
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {cleanUserInfo} from "../../actions/user";
+import {MOBILE_ORIENTATION} from "../../classes/OrientationListener";
 
-function Header(props) {
+function Header() {
     const dispatch = useDispatch()
+    const orientation = useSelector(state => state.app.orientation)
     const [offcanvasShow, setOffcanvasShow] = useState(false);
 
     const handleOffcanvasToggle = () => {
@@ -22,7 +24,7 @@ function Header(props) {
     }
 
     const containerStyle = () => {
-        if (props.orientation === 'portrait'){
+        if (orientation === MOBILE_ORIENTATION){
             return styles.containerHeaderMobile
         } else{
             return styles.containerHeaderPC

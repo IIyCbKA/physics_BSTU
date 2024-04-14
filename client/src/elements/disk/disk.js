@@ -7,7 +7,7 @@ import GoBackButton from "./go_back_button/go_back_button";
 import {getLastDirectory} from "../../actions/strings";
 import {employeeStatus} from "../../reducers/user_reducer";
 
-export default function Disk(props) {
+export default function Disk() {
     const files = useSelector(state => state.file.files)
     const path = useSelector(state => state.file.path)
     const userStatus = useSelector(state => state.user.currentUser.status)
@@ -25,18 +25,16 @@ export default function Disk(props) {
                     <div className="client-listing">
                         <div className="listing-items">
                             {backPath !== '' &&
-                                <GoBackButton backPath={backPath}
-                                              orientation={props.orientation}/>}
+                                <GoBackButton backPath={backPath}/>}
                             {files.map(file => (
                                 <File name={file.name}
                                       type={file.type}
                                       id={file.id}
                                       key={file.id}
-                                      orientation={props.orientation}
                                 />
                             ))}
                             {userStatus === employeeStatus &&
-                                <AddButton orientation={props.orientation}/>}
+                                <AddButton/>}
                         </div>
                     </div>
                 </div>

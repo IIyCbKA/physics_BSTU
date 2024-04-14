@@ -5,9 +5,12 @@ import {styles} from './styles/style_add_button'
 import {Button} from "antd"
 import {PlusOutlined} from "@ant-design/icons";
 import ContextMenuDisk from "../context_menus/disk_context_menu";
+import {useSelector} from "react-redux";
+import {MOBILE_ORIENTATION, PC_ORIENTATION} from "../../../classes/OrientationListener";
 
 export default function AddButton(props){
     const [isModalOpen, setModalOpen] = useState(false)
+    const orientation = useSelector(state => state.app.orientation)
 
     const { show } = useContextMenu({
         id: 'disk-context-menu',
@@ -26,7 +29,7 @@ export default function AddButton(props){
     };
 
     const iconStyle = () => {
-        if (props.orientation === 'portrait'){
+        if (orientation === MOBILE_ORIENTATION){
             return styles.iconMobile
         } else{
             return styles.iconPC
@@ -37,7 +40,7 @@ export default function AddButton(props){
         <div className="add-button-area">
             <Button type="dashed" style={iconStyle()} onClick={handleClick}>
                 <PlusOutlined/>
-                {props.orientation === 'landscape' &&
+                {props.orientation === PC_ORIENTATION &&
                     <div
                         style={{
                             marginTop: 8,

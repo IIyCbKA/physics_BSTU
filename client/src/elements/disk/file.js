@@ -5,9 +5,11 @@ import {minimizeStr} from "../../actions/strings";
 import {useSelector} from "react-redux";
 import {icons} from "./file_icons";
 import {styles} from "./styles/style_disk";
+import {MOBILE_ORIENTATION, PC_ORIENTATION} from "../../classes/OrientationListener";
 
 export default function File(props){
     const path = useSelector(state => state.file.path)
+    const orientation = useSelector(state => state.app.orientation)
     let clickCount = 0;
 
     const { show } = useContextMenu({
@@ -41,7 +43,7 @@ export default function File(props){
     }
 
     const iconStyle = () => {
-        if (props.orientation === 'portrait'){
+        if (orientation === MOBILE_ORIENTATION){
             return styles.iconMobile
         } else{
             return styles.iconPC
@@ -70,7 +72,10 @@ export default function File(props){
                         className="clamped-text"
                         aria-hidden={true}
                         title={props.name}
-                    >{minimizeStr(props.name, 22, 2)}
+                    >{minimizeStr(
+                        props.name,
+                        orientation === MOBILE_ORIENTATION ? 32 : 22,
+                        2)}
                     </span>
                 </div>
             </div>
