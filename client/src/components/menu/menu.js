@@ -31,7 +31,7 @@ function MenuOffcanvas({show, handleClose}) {
         >
             <Offcanvas.Header closeButton>
                 <Offcanvas.Title className="me-auto">
-                    <span className="style-title-offcanvas">Menu</span>
+                    <span className="style-title-offcanvas">Меню</span>
                 </Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
