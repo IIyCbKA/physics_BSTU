@@ -3,29 +3,12 @@ import { useContextMenu } from 'react-contexify';
 import ContextMenuFile from "./context_menus/file_context_menu";
 import {minimizeStr} from "../../actions/strings";
 import {useSelector} from "react-redux";
-import {useEffect, useState} from "react";
 import {icons} from "./file_icons";
 import {styles} from "./styles/style_disk";
 
 export default function File(props){
-    const [orientation, setOrientation] = useState(window.matchMedia(
-        "(orientation: portrait)").matches ? "portrait" : "landscape");
     const path = useSelector(state => state.file.path)
     let clickCount = 0;
-
-    useEffect(() => {
-        const handleOrientationChange = () => {
-            setOrientation(window.matchMedia("(orientation: portrait)").matches
-                ? "portrait" : "landscape");
-        };
-
-        window.addEventListener("orientationchange", handleOrientationChange);
-
-        return () => {
-            window.removeEventListener("orientationchange",
-                handleOrientationChange);
-        };
-    }, []);
 
     const { show } = useContextMenu({
         id: props.id,
@@ -58,7 +41,7 @@ export default function File(props){
     }
 
     const iconStyle = () => {
-        if (orientation === 'portrait'){
+        if (props.orientation === 'portrait'){
             return styles.iconMobile
         } else{
             return styles.iconPC

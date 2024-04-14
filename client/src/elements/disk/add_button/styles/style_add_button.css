@@ -6,3 +6,16 @@
     border-radius: 8px;
     margin-bottom: 4px;
 }
+
+@media (orientation: portrait) {
+    .add-button-area{
+        width: 100%;
+        height: 72px;
+        padding: 16px 6px 16px 6px;
+        transition: background-color 0.3s;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        margin: 0
+    }
+}

@@ -1,6 +1,14 @@
-const frameBtn = {
+const frameMobile = {
+    height: '40px',
+    width: '100%',
+}
+
+const framePC = {
     height: '80px',
     width: '80px',
+}
+
+const allFrame = {
     justifyContent: 'center',
     alignItems: 'center',
     display: 'flex',
@@ -8,5 +16,6 @@ const frameBtn = {
 }
 
 export const styles = {
-    frameBtn: frameBtn
+    iconMobile: {...frameMobile, ...allFrame},
+    iconPC: {...framePC, ...allFrame}
 }

@@ -10,7 +10,7 @@ import {useDispatch} from "react-redux";
 import './styles/style_storage.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-export default function Storage(){
+export default function Storage(props){
     const dispatch = useDispatch()
     const path = useSelector(state => state.file.path)
     const userStatus = useSelector(state => state.user.currentUser.status)
@@ -30,7 +30,7 @@ export default function Storage(){
     return (
         <div className="around-storage">
             <div {...rootProps} className="storage">
-                <Disk/>
+                <Disk orientation={props.orientation}/>
                 {isDragActive && userStatus === employeeStatus &&
                     <div className='drop-area'>
                         <div className='drop-frame'>

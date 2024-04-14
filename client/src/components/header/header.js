@@ -9,7 +9,7 @@ import {FormOutlined, LogoutOutlined, UserOutlined} from '@ant-design/icons'
 import {useDispatch} from "react-redux";
 import {cleanUserInfo} from "../../actions/user";
 
-function Header() {
+function Header(props) {
     const dispatch = useDispatch()
     const [offcanvasShow, setOffcanvasShow] = useState(false);
 
@@ -21,13 +21,21 @@ function Header() {
         dispatch(cleanUserInfo())
     }
 
+    const containerStyle = () => {
+        if (props.orientation === 'portrait'){
+            return styles.containerHeaderMobile
+        } else{
+            return styles.containerHeaderPC
+        }
+    }
+
     return (
         <Navbar
             collapseOnSelect
             expand='lg'
             style={styles.styleNavbar}
         >
-            <Container fluid style={styles.styleContainerHeader}>
+            <Container fluid style={containerStyle()}>
                 <Navbar.Brand href='/disk/' style={styles.logotypePadding}>
                     <img
                         src={logo}
@@ -42,7 +50,7 @@ function Header() {
                     onClick={handleOffcanvasToggle}
                     style={styles.customToggle}
                 >
-                    <span className="btn-menu-text">Меню</span>
+                    <span className="btn-menu-text none-select">Меню</span>
                 </Navbar.Toggle>
                 <MenuOffcanvas
                     show={offcanvasShow}

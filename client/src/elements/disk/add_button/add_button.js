@@ -6,7 +6,7 @@ import {Button} from "antd"
 import {PlusOutlined} from "@ant-design/icons";
 import ContextMenuDisk from "../context_menus/disk_context_menu";
 
-export default function AddButton(){
+export default function AddButton(props){
     const [isModalOpen, setModalOpen] = useState(false)
 
     const { show } = useContextMenu({
@@ -25,17 +25,27 @@ export default function AddButton(){
         }
     };
 
+    const iconStyle = () => {
+        if (props.orientation === 'portrait'){
+            return styles.iconMobile
+        } else{
+            return styles.iconPC
+        }
+    }
+
     return(
         <div className="add-button-area">
-            <Button type="dashed" style={styles.frameBtn} onClick={handleClick}>
+            <Button type="dashed" style={iconStyle()} onClick={handleClick}>
                 <PlusOutlined/>
-                <div
-                    style={{
-                        marginTop: 8,
-                    }}
-                >
-                    Добавить
-                </div>
+                {props.orientation === 'landscape' &&
+                    <div
+                        style={{
+                            marginTop: 8,
+                        }}
+                    >
+                        Добавить
+                    </div>
+                }
             </Button>
             <ContextMenuDisk
                 isModalOpen={isModalOpen}

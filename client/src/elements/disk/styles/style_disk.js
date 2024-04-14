@@ -1,6 +1,6 @@
 
 const styleFolderIcon = {
-    color: '#FFB11F'
+    color: '#F4DC49'
 }
 
 const styleDocIcon = {

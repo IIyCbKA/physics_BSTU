@@ -7,7 +7,7 @@ import {setPath} from "../reducers/file_reducer";
 import {useDispatch, useSelector} from "react-redux";
 import Storage from "../components/storage/storage";
 
-function Home() {
+function Home(props) {
     const dispatch = useDispatch()
     const pathSel = useSelector(state => state.file.path)
     const location = useLocation();
@@ -27,8 +27,8 @@ function Home() {
             <Helmet>
                 <title>Хранилище</title>
             </Helmet>
-            <Header/>
-            <Storage/>
+            <Header orientation={props.orientation}/>
+            <Storage orientation={props.orientation}/>
         </div>
     );
 }

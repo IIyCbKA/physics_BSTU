@@ -24,9 +24,17 @@ const styleNavbar = {
     paddingBottom: '0px'
 }
 
-const styleContainerHeader = {
+const containerHeaderAll = {
     padding: '0 30px',
     height: '30px'
+}
+
+const containerHeaderMobile = {
+    padding: '0 10px',
+}
+
+const containerHeaderPC = {
+    padding: '0 30px',
 }
 
 const headerIconStyle = {
@@ -39,6 +47,7 @@ export const styles = {
     logotypePadding: logotypePadding,
     customToggle: customToggle,
     styleNavbar: styleNavbar,
-    styleContainerHeader: styleContainerHeader,
+    containerHeaderMobile: {...containerHeaderAll, ...containerHeaderMobile},
+    containerHeaderPC: {...containerHeaderAll, ...containerHeaderPC},
     headerIconStyle: headerIconStyle
 }

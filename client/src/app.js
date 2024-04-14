@@ -14,6 +14,9 @@ function App() {
     const [isWaiting, setIsWaiting] = useState(true)
     const dispatch = useDispatch()
 
+    const [orientation, setOrientation] = useState(window.matchMedia(
+        "(orientation: portrait)").matches ? "portrait" : "landscape");
+
     useEffect(() => {
         const waitFunc = async () => {
             await dispatch(auth())
@@ -22,6 +25,20 @@ function App() {
 
         waitFunc()
     }, [dispatch])
+
+    useEffect(() => {
+        const handleOrientationChange = () => {
+            setOrientation(window.matchMedia("(orientation: portrait)").matches
+                ? "portrait" : "landscape");
+        };
+
+        window.addEventListener("orientationchange", handleOrientationChange);
+
+        return () => {
+            window.removeEventListener("orientationchange",
+                handleOrientationChange);
+        };
+    }, []);
 
     return (
         <BrowserRouter>
@@ -35,11 +52,11 @@ function App() {
 
             {!isWaiting && isAuth &&
                 <Routes>
-                    <Route path="/disk/*" element={<Home />} />
+                    <Route path="/disk/*" element={<Home orientation={orientation}/>} />
                     <Route path="/login" element={<Navigate to="/disk/" />}/>
                     <Route path="/" element={<Navigate to="/disk/" />}/>
-                    <Route path="/tests" element={<Test />} />
-                    <Route path="/account" element={<Account />} />
+                    <Route path="/tests" element={<Test orientation={orientation}/>} />
+                    <Route path="/account" element={<Account orientation={orientation}/>} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             }
