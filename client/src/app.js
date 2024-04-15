@@ -7,7 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {auth} from "./actions/user";
 import Account from "./pages/account";
-import {orientationListener} from "./classes/OrientationListener";
+import "./classes/OrientationListener";
 
 
 function App() {

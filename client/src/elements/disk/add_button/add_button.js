@@ -6,7 +6,7 @@ import {Button} from "antd"
 import {PlusOutlined} from "@ant-design/icons";
 import ContextMenuDisk from "../context_menus/disk_context_menu";
 import {useSelector} from "react-redux";
-import {MOBILE_ORIENTATION, PC_ORIENTATION} from "../../../classes/OrientationListener";
+import {PORTRAIT_ORIENTATION, LANDSCAPE_ORIENTATION} from "../../../classes/OrientationListener";
 
 export default function AddButton(props){
     const [isModalOpen, setModalOpen] = useState(false)
@@ -29,7 +29,7 @@ export default function AddButton(props){
     };
 
     const iconStyle = () => {
-        if (orientation === MOBILE_ORIENTATION){
+        if (orientation === PORTRAIT_ORIENTATION){
             return styles.iconMobile
         } else{
             return styles.iconPC
@@ -40,7 +40,7 @@ export default function AddButton(props){
         <div className="add-button-area">
             <Button type="dashed" style={iconStyle()} onClick={handleClick}>
                 <PlusOutlined/>
-                {props.orientation === PC_ORIENTATION &&
+                {props.orientation === LANDSCAPE_ORIENTATION &&
                     <div
                         style={{
                             marginTop: 8,

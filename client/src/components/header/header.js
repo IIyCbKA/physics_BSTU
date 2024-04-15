@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import {FormOutlined, LogoutOutlined, UserOutlined} from '@ant-design/icons'
 import {useDispatch, useSelector} from "react-redux";
 import {cleanUserInfo} from "../../actions/user";
-import {MOBILE_ORIENTATION} from "../../classes/OrientationListener";
+import {PORTRAIT_ORIENTATION} from "../../classes/OrientationListener";
 
 function Header() {
     const dispatch = useDispatch()
@@ -24,7 +24,7 @@ function Header() {
     }
 
     const containerStyle = () => {
-        if (orientation === MOBILE_ORIENTATION){
+        if (orientation === PORTRAIT_ORIENTATION){
             return styles.containerHeaderMobile
         } else{
             return styles.containerHeaderPC

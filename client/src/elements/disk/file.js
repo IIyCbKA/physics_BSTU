@@ -5,12 +5,11 @@ import {minimizeStr} from "../../actions/strings";
 import {useSelector} from "react-redux";
 import {icons} from "./file_icons";
 import {styles} from "./styles/style_disk";
-import {MOBILE_ORIENTATION, PC_ORIENTATION} from "../../classes/OrientationListener";
+import {PORTRAIT_ORIENTATION, LANDSCAPE_ORIENTATION} from "../../classes/OrientationListener";
 
 export default function File(props){
     const path = useSelector(state => state.file.path)
     const orientation = useSelector(state => state.app.orientation)
-    let clickCount = 0;
 
     const { show } = useContextMenu({
         id: props.id,
@@ -28,7 +27,7 @@ export default function File(props){
 
     const handleFileClick = (event) => {
         event.stopPropagation();
-        if (orientation === PC_ORIENTATION) {
+        if (orientation === LANDSCAPE_ORIENTATION) {
             if (props.type !== 'folder')
                 showContextMenu(event)
         } else {
@@ -54,7 +53,7 @@ export default function File(props){
     }
 
     const iconStyle = () => {
-        if (orientation === MOBILE_ORIENTATION){
+        if (orientation === PORTRAIT_ORIENTATION){
             return styles.iconMobile
         } else{
             return styles.iconPC
@@ -87,7 +86,7 @@ export default function File(props){
                         title={props.name}
                     >{minimizeStr(
                         props.name,
-                        orientation === MOBILE_ORIENTATION ? 32 : 22,
+                        orientation === PORTRAIT_ORIENTATION ? 32 : 22,
                         2)}
                     </span>
                 </div>

@@ -1,8 +1,8 @@
 import {store} from "../reducers";
 import {setOrientation} from "../reducers/app_reducer";
 
-export const MOBILE_ORIENTATION = 'portrait'
-export const PC_ORIENTATION = 'landscape'
+export const PORTRAIT_ORIENTATION = 'portrait'
+export const LANDSCAPE_ORIENTATION = 'landscape'
 
 class OrientationListener {
     constructor() {
@@ -12,18 +12,14 @@ class OrientationListener {
     }
 
     setupListener() {
-        window.addEventListener("orientationchange", this.orientationHandler);
+        window.addEventListener("resize", this.orientationHandler);
     }
 
     orientationHandler() {
         setTimeout( () => {
-            const orientation = window.matchMedia(
-                "(orientation: portrait)").matches ?
-                MOBILE_ORIENTATION :
-                PC_ORIENTATION
-
-            console.log('orientation', orientation)
-
+            const orientation = window.innerHeight > window.innerWidth ?
+                PORTRAIT_ORIENTATION :
+                LANDSCAPE_ORIENTATION
 
             store.dispatch(setOrientation(orientation))
         }, 0)
@@ -31,7 +27,7 @@ class OrientationListener {
     }
 
     destroy() {
-        window.removeEventListener("orientationchange", this.orientationHandler);
+        window.removeEventListener("resize", this.orientationHandler);
     }
 }
 
