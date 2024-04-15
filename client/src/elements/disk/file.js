@@ -17,6 +17,7 @@ export default function File(props){
     });
 
     const showContextMenu = (event) => {
+        event.preventDefault()
         show({
             event,
             props: {
@@ -27,19 +28,29 @@ export default function File(props){
 
     const handleFileClick = (event) => {
         event.stopPropagation();
-        if (props.type === 'folder'){
-            clickCount += 1
-            setTimeout(() => {
-                if (clickCount === 1) {
-                    showContextMenu(event)
-                } else if (clickCount > 1){
-                    window.location.href = path + props.name + '\\';
-                }
-                clickCount = 0
-            }, 300);
-        } else{
-            showContextMenu(event)
+        if (orientation === PC_ORIENTATION) {
+            if (props.type !== 'folder')
+                showContextMenu(event)
+        } else {
+            if (props.type !== 'folder')
+                showContextMenu(event)
+            else
+                window.location.href = path + props.name + '\\'
         }
+    }
+
+    const handleFileContextMenu = (event) => {
+        event.stopPropagation();
+        showContextMenu(event);
+    }
+
+    const handleFileDoubleClick = (event) => {
+        event.stopPropagation();
+        if (props.type === 'folder') {
+            window.location.href = path + props.name + '\\';
+
+        }
+
     }
 
     const iconStyle = () => {
@@ -53,6 +64,8 @@ export default function File(props){
     return(
         <div className="file-area"
              onClick={handleFileClick}
+             onDoubleClick={handleFileDoubleClick}
+             onContextMenu={handleFileContextMenu}
         >
             <div className="item-icon">
                 <div className="icon-wrapper">

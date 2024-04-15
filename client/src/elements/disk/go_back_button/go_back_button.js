@@ -11,6 +11,12 @@ export default function GoBackButton(props){
 
     const handleClick = (event) => {
         event.stopPropagation();
+        if (orientation === MOBILE_ORIENTATION)
+            window.location.href = props.backPath;
+    };
+
+    const handleDoubleClick = (event) => {
+        event.stopPropagation();
         window.location.href = props.backPath;
     };
 
@@ -31,7 +37,10 @@ export default function GoBackButton(props){
     }
 
     return(
-        <div className="go-back-area" onClick={handleClick}>
+        <div className="go-back-area"
+             onClick={handleClick}
+             onDoubleClick={handleDoubleClick}
+        >
             <div className='go-back-item-icon'>
                 <FolderOpenOutlined style={iconStyle()}/>
             </div>
