@@ -4,7 +4,7 @@ from src.storage.functions.storage import *
 from src.handlers.schemas import *
 
 from fastapi.responses import JSONResponse, StreamingResponse
-from fastapi import File, UploadFile, Form, Request
+from fastapi import File, UploadFile, Form, Request, HTTPException
 from typing import Annotated
 from fastapi import Depends
 from src.handlers.login import getCurrentUser, getCurrentEmployee
@@ -27,6 +27,7 @@ async def sendFilesNameListToAll(path: str):
 async def filesList(path: str,
                     user: Annotated[dict, Depends(getCurrentUser)],
                     request: Request):
+    checkDiskPath(path)
     sockets.addPath(request.client.host, path)
     filesName: dict = getFilesNameList(path)
     return JSONResponse(content=filesName, status_code=200)
@@ -62,6 +63,7 @@ async def addFile(file: Annotated[UploadFile, File()],
                                        status_code=500)
 
     path = path.replace('/disk', '', 1)
+    checkDiskPath(path)
     fileName: str = file.filename
     fileType: str = file.filename.split('.')[-1]
     fileModel: FileModel | None = addFileToDB(fileName, fileType, path)
@@ -118,3 +120,25 @@ async def handleFileDownloadRequest(fileID: str, user: Annotated[dict, Depends(g
                             status_code=404)
     except Exception as e:
         return JSONResponse(content={'Error': e}, status_code=500)
+
+
+def checkDiskPath(path: str) -> None:
+    file_path_exception = HTTPException(
+        status_code=404,
+        detail="Could not find a folder",
+    )
+
+    if path == '/':
+        return
+
+    if path.count('/') < 2 or path[-1] != '/':
+        raise file_path_exception
+
+    pathCut = path[:-1]
+    folderNamePos = pathCut.rfind('/') + 1
+    folderName = pathCut[folderNamePos:]
+    forderPath = pathCut[:folderNamePos]
+    isFolderExist: bool = getFolderByPath(forderPath, folderName) != []
+
+    if not isFolderExist:
+        raise file_path_exception
