@@ -1,11 +1,11 @@
 import {Item, Menu} from "react-contexify";
 import 'react-contexify/ReactContexify.css';
-import CreateFolderModal from "../modal/modal_with_config";
 import {FileAddOutlined, FolderAddOutlined} from "@ant-design/icons";
 import {styles} from './styles/style_context_menu'
 import React, {useRef} from 'react'
 import {uploadFile} from "../../../actions/files";
 import {useSelector} from "react-redux";
+import ModalWindow from "../modal/default_modal";
 
 
 export default function ContextMenuDisk(props){
@@ -58,7 +58,7 @@ export default function ContextMenuDisk(props){
                 </Item>
             </Menu>
             {props.isModalOpen &&
-                <CreateFolderModal
+                <ModalWindow
                     show={props.isModalOpen}
                     handleClose={handleCloseModal}
                 />

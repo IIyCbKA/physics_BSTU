@@ -1,0 +1,59 @@
+.bar-left{
+    display: flex;
+    height: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row
+}
+
+.bar-right{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: row
+}
+
+.text-name{
+    font-size: 13px;
+    font-weight: 700;
+    word-wrap: break-word;
+    word-break: break-word;
+    line-height: 21px;
+}
+
+.title{
+    display: flex;
+    width: 100%;
+    height: 16px;
+}
+
+.title-text{
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    font-family: "YS Text","Helvetica Neue", Helvetica,Arial, sans-serif;
+    word-wrap: break-word;
+    word-break: break-word;
+    line-height: 21px;
+    width: 100%;
+}
+
+.close-btn{
+    display: flex;
+    justify-content: flex-end;
+    height: 16px;
+    align-items: center;
+    cursor: pointer
+}
+
+.ant-notification-notice-message {
+    margin-bottom: 0 !important;
+}
+
+.ant-notification-notice-close{
+    inset-inline-end: 8px !important;
+    width: 14px !important;
+    height: 14px !important;
+}

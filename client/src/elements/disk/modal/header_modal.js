@@ -6,7 +6,7 @@ import './styles/style_modal.css'
 export default function HeaderModal(props){
     return (
         <div style={styles.modalHeader}>
-            <span>
+            <span className='modal-header-text'>
                 Укажите название папки
             </span>
             <Button icon={<CloseCircleOutlined />}

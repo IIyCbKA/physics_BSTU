@@ -1,7 +1,7 @@
 .storage-main {
     background-color: #FFFFFF;
     width: calc(100vw - 40px);
-    min-height: calc(100vh - 44px - 34px);
+    min-height: calc(100vh - 60px - 34px);
     min-width: 390px;
     padding: 8px;
     display: flex;
@@ -17,9 +17,14 @@
     transition: background-color 0.3s;
     border-radius: 8px;
     margin-bottom: 4px;
+    user-select: none;
 }
 
-.file-area:hover {
+.selected{
+    background-color: #F5F5F5 !important;
+}
+
+.file-area:hover{
     background-color: #F5F5F5;
 }
 
@@ -54,7 +59,6 @@
     white-space: pre-line;
     font: 13px / 14px "YS Text", sans-serif;
     max-width: 80px;
-    user-select: none;
 }
 
 .icon-wrapper{
@@ -92,7 +96,7 @@
 
 .root-content-inner{
     padding: 0 24px;
-    min-height: calc(100vh - 44px - 34px - 16px);
+    min-height: calc(100vh - 60px - 34px - 16px);
     display: flex;
     flex-grow: 1;
     box-sizing: border-box;
@@ -134,18 +138,20 @@
 @media (orientation: portrait) {
     .storage-main {
         width: 100vw;
-        min-height: calc(100vh - 44px - 24px);
+        min-height: calc(100vh - 60px - 24px);
     }
 
     .file-area{
         width: 100%;
         height: 72px;
         padding: 16px 6px 16px 6px;
-        transition: background-color 0.3s;
-        border-radius: 8px;
         display: flex;
         align-items: center;
         margin: 0
+    }
+
+    .file-area:hover{
+        background-color: #FFFFFF;
     }
 
     .listing-items{
@@ -159,15 +165,10 @@
         width: 40px;
         height: 40px;
         align-items: center;
-        display: flex;
-        flex-shrink: 0;
-        justify-content: center;
-        order: 0;
     }
 
     .item-info{
         width: 100%;
-        height: 40px;
         padding: 0 0 0 10px;
         display: flex;
         justify-content: flex-start;
@@ -177,24 +178,14 @@
     .item-title{
         width: 100%;
         height: 100%;
-        word-break: break-all;
-        line-height: 14px;
-        text-align: center;
         display: flex;
         align-items: center;
     }
 
     .clamped-text{
         display: flex;
-        word-break: break-all;
-        white-space: pre-line;
         font: 15px / 16px "YS Text", sans-serif;
         max-width: 100%;
-        user-select: none;
-    }
-
-    .icon-wrapper{
-        position: relative;
     }
 
     .file-icon-size{
@@ -202,36 +193,8 @@
         width: 40px;
     }
 
-    .file-icon{
-        position: relative;
-        display: inline-block;
-        vertical-align: middle;
-        max-width: 100%;
-        max-height: 100%;
-    }
-
-    .file-icon::after{
-        content: "";
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: 50%;
-    }
-
-    .icon-contain{
-        background-size: contain;
-    }
-
     .root-content-inner{
-        min-height: calc(100vh - 44px - 24px - 16px);
-        display: flex;
-        flex-grow: 1;
-        box-sizing: border-box;
-        position: relative;
+        min-height: calc(100vh - 60px - 24px - 16px);
         padding: 0;
     }
 

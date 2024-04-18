@@ -9,7 +9,6 @@ const headerIconsForm = {
 const logotypePadding = {
     padding: 0,
     height: '30px',
-    justifyContent: 'center'
 }
 
 const customToggle = {
@@ -20,21 +19,21 @@ const customToggle = {
 
 const styleNavbar = {
     minWidth: '390px',
-    paddingTop: '14px',
-    paddingBottom: '0px'
+    height: '60px',
+    padding: 0,
+    justifyContent: 'center'
 }
 
 const containerHeaderAll = {
-    padding: '0 30px',
-    height: '30px'
+    height: '60px'
 }
 
 const containerHeaderMobile = {
-    padding: '0 10px',
+    padding: '14px 10px 0px 10px',
 }
 
 const containerHeaderPC = {
-    padding: '0 30px',
+    padding: '14px 30px 0px 30px',
 }
 
 const headerIconStyle = {

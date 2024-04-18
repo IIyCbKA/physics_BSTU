@@ -4,7 +4,7 @@ import {uploadFile} from "../../actions/files";
 import {useDropzone} from "react-dropzone";
 import {useSelector} from "react-redux";
 import {socket} from "../../classes/socket_client";
-import {setFiles} from "../../reducers/file_reducer";
+import {cleanSelectedInfo, setFiles} from "../../reducers/file_reducer";
 import {employeeStatus} from "../../reducers/user_reducer";
 import {useDispatch} from "react-redux";
 import './styles/style_storage.css'
@@ -14,6 +14,7 @@ export default function Storage(props){
     const dispatch = useDispatch()
     const path = useSelector(state => state.file.path)
     const userStatus = useSelector(state => state.user.currentUser.status)
+    const selected_id = useSelector(state => state.file.selected_id)
 
     const onDrop = useCallback(acceptedFiles => {
         acceptedFiles.forEach(file => uploadFile(file, path));
@@ -27,8 +28,16 @@ export default function Storage(props){
 
     const rootProps = userStatus === employeeStatus ? getRootProps() : {};
 
+    const handlerClick = () => {
+        if (selected_id !== null){
+            dispatch(cleanSelectedInfo());
+        }
+    }
+
     return (
-        <div className="around-storage">
+        <div className="around-storage"
+            onClick={handlerClick}
+        >
             <div {...rootProps} className="storage">
                 <Disk orientation={props.orientation}/>
                 {isDragActive && userStatus === employeeStatus &&

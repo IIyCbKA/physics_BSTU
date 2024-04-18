@@ -14,3 +14,9 @@
 .modal-wrap{
     padding: 5px;
 }
+
+.modal-header-text{
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}

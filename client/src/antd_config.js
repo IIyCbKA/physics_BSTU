@@ -1,7 +1,7 @@
 import { ConfigProvider } from 'antd';
-import ModalWindow from "./default_modal";
+import App from "./app";
 
-export default function CreateFolderModal(props){
+export default function AppWithAntdConfig(){
     return (
         <ConfigProvider
             theme={{
@@ -12,11 +12,11 @@ export default function CreateFolderModal(props){
                 components: {
                     Modal: {
                         titleFontSize: '15px'
-                    },
+                    }
                 },
             }}
         >
-            <ModalWindow show={props.show} handleClose={props.handleClose}/>
+            <App/>
         </ConfigProvider>
     )
 };

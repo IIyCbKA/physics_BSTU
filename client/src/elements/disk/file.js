@@ -1,55 +1,72 @@
 import './styles/style_disk.css'
-import { useContextMenu } from 'react-contexify';
-import ContextMenuFile from "./context_menus/file_context_menu";
 import {minimizeStr} from "../../actions/strings";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {icons} from "./file_icons";
 import {styles} from "./styles/style_disk";
-import {PORTRAIT_ORIENTATION, LANDSCAPE_ORIENTATION} from "../../classes/OrientationListener";
+import {PORTRAIT_ORIENTATION} from "../../classes/OrientationListener";
+import {selectedFile} from "../../reducers/file_reducer";
+import {isMobile} from "react-device-detect";
 
 export default function File(props){
     const path = useSelector(state => state.file.path)
     const orientation = useSelector(state => state.app.orientation)
-
-    const { show } = useContextMenu({
-        id: props.id,
-    });
-
-    const showContextMenu = (event) => {
-        event.preventDefault()
-        show({
-            event,
-            props: {
-                key: 'value'
-            }
-        })
-    }
+    const selected_id = useSelector(state => state.file.selected_id)
+    const dispatch = useDispatch()
+    let timer = null;
+    let startTime = null;
+    let touchStartX = null;
+    let touchStartY = null;
 
     const handleFileClick = (event) => {
         event.stopPropagation();
-        if (orientation === LANDSCAPE_ORIENTATION) {
-            if (props.type !== 'folder')
-                showContextMenu(event)
-        } else {
-            if (props.type !== 'folder')
-                showContextMenu(event)
-            else
-                window.location.href = path + props.name + '\\'
+        if (!isMobile && selected_id !== props.id){
+            dispatch(selectedFile(props.id, props.name, props.type))
+        }
+    }
+
+    const handleDoubleClick = (event) => {
+        event.preventDefault()
+        if (props.type === 'folder' && !isMobile){
+            window.location.href = path + props.name + '\\'
+        }
+    }
+
+    const handleTouchStart = (event) => {
+        touchStartX = event.touches[0].clientX;
+        touchStartY = event.touches[0].clientY;
+        startTime = Date.now();
+
+        timer = setTimeout(() => {
+            event.stopPropagation();
+            dispatch(selectedFile(props.id, props.name, props.type))
+        }, 300);
+    }
+
+    const handleTouchEnd = () => {
+        const endTime = Date.now();
+        if (endTime - startTime < 300 && props.type === 'folder'){
+            window.location.href = path + props.name + '\\'
+        }
+
+        clearTimeout(timer);
+        touchStartX = null;
+        touchStartY = null;
+    }
+
+    const handleTouchMove =  (event) => {
+        const touchMoveX = event.touches[0].clientX;
+        const touchMoveY = event.touches[0].clientY;
+
+        const diffX = Math.abs(touchMoveX - touchStartX);
+        const diffY = Math.abs(touchMoveY - touchStartY);
+
+        if (diffX > 10 || diffY > 10) {
+            clearTimeout(timer);
         }
     }
 
     const handleFileContextMenu = (event) => {
-        event.stopPropagation();
-        showContextMenu(event);
-    }
-
-    const handleFileDoubleClick = (event) => {
-        event.stopPropagation();
-        if (props.type === 'folder') {
-            window.location.href = path + props.name + '\\';
-
-        }
-
+        event.preventDefault()
     }
 
     const iconStyle = () => {
@@ -61,10 +78,13 @@ export default function File(props){
     }
 
     return(
-        <div className="file-area"
+        <div className={`file-area${selected_id === props.id ? ' selected' : ''}`}
              onClick={handleFileClick}
-             onDoubleClick={handleFileDoubleClick}
+             onDoubleClick={handleDoubleClick}
              onContextMenu={handleFileContextMenu}
+             onTouchStart={handleTouchStart}
+             onTouchEnd={handleTouchEnd}
+             onTouchMove={handleTouchMove}
         >
             <div className="item-icon">
                 <div className="icon-wrapper">
@@ -91,7 +111,6 @@ export default function File(props){
                     </span>
                 </div>
             </div>
-            <ContextMenuFile id={props.id} name={props.name} type={props.type}/>
         </div>
     )
 }

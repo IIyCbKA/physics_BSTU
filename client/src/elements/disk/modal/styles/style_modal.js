@@ -16,17 +16,16 @@ const closeBtn = {
     display: 'flex',
     border: 'None',
     boxShadow: 'None',
-    marginLeft: '175px',
+    justifyContent: 'flex-end',
     height: '16px',
     width: '16px',
-    justifyContent: 'center',
     alignItems: 'center'
 }
 
 const modalHeader = {
+    width: '100%',
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: 'center'
 }
 
 export const styles = {
