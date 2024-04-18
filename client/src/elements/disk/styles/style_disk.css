@@ -122,17 +122,46 @@
 .disk-head{
     display: flex;
     align-items: center;
-    padding-left: 12px;
+    padding: 0 12px;
     margin: 20px 0 10px;
 }
 
 .head-text{
+    width: 100%;
     font-size: 24px;
     margin: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     user-select: none;
+}
+
+.go-btn-div{
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.disk-head-btn{
+    color: #464646;
+    transition: color 0.3s ease;
+}
+
+.disk-head-btn:hover{
+    color: #161616
+}
+
+.plus-btn-div{
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 }
 
 @media (orientation: portrait) {
@@ -201,7 +230,8 @@
     .disk-head{
         display: flex;
         align-items: center;
-        padding-left: 6px;
+        padding: 0 6px;
         margin: 10px 0 0;
+        height: 30px;
     }
 }

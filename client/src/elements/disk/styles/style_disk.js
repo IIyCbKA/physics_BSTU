@@ -45,6 +45,10 @@ const allIcon = {
     display: 'flex'
 }
 
+const diskHeadIconStyle = {
+    fontSize: '24px'
+}
+
 export const styles = {
     styleFolderIcon: styleFolderIcon,
     styleDocIcon: styleDocIcon,
@@ -55,5 +59,6 @@ export const styles = {
     stylePresentationIcon: stylePresentationIcon,
     styleOtherIcon: styleOtherIcon,
     iconMobile: {...iconMobile, ...allIcon},
-    iconPC: {...iconPC, ...allIcon}
+    iconPC: {...iconPC, ...allIcon},
+    diskHeadIconStyle: diskHeadIconStyle
 }
