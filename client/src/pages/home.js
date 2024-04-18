@@ -1,7 +1,7 @@
 import Header from "../components/header/header";
 import {Helmet} from 'react-helmet';
 import {getFilesName} from '../actions/files'
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useLocation} from 'react-router-dom';
 import {setPath} from "../reducers/file_reducer";
 import {useDispatch, useSelector} from "react-redux";
@@ -13,11 +13,21 @@ function Home() {
     const location = useLocation();
     const path = location.pathname.endsWith('/') ? location.pathname:
         location.pathname + '/';
+    const [initSuccess, setInitSuccess] = useState(false);
 
     useEffect(() => {
         const waitFunc = async () => {
-            await dispatch(setPath(decodeURIComponent(path)))
-            await getFilesName(path)(dispatch)
+            const decode_path = decodeURIComponent(path)
+            await dispatch(setPath(decode_path))
+            const code = await getFilesName(path)(dispatch)
+
+            if (code === 404) {
+                const diskPos = decode_path.search('/disk/')
+                window.location.href = decode_path.slice(
+                    0, diskPos + '/disk/'.length)
+            } else{
+                setInitSuccess(true)
+            }
         }
         waitFunc()
     }, [pathSel]);
@@ -28,7 +38,7 @@ function Home() {
                 <title>Хранилище</title>
             </Helmet>
             <Header/>
-            <Storage/>
+            {initSuccess && <Storage/>}
         </div>
     );
 }

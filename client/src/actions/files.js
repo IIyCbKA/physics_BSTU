@@ -7,8 +7,11 @@ export const getFilesName = (path) =>
     try {
         const response = await $host.get(path);
         dispatch(setFiles(response.data.files));
+
+        return response.status
     } catch (e) {
         console.log(e);
+        return e.response.status
     }
 };
 
@@ -17,7 +20,7 @@ export const uploadFile = async (file, dir_path) => {
         const formData = new FormData()
         formData.append('file', file)
         formData.append('path', dir_path)
-        const response = await $host.post('/api/add_file', formData, {
+        await $host.post('/api/add_file', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
