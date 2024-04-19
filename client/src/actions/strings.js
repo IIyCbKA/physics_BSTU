@@ -29,7 +29,7 @@ export const getLastDirectory = (path) => {
 
 export const getCurrentFolderName = (path) => {
     if (getAfterDiskPath(path) === '')
-        return 'Главная'
+        return 'Файлы'
 
     return path.slice(path.lastIndexOf('/', path.length - 2) + 1, -1)
 }

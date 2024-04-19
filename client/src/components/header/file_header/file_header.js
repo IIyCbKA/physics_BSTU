@@ -20,6 +20,7 @@ export default function FileHeader(){
     const orientation = useSelector(state => state.app.orientation)
     const selected_id = useSelector(state => state.file.selected_id)
     const selected_name = useSelector(state => state.file.selected_name)
+    const selected_type = useSelector(state => state.file.selected_type)
     const dispatch = useDispatch();
 
     const containerStyle = () => {
@@ -97,9 +98,11 @@ export default function FileHeader(){
                             <DeleteOutlined style={styles.iconsStyle}/>
                         </Nav.Item>
                     }
-                    <Nav.Item style={styles.navItemStyle} onClick={onDownload}>
-                        <DownloadOutlined style={styles.iconsStyle}/>
-                    </Nav.Item>
+                    {selected_type !== 'folder' &&
+                        <Nav.Item style={styles.navItemStyle} onClick={onDownload}>
+                            <DownloadOutlined style={styles.iconsStyle}/>
+                        </Nav.Item>
+                    }
                     <Nav.Item style={styles.navItemStyle} onClick={handleClickClose}>
                         <CloseOutlined style={styles.iconsStyle}/>
                     </Nav.Item>
