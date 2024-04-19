@@ -26,3 +26,10 @@ export const getLastDirectory = (path) => {
 
     return path.slice(0, path.lastIndexOf('/', path.length - 2) + 1)
 }
+
+export const getCurrentFolderName = (path) => {
+    if (getAfterDiskPath(path) === '')
+        return 'Главная'
+
+    return path.slice(path.lastIndexOf('/', path.length - 2) + 1, -1)
+}

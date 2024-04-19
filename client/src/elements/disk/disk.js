@@ -2,7 +2,7 @@ import File from "./file";
 import React, {useState} from "react";
 import {useSelector} from "react-redux";
 import './styles/style_disk.css'
-import {getLastDirectory} from "../../actions/strings";
+import {getCurrentFolderName, getLastDirectory} from "../../actions/strings";
 import {employeeStatus} from "../../reducers/user_reducer";
 import {ArrowLeftOutlined, PlusOutlined} from "@ant-design/icons";
 import {styles} from './styles/style_disk'
@@ -15,6 +15,7 @@ export default function Disk() {
     const path = useSelector(state => state.file.path)
     const userStatus = useSelector(state => state.user.currentUser.status)
     const backPath = getLastDirectory(path)
+    const folderName = getCurrentFolderName(path)
 
     const handleGoBackClick = (event) => {
         event.stopPropagation();
@@ -51,7 +52,7 @@ export default function Disk() {
                             </div>
                         }
                         <h1 className="head-text">
-                            Файлы
+                            {folderName}
                         </h1>
                         {userStatus === employeeStatus &&
                             <div className='plus-btn-div' onClick={handleAddClick}>
