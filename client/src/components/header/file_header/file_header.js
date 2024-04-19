@@ -71,6 +71,7 @@ export default function FileHeader(){
 
     const onDelete = async () => {
         await deleteFile(selected_id)
+        dispatch(cleanSelectedInfo());
     }
 
     const handleCloseNotification = () => {
