@@ -1,0 +1,16 @@
+.select-form{
+    display: flex;
+    flex-direction: column;
+}
+
+.select-text{
+    font-size: 14px;
+    color: #5F6368;
+    font-family: "Google Sans", Roboto, Arial, sans-serif;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.select-wrap{
+    display: flex;
+}

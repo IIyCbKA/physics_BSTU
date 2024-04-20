@@ -1,16 +1,14 @@
 from src.application import fastApiServer
-from src.data.functions.files import *
 from src.data.functions.journal import *
-from src.handlers.schemas import *
-from fastapi.responses import JSONResponse
-from fastapi import Request, HTTPException
-from typing import Annotated
-from fastapi import Depends
 from src.handlers.login import getCurrentEmployee
 from src.socketManager import sockets
 
+from fastapi.responses import JSONResponse
+from typing import Annotated
+from fastapi import Depends
 
-# Роут на получение списка груп
+
+# Роут на получение списка групп
 @fastApiServer.get('/api/groups')
 async def groupsList(user: Annotated[dict, Depends(getCurrentEmployee)]):
     groups: dict = getGroupsList()

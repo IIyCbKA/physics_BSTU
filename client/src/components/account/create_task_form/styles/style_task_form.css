@@ -1,0 +1,16 @@
+.form-wrap{
+    background-color: #FFFFFF;
+    min-width: 390px;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease 0.2s, visibility 0.3s ease 0.2s
+}
+
+.main-form{
+    padding: 16px;
+}

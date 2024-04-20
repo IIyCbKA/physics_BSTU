@@ -1,0 +1,30 @@
+.create_btn_zone{
+    display: flex;
+    align-items: center;
+    height: 60px;
+    margin-top: 5px;
+}
+
+.plus-wrap{
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 5px;
+}
+
+.create-btn-text{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 3px;
+}
+
+.btn-root{
+    background-color: #1967D2;
+}
+
+.btn-root:hover{
+    background-color: #144B9D;
+}

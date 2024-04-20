@@ -1,10 +1,10 @@
 import RootAccount from "../../elements/account/root/root";
 import './styles/style_account.css'
 
-export default function AccountAround(){
+export default function AccountAround(props){
     return (
         <div className="around-account">
-            <RootAccount/>
+            <RootAccount setShow={props.setShow}/>
         </div>
     )
 }
