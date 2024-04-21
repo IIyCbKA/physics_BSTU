@@ -1,0 +1,72 @@
+.addition-wrap{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.addition-form{
+    display: flex;
+    min-width: 358px;
+    width: 100%;
+    max-width: 850px;
+    border: 1px solid #DADCE0;
+    padding: 20px 14px 14px 14px;
+    border-radius: 5px;
+    flex-direction: column;
+}
+
+.addition-title{
+    font-family: "Google Sans", Roboto, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #3C4043;
+    margin-bottom: 4px;
+}
+
+.addition-buttons-wrap{
+    display: grid;
+    grid-gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(74px, 1fr));
+    justify-items: center;
+}
+
+.addition-btn-area{
+    width: 74px;
+    height: 104px;
+}
+
+.addition-btn-icon-wrap{
+    width: 50px;
+    height: 50px;
+    margin: 12px 12px 8px 12px;
+    cursor: pointer;
+}
+
+.addition-btn-text-wrap{
+    height: 20px;
+    margin-bottom: 14px;
+    font-family: "Google Sans", Roboto, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+.addition-btn-style{
+    height: 50px;
+    width: 50px;
+    border-radius: 100px;
+    background-color: #FFFFFF;
+    border-color: #E8EAED;
+}
+
+.addition-btn-style:hover{
+    background-color: #F8F8FF;
+    border-color: #E8EAED;
+}
+
+.addition-btn-style:is(:active, :focus-visible) {
+    background-color: #F0F0FF !important;
+    border-color: #E8EAED;
+    box-shadow: none;
+}

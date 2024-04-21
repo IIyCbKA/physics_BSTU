@@ -2,7 +2,7 @@
     background-color: #FFFFFF;
     min-width: 390px;
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     position: absolute;
     z-index: 1000;
     left: 0;

@@ -1,6 +1,16 @@
+.select-form-wrap{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 .select-form{
     display: flex;
     flex-direction: column;
+    margin-bottom: 16px;
+    min-width: 358px;
+    width: 100%;
+    max-width: 850px;
 }
 
 .select-text{

@@ -12,20 +12,22 @@ export default function SelectGroups(){
     const options = getGroupsOptions(groups);
 
     return(
-        <div className='select-form'>
+        <div className='select-form-wrap'>
+            <div className='select-form'>
             <span className='select-text'>
                 Для кого
             </span>
-            <div className='select-wrap'>
-                <Select
-                    mode="tags"
-                    style={{
-                        width: '100%',
-                    }}
-                    onChange={handleChange}
-                    tokenSeparators={[',']}
-                    options={options}
-                />
+                <div className='select-wrap'>
+                    <Select
+                        mode="tags"
+                        style={{
+                            width: '100%',
+                        }}
+                        onChange={handleChange}
+                        tokenSeparators={[',']}
+                        options={options}
+                    />
+                </div>
             </div>
         </div>
     )

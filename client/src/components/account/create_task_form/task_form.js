@@ -3,6 +3,10 @@ import HeaderTaskForm
     from "../../../elements/account/task_form/header/header_task_form";
 import SelectGroups
     from "../../../elements/account/task_form/select_groups/select_groups";
+import Information
+    from "../../../elements/account/task_form/information/information";
+import Addition
+    from "../../../elements/account/task_form/addition/addition";
 
 export default function TaskForm(props){
     const formStyle = () => {
@@ -16,6 +20,8 @@ export default function TaskForm(props){
             <HeaderTaskForm setShow={props.setShow}/>
             <div className='main-form'>
                 <SelectGroups/>
+                <Information/>
+                <Addition/>
             </div>
         </div>
     )
