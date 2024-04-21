@@ -48,9 +48,11 @@ alter table employees
 
 create table tasks
 (
-    task_id   serial
+    task_id          serial
         primary key,
-    task_name varchar(255) not null
+    task_name        varchar(255) not null,
+    task_description varchar,
+    additions_id     integer[]
 );
 
 alter table tasks
@@ -98,4 +100,15 @@ create table files
 );
 
 alter table files
+    owner to admin;
+
+create table additions
+(
+    addition_id    serial
+        primary key,
+    addition_title varchar not null,
+    addition_type  varchar not null
+);
+
+alter table additions
     owner to admin;
