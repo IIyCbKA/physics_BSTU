@@ -31,7 +31,7 @@ export default function InputLine(props) {
                 <InputGroup>
                     <FormControl
                         type="text"
-                        placeholder='Новая папка'
+                        placeholder={props.placeholder}
                         value={props.value}
                         onChange={(e) => props.onChange(e.target.value)}
                         style={inputLineStyle()}

@@ -20,7 +20,7 @@ export const getGroupsOptions = (groups) => {
         return options.push({
             key: group.id,
             label: group.name,
-            value: group.name
+            value: group.id
         })
     })
     return options

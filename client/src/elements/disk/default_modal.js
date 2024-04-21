@@ -1,10 +1,10 @@
-import InputLine from "./input_line";
+import InputLine from "../modal/input_line";
 import {Modal} from "antd";
 import {useState} from "react";
 import {useSelector} from "react-redux";
-import {createFolder} from "../../../actions/files";
-import './styles/style_modal.css'
-import HeaderModal from "./header_modal";
+import {createFolder} from "../../actions/files";
+import '../modal/styles/style_modal.css'
+import HeaderModal from "../modal/header_modal";
 
 export default function ModalWindow(props){
     const [folderName, setFolderName] = useState('')
@@ -23,7 +23,8 @@ export default function ModalWindow(props){
     return (
         <Modal
             open={props.show}
-            title={<HeaderModal handlerClick={handleCancel}/>}
+            title={<HeaderModal text='Укажите название папки'
+                                handleClick={handleCancel}/>}
             okText='Сохранить'
             onOk={handleOk}
             onCancel={handleCancel}
@@ -37,7 +38,10 @@ export default function ModalWindow(props){
             )}
             centered={true}
         >
-            <InputLine value={folderName} onChange={setFolderName}/>
+            <InputLine value={folderName}
+                       onChange={setFolderName}
+                       placeholder='Новая папка'
+            />
         </Modal>
     )
 }

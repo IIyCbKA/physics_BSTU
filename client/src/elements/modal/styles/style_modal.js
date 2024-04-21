@@ -1,15 +1,15 @@
-const focusInputLineStyle = {
-    height: "32px",
-    backgroundColor: "#F4F4F4",
-    border: '1px solid #D0D1D2',
+const modalInputAll = {
+    height: '32px',
+    backgroundColor: '#F4F4F4',
     transition: "background-color 0.7s, border 0.7s"
 }
 
-const modalInputLineStyle = {
-    height: "32px",
-    backgroundColor: "#F4F4F4",
-    border: '1px solid #F4F4F4',
-    transition: "background-color 0.7s, border 0.7s"
+const focusInputLine = {
+    border: '1px solid #D0D1D2'
+}
+
+const modalInputLine = {
+    border: '1px solid #F4F4F4'
 }
 
 const closeBtn = {
@@ -29,8 +29,8 @@ const modalHeader = {
 }
 
 export const styles = {
-    focusInputLineStyle: focusInputLineStyle,
-    modalInputLineStyle: modalInputLineStyle,
+    focusInputLineStyle: {...focusInputLine, ...modalInputAll},
+    modalInputLineStyle: {...modalInputLine, ...modalInputAll},
     closeBtn: closeBtn,
     modalHeader: modalHeader
 };

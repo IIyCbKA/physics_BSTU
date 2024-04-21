@@ -3,9 +3,9 @@ import { Select } from 'antd';
 import {useSelector} from "react-redux";
 import {getGroupsOptions} from "../../../../actions/journal";
 
-export default function SelectGroups(){
+export default function SelectGroups(props){
     const handleChange = (value) => {
-        console.log(`selected ${value}`);
+        props.setSelectedGroups(value)
     };
 
     const groups = useSelector(state => state.journal.groups);

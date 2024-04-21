@@ -5,7 +5,7 @@ import {styles} from './styles/style_context_menu'
 import React, {useRef} from 'react'
 import {uploadFile} from "../../../actions/files";
 import {useSelector} from "react-redux";
-import ModalWindow from "../modal/default_modal";
+import ModalWindow from "../default_modal";
 
 
 export default function ContextMenuDisk(props){
@@ -21,10 +21,6 @@ export default function ContextMenuDisk(props){
 
     const handleAddFileClick = () => {
         fileInputRef.current.click();
-    }
-
-    const fileSelectClick = (event) => {
-        event.stopPropagation()
     }
 
     const handleFileSelect = async (event) => {
@@ -43,7 +39,6 @@ export default function ContextMenuDisk(props){
             <input type="file" ref={fileInputRef}
                    style={{display: 'none'}}
                    onChange={handleFileSelect}
-                   onClick={fileSelectClick}
             />
 
             <Menu id='disk-context-menu'>

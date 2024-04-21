@@ -7,11 +7,11 @@ export default function HeaderModal(props){
     return (
         <div style={styles.modalHeader}>
             <span className='modal-header-text'>
-                Укажите название папки
+                {props.text}
             </span>
             <Button icon={<CloseCircleOutlined />}
                     style={styles.closeBtn}
-                    onClick={props.handlerClick}/>
+                    onClick={props.handleClick}/>
         </div>
     )
 }

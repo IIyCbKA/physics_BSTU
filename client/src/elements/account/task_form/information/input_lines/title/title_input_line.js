@@ -1,8 +1,12 @@
 import './styles/title_task_input.css'
 import {Input} from "antd";
 
-export default function TitleInputLine(){
+export default function TitleInputLine(props){
     const {TextArea} = Input;
+
+    const handleChange = (e) => {
+        props.setTitle(e.target.value)
+    }
 
     return (
         <div className='title-input-line-wrap'>
@@ -13,6 +17,7 @@ export default function TitleInputLine(){
                              marginBottom: '16px',
                              minHeight: '56px'
                          }}
+                         onChange={handleChange}
                     />
                 </div>
             </div>
