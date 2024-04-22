@@ -12,7 +12,7 @@ export default function ModalLink(props){
     }
 
     const handleOk = async () => {
-        // тут на сервак и дальше тут обрабатываем
+        props.setLinks([...props.links, link])
         handleCancel()
     }
 

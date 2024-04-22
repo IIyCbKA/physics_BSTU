@@ -14,6 +14,8 @@ export default function TaskForm(props){
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const isActiveCreateBtn = selectedGroups !== [] && title !== ''
+    const [files, setFiles] = useState([])
+    const [links, setLinks] = useState([])
 
     const formStyle = () => {
         return {opacity: props.show ? 1 : 0,
@@ -29,7 +31,12 @@ export default function TaskForm(props){
             <div className='main-form'>
                 <SelectGroups setSelectedGroups={setSelectedGroups}/>
                 <Information setTitle={setTitle} setDescription={setDescription}/>
-                <Addition/>
+                <Addition
+                    links={links}
+                    setLinks={setLinks}
+                    files={files}
+                    setFiles={setFiles}
+                />
             </div>
         </div>
     )

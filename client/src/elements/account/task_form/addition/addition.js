@@ -6,7 +6,7 @@ import React, {useRef, useState} from "react";
 import ModalLink from "./link_modal";
 
 
-export default function Addition(){
+export default function Addition(props){
     const [isModalOpen, setModalOpen] = useState(false)
 
     const fileInputRef = useRef(null);
@@ -21,7 +21,11 @@ export default function Addition(){
     const handleFileSelect = async (event) => {
         const selectedFile = event.target.files[0];
         try {
-            // тут кидаем файл на сервак и получаем ответ
+            props.setFiles([...props.files, {
+                name: selectedFile.name,
+                remote: false,
+                file: selectedFile
+            }])
         } catch (error) {
             console.log(error);
         }
@@ -75,6 +79,8 @@ export default function Addition(){
                 <ModalLink
                     show={isModalOpen}
                     handleClose={handleCloseModal}
+                    links={props.links}
+                    setLinks={props.setLinks}
                 />
             }
         </div>
