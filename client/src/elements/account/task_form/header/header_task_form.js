@@ -26,7 +26,8 @@ export default function HeaderTaskForm(props){
             </div>
             <div className='create-wrap'>
                 <div className='create-btn-wrap'>
-                    <Button style={styles.btnCreate}>
+                    <Button style={styles.btnCreate}
+                            disabled={!props.isActiveBtn}>
                         <span className='create-task-btn-text'>
                             Создать задание
                         </span>

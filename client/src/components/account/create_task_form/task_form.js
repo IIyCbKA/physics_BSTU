@@ -13,6 +13,7 @@ export default function TaskForm(props){
     const [selectedGroups, setSelectedGroups] = useState([])
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
+    const isActiveCreateBtn = selectedGroups !== [] && title !== ''
 
     const formStyle = () => {
         return {opacity: props.show ? 1 : 0,
@@ -22,7 +23,9 @@ export default function TaskForm(props){
 
     return (
         <div className='form-wrap' style={formStyle()}>
-            <HeaderTaskForm setShow={props.setShow}/>
+            <HeaderTaskForm setShow={props.setShow}
+                            isActiveBtn={isActiveCreateBtn}
+            />
             <div className='main-form'>
                 <SelectGroups setSelectedGroups={setSelectedGroups}/>
                 <Information setTitle={setTitle} setDescription={setDescription}/>
