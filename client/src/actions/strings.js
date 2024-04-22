@@ -33,3 +33,19 @@ export const getCurrentFolderName = (path) => {
 
     return path.slice(path.lastIndexOf('/', path.length - 2) + 1, -1)
 }
+
+export const getFileType = (filename) => {
+    const pointPos = filename.lastIndexOf('.')
+    if (pointPos === -1)
+        return ''
+    else
+        return filename.slice(pointPos + 1)
+}
+
+export const getFilenameOnly = (filename) => {
+    const pointPos = filename.lastIndexOf('.')
+    if (pointPos === -1)
+        return filename
+    else
+        return filename.slice(0, pointPos)
+}

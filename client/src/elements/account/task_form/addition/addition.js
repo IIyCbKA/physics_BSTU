@@ -2,8 +2,9 @@ import './styles/style_addition.css'
 import {LinkOutlined, UploadOutlined} from "@ant-design/icons";
 import {styles} from './styles/style_addition'
 import {Button} from "react-bootstrap";
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import ModalLink from "./link_modal";
+import {getFilenameOnly, getFileType} from "../../../../actions/strings";
 
 
 export default function Addition(props){
@@ -18,14 +19,22 @@ export default function Addition(props){
         setModalOpen(true)
     }
 
+    useEffect(() => {
+        console.log(props.files)
+    }, [props.files])
+
     const handleFileSelect = async (event) => {
         const selectedFile = event.target.files[0];
         try {
             props.setFiles([...props.files, {
-                name: selectedFile.name,
+                name: getFilenameOnly(selectedFile.name),
+                fileType: getFileType(selectedFile.name),
                 remote: false,
                 file: selectedFile
             }])
+            // setTimeout(() => {
+            //     console.log(props.files)
+            // }, 0)
         } catch (error) {
             console.log(error);
         }
