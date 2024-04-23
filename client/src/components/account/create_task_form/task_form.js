@@ -30,7 +30,11 @@ export default function TaskForm(props){
             />
             <div className='main-form'>
                 <SelectGroups setSelectedGroups={setSelectedGroups}/>
-                <Information setTitle={setTitle} setDescription={setDescription}/>
+                <Information setTitle={setTitle}
+                             setDescription={setDescription}
+                             files={files}
+                             links={links}
+                />
                 <Addition
                     links={links}
                     setLinks={setLinks}

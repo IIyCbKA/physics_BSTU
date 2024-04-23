@@ -1,10 +1,10 @@
 const iconClose = {
-    fontSize: '24px',
+    fontSize: '16px',
     color: '#5F6368'
 }
 
 const iconHeader = {
-    fontSize: '24px',
+    fontSize: '22px',
     color: '#4285F4'
 }
 

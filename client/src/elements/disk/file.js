@@ -106,7 +106,7 @@ export default function File(props){
                         title={props.name}
                     >{minimizeStr(
                         props.name,
-                        orientation === PORTRAIT_ORIENTATION ? 32 : 22,
+                        orientation === PORTRAIT_ORIENTATION ? 32 : 20,
                         2)}
                     </span>
                 </div>
