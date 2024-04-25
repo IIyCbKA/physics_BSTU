@@ -19,12 +19,10 @@ export default function AdditionEntity(props){
                    target="_blank"
                    rel="noopener noreferrer"
                 >
-                    <AdditionEntityInfo name={props.name}
-                                        type={props.type}
+                    <AdditionEntityInfo {...props}
                                         isHover={isHover}/>
                 </a>) :
-                (<AdditionEntityInfo name={props.name}
-                                     type={props.type}
+                (<AdditionEntityInfo {...props}
                                      isHover={isHover}/>)
             }
             <div className='addition-entity-delete'>

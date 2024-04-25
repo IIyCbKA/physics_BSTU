@@ -20,21 +20,23 @@ export default function Addition(props){
     }
 
     useEffect(() => {
-        console.log(props.files)
-    }, [props.files])
+        console.log(props.additions)
+    }, [props.additions])
 
     const handleFileSelect = async (event) => {
         const selectedFile = event.target.files[0];
         try {
-            props.setFiles([...props.files, {
+            const currentId = props.nextId()
+            props.setAdditions([...props.additions, {
+                id: currentId,
                 name: getFilenameOnly(selectedFile.name),
-                fileType: getFileType(selectedFile.name),
+                type: 'file',
                 remote: false,
-                file: selectedFile
+                content: {
+                    fileType: getFileType(selectedFile.name),
+                    file: selectedFile
+                }
             }])
-            // setTimeout(() => {
-            //     console.log(props.files)
-            // }, 0)
         } catch (error) {
             console.log(error);
         }
@@ -88,8 +90,9 @@ export default function Addition(props){
                 <ModalLink
                     show={isModalOpen}
                     handleClose={handleCloseModal}
-                    links={props.links}
-                    setLinks={props.setLinks}
+                    additions={props.additions}
+                    setAdditions={props.setAdditions}
+                    nextId={props.nextId}
                 />
             }
         </div>

@@ -46,6 +46,8 @@ class Tasks(Base):
 
     task_id: int = Column(Integer, primary_key=True, autoincrement=True)
     task_name: str = Column(String(255), nullable=False)
+    task_description: str = Column(String, nullable=False)
+    additions_id: List = Column(ARRAY(Integer))
 
 
 class Files(Base):
@@ -87,3 +89,11 @@ class Grades(Base):
     __table_args__ = (
         UniqueConstraint('student_id', 'task_id'),
     )
+
+
+class Additions(Base):
+    __tablename__ = 'additions'
+
+    addition_id: int = Column(Integer, primary_key=True, autoincrement=True)
+    addition_title: str = Column(String(255), nullable=False)
+    addition_type: str = Column(String(255), nullable=False)

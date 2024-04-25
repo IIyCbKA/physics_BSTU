@@ -12,7 +12,14 @@ export default function ModalLink(props){
     }
 
     const handleOk = async () => {
-        props.setLinks([...props.links, link])
+        const currentId = props.nextId()
+        props.setAdditions([...props.additions, {
+            id: currentId,
+            name: link,
+            type: 'link',
+            remote: false,
+            content: null
+        }])
         handleCancel()
     }
 

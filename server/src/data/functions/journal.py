@@ -18,3 +18,45 @@ def getGroupStudentsList(groupID: int) -> dict:
                           'surname': row[1],
                           'name': row[2],
                           'patronymic': row[3]} for row in result]}
+
+
+def isTaskExists(taskName: str) -> bool:
+    result = db.query(Tasks.task_id).filter_by(task_name=taskName).count()
+    return result == 1
+
+
+def addTaskAdditionsToDB(additions: dict) -> list[Additions]:
+    db_additions = [
+        Additions(addition_title=addition['name'],
+                  addition_type=addition['type'])
+        for addition in additions]
+
+    db.add_all(db_additions)
+    db.commit()
+    return db_additions
+
+
+def getIdAdditionList(additions: list[Additions]):
+    return list(map(lambda x: x.addition_id, additions))
+
+
+
+def addTaskToDB(task_name: str,
+                task_description: str,
+                additions: list[Additions]):
+    task = Tasks(task_name=task_name,
+                 task_description=task_description,
+                 additions_id=getIdAdditionList(additions))
+    db.add(task)
+    db.commit()
+
+
+def deleteTaskAdditionFromDB(addition_id: int):
+    addition_to_delete = db.query(Additions).filter_by(addition_id=addition_id)
+    db.delete(addition_to_delete)
+
+
+def deleteTaskAdditionsFromDB(additions_id: list[int]):
+    for addition_id in additions_id:
+        deleteTaskAdditionFromDB(addition_id)
+

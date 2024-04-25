@@ -14,8 +14,13 @@ export default function TaskForm(props){
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const isActiveCreateBtn = selectedGroups !== [] && title !== ''
-    const [files, setFiles] = useState([])
-    const [links, setLinks] = useState([])
+    const [additions, setAdditions] = useState([])
+    const [currentId, setCurrentId] = useState(0);
+
+    const nextId = () => {
+        setCurrentId(currentId + 1)
+        return currentId;
+    }
 
     const formStyle = () => {
         return {opacity: props.show ? 1 : 0,
@@ -27,19 +32,21 @@ export default function TaskForm(props){
         <div className='form-wrap' style={formStyle()}>
             <HeaderTaskForm setShow={props.setShow}
                             isActiveBtn={isActiveCreateBtn}
+                            groups={selectedGroups}
+                            title={title}
+                            description={description}
+                            additions={additions}
             />
             <div className='main-form'>
                 <SelectGroups setSelectedGroups={setSelectedGroups}/>
                 <Information setTitle={setTitle}
                              setDescription={setDescription}
-                             files={files}
-                             links={links}
+                             additions={additions}
                 />
                 <Addition
-                    links={links}
-                    setLinks={setLinks}
-                    files={files}
-                    setFiles={setFiles}
+                    additions={additions}
+                    setAdditions={setAdditions}
+                    nextId={nextId}
                 />
             </div>
         </div>

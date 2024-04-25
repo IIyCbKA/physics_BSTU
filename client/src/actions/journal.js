@@ -20,14 +20,13 @@ export const getGroupsOptions = (groups) => {
         return options.push({
             key: group.id,
             label: group.name,
-            value: group.id
+            value: group.id.toString()
         })
     })
     return options
 }
 
-export const getGroupStudents = async (groupID) =>
-{
+export const getGroupStudents = async (groupID) => {
     try {
         const response = await $host.get(
             GROUP_STUDENTS_ROUTE, {params: {groupID}});
@@ -37,3 +36,59 @@ export const getGroupStudents = async (groupID) =>
         console.log(e);
     }
 };
+
+// Возвращает имена всех заданий
+export const getTasksName = async () => {
+
+}
+
+// Возвращает информацию о задании
+export const getTaskInfo = async () => {
+
+}
+
+// Добавляет задание
+export const createTask = async (task) => {
+    try {
+        const formData = new FormData();
+        const additions_info = [];
+        formData.append('title', task.title);
+        formData.append('description', task.description);
+        formData.append('groups', task.groups);
+        const files = task.additions;
+
+        let index = 0;
+        files.forEach((addition) => {
+            const info = {
+                id: addition.id,
+                name: addition.name,
+                type: addition.type,
+                remote: addition.remote,
+            };
+            if (addition.type === 'file') {
+                formData.append('files', addition.content.file);
+                info.name = addition.content.file.name;
+                info.fileIndex = index++;
+            }
+            else{
+                info.fileIndex = -1;
+            }
+            additions_info.push(info)
+        });
+
+        formData.append('additions', JSON.stringify(additions_info));
+        
+        await $host.post('/api/tasks/add', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+// Обновляет задание
+// export const updateTask = async (task) => {
+//
+// }

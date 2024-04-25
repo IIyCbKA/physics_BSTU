@@ -4,7 +4,6 @@ import './styles/style_addition_entity.css'
 
 export default function AdditionEntityInfo(props){
     const linkTitle = 'Ссылка'
-    const fileType = 'PNG'
 
     const styleAdditionTitle = () => {
         if (props.type === 'link' && props.isHover){
@@ -27,7 +26,7 @@ export default function AdditionEntityInfo(props){
                 </div>
                 <div className='addition-text-root'>
                     {props.type === 'link' && props.name}
-                    {props.type === 'file' && fileType}
+                    {props.type === 'file' && props.content.fileType.toUpperCase()}
                 </div>
             </div>
         </div>

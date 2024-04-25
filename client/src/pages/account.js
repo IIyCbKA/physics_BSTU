@@ -15,7 +15,7 @@ export default function Account(){
             await dispatch(getGroups())
         }
         waitFunc()
-    }, [dispatch]);
+    }, []);
 
     return (
         <div style={{backgroundColor: '#EBF0FF'}}>

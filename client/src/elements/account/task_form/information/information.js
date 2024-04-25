@@ -11,11 +11,8 @@ export default function Information(props){
             <div className='information-form'>
                 <TitleInputLine setTitle={props.setTitle}/>
                 <DescriptionInputLine setDescription={props.setDescription}/>
-                {props.files.map(file => (
-                    <AdditionEntity name={file.name} type={'file'}/>
-                ))}
-                {props.links.map(link => (
-                    <AdditionEntity name={link} type={'link'}/>
+                {props.additions.map(addition => (
+                    <AdditionEntity {...addition} key={addition.id}/>
                 ))}
             </div>
         </div>

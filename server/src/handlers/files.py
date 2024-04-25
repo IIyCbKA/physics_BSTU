@@ -9,6 +9,7 @@ from typing import Annotated
 from fastapi import Depends
 from src.handlers.login import getCurrentUser, getCurrentEmployee
 from src.socketManager import sockets
+from src.strings.strings import getFileType
 
 
 # Отправляет на клиент новый список файлов
@@ -65,7 +66,7 @@ async def addFile(file: Annotated[UploadFile, File()],
     path = path.replace('/disk', '', 1)
     checkDiskPath(path)
     fileName: str = file.filename
-    fileType: str = file.filename.split('.')[-1]
+    fileType: str = getFileType(file.filename)
     fileModel: FileModel | None = addFileToDB(fileName, fileType, path)
     if fileModel is None:
         return error

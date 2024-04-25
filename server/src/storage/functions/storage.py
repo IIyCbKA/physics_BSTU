@@ -5,11 +5,10 @@ from io import BytesIO
 from typing import Annotated
 
 
-def addFileToStorage(file: Annotated[UploadFile, File()], id: int,
-                     fileType: str) -> bool:
+def addFileToMinio(folderName: str, file: Annotated[UploadFile, File()],
+                   id: int, fileType: str) -> bool:
     fileData = file.file.read()
     bucketName: str = "storage"
-    folderName: str = "files"
     fileName: str = f"{id}.{fileType}"
     try:
         minio_client.put_object(bucketName, f"{folderName}/{fileName}",
@@ -17,6 +16,16 @@ def addFileToStorage(file: Annotated[UploadFile, File()], id: int,
         return True
     except Exception:
         return False
+
+
+def addFileToStorage(file: Annotated[UploadFile, File()], id: int,
+                     fileType: str) -> bool:
+    return addFileToMinio('files', file, id, fileType)
+
+
+def addFileToTaskStorage(file: Annotated[UploadFile, File()], id: int,
+                     fileType: str) -> bool:
+    return addFileToMinio('tasks', file, id, fileType)
 
 
 def getFileObject(fileID: int, fileType: str):
