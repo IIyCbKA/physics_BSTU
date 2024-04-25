@@ -18,7 +18,7 @@
 }
 
 .addition-entity-root{
-    width: calc(100% - 48px - 96px);
+    width: calc(100% - 112px);
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -26,7 +26,7 @@
 }
 
 .addition-entity-delete{
-    height: 72px;
+    height: 100%;
     width: 64px;
     display: flex;
     align-items: center;
@@ -53,6 +53,9 @@
     font-size: 16px;
     font-weight: 600;
     word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .addition-text-root{
@@ -61,16 +64,24 @@
     font-weight: 500;
     color: #5F6368;
     word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .addition-entity-ref-zone{
     display: flex;
-    width: calc(100% - 64px);
+    width: 100%;
     text-decoration: none;
     outline: none;
 }
 
 .addition-entity-info-wrap{
+    display: flex;
+    width: 100%;
+}
+
+.addition-info-root{
     display: flex;
     width: calc(100% - 64px);
 }

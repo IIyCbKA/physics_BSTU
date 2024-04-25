@@ -13,18 +13,20 @@ export default function AdditionEntity(props){
              onMouseEnter={() => setHover(true)}
              onMouseLeave={() => setHover(false)}
         >
-            {props.type === 'link' ?
-                (<a className='addition-entity-ref-zone'
-                   href={props.name}
-                   target="_blank"
-                   rel="noopener noreferrer"
-                >
-                    <AdditionEntityInfo {...props}
-                                        isHover={isHover}/>
-                </a>) :
-                (<AdditionEntityInfo {...props}
-                                     isHover={isHover}/>)
-            }
+            <div className='addition-info-root'>
+                {props.type === 'link' ?
+                    (<a className='addition-entity-ref-zone'
+                        href={props.name}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <AdditionEntityInfo {...props}
+                                            isHover={isHover}/>
+                    </a>) :
+                    (<AdditionEntityInfo {...props}
+                                         isHover={isHover}/>)
+                }
+            </div>
             <div className='addition-entity-delete'>
                 <div className='delete-zone'>
                     <CloseOutlined style={styles.iconClose}/>
