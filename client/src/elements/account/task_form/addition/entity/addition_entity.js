@@ -13,7 +13,7 @@ export default function AdditionEntity(props){
              onMouseEnter={() => setHover(true)}
              onMouseLeave={() => setHover(false)}
         >
-            <div className='addition-info-root'>
+            <div className='addition-entity-info-root'>
                 {props.type === 'link' ?
                     (<a className='addition-entity-ref-zone'
                         href={props.name}
