@@ -39,10 +39,16 @@ def getFileObject(fileID: int, fileType: str):
         return None
 
 
-def deleteFileObject(fileID: int, fileType: str):
-    folderName: str = 'files'
+def deleteStorageObject(folderName: str, objID: int, fileType: str):
     try:
         minio_client.remove_object('storage',
-                                   f'{folderName}/{fileID}.{fileType}')
+                                   f'{folderName}/{objID}.{fileType}')
     except Exception:
         pass
+
+
+def deleteFileObject(fileID: int, fileType: str):
+    deleteStorageObject('files', fileID, fileType)
+
+def deleteTaskFileObject(fileID: int, fileType: str):
+    deleteStorageObject('tasks', fileID, fileType)

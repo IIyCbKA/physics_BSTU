@@ -10,6 +10,10 @@ class DeleteFileData(BaseModel):
     fileID: int
 
 
+class DeleteTaskData(BaseModel):
+    taskID: int
+
+
 class FolderData(BaseModel):
     folderName: str
     path: str

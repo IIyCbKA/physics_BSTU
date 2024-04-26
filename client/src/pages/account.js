@@ -4,7 +4,7 @@ import {Helmet} from "react-helmet";
 import React, {useEffect, useState} from "react";
 import TaskForm from "../components/account/create_task_form/task_form";
 import {useDispatch} from "react-redux";
-import {getGroups} from "../actions/journal";
+import {getGroups, getTasksList} from "../actions/journal";
 
 export default function Account(){
     const [showTaskForm, setShowTaskForm] = useState(false)
@@ -13,6 +13,7 @@ export default function Account(){
     useEffect(() => {
         const waitFunc = async () => {
             await dispatch(getGroups())
+            await dispatch(getTasksList())
         }
         waitFunc()
     }, []);

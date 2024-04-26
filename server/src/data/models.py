@@ -1,6 +1,7 @@
 from sqlalchemy import (Column, String, Integer, ARRAY, ForeignKey,
                         UniqueConstraint)
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
 from typing import List
 
 Base = declarative_base()
@@ -97,3 +98,21 @@ class Additions(Base):
     addition_id: int = Column(Integer, primary_key=True, autoincrement=True)
     addition_title: str = Column(String(255), nullable=False)
     addition_type: str = Column(String(255), nullable=False)
+
+class TasksGroups(Base):
+    __tablename__ = 'tasks_groups'
+
+    task_group_id = Column(Integer, primary_key=True)
+    task_id = Column(Integer, ForeignKey('tasks.task_id',
+                                         onupdate='CASCADE',
+                                         ondelete='CASCADE'), nullable=False)
+    group_id = Column(Integer, ForeignKey('groups.group_id',
+                                          onupdate='CASCADE',
+                                          ondelete='CASCADE'), nullable=False)
+
+    task = relationship("Tasks", backref="tasks_groups")
+    group = relationship("Groups", backref="tasks_groups")
+
+    def __repr__(self):
+        return (f"<TasksGroups(id={self.id}, "
+                f"task_id={self.task_id}, group_id={self.group_id})>")

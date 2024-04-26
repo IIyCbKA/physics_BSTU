@@ -20,9 +20,20 @@ def getGroupStudentsList(groupID: int) -> dict:
                           'patronymic': row[3]} for row in result]}
 
 
-def isTaskExists(taskName: str) -> bool:
-    result = db.query(Tasks.task_id).filter_by(task_name=taskName).count()
-    return result == 1
+def getTaskInfo(taskNameOrID) -> Tasks | None:
+    if type(taskNameOrID) == str:
+        result = db.query(Tasks).filter_by(task_name=taskNameOrID).first()
+    elif type(taskNameOrID) == int:
+        result = db.query(Tasks).filter_by(task_id=taskNameOrID).first()
+    else:
+        result = None
+
+    return result
+
+
+def isTaskExists(taskName) -> bool:
+    result = getTaskInfo(taskName)
+    return result is not None
 
 
 def addTaskAdditionsToDB(additions: dict) -> list[Additions]:
@@ -43,16 +54,80 @@ def getIdAdditionList(additions: list[Additions]):
 
 def addTaskToDB(task_name: str,
                 task_description: str,
-                additions: list[Additions]):
+                additions: list[Additions]) -> Tasks:
     task = Tasks(task_name=task_name,
                  task_description=task_description,
                  additions_id=getIdAdditionList(additions))
     db.add(task)
     db.commit()
+    return task
+
+
+def getAllTasks():
+    return db.query(Tasks).all()
+
+
+def addTaskGroups(task_id: int, groups_id: List[int]):
+    db_tasks_groups = [
+        TasksGroups(task_id=task_id,
+                    group_id=group_id)
+        for group_id in groups_id]
+
+    db.add_all(db_tasks_groups)
+    db.commit()
+
+
+def getGroupTasks(group_id: int) -> List:
+    tasks = (
+        db.query(Tasks)
+        .join(TasksGroups)
+        .filter_by(group_id=group_id)
+        .all()
+    )
+    return tasks
+
+
+def getStudentGroup(student_id: int):
+    return db.query(Students.group_id).\
+        filter_by(student_id=student_id).first()[0]
+
+
+def getAddition(addition_id: int):
+    return db.query(Additions).filter_by(addition_id=addition_id).first()
+
+
+def deleteAddition(addition: Additions):
+    db.delete(addition)
+    db.commit()
+
+
+def convertDBAdditionToDict(addition: Additions):
+    return {
+        'id': addition.addition_id,
+        'title': addition.addition_title,
+        'type': addition.addition_type
+    }
+
+def convertDBTaskToDict(task: Tasks):
+    result = {}
+    result['id'] = task.task_id
+    result['title'] = task.task_name
+    result['description'] = task.task_name
+    result['additions'] = []
+    for addition_id in task.additions_id:
+        addition = getAddition(addition_id)
+        if addition is not None:
+            result['additions'].append(convertDBAdditionToDict(addition))
+    return result
+
+
+def convertDBTasksToDict(tasks: List[Tasks]):
+    return list(map(convertDBTaskToDict, tasks))
 
 
 def deleteTaskAdditionFromDB(addition_id: int):
-    addition_to_delete = db.query(Additions).filter_by(addition_id=addition_id)
+    addition_to_delete = (db.query(Additions).
+                          filter_by(addition_id=addition_id).first())
     db.delete(addition_to_delete)
 
 
@@ -60,3 +135,6 @@ def deleteTaskAdditionsFromDB(additions_id: list[int]):
     for addition_id in additions_id:
         deleteTaskAdditionFromDB(addition_id)
 
+def deleteTaskOnlyFromDB(task: Tasks):
+    db.delete(task)
+    db.commit()

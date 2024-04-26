@@ -1,13 +1,10 @@
 import { $host } from "../server_files/server_connect"
-import {setGroups} from "../reducers/journal_reducer";
-
-const GROUPS_ROUTE = '/api/groups'
-const GROUP_STUDENTS_ROUTE = '/api/group_students'
+import {setGroups, setTasks} from "../reducers/journal_reducer";
 
 export const getGroups = () =>
     async (dispatch) => {
     try {
-        const response = await $host.get(GROUPS_ROUTE);
+        const response = await $host.get('/api/groups');
         dispatch(setGroups(response.data.groups));
     } catch (e) {
         console.log(e);
@@ -29,7 +26,7 @@ export const getGroupsOptions = (groups) => {
 export const getGroupStudents = async (groupID) => {
     try {
         const response = await $host.get(
-            GROUP_STUDENTS_ROUTE, {params: {groupID}});
+            '/api/group_students', {params: {groupID}});
 
         return response.data.students
     } catch (e) {
@@ -38,8 +35,25 @@ export const getGroupStudents = async (groupID) => {
 };
 
 // Возвращает имена всех заданий
-export const getTasksName = async () => {
+export const getTasksList = () =>
+    async (dispatch) => {
+        try {
+            const response = await $host.get('/api/tasks/all');
+            //if (response.data.tasks.length)
+            //await deleteTask(response.data[0].id)
+            dispatch(setTasks(response.data));
+        } catch (e) {
+            console.log(e);
+        }
+    };
 
+export const deleteTask = async (task_id) => {
+    try{
+        await $host.post('/api/tasks/delete', {taskID: task_id})
+    }
+    catch(e){
+        console.log(e)
+    }
 }
 
 // Возвращает информацию о задании
