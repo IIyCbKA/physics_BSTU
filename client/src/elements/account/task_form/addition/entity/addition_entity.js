@@ -8,6 +8,11 @@ import {useState} from "react";
 export default function AdditionEntity(props){
     const [isHover, setHover] = useState(false)
 
+    const handleDeleteAddition = () => {
+        props.setAdditions(prevAdditions => prevAdditions.filter(
+            addition => addition.id !== props.id))
+    }
+
     return (
         <div className='addition-entity-wrap'
              onMouseEnter={() => setHover(true)}
@@ -28,7 +33,7 @@ export default function AdditionEntity(props){
                 }
             </div>
             <div className='addition-entity-delete'>
-                <div className='delete-zone'>
+                <div className='delete-zone' onClick={handleDeleteAddition}>
                     <CloseOutlined style={styles.iconClose}/>
                 </div>
             </div>

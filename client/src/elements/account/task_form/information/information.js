@@ -12,7 +12,10 @@ export default function Information(props){
                 <TitleInputLine setTitle={props.setTitle}/>
                 <DescriptionInputLine setDescription={props.setDescription}/>
                 {props.additions.map(addition => (
-                    <AdditionEntity {...addition} key={addition.id}/>
+                    <AdditionEntity {...addition}
+                                    key={addition.id}
+                                    setAdditions={props.setAdditions}
+                    />
                 ))}
             </div>
         </div>

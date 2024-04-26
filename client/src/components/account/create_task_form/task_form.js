@@ -42,6 +42,7 @@ export default function TaskForm(props){
                 <Information setTitle={setTitle}
                              setDescription={setDescription}
                              additions={additions}
+                             setAdditions={setAdditions}
                 />
                 <Addition
                     additions={additions}
