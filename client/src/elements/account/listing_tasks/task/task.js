@@ -3,7 +3,7 @@ import {BookOutlined} from "@ant-design/icons";
 import {styles} from './styles/style_task'
 import {useState} from "react";
 import {useDispatch} from "react-redux";
-import {addActiveTask, deleteActiveTask} from "../../../../reducers/journal_reducer";
+import {setActiveTask} from "../../../../reducers/journal_reducer";
 
 export default function Task(props){
     const [isActive, setActive] = useState(false);
@@ -11,10 +11,10 @@ export default function Task(props){
 
     const setCurrentActiveTask = (newActiveStatus) => {
         if (newActiveStatus){
-            dispatch(addActiveTask({...props}))
+            dispatch(setActiveTask({...props}))
         } else{
             if (isActive){
-                dispatch(deleteActiveTask({id: props.id}));
+                dispatch(setActiveTask({}));
             }
         }
         setActive(newActiveStatus);
