@@ -2,9 +2,23 @@ import './styles/style_task.css'
 import {BookOutlined} from "@ant-design/icons";
 import {styles} from './styles/style_task'
 import {useState} from "react";
+import {useDispatch} from "react-redux";
+import {addActiveTask, deleteActiveTask} from "../../../../reducers/journal_reducer";
 
 export default function Task(props){
     const [isActive, setActive] = useState(false);
+    const dispatch = useDispatch();
+
+    const setCurrentActiveTask = (newActiveStatus) => {
+        if (newActiveStatus){
+            dispatch(addActiveTask({...props}))
+        } else{
+            if (isActive){
+                dispatch(deleteActiveTask({id: props.id}));
+            }
+        }
+        setActive(newActiveStatus);
+    }
 
     const rootStyle = () => {
         if (isActive){
@@ -49,7 +63,7 @@ export default function Task(props){
         >
             <div className='task-main'
                  style={mainStyle()}
-                 onClick={() => setActive(!isActive)}
+                 onClick={() => setCurrentActiveTask(!isActive)}
             >
                 <div className='task-icon-wrap'>
                     <BookOutlined style={styles.iconStyle}/>
