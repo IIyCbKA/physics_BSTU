@@ -24,9 +24,21 @@
     min-width: 0;
 }
 
+.account-info-main{
+    min-width: 294px;
+    width: 100%;
+    max-width: 850px;
+}
+
+.account-info-wrap{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 @media (orientation: portrait) {
     .account-main {
-        width: 100vw;
+        width: 100%;
         min-height: calc(100vh - 60px - 24px);
     }
 

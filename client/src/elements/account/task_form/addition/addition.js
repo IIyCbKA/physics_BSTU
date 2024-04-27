@@ -20,7 +20,6 @@ export default function Addition(props){
     }
 
     useEffect(() => {
-        console.log(props.additions)
     }, [props.additions])
 
     const handleFileSelect = async (event) => {

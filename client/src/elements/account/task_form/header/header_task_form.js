@@ -19,8 +19,10 @@ export default function HeaderTaskForm(props){
             additions: props.additions
         }
 
-        console.log(task)
-        await createTask(task)
+        const result = await createTask(task);
+        if (result.status === 200){
+            props.setShow(false)
+        }
     }
 
     return (

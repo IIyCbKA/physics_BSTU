@@ -36,8 +36,9 @@
 }
 
 .header-text{
+    font-family: "Google Sans", Roboto, Arial, sans-serif;
     font-size: 22px;
-    color: #5F6368
+    color: #5F6368;
 }
 
 .header-icon-wrap{

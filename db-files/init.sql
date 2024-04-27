@@ -15,10 +15,9 @@ alter table users
 
 create table groups
 (
-    group_id     serial
+    group_id   serial
         primary key,
-    group_name   varchar(15) not null,
-    task_numbers integer[]
+    group_name varchar(15) not null
 );
 
 alter table groups
@@ -112,3 +111,22 @@ create table additions
 
 alter table additions
     owner to admin;
+
+create table tasks_groups
+(
+    task_group_id serial
+        primary key,
+    task_id       integer not null
+        constraint task_id
+            references tasks
+            on update cascade on delete cascade,
+    group_id      integer not null
+        constraint group_id
+            references groups
+            on update cascade on delete cascade
+);
+
+alter table tasks_groups
+    owner to admin;
+
+

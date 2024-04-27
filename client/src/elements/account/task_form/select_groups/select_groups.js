@@ -14,9 +14,9 @@ export default function SelectGroups(props){
     return(
         <div className='select-form-wrap'>
             <div className='select-form'>
-            <span className='select-text'>
-                Для кого
-            </span>
+                <span className='select-text'>
+                    Для кого
+                </span>
                 <div className='select-wrap'>
                     <Select
                         mode="tags"

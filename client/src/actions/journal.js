@@ -92,7 +92,7 @@ export const createTask = async (task) => {
 
         formData.append('additions', JSON.stringify(additions_info));
         
-        await $host.post('/api/tasks/add', formData, {
+        return await $host.post('/api/tasks/add', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
