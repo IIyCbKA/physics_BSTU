@@ -38,6 +38,7 @@ async def allTasks(user: Annotated[dict, Depends(getCurrentUser)]):
     else:
         tasks = []
 
+    tasks.reverse()
     result = convertDBTasksToDict(tasks)
 
     return JSONResponse(content=result, status_code=200)
