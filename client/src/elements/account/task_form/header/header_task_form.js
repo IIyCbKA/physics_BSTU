@@ -1,8 +1,9 @@
 import './styles/style_header_task_form.css'
-import {BookOutlined, CloseOutlined} from "@ant-design/icons";
+import {CloseOutlined} from "@ant-design/icons";
 import {styles} from './styles/style_header_task_form'
 import {Button} from "react-bootstrap";
 import {createTask} from "../../../../actions/journal";
+import {AssignmentOutlined} from "@mui/icons-material";
 
 export default function HeaderTaskForm(props){
     const handleCloseClick = (event) => {
@@ -34,7 +35,7 @@ export default function HeaderTaskForm(props){
             </div>
             <div className='header-info'>
                 <div className='header-icon-wrap'>
-                    <BookOutlined style={styles.iconHeader}/>
+                    <AssignmentOutlined style={styles.iconHeader}/>
                 </div>
                 <span className='header-text'>
                     Задание

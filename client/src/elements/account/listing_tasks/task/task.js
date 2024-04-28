@@ -1,27 +1,10 @@
 import './styles/style_task.css'
-import {BookOutlined} from "@ant-design/icons";
 import {styles} from './styles/style_task'
-import {useState} from "react";
-import {useDispatch} from "react-redux";
-import {setActiveTask} from "../../../../reducers/journal_reducer";
+import {AssignmentOutlined} from "@mui/icons-material";
 
 export default function Task(props){
-    const [isActive, setActive] = useState(false);
-    const dispatch = useDispatch();
-
-    const setCurrentActiveTask = (newActiveStatus) => {
-        if (newActiveStatus){
-            dispatch(setActiveTask({...props}))
-        } else{
-            if (isActive){
-                dispatch(setActiveTask({}));
-            }
-        }
-        setActive(newActiveStatus);
-    }
-
     const rootStyle = () => {
-        if (isActive){
+        if (props.isActive){
             return {boxShadow: '0 1px 2px 0 rgba(60,64,67,.3), ' +
                         '0 2px 6px 2px rgba(60,64,67,.15)',
                     borderTopLeftRadius: '0px',
@@ -31,7 +14,7 @@ export default function Task(props){
     }
 
     const mainStyle = () =>{
-        if (isActive){
+        if (props.isActive){
             return {borderBottom: 'none',
                     backgroundColor: '#E8F0FE'
             }
@@ -45,7 +28,7 @@ export default function Task(props){
             transition: 'height .3s cubic-bezier(0.4, 0, 0.2, 1)'
         }
 
-        if (isActive){
+        if (props.isActive){
             return {...defaultStyle,
                     height: '300px',
                     borderTop: '1px solid #E0E0E0'
@@ -57,16 +40,24 @@ export default function Task(props){
         }
     }
 
+    const handleTaskClick = () => {
+        if (props.isActive){
+            props.setActiveID(null)
+        } else {
+            props.setActiveID(props.id)
+        }
+    }
+
     return(
         <div className='task-root'
              style={rootStyle()}
         >
             <div className='task-main'
                  style={mainStyle()}
-                 onClick={() => setCurrentActiveTask(!isActive)}
+                 onClick={handleTaskClick}
             >
                 <div className='task-icon-wrap'>
-                    <BookOutlined style={styles.iconStyle}/>
+                    <AssignmentOutlined style={styles.iconStyle}/>
                 </div>
                 <div className='task-title-wrap'>
                     <div className='task-title-text'>

@@ -1,5 +1,6 @@
 const styleIcons = {
-    fontSize: '24px',
+    height: '24px',
+    width: '24px',
     color: '#1967D2'
 }
 
