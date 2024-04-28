@@ -1,11 +1,12 @@
 import {Nav} from "react-bootstrap";
 import {motion} from "framer-motion";
 import React from "react";
-import {FormOutlined, LogoutOutlined, UserOutlined} from '@ant-design/icons';
+import {FormOutlined, UserOutlined} from '@ant-design/icons';
 import './styles/style_menu_elements.css'
 import {styles} from "./styles/style_menu_elements";
 import {useDispatch} from "react-redux";
 import {cleanUserInfo} from "../../actions/user";
+import {LogoutRounded} from "@mui/icons-material";
 
 export function TestsElement({isHidden}) {
     return (
@@ -63,7 +64,7 @@ export function LogoutElement({isHidden}) {
             }}
         >
             <Nav.Link onClick={handlerClick} disabled={isHidden} style={styles.navItems}>
-                <LogoutOutlined style={styles.iconStyle}/>
+                <LogoutRounded style={styles.iconStyle}/>
                 <span
                     className="style-text-in-menu"> Выйти</span>
             </Nav.Link>

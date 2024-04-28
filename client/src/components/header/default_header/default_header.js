@@ -2,12 +2,13 @@ import {Container, Nav, Navbar} from "react-bootstrap";
 import {styles} from "./styles/style_header";
 import logo from "./icons/logo.png";
 import MenuOffcanvas from "../../menu/menu";
-import {FormOutlined, LogoutOutlined, UserOutlined} from "@ant-design/icons";
+import {FormOutlined, UserOutlined} from "@ant-design/icons";
 import React, {useState} from "react";
 import {cleanUserInfo} from "../../../actions/user";
 import {PORTRAIT_ORIENTATION} from "../../../classes/OrientationListener";
 import {useDispatch, useSelector} from "react-redux";
 import './styles/style_header.css';
+import {LogoutRounded} from "@mui/icons-material";
 
 export default function DefaultHeader(){
     const dispatch = useDispatch()
@@ -70,7 +71,7 @@ export default function DefaultHeader(){
                     <Nav.Link onClick={handlerLogoutClick}
                               style={styles.headerIconsForm}
                     >
-                        <LogoutOutlined style={styles.headerIconStyle}/>
+                        <LogoutRounded style={styles.headerIconStyle}/>
                     </Nav.Link>
                 </Nav>
             </Navbar.Collapse>

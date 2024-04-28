@@ -1,11 +1,10 @@
 import './styles/style_addition.css'
-import {LinkOutlined, UploadOutlined} from "@ant-design/icons";
 import {styles} from './styles/style_addition'
 import {Button} from "react-bootstrap";
 import React, {useEffect, useRef, useState} from "react";
 import ModalLink from "./link_modal";
 import {getFilenameOnly, getFileType} from "../../../../actions/strings";
-
+import {FileUploadOutlined, Link} from "@mui/icons-material";
 
 export default function Addition(props){
     const [isModalOpen, setModalOpen] = useState(false)
@@ -64,7 +63,7 @@ export default function Addition(props){
                             <Button className='addition-btn-style'
                                     onClick={handleAddFileClick}
                             >
-                                <UploadOutlined style={styles.styleIcons}/>
+                                <FileUploadOutlined style={styles.styleIcons}/>
                             </Button>
                         </div>
                         <div className='addition-btn-text-wrap'>
@@ -75,7 +74,7 @@ export default function Addition(props){
                         <div className='addition-btn-icon-wrap'>
                             <Button className='addition-btn-style'
                                     onClick={handleOpenModal}>
-                                <LinkOutlined style={styles.styleIcons}/>
+                                <Link style={styles.styleIcons}/>
                             </Button>
                         </div>
                         <div className='addition-btn-text-wrap'>

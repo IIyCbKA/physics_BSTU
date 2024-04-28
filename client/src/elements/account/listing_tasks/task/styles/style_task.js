@@ -1,6 +1,7 @@
 const iconStyle = {
-    fontSize: '24px',
-    color: '#4285F4'
+    height: '24px',
+    width: '24px',
+    color: '#FFFFFF'
 }
 
 export const styles = {

@@ -1,6 +1,6 @@
 import './styles/style_task.css'
-import {BookOutlined} from "@ant-design/icons";
 import {styles} from './styles/style_task'
+import {AssignmentOutlined} from "@mui/icons-material";
 
 export default function Task(props){
     const rootStyle = () => {
@@ -57,7 +57,7 @@ export default function Task(props){
                  onClick={handleTaskClick}
             >
                 <div className='task-icon-wrap'>
-                    <BookOutlined style={styles.iconStyle}/>
+                    <AssignmentOutlined style={styles.iconStyle}/>
                 </div>
                 <div className='task-title-wrap'>
                     <div className='task-title-text'>

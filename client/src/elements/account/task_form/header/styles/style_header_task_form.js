@@ -4,7 +4,8 @@ const iconClose = {
 }
 
 const iconHeader = {
-    fontSize: '22px',
+    height: '24px',
+    width: '24px',
     color: '#4285F4'
 }
 
