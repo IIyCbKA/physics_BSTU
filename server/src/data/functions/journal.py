@@ -112,7 +112,7 @@ def convertDBTaskToDict(task: Tasks):
     result = {}
     result['id'] = task.task_id
     result['title'] = task.task_name
-    result['description'] = task.task_name
+    result['description'] = task.task_description
     result['additions'] = []
     for addition_id in task.additions_id:
         addition = getAddition(addition_id)
