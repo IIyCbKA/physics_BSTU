@@ -24,18 +24,21 @@ export default function Task(props){
     }
 
     const infoStyle = () => {
+        const checkElement = document.querySelector('.task-info-main');
+        const height = checkElement.scrollHeight;
+
         const defaultStyle = {
-            transition: 'height .3s cubic-bezier(0.4, 0, 0.2, 1)'
+            transition: 'height .4s cubic-bezier(0.4, 0, 0.2, 1)',
+            overflow: 'hidden'
         }
 
         if (props.isActive){
             return {...defaultStyle,
-                    height: '300px',
-                    borderTop: '1px solid #E0E0E0'
+                height: height
             }
         } else{
             return {...defaultStyle,
-                    height: '0',
+                height: 0
             }
         }
     }
@@ -66,7 +69,11 @@ export default function Task(props){
                 </div>
             </div>
             <div className='task-info-wrap' style={infoStyle()}>
-
+                <div className='task-info-main'>
+                    <span className='task-info-description'>
+                        {props.description}
+                    </span>
+                </div>
             </div>
         </div>
     )
