@@ -64,10 +64,9 @@
 }
 
 .task-info-description{
-    word-break: break-all;
+    word-break: break-word;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
     font-family: 'Roboto', Helvetica, Arial, sans-serif;
     font-size: 13px;
     font-weight: 400;

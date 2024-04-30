@@ -12,6 +12,7 @@ export default function ListingTask(){
             {tasks.map((task, index) => (
                 <Task title={task.title}
                       description={task.description}
+                      additions={task.additions}
                       id={task.id}
                       key={task.id}
                       isLast={index === tasks.length - 1}

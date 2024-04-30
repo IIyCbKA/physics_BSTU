@@ -108,6 +108,7 @@ def convertDBAdditionToDict(addition: Additions):
         'type': addition.addition_type
     }
 
+
 def convertDBTaskToDict(task: Tasks):
     result = {}
     result['id'] = task.task_id
@@ -134,6 +135,7 @@ def deleteTaskAdditionFromDB(addition_id: int):
 def deleteTaskAdditionsFromDB(additions_id: list[int]):
     for addition_id in additions_id:
         deleteTaskAdditionFromDB(addition_id)
+
 
 def deleteTaskOnlyFromDB(task: Tasks):
     db.delete(task)

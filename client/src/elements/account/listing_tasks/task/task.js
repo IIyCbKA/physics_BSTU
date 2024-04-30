@@ -1,8 +1,19 @@
 import './styles/style_task.css'
 import {styles} from './styles/style_task'
 import {AssignmentOutlined} from "@mui/icons-material";
+import {useState, useEffect, useRef} from "react";
+import TaskAddition from "./addition/addition";
 
 export default function Task(props){
+    const infoRef = useRef(null);
+    const [heightInfo, setHeight] = useState(0);
+
+    useEffect(() => {
+        if (infoRef.current){
+            setHeight(infoRef.current.scrollHeight);
+        }
+    }, [infoRef, heightInfo])
+
     const rootStyle = () => {
         if (props.isActive){
             return {boxShadow: '0 1px 2px 0 rgba(60,64,67,.3), ' +
@@ -24,9 +35,6 @@ export default function Task(props){
     }
 
     const infoStyle = () => {
-        const checkElement = document.querySelector('.task-info-main');
-        const height = checkElement.scrollHeight;
-
         const defaultStyle = {
             transition: 'height .4s cubic-bezier(0.4, 0, 0.2, 1)',
             overflow: 'hidden'
@@ -34,7 +42,7 @@ export default function Task(props){
 
         if (props.isActive){
             return {...defaultStyle,
-                height: height
+                height: heightInfo
             }
         } else{
             return {...defaultStyle,
@@ -68,11 +76,18 @@ export default function Task(props){
                     </div>
                 </div>
             </div>
-            <div className='task-info-wrap' style={infoStyle()}>
+            <div className='task-info-wrap' style={infoStyle()} ref={infoRef}>
                 <div className='task-info-main'>
                     <span className='task-info-description'>
                         {props.description}
                     </span>
+                    <div>
+                        {props.additions.map(addition => (
+                            <TaskAddition
+                                key={addition.id}
+                            />
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
