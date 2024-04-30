@@ -32,7 +32,7 @@ export const uploadFile = async (file, dir_path) => {
 }
 
 export const downloadFile = async (fileName, fileID) => {
-    const url = `${SERVER}/api/download/${fileID}`
+    const url = `${SERVER}/api/disk/download/${fileID}`
 
     $host.get(url, {
         responseType: 'blob'
