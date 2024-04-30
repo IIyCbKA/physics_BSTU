@@ -1,7 +1,8 @@
 const navItems = {
     display: 'flex',
     alignItems: 'center',
-
+    margin: '10px 0px',
+    padding: '0px'
 }
 
 const iconStyle = {

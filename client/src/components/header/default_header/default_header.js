@@ -2,13 +2,12 @@ import {Container, Nav, Navbar} from "react-bootstrap";
 import {styles} from "./styles/style_header";
 import logo from "./icons/logo.png";
 import MenuOffcanvas from "../../menu/menu";
-import {FormOutlined, UserOutlined} from "@ant-design/icons";
 import React, {useState} from "react";
 import {cleanUserInfo} from "../../../actions/user";
 import {PORTRAIT_ORIENTATION} from "../../../classes/OrientationListener";
 import {useDispatch, useSelector} from "react-redux";
 import './styles/style_header.css';
-import {LogoutRounded} from "@mui/icons-material";
+import {LogoutRounded, TaskAltOutlined, AccountCircleOutlined} from "@mui/icons-material";
 
 export default function DefaultHeader(){
     const dispatch = useDispatch()
@@ -58,17 +57,17 @@ export default function DefaultHeader(){
                 className="d-none d-lg-block"
             >
                 <Nav className="ms-auto">
-                    <Nav.Link href="/test"
+                    <Nav.Link href="/tests"
                               style={styles.headerIconsForm}
                               className='main-btns-background'
                     >
-                        <FormOutlined style={styles.headerIconStyle}/>
+                        <TaskAltOutlined style={styles.headerIconStyle}/>
                     </Nav.Link>
                     <Nav.Link href="/account"
                               style={styles.headerIconsForm}
                               className='main-btns-background'
                     >
-                        <UserOutlined style={styles.headerIconStyle}/>
+                        <AccountCircleOutlined style={styles.headerIconStyle}/>
                     </Nav.Link>
                     <Nav.Link onClick={handlerLogoutClick}
                               style={styles.headerIconsForm}

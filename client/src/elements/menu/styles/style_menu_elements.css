@@ -1,6 +1,8 @@
 .style-text-in-menu {
     color: #161616;
-    font-weight: 600;
-    padding-left: 8px;
+    padding-left: 12px;
     user-select: none;
+    width: calc(100% - 24px);
+    font-weight: 600;
+    font-family: "Google Sans", Roboto, Arial, sans-serif;
 }

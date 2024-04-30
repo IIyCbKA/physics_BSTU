@@ -1,12 +1,11 @@
 import {Nav} from "react-bootstrap";
 import {motion} from "framer-motion";
 import React from "react";
-import {FormOutlined, UserOutlined} from '@ant-design/icons';
 import './styles/style_menu_elements.css'
 import {styles} from "./styles/style_menu_elements";
 import {useDispatch} from "react-redux";
 import {cleanUserInfo} from "../../actions/user";
-import {LogoutRounded} from "@mui/icons-material";
+import {LogoutRounded, TaskAltOutlined, AccountCircleOutlined} from "@mui/icons-material";
 
 export function TestsElement({isHidden}) {
     return (
@@ -19,7 +18,7 @@ export function TestsElement({isHidden}) {
             }}
         >
             <Nav.Link href="/tests" disabled={isHidden} style={styles.navItems}>
-                <FormOutlined style={styles.iconStyle}/>
+                <TaskAltOutlined style={styles.iconStyle}/>
                 <span
                     className="style-text-in-menu"> Тесты</span>
             </Nav.Link>
@@ -38,7 +37,7 @@ export function ProfileElement({isHidden}) {
             }}
         >
             <Nav.Link href="/account" disabled={isHidden} style={styles.navItems}>
-                <UserOutlined style={styles.iconStyle}/>
+                <AccountCircleOutlined style={styles.iconStyle}/>
                 <span
                     className="style-text-in-menu"> Профиль</span>
             </Nav.Link>
