@@ -1,4 +1,4 @@
-import { $host } from "../server_files/server_connect"
+import {$host, SERVER} from "../server_files/server_connect"
 import {setGroups, setTasks} from "../reducers/journal_reducer";
 
 export const getGroups = () =>
@@ -100,6 +100,17 @@ export const createTask = async (task) => {
     } catch (e) {
         console.log(e);
     }
+}
+
+export const downloadTaskFile = async (fileName, fileID) => {
+    const url = `${SERVER}/api/journal/download/${fileID}`
+
+    $host.get(url, {
+        responseType: 'blob'
+    }).then(response => {
+        const blob = new Blob([response.data]);
+        saveAs(blob, fileName);
+    }).catch(e => console.log(e));
 }
 
 // Обновляет задание

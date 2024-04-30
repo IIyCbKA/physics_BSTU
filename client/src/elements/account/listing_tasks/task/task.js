@@ -85,6 +85,7 @@ export default function Task(props){
                         {props.additions.map(addition => (
                             <TaskAddition
                                 key={addition.id}
+                                id={addition.id}
                                 name={addition.title}
                                 type={addition.type}
                                 content={addition.content}
