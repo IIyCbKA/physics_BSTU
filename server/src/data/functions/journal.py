@@ -1,5 +1,6 @@
 from src.data.models import *
 from src.data.db_session import db
+from src.strings.strings import divideFileName
 
 
 def getGroupsList() -> dict:
@@ -102,11 +103,17 @@ def deleteAddition(addition: Additions):
 
 
 def convertDBAdditionToDict(addition: Additions):
-    return {
+    res = {
         'id': addition.addition_id,
-        'title': addition.addition_title,
         'type': addition.addition_type
     }
+    if res['type'] == 'file':
+        res['content'] = {}
+        res['title'], res['content']['fileType'] = divideFileName(
+            addition.addition_title)
+    else:
+        res['title'] = addition.addition_title
+    return res
 
 
 def convertDBTaskToDict(task: Tasks):
