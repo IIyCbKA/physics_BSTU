@@ -1,6 +1,6 @@
 from src.data.models import *
 from src.data.db_session import db
-from src.strings.strings import divideFileName
+from src.strings.strings import getFileType
 
 
 def getGroupsList() -> dict:
@@ -105,14 +105,12 @@ def deleteAddition(addition: Additions):
 def convertDBAdditionToDict(addition: Additions):
     res = {
         'id': addition.addition_id,
-        'type': addition.addition_type
+        'type': addition.addition_type,
+        'title': addition.addition_title
     }
     if res['type'] == 'file':
         res['content'] = {}
-        res['title'], res['content']['fileType'] = divideFileName(
-            addition.addition_title)
-    else:
-        res['title'] = addition.addition_title
+        res['content']['fileType'] = getFileType(addition.addition_title)
     return res
 
 
