@@ -60,16 +60,19 @@ export default function DefaultHeader(){
                 <Nav className="ms-auto">
                     <Nav.Link href="/test"
                               style={styles.headerIconsForm}
+                              className='main-btns-background'
                     >
                         <FormOutlined style={styles.headerIconStyle}/>
                     </Nav.Link>
                     <Nav.Link href="/account"
                               style={styles.headerIconsForm}
+                              className='main-btns-background'
                     >
                         <UserOutlined style={styles.headerIconStyle}/>
                     </Nav.Link>
                     <Nav.Link onClick={handlerLogoutClick}
                               style={styles.headerIconsForm}
+                              className='main-btns-background'
                     >
                         <LogoutRounded style={styles.headerIconStyle}/>
                     </Nav.Link>

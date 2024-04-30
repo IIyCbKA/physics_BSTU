@@ -11,3 +11,12 @@
 .none-select{
     user-select: none;
 }
+
+.main-btns-background{
+    background-color: #EBF0FF;
+    border-radius: 8px;
+}
+
+.main-btns-background:hover{
+    background-color: rgba(58, 66, 75, 0.07);
+}

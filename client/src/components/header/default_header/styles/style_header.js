@@ -1,9 +1,11 @@
 const headerIconsForm = {
-    paddingBottom: 0,
-    paddingTop: 0,
-    paddingLeft: "10px",
-    paddingRight: 0,
-    height: '26px'
+    padding: '0px',
+    height: '36px',
+    width: '36px',
+    marginLeft: '8px',
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex'
 }
 
 const logotypePadding = {
@@ -37,7 +39,7 @@ const containerHeaderPC = {
 }
 
 const headerIconStyle = {
-    fontSize: '26px',
+    fontSize: '24px',
     color: '#161616'
 }
 
