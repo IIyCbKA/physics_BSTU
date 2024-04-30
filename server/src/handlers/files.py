@@ -14,12 +14,12 @@ from src.strings.strings import getFileType
 
 # Отправляет на клиент новый список файлов
 async def sendFilesNameList(ip: str, path: str):
-    await sockets.sendMessage('getFilesName', getFilesNameList(path), ip)
+    await sockets.sendMessage('getFilesName', getDiskFilesNameList(path), ip)
 
 
 # Отправляет на клиент новый список файлов
 async def sendFilesNameListToAll(path: str):
-    await sockets.sendMessagePath('getFilesName', getFilesNameList(path), path)
+    await sockets.sendMessagePath('getFilesName', getDiskFilesNameList(path), path)
 
 
 # Роут на получение списка файлов
@@ -30,7 +30,7 @@ async def filesList(path: str,
                     request: Request):
     checkDiskPath(path)
     sockets.addPath(request.client.host, path)
-    filesName: dict = getFilesNameList(path)
+    filesName: dict = getDiskFilesNameList(path)
     return JSONResponse(content=filesName, status_code=200)
 
 
@@ -41,7 +41,7 @@ async def filesList(path: str,
 async def createFolder(data: FolderData,
                        user: Annotated[dict, Depends(getCurrentEmployee)]):
     data.path = data.path.replace('/disk', '', 1)
-    fileModel: FileModel | None = addFileToDB(data.folderName,
+    fileModel: FileModel | None = addDiskFileToDB(data.folderName,
                                               'folder',
                                               data.path)
     if fileModel is None:
@@ -67,12 +67,12 @@ async def addFile(file: Annotated[UploadFile, File()],
     checkDiskPath(path)
     fileName: str = file.filename
     fileType: str = getFileType(file.filename)
-    fileModel: FileModel | None = addFileToDB(fileName, fileType, path)
+    fileModel: FileModel | None = addDiskFileToDB(fileName, fileType, path)
     if fileModel is None:
         return error
 
     if not addFileToStorage(file, fileModel.fileID, fileModel.fileType):
-        deleteFileFromDB(fileModel.fileID)
+        deleteDiskFileFromDB(fileModel.fileID)
         return error
 
     await sendFilesNameListToAll(path)
@@ -84,10 +84,10 @@ async def addFile(file: Annotated[UploadFile, File()],
 @fastApiServer.post('/api/delete_file')
 async def deleteFile(data: DeleteFileData, user: Annotated[dict, Depends(getCurrentEmployee)]):
     try:
-        fileInfo: FileModel | None = getFileInfo(data.fileID)
+        fileInfo: FileModel | None = getDiskFileInfo(data.fileID)
         if fileInfo is not None:
             if fileInfo.fileType != 'folder':
-                deleteFileFromDB(fileInfo.fileID)
+                deleteDiskFileFromDB(fileInfo.fileID)
                 deleteFileObject(fileInfo.fileID, fileInfo.fileType)
             else:
                 searchPath: str = f"{fileInfo.path}{fileInfo.fileName}/%"
@@ -102,14 +102,13 @@ async def deleteFile(data: DeleteFileData, user: Annotated[dict, Depends(getCurr
 
 
 # Роут для загрузки файла
-# path cодержит путь к файлу и его имя
-@fastApiServer.get('/api/download/{fileID}')
-async def handleFileDownloadRequest(fileID: str, user: Annotated[dict, Depends(getCurrentUser)]):
+@fastApiServer.get('/api/disk/download/{fileID}')
+async def handleDiskFileDownloadRequest(fileID: str, user: Annotated[dict, Depends(getCurrentUser)]):
     async def file_iterator():
         yield data
 
     try:
-        fileModel: FileModel | None = getFileInfo(int(fileID))
+        fileModel: FileModel | None = getDiskFileInfo(int(fileID))
         if (fileModel is not None) and (fileModel.fileType != 'folder'):
             file = getFileObject(fileModel.fileID, fileModel.fileType)
             if file is not None:

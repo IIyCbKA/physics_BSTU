@@ -13,7 +13,7 @@ def getFolderByPath(path: str, folderName: str) -> list:
 
 
 # Возвращает список файлов и папок по текущему пути path
-def getFilesNameList(path: str) -> dict:
+def getDiskFilesNameList(path: str) -> dict:
     result = db.query(Files.file_id, Files.file_name,
                       Files.file_type).filter_by(path=path).all()
     result = sorted(result, key=lambda x: (x[2] != 'folder', x[1]))
@@ -22,7 +22,7 @@ def getFilesNameList(path: str) -> dict:
                        'type': row[2]} for row in result]}
 
 
-def addFileToDB(fileName: str, fileType: str, path: str) -> FileModel | None:
+def addDiskFileToDB(fileName: str, fileType: str, path: str) -> FileModel | None:
     try:
         newFile = Files(file_name=fileName, file_type=fileType, path=path)
         db.add(newFile)
@@ -40,14 +40,14 @@ def addFileToDB(fileName: str, fileType: str, path: str) -> FileModel | None:
         return None
 
 
-def deleteFileFromDB(fileID: int) -> None:
+def deleteDiskFileFromDB(fileID: int) -> None:
     file = db.query(Files).filter_by(file_id=fileID).first()
     if file:
         db.delete(file)
         db.commit()
 
 
-def getFileInfo(fileID: int) -> FileModel | None:
+def getDiskFileInfo(fileID: int) -> FileModel | None:
     file = db.query(Files).filter_by(file_id=fileID).first()
     if file:
         fileInfo: FileModel | None = FileModel(
@@ -68,5 +68,5 @@ def deleteFolderFromDB(folderID: int, searchPath: str):
         if item.file_type != 'folder':
             deleteFileObject(item.file_id, item.file_type)
         db.delete(item)
-    deleteFileFromDB(folderID)
+    deleteDiskFileFromDB(folderID)
     db.commit()

@@ -2,7 +2,7 @@ import './styles/style_task.css'
 import {styles} from './styles/style_task'
 import {AssignmentOutlined} from "@mui/icons-material";
 import {useState, useEffect, useRef} from "react";
-import TaskAddition from "./addition/addition";
+import TaskAddition from "./addition/task_addition";
 
 export default function Task(props){
     const infoRef = useRef(null);
@@ -85,6 +85,9 @@ export default function Task(props){
                         {props.additions.map(addition => (
                             <TaskAddition
                                 key={addition.id}
+                                name={addition.title}
+                                type={addition.type}
+                                content={addition.content}
                             />
                         ))}
                     </div>

@@ -106,3 +106,24 @@ async def deleteTask(data: DeleteTaskData,
                             status_code=404)
     except Exception as e:
         return JSONResponse(content={'Error': e}, status_code=500)
+
+
+@fastApiServer.get('/api/journal/download/{fileID}')
+async def handleJournalFileDownloadRequest(fileID: str, user: Annotated[dict, Depends(getCurrentUser)]):
+    async def file_iterator():
+        yield data
+
+    try:
+        # получаем инфу о файле из бд, проверяем, что он типа file
+        if (fileModel is not None) and (fileModel.fileType != 'folder'):
+            # получаем файл из хранилища, проверяем, что он существует
+            file = getFileObject(fileModel.fileID, fileModel.fileType)
+            if file is not None:
+                data = file.read()
+
+                return StreamingResponse(file_iterator())
+
+        return JSONResponse(content={'Error': 'File not found'},
+                            status_code=404)
+    except Exception as e:
+        return JSONResponse(content={'Error': e}, status_code=500)

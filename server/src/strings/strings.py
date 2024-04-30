@@ -1,7 +1,7 @@
 def divideFileName(filename: str):
     index = filename.rfind('.')
     if index == -1:
-        return filename, ''
+        return filename, 'other'
     else:
         return filename[:index], filename[index + 1:]
 
