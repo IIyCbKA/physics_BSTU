@@ -1,7 +1,21 @@
 from src.data.models import *
 from src.data.db_session import db
 from src.strings.strings import getFileType
+from src.handlers.schemas import AdditionFileModel
 
+
+def getAdditionFileInfo(fileID: int) -> Additions | None:
+    file = db.query(Additions).filter_by(addition_id=fileID).first()
+    if file:
+        fileInfo: AdditionFileModel | None = AdditionFileModel(
+            fileID=file.addition_id,
+            fileName=file.addition_title,
+            fileType=getFileType(file.addition_title)
+        )
+    else:
+        fileInfo = None
+
+    return fileInfo
 
 def getGroupsList() -> dict:
     result = db.query(Groups.group_id, Groups.group_name).all()

@@ -1,16 +1,17 @@
 from src.application import fastApiServer
 from src.data.functions.journal import *
 from src.handlers.login import getCurrentEmployee, getCurrentUser
-from src.socketManager import sockets
+from src.storage.functions.storage import getAdditionFileObject
 from src.storage.functions.storage \
     import addFileToTaskStorage, deleteTaskFileObject
 from src.strings.strings import getFileType
 from src.handlers.schemas import DeleteTaskData
 import json
 
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from typing import Annotated
 from fastapi import File, UploadFile, Form, Request, Depends
+from src.socketManager import sockets
 
 # Роут на получение списка групп
 @fastApiServer.get('/api/groups')
@@ -28,9 +29,7 @@ async def groupStudentsList(groupID: int,
     return JSONResponse(content=groups, status_code=200)
 
 
-# Роут на получение списка групп
-@fastApiServer.get('/api/tasks/all')
-async def allTasks(user: Annotated[dict, Depends(getCurrentUser)]):
+async def getUserTasks(user: dict) -> dict:
     if user['user']['status'] == 'employee':
         tasks = getAllTasks()
     elif user['user']['status'] == 'student':
@@ -41,7 +40,28 @@ async def allTasks(user: Annotated[dict, Depends(getCurrentUser)]):
     tasks.reverse()
     result = convertDBTasksToDict(tasks)
 
-    return JSONResponse(content=result, status_code=200)
+    return result
+
+
+async def sendAllTasks(group_id: int):
+    tasks = getAllTasks()
+
+
+# Роут на получение списка групп
+@fastApiServer.get('/api/tasks/all')
+async def allTasks(user: Annotated[dict, Depends(getCurrentUser)],
+                   request: Request):
+    if user['user']['status'] == 'employee':
+        sockets.addPath(
+            request.client.host,
+            'employee')
+
+    elif user['user']['status'] == 'student':
+        sockets.addPath(
+            request.client.host,
+            'group' + getStudentGroup(user['user']['id']))
+
+    return JSONResponse(content=await getUserTasks(user), status_code=200)
 
 
 # Роут на добавления задания
@@ -114,10 +134,12 @@ async def handleJournalFileDownloadRequest(fileID: str, user: Annotated[dict, De
         yield data
 
     try:
+        fileID = int(fileID)
+        fileModel = getAdditionFileInfo(fileID)
         # получаем инфу о файле из бд, проверяем, что он типа file
         if (fileModel is not None) and (fileModel.fileType != 'folder'):
             # получаем файл из хранилища, проверяем, что он существует
-            file = getFileObject(fileModel.fileID, fileModel.fileType)
+            file = getAdditionFileObject(fileModel.fileID, fileModel.fileType)
             if file is not None:
                 data = file.read()
 

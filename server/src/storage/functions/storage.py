@@ -28,8 +28,7 @@ def addFileToTaskStorage(file: Annotated[UploadFile, File()], id: int,
     return addFileToMinio('tasks', file, id, fileType)
 
 
-def getFileObject(fileID: int, fileType: str):
-    folderName: str = 'files'
+def getStorageObject(folderName: str, fileID: int, fileType: str):
     try:
         fileObject = minio_client.get_object('storage',
                                              f'{folderName}/{fileID}.{fileType}'
@@ -37,6 +36,14 @@ def getFileObject(fileID: int, fileType: str):
         return fileObject
     except Exception:
         return None
+
+
+def getFileObject(fileID: int, fileType: str):
+    return getStorageObject('files', fileID, fileType)
+
+
+def getAdditionFileObject(fileID: int, fileType: str):
+    return getStorageObject('tasks', fileID, fileType)
 
 
 def deleteStorageObject(folderName: str, objID: int, fileType: str):

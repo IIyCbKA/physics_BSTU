@@ -41,3 +41,9 @@ class FileModel(BaseModel):
     fileName: str
     fileType: str
     path: str
+
+
+class AdditionFileModel(BaseModel):
+    fileID: int
+    fileName: str
+    fileType: str
