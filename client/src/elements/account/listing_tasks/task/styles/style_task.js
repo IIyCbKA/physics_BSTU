@@ -1,9 +1,14 @@
 const iconStyle = {
-    height: '24px',
-    width: '24px',
+    fontSize: '24px',
     color: '#FFFFFF'
 }
 
+const moreIconStyle = {
+    fontSize: '24px',
+    color: '#5F6368'
+}
+
 export const styles = {
-    iconStyle: iconStyle
+    iconStyle: iconStyle,
+    moreIconStyle: moreIconStyle
 }

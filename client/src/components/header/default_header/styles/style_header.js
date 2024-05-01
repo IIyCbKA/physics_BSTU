@@ -39,7 +39,7 @@ const containerHeaderPC = {
 }
 
 const headerIconStyle = {
-    fontSize: '24px',
+    fontSize: '28px',
     color: '#161616'
 }
 

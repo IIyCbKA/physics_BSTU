@@ -1,12 +1,13 @@
 import './styles/style_task.css'
 import {styles} from './styles/style_task'
-import {AssignmentOutlined} from "@mui/icons-material";
+import {AssignmentOutlined, MoreVert} from "@mui/icons-material";
 import {useState, useEffect, useRef} from "react";
 import TaskAddition from "./addition/task_addition";
 
 export default function Task(props){
     const infoRef = useRef(null);
     const [heightInfo, setHeight] = useState(0);
+    const [isHover, setHover] = useState(false);
 
     useEffect(() => {
         if (infoRef.current){
@@ -59,9 +60,23 @@ export default function Task(props){
         }
     }
 
+    const moreWrapStyle = () => {
+        if (isHover){
+            return {visibility: 'visible'}
+        } else {
+            return {visibility: 'hidden'}
+        }
+    }
+
+    const handleMoreClick = (event) => {
+        event.stopPropagation()
+    }
+
     return(
         <div className='task-root'
              style={rootStyle()}
+             onMouseEnter={() => {setHover(true)}}
+             onMouseLeave={() => {setHover(false)}}
         >
             <div className='task-main'
                  style={mainStyle()}
@@ -74,6 +89,12 @@ export default function Task(props){
                     <div className='task-title-text'>
                         {props.title}
                     </div>
+                </div>
+                <div className='task-more-btn-wrap'
+                     style={moreWrapStyle()}
+                     onClick={handleMoreClick}
+                >
+                    <MoreVert style={styles.moreIconStyle}/>
                 </div>
             </div>
             <div className='task-info-wrap' style={infoStyle()} ref={infoRef}>
