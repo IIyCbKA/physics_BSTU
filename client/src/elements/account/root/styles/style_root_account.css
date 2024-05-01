@@ -38,7 +38,7 @@
 
 @media (orientation: portrait) {
     .account-main {
-        width: 100%;
+        width: 100vw;
         min-height: calc(100vh - 60px - 24px);
     }
 

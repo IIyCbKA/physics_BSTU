@@ -1,4 +1,5 @@
 .around-account{
+    display: flex;
     background-color: #EBF0FF;
     padding: 14px 20px 20px 20px
 }

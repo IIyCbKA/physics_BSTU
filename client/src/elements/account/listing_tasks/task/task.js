@@ -4,8 +4,10 @@ import {AssignmentOutlined, MoreVert} from "@mui/icons-material";
 import {useState, useEffect, useRef} from "react";
 import TaskAddition from "./addition/task_addition";
 import TaskMenu from "./menu/task_menu";
+import {useSelector} from "react-redux";
 
 export default function Task(props){
+    const orientation = useSelector(state => state.app.orientation)
     const infoRef = useRef(null);
     const [heightInfo, setHeight] = useState(0);
     const [isHover, setHover] = useState(false);
@@ -16,7 +18,7 @@ export default function Task(props){
         if (infoRef.current){
             setHeight(infoRef.current.scrollHeight);
         }
-    }, [infoRef, heightInfo])
+    }, [infoRef, heightInfo, orientation])
 
     const rootStyle = () => {
         if (props.isActive){
