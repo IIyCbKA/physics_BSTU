@@ -1,7 +1,7 @@
 import {Button} from "react-bootstrap";
-import {PlusOutlined} from "@ant-design/icons";
 import './styles/style_create_task_btn.css'
 import {styles} from './styles/style_create_task_btn'
+import {AddOutlined} from "@mui/icons-material";
 
 export default function CreateTask(props){
     const handleClick = (event) => {
@@ -13,7 +13,7 @@ export default function CreateTask(props){
         <div className='create_btn_zone'>
             <Button style={styles.btn_style} className='btn-root' onClick={handleClick}>
                 <span className='plus-wrap'>
-                    <PlusOutlined style={styles.plus_size}/>
+                    <AddOutlined style={styles.plus_size}/>
                 </span>
                 <span className='create-btn-text'>
                     Создать

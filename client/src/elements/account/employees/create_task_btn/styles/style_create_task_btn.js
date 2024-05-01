@@ -7,7 +7,7 @@ const btn_style = {
 }
 
 const plus_size = {
-    fontSize: '24px'
+    fontSize: '28px'
 }
 
 export const styles = {
