@@ -15,11 +15,9 @@ export default function CreateTask(props){
                 <span className='plus-wrap'>
                     <AddOutlined style={styles.plus_size}/>
                 </span>
-                <div className='create-btn-text-wrap'>
-                    <span className='create-btn-text'>
-                        Создать
-                    </span>
-                </div>
+                <span className='create-btn-text'>
+                    Создать
+                </span>
             </Button>
         </div>
     )
