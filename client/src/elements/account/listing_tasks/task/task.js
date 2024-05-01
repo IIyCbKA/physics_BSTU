@@ -3,11 +3,14 @@ import {styles} from './styles/style_task'
 import {AssignmentOutlined, MoreVert} from "@mui/icons-material";
 import {useState, useEffect, useRef} from "react";
 import TaskAddition from "./addition/task_addition";
+import TaskMenu from "./menu/task_menu";
 
 export default function Task(props){
     const infoRef = useRef(null);
     const [heightInfo, setHeight] = useState(0);
     const [isHover, setHover] = useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
 
     useEffect(() => {
         if (infoRef.current){
@@ -61,15 +64,18 @@ export default function Task(props){
     }
 
     const moreWrapStyle = () => {
-        if (isHover){
-            return {visibility: 'visible'}
+        const visibility = {visibility: (isHover + open ? 'visible' : "hidden")}
+        if (open){
+            return {...visibility, backgroundColor: '#D6D6D6'}
         } else {
-            return {visibility: 'hidden'}
+            return visibility
         }
     }
 
-    const handleMoreClick = (event) => {
-        event.stopPropagation()
+    const moreClick = (event) => {
+        event.stopPropagation();
+        setHover(false)
+        setAnchorEl(event.currentTarget);
     }
 
     return(
@@ -92,7 +98,7 @@ export default function Task(props){
                 </div>
                 <div className='task-more-btn-wrap'
                      style={moreWrapStyle()}
-                     onClick={handleMoreClick}
+                     onClick={moreClick}
                 >
                     <MoreVert style={styles.moreIconStyle}/>
                 </div>
@@ -115,6 +121,7 @@ export default function Task(props){
                     </div>
                 </div>
             </div>
+            <TaskMenu open={open} setAnchorEl={setAnchorEl} anchorEl={anchorEl}/>
         </div>
     )
 }
