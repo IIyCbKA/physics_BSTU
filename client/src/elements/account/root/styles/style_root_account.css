@@ -2,7 +2,7 @@
     background-color: #FFFFFF;
     width: calc(100vw - 40px);
     min-height: calc(100vh - 60px - 34px);
-    min-width: 390px;
+    min-width: 340px;
     padding: 8px;
     display: flex;
     flex-direction: column;
@@ -25,7 +25,7 @@
 }
 
 .account-info-main{
-    min-width: 294px;
+    min-width: 244px;
     width: 100%;
     max-width: 850px;
 }
