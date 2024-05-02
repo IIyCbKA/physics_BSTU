@@ -20,3 +20,9 @@
     justify-content: flex-start;
     width: 100%;
 }
+
+.modal-root{
+    min-width: 330px !important;
+    width: 90vw !important;
+    max-width: 450px !important;
+}

@@ -29,8 +29,8 @@ export default function ModalWindow(props){
             onOk={handleOk}
             onCancel={handleCancel}
             wrapClassName='modal-wrap'
-            width='380px'
             closable={false}
+            className='modal-root'
             footer={(_, { OkBtn}) => (
                 <>
                     <OkBtn />
