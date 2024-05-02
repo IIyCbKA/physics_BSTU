@@ -3,19 +3,23 @@ import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
 import {styles} from './styles/style_task_menu'
 import './styles/style_task_menu.css'
+import {deleteTask} from "../../../../../actions/journal";
+import {useDispatch} from "react-redux";
+import {setUpdatingTask} from "../../../../../reducers/journal_reducer";
 
 export default function TaskMenu(props){
+    const dispatch = useDispatch();
     const handleClose = () => {
         props.setAnchorEl(null);
     };
 
-    const handleEditClick = () => {
-        // тут привязка к редактированию
+    const handleEditClick = async () => {
+        dispatch(setUpdatingTask(props.task))
         handleClose();
     }
 
-    const handleDeleteClick = () => {
-        // тут привязка к удалению
+    const handleDeleteClick = async () => {
+        await deleteTask(props.task.id)
         handleClose();
     }
 

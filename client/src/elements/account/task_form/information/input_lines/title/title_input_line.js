@@ -18,6 +18,7 @@ export default function TitleInputLine(props){
                              minHeight: '56px'
                          }}
                          onChange={handleChange}
+                         value={props.title}
                     />
                 </div>
             </div>

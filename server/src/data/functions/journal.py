@@ -128,11 +128,17 @@ def convertDBAdditionToDict(addition: Additions):
     return res
 
 
+def getTaskGroups(task_id: int):
+    result = db.query(TasksGroups).filter_by(task_id=task_id)
+    return list(map(lambda x: x.group_id, result))
+
+
 def convertDBTaskToDict(task: Tasks):
     result = {}
     result['id'] = task.task_id
     result['title'] = task.task_name
     result['description'] = task.task_description
+    result['groups'] = getTaskGroups(task.task_id)
     result['additions'] = []
     for addition_id in task.additions_id:
         addition = getAddition(addition_id)
@@ -157,5 +163,7 @@ def deleteTaskAdditionsFromDB(additions_id: list[int]):
 
 
 def deleteTaskOnlyFromDB(task: Tasks):
+    for tg in db.query(TasksGroups).filter_by(task_id=task.task_id).all():
+        db.delete(tg)
     db.delete(task)
     db.commit()

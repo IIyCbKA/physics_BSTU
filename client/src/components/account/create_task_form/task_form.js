@@ -7,7 +7,9 @@ import Information
     from "../../../elements/account/task_form/information/information";
 import Addition
     from "../../../elements/account/task_form/addition/addition";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {useSelector} from "react-redux";
+import {convertRemoteAdditionsToEditFormat, getNextAdditionID} from "../../../actions/journal";
 
 export default function TaskForm(props){
     const [selectedGroups, setSelectedGroups] = useState([])
@@ -16,6 +18,30 @@ export default function TaskForm(props){
     const isActiveCreateBtn = selectedGroups !== [] && title !== ''
     const [additions, setAdditions] = useState([])
     const [currentId, setCurrentId] = useState(0);
+    const [taskId, setTaskId] = useState(0);
+    const task = useSelector(state => state.journal.updatingTask);
+    const {setShow} = props
+
+    useEffect(() => {
+        if (Object.keys(task).length !== 0) {
+            const adds = convertRemoteAdditionsToEditFormat(task.additions)
+            setSelectedGroups(task.groups)
+            console.log(getNextAdditionID(adds))
+            setCurrentId(getNextAdditionID(adds))
+            setTitle(task.title)
+            setDescription(task.description)
+            setAdditions(adds)
+            setTaskId(task.id)
+            setShow(true)
+        } else{
+            setSelectedGroups([])
+            setCurrentId(0)
+            setTitle('')
+            setDescription('')
+            setTaskId(0)
+            setAdditions([])
+        }
+    }, [task])
 
     const nextId = () => {
         setCurrentId(currentId + 1)
@@ -36,13 +62,18 @@ export default function TaskForm(props){
                             title={title}
                             description={description}
                             additions={additions}
+                            id={taskId}
             />
             <div className='main-form'>
-                <SelectGroups setSelectedGroups={setSelectedGroups}/>
+                <SelectGroups setSelectedGroups={setSelectedGroups}
+                              groups={selectedGroups}
+                />
                 <Information setTitle={setTitle}
                              setDescription={setDescription}
                              additions={additions}
                              setAdditions={setAdditions}
+                             title={title}
+                             description={description}
                 />
                 <Addition
                     additions={additions}

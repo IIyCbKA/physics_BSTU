@@ -26,6 +26,7 @@ export default function SelectGroups(props){
                         onChange={handleChange}
                         tokenSeparators={[',']}
                         options={options}
+                        value={props.groups.map(number => number.toString())}
                     />
                 </div>
             </div>

@@ -9,8 +9,8 @@ export default function Information(props){
     return(
         <div className='information-form-wrap'>
             <div className='information-form'>
-                <TitleInputLine setTitle={props.setTitle}/>
-                <DescriptionInputLine setDescription={props.setDescription}/>
+                <TitleInputLine setTitle={props.setTitle} title={props.title}/>
+                <DescriptionInputLine setDescription={props.setDescription} description={props.description}/>
                 {props.additions.map(addition => (
                     <AdditionEntity {...addition}
                                     key={addition.id}

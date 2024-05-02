@@ -9,6 +9,7 @@ import {employeeStatus} from "../../reducers/user_reducer";
 import {useDispatch} from "react-redux";
 import './styles/style_storage.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import {setTasks} from "../../reducers/journal_reducer";
 
 export default function Storage(props){
     const dispatch = useDispatch()
@@ -24,6 +25,10 @@ export default function Storage(props){
 
     socket.onMessage('getFilesName', (data) => {
         dispatch(setFiles(data.files))
+    })
+
+    socket.onMessage('getTasksList', (data) => {
+        dispatch(setTasks(data))
     })
 
     const rootProps = userStatus === employeeStatus ? getRootProps() : {};

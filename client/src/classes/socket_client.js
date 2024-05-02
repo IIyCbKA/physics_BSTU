@@ -20,4 +20,6 @@ wsocket.onmessage = (event) => {
     socket.routes[data.routeName](data.data)
 }
 
+console.log('socket url:', wsocket.url);
+
 export {socket}

@@ -14,6 +14,14 @@ export default function Task(props){
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
+    const task = {
+        id: props.id,
+        title: props.title,
+        description: props.description,
+        additions: props.additions,
+        groups: props.groups,
+    }
+
     useEffect(() => {
         if (infoRef.current){
             setHeight(infoRef.current.scrollHeight);
@@ -123,7 +131,12 @@ export default function Task(props){
                     </div>
                 </div>
             </div>
-            <TaskMenu open={open} setAnchorEl={setAnchorEl} anchorEl={anchorEl}/>
+            <TaskMenu
+                open={open}
+                setAnchorEl={setAnchorEl}
+                anchorEl={anchorEl}
+                task={task}
+            />
         </div>
     )
 }

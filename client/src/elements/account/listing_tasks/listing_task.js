@@ -13,6 +13,7 @@ export default function ListingTask(){
                 <Task title={task.title}
                       description={task.description}
                       additions={task.additions}
+                      groups={task.groups}
                       id={task.id}
                       key={task.id}
                       isLast={index === tasks.length - 1}

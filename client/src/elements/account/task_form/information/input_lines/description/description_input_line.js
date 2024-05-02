@@ -17,6 +17,7 @@ export default function DescriptionInputLine(props){
                              minHeight: '140px'
                          }}
                          onChange={handleChange}
+                         value={props.description}
                     />
                 </div>
             </div>

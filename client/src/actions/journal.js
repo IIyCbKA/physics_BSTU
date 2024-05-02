@@ -1,6 +1,7 @@
 import {$host, SERVER} from "../server_files/server_connect"
 import {setGroups, setTasks} from "../reducers/journal_reducer";
 import { saveAs } from 'file-saver';
+import {getFilenameOnly} from "./strings";
 
 export const getGroups = () =>
     async (dispatch) => {
@@ -40,8 +41,6 @@ export const getTasksList = () =>
     async (dispatch) => {
         try {
             const response = await $host.get('/api/tasks/all');
-            //if (response.data.tasks.length)
-            //await deleteTask(response.data[0].id)
             dispatch(setTasks(response.data));
         } catch (e) {
             console.log(e);
@@ -50,6 +49,7 @@ export const getTasksList = () =>
 
 export const deleteTask = async (task_id) => {
     try{
+        console.log(task_id)
         await $host.post('/api/tasks/delete', {taskID: task_id})
     }
     catch(e){
@@ -62,11 +62,12 @@ export const getTaskInfo = async () => {
 
 }
 
-// Добавляет задание
-export const createTask = async (task) => {
+export const processTask = async (task, route) => {
     try {
         const formData = new FormData();
         const additions_info = [];
+        if (task.id)
+            formData.append('id', task.id);
         formData.append('title', task.title);
         formData.append('description', task.description);
         formData.append('groups', task.groups);
@@ -80,7 +81,7 @@ export const createTask = async (task) => {
                 type: addition.type,
                 remote: addition.remote,
             };
-            if (addition.type === 'file') {
+            if (addition.type === 'file' && !addition.remote) {
                 formData.append('files', addition.content.file);
                 info.name = addition.content.file.name;
                 info.fileIndex = index++;
@@ -92,8 +93,8 @@ export const createTask = async (task) => {
         });
 
         formData.append('additions', JSON.stringify(additions_info));
-        
-        return await $host.post('/api/tasks/add', formData, {
+
+        return await $host.post(route, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -101,6 +102,11 @@ export const createTask = async (task) => {
     } catch (e) {
         console.log(e);
     }
+}
+
+// Добавляет задание
+export const createTask = async (task) => {
+    return await processTask(task, '/api/tasks/add')
 }
 
 export const downloadTaskFile = async (fileName, fileID) => {
@@ -115,6 +121,32 @@ export const downloadTaskFile = async (fileName, fileID) => {
 }
 
 // Обновляет задание
-// export const updateTask = async (task) => {
-//
-// }
+export const updateTask = async (task) => {
+    return await processTask(task, '/api/tasks/update')
+}
+
+export const getNextAdditionID = (additions) => {
+    let maxID = 0;
+    additions.forEach((addition) => {
+        if (addition.id > maxID)
+            maxID = addition.id
+    })
+    return maxID + 1;
+}
+
+export const convertRemoteAdditionsToEditFormat = (additions) => {
+    const result = []
+    additions.map(addition => {
+        const name = addition.type === 'file' ?
+            getFilenameOnly(addition.title) :
+            addition.title
+        return result.push({
+            id: addition.id,
+            type: addition.type,
+            name,
+            remote: true,
+            content: addition.content
+        })
+    })
+    return result
+}
