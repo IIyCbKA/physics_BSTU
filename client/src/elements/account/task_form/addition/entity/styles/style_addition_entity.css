@@ -18,7 +18,7 @@
 }
 
 .addition-entity-root{
-    width: calc(100% - 112px);
+    width: calc(100% - 128px);
     height: 100%;
     display: flex;
     flex-direction: column;

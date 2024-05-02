@@ -14,7 +14,7 @@ const btnCreate = {
     height: '36px',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '160px'
+    width: '120px'
 }
 
 export const styles = {

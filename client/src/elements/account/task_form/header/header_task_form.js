@@ -65,7 +65,7 @@ export default function HeaderTaskForm(props){
                             disabled={!props.isActiveBtn}
                             onClick={handleCreateTaskClick}>
                         <span className='create-task-btn-text'>
-                            {buttonText} задание
+                            {buttonText}
                         </span>
                     </Button>
                 </div>
