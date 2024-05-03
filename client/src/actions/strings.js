@@ -49,3 +49,37 @@ export const getFilenameOnly = (filename) => {
     else
         return filename.slice(0, pointPos)
 }
+
+export const minimizeStrPortrait = (text, maxWidth, fieldRef) => {
+    let start = 0;
+    let end = text.length - 1;
+
+    fieldRef.textContent = '...';
+    const ellipsisWidth = fieldRef.offsetWidth;
+
+    while (fieldRef.offsetWidth + ellipsisWidth < maxWidth && start < end) {
+        if (fieldRef.offsetWidth + ellipsisWidth < maxWidth){
+            fieldRef.textContent += text[end];
+            end--;
+            if (fieldRef.offsetWidth + ellipsisWidth > maxWidth) {
+                fieldRef.textContent = fieldRef.textContent.slice(0, -1);
+                break;
+            }
+        }
+
+        if (fieldRef.offsetWidth + ellipsisWidth < maxWidth) {
+            fieldRef.textContent = text[start] + fieldRef.textContent;
+            start++;
+            if (fieldRef.offsetWidth + ellipsisWidth > maxWidth) {
+                fieldRef.textContent = fieldRef.textContent.slice(1);
+                break;
+            }
+        }
+    }
+
+    if (start > end){
+        fieldRef.textContent = text;
+    } else {
+        fieldRef.textContent = text.slice(0, start) + '...' + text.slice(end + 1);
+    }
+}

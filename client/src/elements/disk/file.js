@@ -1,13 +1,17 @@
 import './styles/style_disk.css'
-import {minimizeStr} from "../../actions/strings";
+import {minimizeStr, minimizeStrPortrait} from "../../actions/strings";
 import {useDispatch, useSelector} from "react-redux";
 import {icons} from "./file_icons";
 import {styles} from "./styles/style_disk";
 import {PORTRAIT_ORIENTATION} from "../../classes/OrientationListener";
 import {selectedFile} from "../../reducers/file_reducer";
 import {isMobile} from "react-device-detect";
+import {useEffect, useRef, useState} from "react";
 
 export default function File(props){
+    const nameRef = useRef(null)
+    const nameFieldRef = useRef(null);
+    const [nameWidth, setNameWidth] = useState(window.innerWidth - 78)
     const path = useSelector(state => state.file.path)
     const orientation = useSelector(state => state.app.orientation)
     const selected_id = useSelector(state => state.file.selected_id)
@@ -16,6 +20,30 @@ export default function File(props){
     let startTime = null;
     let touchStartX = null;
     let touchStartY = null;
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (nameRef.current) {
+                setNameWidth(nameRef.current.offsetWidth);
+            }
+        };
+
+        if (orientation === PORTRAIT_ORIENTATION){
+            window.addEventListener('resize', handleResize);
+            return () => window.removeEventListener('resize', handleResize);
+        }
+    }, [nameRef, orientation, nameWidth])
+
+    useEffect(() => {
+        if (nameFieldRef.current){
+            if (orientation === PORTRAIT_ORIENTATION){
+                minimizeStrPortrait(props.name, nameWidth, nameFieldRef.current)
+            } else {
+                nameFieldRef.current.textContent = minimizeStr(props.name, 20, 2);
+            }
+        }
+
+    }, [nameWidth, nameFieldRef, orientation, props.name])
 
     const handleFileClick = (event) => {
         event.stopPropagation();
@@ -99,16 +127,13 @@ export default function File(props){
                 </div>
             </div>
             <div className="item-info">
-                <div className="item-title">
+                <div className="item-title" ref={nameRef}>
                     <span
                         className="clamped-text"
                         aria-hidden={true}
                         title={props.name}
-                    >{minimizeStr(
-                        props.name,
-                        orientation === PORTRAIT_ORIENTATION ? 32 : 20,
-                        2)}
-                    </span>
+                        ref={nameFieldRef}
+                    ></span>
                 </div>
             </div>
         </div>
