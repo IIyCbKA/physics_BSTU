@@ -6,7 +6,7 @@ export default function AppWithAntdConfig(){
         <ConfigProvider
             theme={{
                 token:{
-                    fontFamily: 'YS Text, sans-serif'
+                    fontFamily: 'Google Sans, Roboto, Arial, sans-serif'
                 },
 
                 components: {

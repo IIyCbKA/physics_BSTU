@@ -57,7 +57,7 @@
     display: inline-block;
     word-break: break-all;
     white-space: pre-line;
-    font: 13px / 14px "YS Text", sans-serif;
+    font: 13px / 14px "Google Sans", Roboto, Arial, sans-serif;
     max-width: 80px;
 }
 
@@ -213,7 +213,7 @@
 
     .clamped-text{
         display: flex;
-        font: 15px / 16px "YS Text", sans-serif;
+        font: 15px / 16px "Google Sans", Roboto, Arial, sans-serif;
         max-width: 100%;
     }
 

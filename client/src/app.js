@@ -11,15 +11,14 @@ import "./classes/OrientationListener";
 
 
 function App() {
-    const isAuth = useSelector(state => state.user.isAuth)
     const [isWaiting, setIsWaiting] = useState(true)
     const dispatch = useDispatch()
+    const isAuth = useSelector(state => state.user.isAuth)
     const orientation = useSelector(state => state.app.orientation)
 
     useEffect(() => {
 
     }, [orientation]);
-
 
     useEffect(() => {
         const waitFunc = async () => {
