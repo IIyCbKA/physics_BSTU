@@ -6,8 +6,10 @@ import {createTask, updateTask} from "../../../../actions/journal";
 import {AssignmentOutlined} from "@mui/icons-material";
 import {useDispatch, useSelector} from "react-redux";
 import {setUpdatingTask} from "../../../../reducers/journal_reducer";
+import {useState} from "react";
 
 export default function HeaderTaskForm(props){
+    const [isLoading, setLoading] = useState(false)
     const uTask = useSelector(state => state.journal.updatingTask)
     const dispatch = useDispatch()
     const handleCloseClick = (event) => {
@@ -18,10 +20,12 @@ export default function HeaderTaskForm(props){
 
     const isUpdated = Object.keys(uTask).length !== 0;
 
-    const buttonText = isUpdated ? 'Редактировать': 'Создать'
+    const buttonText = isLoading ? 'В процессе...' : (
+        isUpdated ? 'Редактировать': 'Создать')
 
     const handleCreateTaskClick = async (event) => {
         event.preventDefault()
+        setLoading(true)
         const task = {
             id: props.id,
             title: props.title,
@@ -35,13 +39,19 @@ export default function HeaderTaskForm(props){
             if (result.status === 200){
                 props.setShow(false)
             }
-            dispatch(setUpdatingTask({}));
+            setTimeout(() => {
+                dispatch(setUpdatingTask({}));
+            }, 500)
         } else {
             const result = await createTask(task);
             if (result.status === 200){
                 props.setShow(false)
             }
         }
+
+        setTimeout(() => {
+            setLoading(false);
+        }, 500)
     }
 
     return (
@@ -62,7 +72,7 @@ export default function HeaderTaskForm(props){
             <div className='create-wrap'>
                 <div className='create-btn-wrap'>
                     <Button style={styles.btnCreate}
-                            disabled={!props.isActiveBtn}
+                            disabled={!props.isActiveBtn || isLoading}
                             onClick={handleCreateTaskClick}>
                         <span className='create-task-btn-text'>
                             {buttonText}
