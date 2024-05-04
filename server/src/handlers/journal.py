@@ -68,7 +68,6 @@ async def getUserTasks(user: dict) -> dict:
     else:
         tasks = []
 
-    tasks.reverse()
     result = convertDBTasksToDict(tasks)
 
     return result

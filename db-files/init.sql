@@ -2,12 +2,12 @@ comment on database postgres is 'default administrative connection database';
 
 create table users
 (
-    user_id    integer     not null
+    user_id    integer not null
         primary key,
-    surname    varchar(63) not null,
-    name       varchar(63) not null,
-    patronymic varchar(63) not null,
-    status     varchar(63) not null
+    surname    varchar not null,
+    name       varchar not null,
+    patronymic varchar not null,
+    status     varchar not null
 );
 
 alter table users
@@ -17,7 +17,7 @@ create table groups
 (
     group_id   serial
         primary key,
-    group_name varchar(15) not null
+    group_name varchar not null
 );
 
 alter table groups
@@ -49,7 +49,7 @@ create table tasks
 (
     task_id          serial
         primary key,
-    task_name        varchar(255) not null,
+    task_name        varchar not null,
     task_description varchar,
     additions_id     integer[]
 );
@@ -61,13 +61,13 @@ create table grades
 (
     grade_id   serial
         primary key,
-    student_id integer     not null
+    student_id integer not null
         references students,
-    author_id  integer     not null
+    author_id  integer not null
         references employees,
-    task_id    integer     not null
+    task_id    integer not null
         references tasks,
-    grade      varchar(15) not null,
+    grade      varchar not null,
     unique (student_id, task_id)
 );
 
@@ -128,5 +128,3 @@ create table tasks_groups
 
 alter table tasks_groups
     owner to admin;
-
-

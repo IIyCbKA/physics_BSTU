@@ -2,6 +2,7 @@ from src.data.models import *
 from src.data.db_session import db
 from src.strings.strings import getFileType
 from src.handlers.schemas import AdditionFileModel
+from sqlalchemy import desc
 
 
 def getAdditionFileInfo(fileID: int) -> Additions | None:
@@ -93,7 +94,11 @@ def addTaskToDB(task_name: str,
 
 
 def getAllTasks():
-    return db.query(Tasks).all()
+    return (
+        db.query(Tasks)
+        .order_by(desc(Tasks.task_id))
+        .all()
+    )
 
 
 def addTaskGroups(task_id: int, groups_id: List[int]):
@@ -111,6 +116,7 @@ def getGroupTasks(group_id: int) -> List:
         db.query(Tasks)
         .join(TasksGroups)
         .filter_by(group_id=group_id)
+        .order_by(desc(Tasks.task_id))
         .all()
     )
     return tasks
