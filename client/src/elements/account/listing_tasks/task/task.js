@@ -5,8 +5,10 @@ import {useState, useEffect, useRef} from "react";
 import TaskAddition from "./addition/task_addition";
 import TaskMenu from "./menu/task_menu";
 import {useSelector} from "react-redux";
+import DeleteTaskModal from "./modal/delete_task_modal";
 
 export default function Task(props){
+    const [isShowModal, setShowModal] = useState(false);
     const orientation = useSelector(state => state.app.orientation)
     const infoRef = useRef(null);
     const [heightInfo, setHeight] = useState(0);
@@ -91,7 +93,7 @@ export default function Task(props){
     return(
         <div className='task-root'
              style={rootStyle()}
-             onMouseEnter={() => {setHover(true)}}
+             onMouseEnter={() => {if(!isShowModal) setHover(true)}}
              onMouseLeave={() => {setHover(false)}}
         >
             <div className='task-main'
@@ -136,7 +138,15 @@ export default function Task(props){
                 setAnchorEl={setAnchorEl}
                 anchorEl={anchorEl}
                 task={task}
+                setShowModal={setShowModal}
             />
+            {isShowModal &&
+                <DeleteTaskModal
+                    taskID={props.id}
+                    isShow={isShowModal}
+                    setShowModal={setShowModal}
+                />
+            }
         </div>
     )
 }

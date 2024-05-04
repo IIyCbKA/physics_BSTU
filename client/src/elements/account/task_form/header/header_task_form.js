@@ -12,10 +12,13 @@ export default function HeaderTaskForm(props){
     const [isLoading, setLoading] = useState(false)
     const uTask = useSelector(state => state.journal.updatingTask)
     const dispatch = useDispatch()
+
     const handleCloseClick = (event) => {
         event.preventDefault()
         props.setShow(false)
-        dispatch(setUpdatingTask({}))
+        setTimeout(() => {
+            dispatch(setUpdatingTask({}))
+        }, 500)
     }
 
     const isUpdated = Object.keys(uTask).length !== 0;

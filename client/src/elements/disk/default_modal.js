@@ -23,16 +23,17 @@ export default function ModalWindow(props){
     return (
         <Modal
             open={props.show}
-            title={<HeaderModal text='Укажите название папки'
-                                handleClick={handleCancel}/>}
+            title={<HeaderModal text='Укажите название папки'/>}
             okText='Сохранить'
+            cancelText='Отмена'
             onOk={handleOk}
             onCancel={handleCancel}
             wrapClassName='modal-wrap'
             closable={false}
             className='modal-root'
-            footer={(_, { OkBtn}) => (
+            footer={(_, { CancelBtn, OkBtn}) => (
                 <>
+                    <CancelBtn/>
                     <OkBtn />
                 </>
             )}

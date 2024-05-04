@@ -26,7 +26,6 @@ export default function TaskForm(props){
         if (Object.keys(task).length !== 0) {
             const adds = convertRemoteAdditionsToEditFormat(task.additions)
             setSelectedGroups(task.groups)
-            console.log(getNextAdditionID(adds))
             setCurrentId(getNextAdditionID(adds))
             setTitle(task.title)
             setDescription(task.description)

@@ -12,16 +12,6 @@ const modalInputLine = {
     border: '1px solid #F4F4F4'
 }
 
-const closeBtn = {
-    display: 'flex',
-    border: 'None',
-    boxShadow: 'None',
-    justifyContent: 'flex-end',
-    height: '16px',
-    width: '16px',
-    alignItems: 'center'
-}
-
 const modalHeader = {
     width: '100%',
     display: 'flex',
@@ -31,6 +21,5 @@ const modalHeader = {
 export const styles = {
     focusInputLineStyle: {...focusInputLine, ...modalInputAll},
     modalInputLineStyle: {...modalInputLine, ...modalInputAll},
-    closeBtn: closeBtn,
     modalHeader: modalHeader
 };

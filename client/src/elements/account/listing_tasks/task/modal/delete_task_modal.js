@@ -1,0 +1,42 @@
+import {Modal} from "antd";
+import '../../../../modal/styles/style_modal.css'
+import './styles/style_delete_task_modal.css'
+import HeaderModal from "../../../../modal/header_modal";
+import {deleteTask} from "../../../../../actions/journal";
+
+export default function DeleteTaskModal(props){
+    const handleCancel = () => {
+        props.setShowModal(false)
+    }
+
+    const handleOk = async () => {
+        await deleteTask(props.taskID)
+        handleCancel()
+    }
+
+    return (
+        <Modal
+            open={props.isShow}
+            title={<HeaderModal text='Удалить задание?'
+                                handleClick={handleCancel}/>}
+            okText='Удалить'
+            cancelText='Отмена'
+            onOk={handleOk}
+            onCancel={handleCancel}
+            wrapClassName='modal-wrap'
+            closable={false}
+            className='modal-root'
+            footer={(_, { OkBtn, CancelBtn}) => (
+                <>
+                    <CancelBtn />
+                    <OkBtn/>
+                </>
+            )}
+            centered={true}
+        >
+            <div className='delete_task_modal_body'>
+                Оценки и комментарии также будут удалены.
+            </div>
+        </Modal>
+    )
+}
