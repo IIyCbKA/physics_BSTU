@@ -29,6 +29,37 @@ async def groupStudentsList(groupID: int,
     return JSONResponse(content=groups, status_code=200)
 
 
+def updateAdditions(task: Tasks, files: List[UploadFile], newVals: List[dict]):
+    oldSavedIdsLs = []
+    for val in newVals:
+        if val['remote']:
+            oldSavedIdsLs.append(val['id'])
+    oldSavedIdsS = set(oldSavedIdsLs)
+    for oldId in task.additions_id:
+        if oldId not in oldSavedIdsS:
+            addition = getAddition(oldId)
+            deleteTaskFileObject(oldId, getFileType(addition.addition_title))
+            deleteAddition(addition)
+
+    newAdds = []
+    for addition in newVals:
+        if addition['remote'] == False:
+            newAdds.append(addition)
+    additions = addTaskAdditionsToDB(newAdds)
+
+    for i in range(len(newAdds)):
+        if newAdds[i]['type'] == 'file':
+            if not addFileToTaskStorage(files[newAdds[i]['fileIndex']],
+                                        additions[i].addition_id,
+                                        getFileType(additions[i].addition_title)):
+                deleteTaskAdditionsFromDB(getIdAdditionList(additions))
+                return JSONResponse(
+                    content={'error': 'impossible to add addition file'},
+                    status_code=500)
+
+    task.additions_id = oldSavedIdsLs + getIdAdditionList(additions)
+
+
 async def getUserTasks(user: dict) -> dict:
     if user['user']['status'] == 'employee':
         tasks = getAllTasks()
@@ -80,7 +111,7 @@ async def addTask(
                 status_code=409)
 
         groups = list(map(int, groups.split(',')))
-        additions: dict = json.loads(additions)
+        additions = json.loads(additions)
         additions_db = addTaskAdditionsToDB(additions)
 
         for i in range(len(additions_db)):
@@ -97,6 +128,42 @@ async def addTask(
         task = addTaskToDB(title, description, additions_db)
         addTaskGroups(task.task_id, groups)
 
+
+        return JSONResponse(content={}, status_code=200)
+    except Exception as e:
+        return JSONResponse(content={'Error': e}, status_code=500)
+
+
+# Роут на изменения задания
+@fastApiServer.post('/api/tasks/update')
+async def updateTask(
+        user: Annotated[dict, Depends(getCurrentEmployee)],
+        id: int = Form(...),
+        files: List[UploadFile] = [],
+        title: str = Form(...),
+        description: str = Form(...),
+        groups: str = Form(''),
+        additions: str = Form(...)):
+    try:
+        task = getTaskInfo(id)
+        if task is None:
+            return JSONResponse(
+                content={'error': 'Task not exist'},
+                status_code=404)
+
+        if task.task_name != title:
+            if isTaskExists(title):
+                return JSONResponse(
+                    content={'error': 'Task with this name already exist'},
+                    status_code=409)
+
+        groups = list(map(int, groups.split(','))) if len(groups) else []
+        additions = json.loads(additions)
+        updateAdditions(task, files, additions)
+
+        task.task_description = description
+        task.task_name = title
+        updateGroups(task.task_id, groups)
 
         return JSONResponse(content={}, status_code=200)
     except Exception as e:

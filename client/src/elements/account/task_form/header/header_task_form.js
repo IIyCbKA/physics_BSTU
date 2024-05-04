@@ -35,7 +35,7 @@ export default function HeaderTaskForm(props){
             if (result.status === 200){
                 props.setShow(false)
             }
-            await dispatch(updateTask({}));
+            dispatch(setUpdatingTask({}));
         } else {
             const result = await createTask(task);
             if (result.status === 200){

@@ -51,7 +51,7 @@ def isTaskExists(taskName) -> bool:
     return result is not None
 
 
-def addTaskAdditionsToDB(additions: dict) -> list[Additions]:
+def addTaskAdditionsToDB(additions: List[dict]) -> list[Additions]:
     db_additions = [
         Additions(addition_title=addition['name'],
                   addition_type=addition['type'])
@@ -65,6 +65,20 @@ def addTaskAdditionsToDB(additions: dict) -> list[Additions]:
 def getIdAdditionList(additions: list[Additions]):
     return list(map(lambda x: x.addition_id, additions))
 
+
+def updateGroups(taskId: int, newGroups: list[int]):
+    newGroupsS = set(newGroups)
+    oldGroups = getTaskGroups(taskId)
+    oldGroupsS = set(getIdsFromTaskGroups(oldGroups))
+    for group in oldGroups:
+        if group.group_id not in newGroupsS:
+            db.delete(group)
+
+    for group in newGroups:
+        if group not in oldGroupsS:
+            db.add(TasksGroups(group_id=group, task_id=taskId))
+
+    db.commit()
 
 
 def addTaskToDB(task_name: str,
@@ -128,9 +142,17 @@ def convertDBAdditionToDict(addition: Additions):
     return res
 
 
-def getTaskGroups(task_id: int):
-    result = db.query(TasksGroups).filter_by(task_id=task_id)
-    return list(map(lambda x: x.group_id, result))
+def getTaskGroups(task_id: int) -> List[TasksGroups]:
+    return db.query(TasksGroups).filter_by(task_id=task_id).all()
+
+
+def getIdsFromTaskGroups(tg: List[TasksGroups]) -> List[int]:
+    return list(map(lambda x: x.group_id, tg))
+
+
+def getTaskGroupsIds(task_id: int):
+    result = getTaskGroups(task_id)
+    return getIdsFromTaskGroups(result)
 
 
 def convertDBTaskToDict(task: Tasks):
@@ -138,7 +160,7 @@ def convertDBTaskToDict(task: Tasks):
     result['id'] = task.task_id
     result['title'] = task.task_name
     result['description'] = task.task_description
-    result['groups'] = getTaskGroups(task.task_id)
+    result['groups'] = getTaskGroupsIds(task.task_id)
     result['additions'] = []
     for addition_id in task.additions_id:
         addition = getAddition(addition_id)
