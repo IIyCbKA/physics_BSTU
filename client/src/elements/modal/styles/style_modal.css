@@ -26,3 +26,32 @@
     width: 90vw !important;
     max-width: 450px !important;
 }
+
+.modal-cancel-btn{
+    color: #5F6368 !important;
+    border: None;
+    padding: 0 8px;
+    box-shadow: None;
+}
+
+.modal-cancel-btn:hover{
+    background-color: rgba(95, 99, 104, .04) !important;
+}
+
+.modal-ok-btn{
+    color: #1967d2 !important;
+    border: None;
+    padding: 0 8px;
+    background-color: #FFFFFF !important;
+    box-shadow: None;
+}
+
+.modal-ok-btn:hover{
+    background-color: #F8FAFF !important;
+}
+
+.modal-btn-font{
+    font-size: 14px;
+    font-weight: 500;
+    font-family: "Google Sans", Roboto, Arial, sans-serif;
+}

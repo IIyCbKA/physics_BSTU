@@ -28,6 +28,8 @@ export default function ModalWindow(props){
             cancelText='Отмена'
             onOk={handleOk}
             onCancel={handleCancel}
+            cancelButtonProps={{className: 'modal-cancel-btn modal-btn-font'}}
+            okButtonProps={{className: 'modal-ok-btn modal-btn-font'}}
             wrapClassName='modal-wrap'
             closable={false}
             className='modal-root'
