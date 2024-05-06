@@ -19,7 +19,7 @@ export default function SelectGroups(props){
                 </span>
                 <div className='select-wrap'>
                     <Select
-                        mode="tags"
+                        mode="multiple"
                         style={{
                             width: '100%',
                         }}
