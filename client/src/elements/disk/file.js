@@ -9,14 +9,14 @@ import {isMobile} from "react-device-detect";
 import {useEffect, useRef, useState} from "react";
 
 export default function File(props){
-    const nameRef = useRef(null)
-    const nameFieldRef = useRef(null);
-    const [nameWidth, setNameWidth] = useState(0)
     const width = useSelector(state => state.app.width)
     const path = useSelector(state => state.file.path)
     const orientation = useSelector(state => state.app.orientation)
     const selected_id = useSelector(state => state.file.selected_id)
     const dispatch = useDispatch()
+    const nameRef = useRef(null)
+    const nameFieldRef = useRef(null);
+    const [nameWidthPortrait, setNameWidthPortrait] = useState(width - 78)
     let timer = null;
     let startTime = null;
     let touchStartX = null;
@@ -24,20 +24,22 @@ export default function File(props){
 
     useEffect(() => {
         if (nameRef.current) {
-            setNameWidth(nameRef.current.offsetWidth);
+            setNameWidthPortrait(nameRef.current.offsetWidth);
         }
     }, [width])
 
     useEffect(() => {
         if (nameFieldRef.current){
             if (orientation === PORTRAIT_ORIENTATION){
-                minimizeStrPortrait(props.name, nameWidth, nameFieldRef.current)
+                minimizeStrPortrait(props.name, nameWidthPortrait,
+                    nameFieldRef.current)
             } else {
-                nameFieldRef.current.textContent = minimizeStr(props.name, 20, 2);
+                nameFieldRef.current.textContent = minimizeStr(props.name,
+                    20, 2);
             }
         }
 
-    }, [nameWidth, nameFieldRef, orientation, props.name])
+    }, [nameWidthPortrait, nameFieldRef, orientation, props.name])
 
     const handleFileClick = (event) => {
         event.stopPropagation();
