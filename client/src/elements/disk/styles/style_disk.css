@@ -215,6 +215,7 @@
         display: flex;
         font: 15px / 16px "Google Sans", Roboto, Arial, sans-serif;
         max-width: 100%;
+        white-space: nowrap;
     }
 
     .file-icon-size{

@@ -50,36 +50,35 @@ export const getFilenameOnly = (filename) => {
         return filename.slice(0, pointPos)
 }
 
+const isExceedsToLineSize = (textStart, textEnd, fieldRef, maxWidth) => {
+    fieldRef.textContent = textStart + '...' + textEnd;
+    return fieldRef.offsetWidth >= maxWidth;
+}
+
 export const minimizeStrPortrait = (text, maxWidth, fieldRef) => {
-    let start = 0;
-    let end = text.length - 1;
+    fieldRef.textContent = text;
 
-    fieldRef.textContent = '...';
-    const ellipsisWidth = fieldRef.offsetWidth;
+    if (fieldRef.offsetWidth >= maxWidth){
+        let start = 0;
+        let end = text.length - 1;
 
-    while (fieldRef.offsetWidth + ellipsisWidth < maxWidth && start < end) {
-        if (fieldRef.offsetWidth + ellipsisWidth < maxWidth){
-            fieldRef.textContent += text[end];
-            end--;
-            if (fieldRef.offsetWidth + ellipsisWidth > maxWidth) {
-                fieldRef.textContent = fieldRef.textContent.slice(0, -1);
+        let textStart = ''
+        let textEnd = ''
+
+        while (start <= end) {
+            textEnd = text[end--] + textEnd;
+            if (isExceedsToLineSize(textStart, textEnd, fieldRef, maxWidth)) {
+                textEnd = textEnd.slice(1);
+                break;
+            }
+
+            textStart = textStart + text[start++];
+            if (isExceedsToLineSize(textStart, textEnd, fieldRef, maxWidth)) {
+                textStart = textStart.slice(0, -1);
                 break;
             }
         }
 
-        if (fieldRef.offsetWidth + ellipsisWidth < maxWidth) {
-            fieldRef.textContent = text[start] + fieldRef.textContent;
-            start++;
-            if (fieldRef.offsetWidth + ellipsisWidth > maxWidth) {
-                fieldRef.textContent = fieldRef.textContent.slice(1);
-                break;
-            }
-        }
-    }
-
-    if (start > end){
-        fieldRef.textContent = text;
-    } else {
-        fieldRef.textContent = text.slice(0, start) + '...' + text.slice(end + 1);
+        fieldRef.textContent = textStart + '...' + textEnd;
     }
 }
