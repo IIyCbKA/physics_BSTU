@@ -1,5 +1,5 @@
 import {store} from "../reducers";
-import {setOrientation} from "../reducers/app_reducer";
+import {setOrientation, setWidth, setHeight} from "../reducers/app_reducer";
 
 export const PORTRAIT_ORIENTATION = 'portrait'
 export const LANDSCAPE_ORIENTATION = 'landscape'
@@ -17,11 +17,17 @@ class OrientationListener {
 
     orientationHandler() {
         setTimeout( () => {
-            const orientation = window.innerHeight > window.innerWidth ?
+            const width = window.innerWidth
+            const height = window.innerHeight
+
+            const orientation = height > width ?
                 PORTRAIT_ORIENTATION :
                 LANDSCAPE_ORIENTATION
 
+
             store.dispatch(setOrientation(orientation))
+            store.dispatch(setWidth(width))
+            store.dispatch(setHeight(height))
         }, 0)
 
     }

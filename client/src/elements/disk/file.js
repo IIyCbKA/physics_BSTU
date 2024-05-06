@@ -11,7 +11,8 @@ import {useEffect, useRef, useState} from "react";
 export default function File(props){
     const nameRef = useRef(null)
     const nameFieldRef = useRef(null);
-    const [nameWidth, setNameWidth] = useState(window.innerWidth - 78)
+    const [nameWidth, setNameWidth] = useState(0)
+    const width = useSelector(state => state.app.width)
     const path = useSelector(state => state.file.path)
     const orientation = useSelector(state => state.app.orientation)
     const selected_id = useSelector(state => state.file.selected_id)
@@ -22,17 +23,10 @@ export default function File(props){
     let touchStartY = null;
 
     useEffect(() => {
-        const handleResize = () => {
-            if (nameRef.current) {
-                setNameWidth(nameRef.current.offsetWidth);
-            }
-        };
-
-        if (orientation === PORTRAIT_ORIENTATION){
-            window.addEventListener('resize', handleResize);
-            return () => window.removeEventListener('resize', handleResize);
+        if (nameRef.current) {
+            setNameWidth(nameRef.current.offsetWidth);
         }
-    }, [nameRef, orientation, nameWidth])
+    }, [width])
 
     useEffect(() => {
         if (nameFieldRef.current){
