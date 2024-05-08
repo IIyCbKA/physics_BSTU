@@ -1,8 +1,8 @@
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
-import {styles} from './styles/style_task_menu'
-import './styles/style_task_menu.css'
+import {styles} from '../../../../pages_menu/styles/style_task_menu'
+import '../../../../pages_menu/styles/style_task_menu.css'
 import {useDispatch} from "react-redux";
 import {setUpdatingTask} from "../../../../../reducers/journal_reducer";
 

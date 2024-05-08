@@ -6,11 +6,13 @@ import {getCurrentFolderName, getLastDirectory} from "../../actions/strings";
 import {employeeStatus} from "../../reducers/user_reducer";
 import {ArrowLeftOutlined, PlusOutlined} from "@ant-design/icons";
 import {styles} from './styles/style_disk'
-import {useContextMenu} from "react-contexify";
-import ContextMenuDisk from "./context_menus/disk_context_menu";
+import DiskMenu from "./menu/disk_menu";
+import ModalWindow from "./default_modal";
 
 export default function Disk() {
     const [isModalOpen, setModalOpen] = useState(false)
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
     const files = useSelector(state => state.file.files)
     const path = useSelector(state => state.file.path)
     const userStatus = useSelector(state => state.user.currentUser.status)
@@ -22,20 +24,9 @@ export default function Disk() {
         window.location.href = backPath;
     }
 
-    const { show } = useContextMenu({
-        id: 'disk-context-menu',
-    });
-
     const handleAddClick = (event) => {
-        if (!isModalOpen){
-            event.stopPropagation();
-            show({
-                event,
-                props: {
-                    key: 'value'
-                }
-            })
-        }
+        event.stopPropagation();
+        setAnchorEl(event.currentTarget);
     }
 
     return (
@@ -76,10 +67,18 @@ export default function Disk() {
                     </div>
                 </div>
             </div>
-            <ContextMenuDisk
-                isModalOpen={isModalOpen}
-                setModalOpen={setModalOpen}
+            <DiskMenu
+                open={open}
+                setAnchorEl={setAnchorEl}
+                anchorEl={anchorEl}
+                setModalShow={setModalOpen}
             />
+            {isModalOpen &&
+                <ModalWindow
+                    show={isModalOpen}
+                    setModalOpen={setModalOpen}
+                />
+            }
         </div>
     )
 }

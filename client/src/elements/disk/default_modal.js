@@ -12,7 +12,7 @@ export default function ModalWindow(props){
     const path = useSelector(state => state.file.path)
 
     const handleCancel = () => {
-        props.handleClose()
+        props.setModalOpen(false)
     }
 
     const handleOk = async () => {
