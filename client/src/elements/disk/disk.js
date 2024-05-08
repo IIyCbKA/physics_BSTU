@@ -77,6 +77,7 @@ export default function Disk() {
                 <ModalWindow
                     show={isModalOpen}
                     setModalOpen={setModalOpen}
+                    setAnchorEl={setAnchorEl}
                 />
             }
         </div>

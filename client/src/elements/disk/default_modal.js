@@ -8,7 +8,6 @@ import HeaderModal from "../modal/header_modal";
 
 export default function ModalWindow(props){
     const [folderName, setFolderName] = useState('')
-
     const path = useSelector(state => state.file.path)
 
     const handleCancel = () => {
@@ -16,6 +15,7 @@ export default function ModalWindow(props){
     }
 
     const handleOk = async () => {
+        props.setAnchorEl(null);
         await createFolder(folderName, path)
         handleCancel()
     }
@@ -33,7 +33,8 @@ export default function ModalWindow(props){
             wrapClassName='modal-wrap'
             closable={false}
             className='modal-root'
-            footer={(_, { CancelBtn, OkBtn}) => (
+            zIndex='1500'
+            footer={(_, {CancelBtn, OkBtn}) => (
                 <>
                     <CancelBtn/>
                     <OkBtn />
@@ -41,9 +42,10 @@ export default function ModalWindow(props){
             )}
             centered={true}
         >
-            <InputLine value={folderName}
-                       onChange={setFolderName}
-                       placeholder='Новая папка'
+            <InputLine
+                value={folderName}
+                onChange={setFolderName}
+                placeholder='Новая папка'
             />
         </Modal>
     )

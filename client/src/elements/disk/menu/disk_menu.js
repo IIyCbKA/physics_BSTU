@@ -16,16 +16,15 @@ export default function DiskMenu(props){
     };
 
     const handleAddFileClick = () => {
-        handleClose();
         fileInputRef.current.click();
     }
 
     const handleCreateFolderClick = () => {
-        handleClose();
-        props.setModalShow(true)
+        props.setModalShow(true);
     }
 
     const handleFileSelect = async (event) => {
+        handleClose();
         const selectedFile = event.target.files[0];
         try {
             await uploadFile(selectedFile, path);

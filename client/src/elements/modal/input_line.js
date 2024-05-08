@@ -6,7 +6,8 @@ import './styles/style_modal.css'
 export default function InputLine(props) {
     const [inputIsFocused, setInputIsFocused] = useState(false);
 
-    const inputOnFocus = () => {
+    const inputOnFocus = (event) => {
+        event.stopPropagation()
         setInputIsFocused(true);
     };
 
