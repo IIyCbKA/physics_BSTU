@@ -1,11 +1,18 @@
-const containerHeaderAll = {
-    position: 'fixed',
-    zIndex: '2000',
-    backgroundColor: '#222222',
+const navbarFileHeader = {
+    position: 'sticky',
+    top: 0,
+    minWidth: '340px',
     height: '60px',
-    opacity: 0,
-    padding: '12px',
-    transition: 'opacity 0.3s ease 0.3s'
+    padding: 0,
+    justifyContent: 'center',
+    zIndex: '4000'
+}
+
+const containerHeaderAll = {
+    height: '60px',
+    minWidth: '340px',
+    backgroundColor: 'rgba(34, 34, 34, 1)',
+    padding: 0
 }
 
 const containerHeaderMobile = {
@@ -24,6 +31,7 @@ const iconsStyle = {
 }
 
 const navStyle = {
+    padding: '12px',
     height: '100%',
     width: '100%',
     justifyContent: 'flex-end',
@@ -42,6 +50,7 @@ const navItemStyle = {
 }
 
 export const styles = {
+    navbarFileHeader: navbarFileHeader,
     containerHeaderMobile: {...containerHeaderAll, ...containerHeaderMobile},
     containerHeaderPC: {...containerHeaderAll, ...containerHeaderPC},
     iconsStyle: iconsStyle,

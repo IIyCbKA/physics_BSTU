@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from "../components/header/header";
+import DefaultHeader from "../components/header/default_header/default_header";
 import {Helmet} from 'react-helmet';
 
 function Test() {
@@ -8,7 +8,7 @@ function Test() {
             <Helmet>
                 <title>Каталог тестов</title>
             </Helmet>
-            <Header/>
+            <DefaultHeader/>
         </div>
     );
 }

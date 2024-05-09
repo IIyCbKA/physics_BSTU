@@ -1,4 +1,5 @@
-import {Container, Nav} from "react-bootstrap";
+import {Container, Nav, Navbar} from "react-bootstrap";
+import 'bootstrap/dist/css/bootstrap.min.css'
 import {PORTRAIT_ORIENTATION} from "../../../classes/OrientationListener";
 import {styles} from "./styles/style_file_header";
 import {useDispatch, useSelector} from "react-redux";
@@ -24,13 +25,18 @@ export default function FileHeader(){
     const dispatch = useDispatch();
 
     const containerStyle = () => {
-        let selectedStyle = (orientation === PORTRAIT_ORIENTATION) ?
+        return (orientation === PORTRAIT_ORIENTATION) ?
             styles.containerHeaderMobile : styles.containerHeaderPC;
+    }
 
-        return{...selectedStyle,
-               visibility: selected_id != null ? 'visible' : 'hidden',
-               opacity: selected_id != null ? 1 : 0,
-        }
+    const navbarStyle = () => {
+        return ({...styles.navbarFileHeader,
+                 height: selected_id != null ? '60px' : '0px',
+                 visibility: selected_id != null ? 'visible' : 'hidden',
+                 opacity: selected_id != null ? 1 : 0,
+                 transition: 'opacity 0.3s linear 0.1s, visibility linear 0.4s, ' +
+                     'height 0.3s linear 0.1s'
+        })
     }
 
     function messageNotification(){
@@ -86,30 +92,36 @@ export default function FileHeader(){
     };
 
     return(
-        <Container fluid style={containerStyle()}>
-            <Nav style={styles.navStyle}>
-                <div className='bar-left'>
-                    <Nav.Item style={styles.navItemStyle} onClick={handleInfoClick}>
-                        <InfoCircleOutlined style={styles.iconsStyle}/>
-                    </Nav.Item>
-                </div>
-                <div className='bar-right'>
-                    {userStatus === 'employee' &&
-                        <Nav.Item style={styles.navItemStyle} onClick={onDelete}>
-                            <DeleteOutlined style={styles.iconsStyle}/>
+        <Navbar
+            collapseOnSelect
+            expand='lg'
+            style={navbarStyle()}
+        >
+            <Container fluid style={containerStyle()}>
+                <Nav style={styles.navStyle}>
+                    <div className='bar-left'>
+                        <Nav.Item style={styles.navItemStyle} onClick={handleInfoClick}>
+                            <InfoCircleOutlined style={styles.iconsStyle}/>
                         </Nav.Item>
-                    }
-                    {selected_type !== 'folder' &&
-                        <Nav.Item style={styles.navItemStyle} onClick={onDownload}>
-                            <DownloadOutlined style={styles.iconsStyle}/>
+                    </div>
+                    <div className='bar-right'>
+                        {userStatus === 'employee' &&
+                            <Nav.Item style={styles.navItemStyle} onClick={onDelete}>
+                                <DeleteOutlined style={styles.iconsStyle}/>
+                            </Nav.Item>
+                        }
+                        {selected_type !== 'folder' &&
+                            <Nav.Item style={styles.navItemStyle} onClick={onDownload}>
+                                <DownloadOutlined style={styles.iconsStyle}/>
+                            </Nav.Item>
+                        }
+                        <Nav.Item style={styles.navItemStyle} onClick={handleClickClose}>
+                            <CloseOutlined style={styles.iconsStyle}/>
                         </Nav.Item>
-                    }
-                    <Nav.Item style={styles.navItemStyle} onClick={handleClickClose}>
-                        <CloseOutlined style={styles.iconsStyle}/>
-                    </Nav.Item>
-                </div>
-            </Nav>
-            {contextHolder}
-        </Container>
+                    </div>
+                </Nav>
+                {contextHolder}
+            </Container>
+        </Navbar>
     )
 }

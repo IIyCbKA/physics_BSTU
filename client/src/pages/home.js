@@ -1,4 +1,5 @@
-import Header from "../components/header/header";
+import DefaultHeader from "../components/header/default_header/default_header";
+import FileHeader from "../components/header/file_header/file_header";
 import {Helmet} from 'react-helmet';
 import {getFilesName} from '../actions/files'
 import React, {useEffect, useState} from "react";
@@ -37,7 +38,8 @@ function Home() {
             <Helmet>
                 <title>Хранилище</title>
             </Helmet>
-            <Header/>
+            <FileHeader/>
+            <DefaultHeader/>
             {initSuccess && <Storage/>}
         </div>
     );

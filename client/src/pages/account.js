@@ -1,5 +1,5 @@
 import AccountAround from "../components/account/account_around";
-import Header from "../components/header/header";
+import DefaultHeader from "../components/header/default_header/default_header";
 import {Helmet} from "react-helmet";
 import React, {useEffect, useState} from "react";
 import TaskForm from "../components/account/create_task_form/task_form";
@@ -23,7 +23,7 @@ export default function Account(){
             <Helmet>
                 <title>Профиль</title>
             </Helmet>
-            <Header/>
+            <DefaultHeader/>
             <AccountAround setShow={setShowTaskForm}/>
             <TaskForm show={showTaskForm} setShow={setShowTaskForm}/>
         </div>
