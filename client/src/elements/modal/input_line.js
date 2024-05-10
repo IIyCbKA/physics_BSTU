@@ -38,6 +38,11 @@ export default function InputLine(props) {
                         style={inputLineStyle()}
                         onFocus={inputOnFocus}
                         onBlur={inputOnBlur}
+                        onKeyDown={e => {
+                            if (e.key === 'Enter') {
+                                props.handleOk();
+                            }}
+                        }
                     />
                 </InputGroup>
             </Form.Group>

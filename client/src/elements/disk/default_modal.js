@@ -29,7 +29,8 @@ export default function ModalWindow(props){
             onOk={handleOk}
             onCancel={handleCancel}
             cancelButtonProps={{className: 'modal-cancel-btn modal-btn-font'}}
-            okButtonProps={{className: 'modal-ok-btn modal-btn-font'}}
+            okButtonProps={{className: 'modal-ok-btn modal-btn-font',
+                disabled: folderName.length === 0}}
             wrapClassName='modal-wrap'
             closable={false}
             className='modal-root'
@@ -46,6 +47,7 @@ export default function ModalWindow(props){
                 value={folderName}
                 onChange={setFolderName}
                 placeholder='Новая папка'
+                handleOk={handleOk}
             />
         </Modal>
     )
