@@ -8,7 +8,8 @@ const defaultState = {
     path: '/',
     selected_id: null,
     selected_name: null,
-    selected_type: null
+    selected_type: null,
+    type_last_closed: null
 }
 
 export default function fileReducer(state = defaultState, action){
@@ -20,9 +21,11 @@ export default function fileReducer(state = defaultState, action){
             selected_name: action.payload.name,
             selected_type: action.payload.type}
         case CLOSE_SELECTED: return {...state,
+            type_last_closed: state.selected_type,
             selected_id: null,
             selected_name: null,
-            selected_type: null}
+            selected_type: null
+        }
         default:
             return state
     }

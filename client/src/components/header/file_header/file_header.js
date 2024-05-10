@@ -22,6 +22,7 @@ export default function FileHeader(){
     const selected_id = useSelector(state => state.file.selected_id)
     const selected_name = useSelector(state => state.file.selected_name)
     const selected_type = useSelector(state => state.file.selected_type)
+    const type_last_closed = useSelector(state => state.file.type_last_closed)
     const dispatch = useDispatch();
 
     const containerStyle = () => {
@@ -100,7 +101,8 @@ export default function FileHeader(){
                                 <DeleteOutlined style={styles.iconsStyle}/>
                             </Nav.Item>
                         }
-                        {selected_type !== 'folder' &&
+                        {((selected_type !== 'folder' && selected_type) ||
+                            (!selected_type && type_last_closed !== 'folder')) &&
                             <Nav.Item style={styles.navItemStyle} onClick={onDownload}>
                                 <DownloadOutlined style={styles.iconsStyle}/>
                             </Nav.Item>
