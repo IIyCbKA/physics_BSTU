@@ -1,17 +1,15 @@
 const navbarFileHeader = {
-    position: 'sticky',
-    top: 0,
     minWidth: '340px',
     height: '60px',
     padding: 0,
     justifyContent: 'center',
-    zIndex: '4000'
+    position: 'sticky'
 }
 
 const containerHeaderAll = {
     height: '60px',
     minWidth: '340px',
-    backgroundColor: 'rgba(34, 34, 34, 1)',
+    backgroundColor: 'rgb(34, 34, 34)',
     padding: 0
 }
 

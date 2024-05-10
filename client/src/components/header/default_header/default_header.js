@@ -12,7 +12,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 export default function DefaultHeader(){
     const dispatch = useDispatch()
-    const selected_id = useSelector(state => state.file.selected_id)
     const orientation = useSelector(state => state.app.orientation)
     const [offcanvasShow, setOffcanvasShow] = useState(false);
 
@@ -32,20 +31,11 @@ export default function DefaultHeader(){
         }
     }
 
-    const navbarStyle  = () => {
-        return {...styles.styleNavbar,
-                height: selected_id != null ? '0px' : '60px',
-                visibility: selected_id != null ? 'hidden' : 'visible',
-                opacity: selected_id != null ? 0 : 1,
-                transition: 'height 0.3s linear 0.1s, opacity 0.3s linear 0.1s, visibility linear 0.4s'
-        }
-    }
-
     return (
         <Navbar
             collapseOnSelect
             expand='lg'
-            style={navbarStyle()}
+            style={styles.styleNavbar}
         >
             <Container fluid style={containerStyle()}>
                 <Navbar.Brand href='/disk/' style={styles.logotypePadding}>

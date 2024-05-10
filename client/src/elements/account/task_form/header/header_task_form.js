@@ -24,7 +24,7 @@ export default function HeaderTaskForm(props){
     const isUpdated = Object.keys(uTask).length !== 0;
 
     const buttonText = isLoading ? 'В процессе...' : (
-        isUpdated ? 'Редактировать': 'Создать')
+        isUpdated ? 'Сохранить': 'Создать')
 
     const handleCreateTaskClick = async (event) => {
         event.preventDefault()

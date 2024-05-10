@@ -29,16 +29,6 @@ export default function FileHeader(){
             styles.containerHeaderMobile : styles.containerHeaderPC;
     }
 
-    const navbarStyle = () => {
-        return ({...styles.navbarFileHeader,
-                 height: selected_id != null ? '60px' : '0px',
-                 visibility: selected_id != null ? 'visible' : 'hidden',
-                 opacity: selected_id != null ? 1 : 0,
-                 transition: 'opacity 0.3s linear 0.1s, visibility linear 0.4s, ' +
-                     'height 0.3s linear 0.1s'
-        })
-    }
-
     function messageNotification(){
         return (
             <div>
@@ -95,7 +85,7 @@ export default function FileHeader(){
         <Navbar
             collapseOnSelect
             expand='lg'
-            style={navbarStyle()}
+            style={styles.navbarFileHeader}
         >
             <Container fluid style={containerStyle()}>
                 <Nav style={styles.navStyle}>

@@ -7,14 +7,22 @@ import {useLocation} from 'react-router-dom';
 import {setPath} from "../reducers/file_reducer";
 import {useDispatch, useSelector} from "react-redux";
 import Storage from "../components/storage/storage";
+import {SwitchTransition, CSSTransition} from "react-transition-group";
+import './styles/style_from_pages.css'
 
 function Home() {
     const dispatch = useDispatch()
     const pathSel = useSelector(state => state.file.path)
+    const selected_id = useSelector(state => state.file.selected_id)
     const location = useLocation();
     const path = location.pathname.endsWith('/') ? location.pathname:
         location.pathname + '/';
     const [initSuccess, setInitSuccess] = useState(false);
+    const [showFileHeader, setShowFileHeader] = useState(false);
+
+    useEffect(() => {
+        setShowFileHeader(selected_id !== null);
+    }, [selected_id]);
 
     useEffect(() => {
         const waitFunc = async () => {
@@ -33,13 +41,31 @@ function Home() {
         waitFunc()
     }, [pathSel]);
 
+    const styleHeaderBlock = () => {
+        return {height: '60px',
+                position: selected_id !== null ? 'sticky' : 'relative',
+                top: 0,
+                zIndex: 100
+        }
+    }
+    
     return (
         <div style={{backgroundColor: '#EBF0FF'}}>
             <Helmet>
                 <title>Хранилище</title>
             </Helmet>
-            <FileHeader/>
-            <DefaultHeader/>
+            <div style={styleHeaderBlock()}>
+                <SwitchTransition mode="out-in">
+                    <CSSTransition
+                        key={showFileHeader ? 'fileHeader' : 'defaultHeader'}
+                        in={showFileHeader}
+                        timeout={200}
+                        classNames="header-transition"
+                    >
+                        {showFileHeader ? <FileHeader /> : <DefaultHeader />}
+                    </CSSTransition>
+                </SwitchTransition>
+            </div>
             {initSuccess && <Storage/>}
         </div>
     );
