@@ -4,35 +4,38 @@ from src.storage.functions.storage import *
 from src.handlers.schemas import *
 
 from fastapi.responses import JSONResponse, StreamingResponse
-from fastapi import File, UploadFile, Form, Request, HTTPException
+from fastapi import File, UploadFile, Form, HTTPException, WebSocket
 from typing import Annotated
 from fastapi import Depends
-from src.handlers.login import getCurrentUser, getCurrentEmployee
+from src.handlers.login import (getCurrentUser,
+                                getCurrentEmployee,
+                                getCurrentUserS)
 from src.socketManager import sockets
 from src.strings.strings import getFileType
 
 
 # Отправляет на клиент новый список файлов
-async def sendFilesNameList(ip: str, path: str):
-    await sockets.sendMessage('getFilesName', getDiskFilesNameList(path), ip)
-
-
-# Отправляет на клиент новый список файлов
 async def sendFilesNameListToAll(path: str):
-    await sockets.sendMessagePath('getFilesName', getDiskFilesNameList(path), path)
+    await sockets.sendMessageRoom('getFilesName', getDiskFilesNameList(path), path)
 
 
 # Роут на получение списка файлов
 # Аргумент path - путь к директории папки
 @fastApiServer.get('/disk{path:path}')
 async def filesList(path: str,
-                    user: Annotated[dict, Depends(getCurrentUser)],
-                    request: Request):
+                    user: Annotated[dict, Depends(getCurrentUser)]):
     checkDiskPath(path)
-    sockets.addPath(request.client.host, path)
     filesName: dict = getDiskFilesNameList(path)
     return JSONResponse(content=filesName, status_code=200)
 
+
+# регистрирует пользователя в хранилище
+@sockets.onSocket('files')
+async def filesSocket(ws: WebSocket,
+                      token: str,
+                      data: dict):
+    user = (await getCurrentUserS(token))['user']
+    sockets.addSocket(user['id'], user['status'], ws, data['path'])
 
 # Роут на добавление папки. В параметрах:
 # data.folderName: имя создаваемой папки

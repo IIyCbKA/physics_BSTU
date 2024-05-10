@@ -82,12 +82,12 @@ async def sendAllTasks(group_id: int):
 async def allTasks(user: Annotated[dict, Depends(getCurrentUser)],
                    request: Request):
     if user['user']['status'] == 'employee':
-        sockets.addPath(
+        sockets.addRoom(
             request.client.host,
             'employee')
 
     elif user['user']['status'] == 'student':
-        sockets.addPath(
+        sockets.addRoom(
             request.client.host,
             'group' + getStudentGroup(user['user']['id']))
 

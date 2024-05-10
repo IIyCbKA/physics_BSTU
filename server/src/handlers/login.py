@@ -2,13 +2,14 @@ from src.application import fastApiServer
 from src.data.functions.users import *
 from src.settings.config import *
 
-from fastapi import Depends, HTTPException
+from fastapi import Depends, HTTPException, WebSocketException, status
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from datetime import datetime, timedelta, timezone
 from typing import Annotated
 import requests
+from src.socketManager import sockets
 
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
@@ -90,7 +91,7 @@ def createToken(data: dict, expiresDelta: timedelta | None = None):
 
 
 async def getCurrentUserCommon(token: str,
-                               credentials_exception: HTTPException):
+                               credentials_exception: Exception):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         userID: int = payload.get("userID")
@@ -170,3 +171,16 @@ async def getAuthRefreshToken(
             status_code=401,
             detail="Could not validate credentials by refresh token",
         )
+
+async def getCurrentUserS(token: str):
+    e = WebSocketException(code=status.WS_1008_POLICY_VIOLATION)
+    return await getCurrentUserCommon(token, e)
+
+
+@sockets.onSocket('auth')
+async def authSocket(token: dict):
+    print()
+
+
+
+

@@ -9,10 +9,10 @@ import {useDispatch, useSelector} from "react-redux";
 import Storage from "../components/storage/storage";
 import {SwitchTransition, CSSTransition} from "react-transition-group";
 import './styles/style_from_pages.css'
+import {socket} from "../classes/socket_client";
 
 function Home() {
     const dispatch = useDispatch()
-    const pathSel = useSelector(state => state.file.path)
     const selected_id = useSelector(state => state.file.selected_id)
     const location = useLocation();
     const path = location.pathname.endsWith('/') ? location.pathname:
@@ -37,9 +37,10 @@ function Home() {
             } else{
                 setInitSuccess(true)
             }
+            socket.init('files', {path: decode_path.slice(5)})
         }
         waitFunc()
-    }, [pathSel]);
+    });
 
     const styleHeaderBlock = () => {
         return {height: '60px',
