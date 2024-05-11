@@ -14,6 +14,10 @@
     display: block;
 }
 
+.account-evaluation-main{
+    display: block;
+}
+
 .account-transition-enter {
     opacity: 0;
 }

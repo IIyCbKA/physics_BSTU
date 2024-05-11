@@ -2,9 +2,10 @@ import {SwitchTransition, CSSTransition} from "react-transition-group";
 import './styles/style_root_account.css'
 import CreateTask from "../employees/create_task_btn/create_task_btn";
 import ListingTask from "../listing_tasks/listing_task";
-import Head from "../listing_tasks/head/head";
+import TasksHead from "../listing_tasks/head/head";
 import {employeeStatus} from "../../../reducers/user_reducer";
 import {useSelector} from "react-redux";
+import UserInfo from "../user_info/user_info";
 
 
 export default function RootAccount(props){
@@ -25,10 +26,12 @@ export default function RootAccount(props){
                                 {userStatus === employeeStatus &&
                                     <CreateTask setShow={props.setShow}/>
                                 }
-                                <Head/>
+                                <TasksHead/>
                                 <ListingTask/>
                             </div> :
-                            <div></div>
+                            <div className='account-evaluation-main'>
+                                <UserInfo/>
+                            </div>
                         }
                     </CSSTransition>
                 </SwitchTransition>
