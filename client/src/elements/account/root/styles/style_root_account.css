@@ -36,6 +36,28 @@
     justify-content: center;
 }
 
+.account-tasks-main{
+    display: block;
+}
+
+.account-transition-enter {
+    opacity: 0;
+}
+
+.account-transition-enter-active {
+    opacity: 1;
+    transition: opacity 300ms ease-in-out;
+}
+
+.account-transition-exit {
+    opacity: 1;
+}
+
+.account-transition-exit-active {
+    opacity: 0;
+    transition: opacity 300ms ease-in-out;
+}
+
 @media (orientation: portrait) {
     .account-main {
         width: 100vw;

@@ -3,7 +3,7 @@ import {styles} from "./styles/style_navigate_btn";
 import React, {useState} from "react";
 
 
-export default function AccountEmployeeNavigateBtn(props){
+export default function AccountNavigateBtn(props){
     const [btnIsFocused, setBtnIsFocused] = useState(false);
 
     const btnStyle = () => {
