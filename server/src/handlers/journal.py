@@ -81,16 +81,6 @@ async def sendAllTasks(group_id: int):
 @fastApiServer.get('/api/tasks/all')
 async def allTasks(user: Annotated[dict, Depends(getCurrentUser)],
                    request: Request):
-    if user['user']['status'] == 'employee':
-        sockets.addRoom(
-            request.client.host,
-            'employee')
-
-    elif user['user']['status'] == 'student':
-        sockets.addRoom(
-            request.client.host,
-            'group' + getStudentGroup(user['user']['id']))
-
     return JSONResponse(content=await getUserTasks(user), status_code=200)
 
 
