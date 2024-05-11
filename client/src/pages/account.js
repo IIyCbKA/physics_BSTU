@@ -17,7 +17,7 @@ export default function Account(){
             await dispatch(getTasksList())
         }
         waitFunc()
-    }, []);
+    }, [dispatch]);
 
     return (
         <div style={{backgroundColor: '#EBF0FF'}}>

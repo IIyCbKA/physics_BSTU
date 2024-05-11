@@ -3,7 +3,7 @@ import React, {useCallback} from "react";
 import {uploadFile} from "../../actions/files";
 import {useDropzone} from "react-dropzone";
 import {useSelector} from "react-redux";
-import {socket} from "../../classes/socket_client";
+import {socket} from "../../server_files/sockets/socket_client";
 import {cleanSelectedInfo, setFiles} from "../../reducers/file_reducer";
 import {employeeStatus} from "../../reducers/user_reducer";
 import {useDispatch} from "react-redux";

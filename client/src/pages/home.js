@@ -9,7 +9,7 @@ import {useDispatch, useSelector} from "react-redux";
 import Storage from "../components/storage/storage";
 import {SwitchTransition, CSSTransition} from "react-transition-group";
 import './styles/style_from_pages.css'
-import {socket} from "../classes/socket_client";
+import {socket} from "../server_files/sockets/socket_client";
 
 function Home() {
     const dispatch = useDispatch()
@@ -27,7 +27,7 @@ function Home() {
     useEffect(() => {
         const waitFunc = async () => {
             const decode_path = decodeURIComponent(path)
-            await dispatch(setPath(decode_path))
+            dispatch(setPath(decode_path))
             const code = await getFilesName(path)(dispatch)
 
             if (code === 404) {
@@ -40,7 +40,7 @@ function Home() {
             socket.init('files', {path: decode_path.slice(5)})
         }
         waitFunc()
-    });
+    }, [dispatch, path]);
 
     const styleHeaderBlock = () => {
         return {height: '60px',

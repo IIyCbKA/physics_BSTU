@@ -1,4 +1,4 @@
-import { SERVER_ADR } from '../server_files/server_connect';
+import { SERVER_ADR } from '../server_connect';
 
 class SocketManager{
     constructor(address, ws) {
