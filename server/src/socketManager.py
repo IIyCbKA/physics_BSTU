@@ -2,7 +2,7 @@ import json
 
 from fastapi import WebSocket, WebSocketDisconnect
 from src.application import fastApiServer
-from src.data.functions.journal import getStudentGroup
+from src.data.functions.journal import getStudentGroupID
 from functools import wraps
 
 
@@ -26,7 +26,7 @@ class ClientInfo:
         self.roomsNames = set()            # список комнат пользователя
         self.statusRoomName = ''
         if status == 'student':
-            self.group_id = getStudentGroup(userID)
+            self.group_id = getStudentGroupID(userID)
             self.statusRoomName = 'g' + str(self.group_id)
         elif status == 'employee':
             self.statusRoomName = 'employee'

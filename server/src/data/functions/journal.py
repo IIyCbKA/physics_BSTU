@@ -122,9 +122,14 @@ def getGroupTasks(group_id: int) -> List:
     return tasks
 
 
-def getStudentGroup(student_id: int):
+def getStudentGroupID(student_id: int):
     return db.query(Students.group_id).\
         filter_by(student_id=student_id).first()[0]
+
+
+def getStudentGroup(student_id: int):
+    return db.query(Groups).join(Students, Students.group_id == Groups.group_id).\
+        filter_by(student_id=student_id).first()
 
 
 def getAddition(addition_id: int):

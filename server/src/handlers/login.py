@@ -1,6 +1,7 @@
 from src.application import fastApiServer
 from src.data.functions.users import *
 from src.settings.config import *
+from src.data.functions.journal import getStudentGroup
 
 from fastapi import Depends, HTTPException, WebSocketException, status
 from fastapi.responses import JSONResponse
@@ -104,7 +105,11 @@ async def getCurrentUserCommon(token: str,
     if userData is None:
         raise credentials_exception
 
-    return {"user": {"id": userData.userID, "status": userData.status}}
+    return {"user": {"id": userData.userID,
+                     "status": userData.status,
+                     "name": userData.name,
+                     "surname": userData.surname,
+                     "patronymic": userData.patronymic}}
 
 
 async def getCurrentUser(token: Annotated[str, Depends(oauth2_scheme)]):
@@ -148,6 +153,9 @@ async def getCurrentUserRefresh(token: Annotated[str, Depends(oauth2_scheme)]):
 @fastApiServer.get("/api/auth_token")
 async def getAuthToken(userInfo: Annotated[dict, Depends(getCurrentUser)]):
     if userInfo != 'null':
+        if userInfo['user']['status'] == 'student':
+            userInfo['user']['group'] = getStudentGroup(
+                userInfo['user']['id']).group_name
         return JSONResponse(content=userInfo, status_code=200)
     else:
         raise HTTPException(

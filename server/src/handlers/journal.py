@@ -64,7 +64,7 @@ async def getUserTasks(user: dict) -> dict:
     if user['user']['status'] == 'employee':
         tasks = getAllTasks()
     elif user['user']['status'] == 'student':
-        tasks = getGroupTasks(getStudentGroup(user['user']['id']))
+        tasks = getGroupTasks(getStudentGroupID(user['user']['id']))
     else:
         tasks = []
 
