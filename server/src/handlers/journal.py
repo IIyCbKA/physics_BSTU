@@ -92,7 +92,7 @@ async def addTask(
         user: Annotated[UserModel, Depends(getCurrentEmployee)],
         files: List[UploadFile] = [],
         title: str = Form(...),
-        description: str = Form(...),
+        description: str = Form(default=''),
         groups: str = Form(...),
         additions: str = Form(...)):
     try:
@@ -135,7 +135,7 @@ async def updateTask(
         id: int = Form(...),
         files: List[UploadFile] = [],
         title: str = Form(...),
-        description: str = Form(...),
+        description: str = Form(default=''),
         groups: str = Form(''),
         additions: str = Form(...)):
     try:
