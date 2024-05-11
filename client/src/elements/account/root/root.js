@@ -32,7 +32,7 @@ export default function RootAccount(props){
                                 <CSSTransition
                                     key={onFirstSelected ? 'tasks' : 'evaluations'}
                                     in={onFirstSelected}
-                                    timeout={200}
+                                    timeout={150}
                                     classNames="account-transition"
                                 >
                                     {onFirstSelected ?

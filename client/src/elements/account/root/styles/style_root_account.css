@@ -46,7 +46,7 @@
 
 .account-transition-enter-active {
     opacity: 1;
-    transition: opacity 300ms ease-in-out;
+    transition: opacity 150ms linear;
 }
 
 .account-transition-exit {
@@ -55,7 +55,7 @@
 
 .account-transition-exit-active {
     opacity: 0;
-    transition: opacity 300ms ease-in-out;
+    transition: opacity 150ms linear;
 }
 
 @media (orientation: portrait) {
