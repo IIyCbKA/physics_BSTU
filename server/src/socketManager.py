@@ -14,24 +14,28 @@ class SocketError(Exception):
 def getFullAddr(ws: WebSocket):
     return ws.client.host + ':' + str(ws.client.port)
 
+
+class SocketInfo:
+    def __init__(self, ws: WebSocket, userID: int):
+        self.ws: WebSocket = ws
+        self.userID = userID
+        self.rooms: set[str] = set()
+
+
 # информация о клиенте
 class ClientInfo:
-    def __init__(self, userID: int, status: str, ws: WebSocket):
-        addr = getFullAddr(ws)
+    def __init__(self, userID: int, status: str):
         self.userID = userID                  # id пользователя
         self.status = status                    # статус пользователя
-        self.sockets = {}    # сокеты пользователя
+        self.sockets: dict[str, SocketInfo] = {}    # сокеты пользователя
         # распределённые по комнатам сокеты
         self.rooms: dict[str, dict[str, WebSocket]] = {}
-        self.roomsNames = set()            # список комнат пользователя
         self.statusRoomName = ''
         if status == 'student':
             self.group_id = getStudentGroupID(userID)
             self.statusRoomName = 'g' + str(self.group_id)
         elif status == 'employee':
             self.statusRoomName = 'employee'
-        self.sockets[addr] = ws
-        self.addRoom(ws, self.statusRoomName, addr)
 
         # запись о комнатах отобразилась только в ClientInfo
         # позже нужно добавить сокет во все комнаты
@@ -39,14 +43,21 @@ class ClientInfo:
     def addRoom(self, ws: WebSocket, room: str, addr: str = None):
         if addr is None:
             addr = getFullAddr(ws)
-        self.roomsNames.add(room)
+
         if room not in self.rooms.keys():
             self.rooms[room] = {}
+
+        self.rooms[room][addr] = ws
+        self.sockets[addr].rooms.add(room)
 
         self.rooms[room][addr] = ws
 
     def addSocket(self, ws: WebSocket, room: str | None = None):
         addr = getFullAddr(ws)
+
+        if addr not in self.sockets:
+            self.sockets[addr] = SocketInfo(ws, self.userID)
+            self.addRoom(ws, self.statusRoomName, addr)
 
         if room is not None:
             self.addRoom(ws, room, addr)
@@ -55,9 +66,9 @@ class ClientInfo:
     def delSocket(self, ws: WebSocket):
         addr = getFullAddr(ws)
         if addr in self.sockets.keys():
-            for room in list(self.roomsNames):
+            for room in list(self.sockets[addr].rooms):
                 del self.rooms[room][addr]
-                self.roomsNames.remove(room)
+                self.sockets[addr].rooms.remove(room)
             del self.sockets[getFullAddr(ws)]
 
     async def sendData(self, data: dict, room: str):
@@ -67,12 +78,6 @@ class ClientInfo:
     def wsAmount(self):
         return len(self.sockets)
 
-
-class SocketInfo:
-    def __init__(self, ws: WebSocket, userID: int):
-        self.ws: WebSocket = ws
-        self.userID = userID
-        self.rooms: set[str] = set()
 
 class SocketManager:
     def __init__(self):
@@ -88,10 +93,8 @@ class SocketManager:
             self.rooms[room] = {}
         self.rooms[room][addr] = ws
 
-    def addClient(self, ws: WebSocket, userID: int, status: str,
-                  addr: str | None = None):
-        user = ClientInfo(userID, status, ws)
-        self.addInRoom(ws, user.statusRoomName, addr)
+    def addClient(self, userID: int, status: str):
+        user = ClientInfo(userID, status)
         self.clients[userID] = user
 
     def removeClient(self, userID: int):
@@ -105,9 +108,13 @@ class SocketManager:
         else:
             self.sockets[addr].ws = ws
         if userID not in self.clients.keys():
-            self.addClient(ws, userID, status, addr)
-            self.sockets[addr].rooms = self.clients[userID].roomsNames.copy()
+            self.addClient(userID, status)
 
+        user = self.clients[userID]
+        if user.statusRoomName not in self.sockets[addr].rooms:
+            self.clients[userID].addSocket(ws, user.statusRoomName)
+            self.addInRoom(ws, user.statusRoomName, addr)
+            self.sockets[addr].rooms.add(user.statusRoomName)
         if room is not None:
             self.clients[userID].addSocket(ws, room)
             self.addInRoom(ws, room, addr)
