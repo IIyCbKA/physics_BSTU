@@ -37,7 +37,7 @@ function Home() {
             } else{
                 setInitSuccess(true)
             }
-            socket.init('files', {path: decode_path.slice(5)})
+            await socket.init('files', {path: decode_path.slice(5)})
         }
         waitFunc()
     }, [dispatch, path]);

@@ -51,7 +51,7 @@ export const refreshTokenAuth = (refreshToken) => {
 
             if (response.status === 200){
                 dispatch(setUser(response.data.user))
-                localStorage.setItem('token', response.data.user.token)
+                localStorage.setItem('token', response.data.token)
                 Cookies.set('refresh_token', response.data.refresh_token,
                            { expires: REFRESH_TOKEN_EXPIRE_DAYS });
             } else {

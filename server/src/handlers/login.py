@@ -16,6 +16,21 @@ from src.socketManager import sockets
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
+def getUserInfo(userData: UserModel):
+    return {"id": userData.userID,
+            "status": userData.status,
+            "name": userData.name,
+            "surname": userData.surname,
+            "patronymic": userData.patronymic}
+
+def getUserInfoWithGroup(userData: UserModel):
+    userInfo = getUserInfo(userData)
+    if userData.status == 'student':
+        userInfo['group'] = getStudentGroup(
+            userData.userID).group_name
+    return userInfo
+
+
 @fastApiServer.post("/api/login")
 async def loginBstu(data: LoginData):
     login_data = {
@@ -75,7 +90,7 @@ def auth(data: dict) -> dict:
                                     refreshTokenExpires)
 
     return {"success": True,
-            "user": {"id": userData.userID, "status": userData.status},
+            "user": getUserInfo(userData),
             "token": userToken,
             "refresh_token": refreshToken}
 
@@ -105,11 +120,7 @@ async def getCurrentUserCommon(token: str,
     if userData is None:
         raise credentials_exception
 
-    return {"user": {"id": userData.userID,
-                     "status": userData.status,
-                     "name": userData.name,
-                     "surname": userData.surname,
-                     "patronymic": userData.patronymic}}
+    return userData
 
 
 async def getCurrentUser(token: Annotated[str, Depends(oauth2_scheme)]):
@@ -121,14 +132,14 @@ async def getCurrentUser(token: Annotated[str, Depends(oauth2_scheme)]):
 
     return await getCurrentUserCommon(token, credentials_exception)
 
-async def getCurrentEmployee(userInfo: Annotated[dict, Depends(getCurrentUser)]):
+async def getCurrentEmployee(userInfo: Annotated[UserModel, Depends(getCurrentUser)]):
     credentials_exception = HTTPException(
         status_code=403,
         detail="User is not employee",
         headers={"WWW-Authenticate": "Bearer"},
     )
 
-    if userInfo['user']['status'] != "employee":
+    if userInfo.status != "employee":
         raise credentials_exception
 
     return userInfo
@@ -139,23 +150,19 @@ async def getCurrentUserRefresh(token: Annotated[str, Depends(oauth2_scheme)]):
         detail="Could not update refresh token",
         headers={"WWW-Authenticate": "Bearer"},
     )
-    userInfo = await getCurrentUserCommon(token, credentials_exception)
+    userData = await getCurrentUserCommon(token, credentials_exception)
 
     accessTokenExpires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    userToken: str = createToken({'userID': userInfo["user"]["id"]},
+    userToken: str = createToken({'userID': userData.userID},
                                  accessTokenExpires)
 
-    userInfo['user']['token'] = userToken
-
-    return userInfo
+    return {'user': getUserInfo(userData), 'token': userToken}
 
 
 @fastApiServer.get("/api/auth_token")
-async def getAuthToken(userInfo: Annotated[dict, Depends(getCurrentUser)]):
-    if userInfo != 'null':
-        if userInfo['user']['status'] == 'student':
-            userInfo['user']['group'] = getStudentGroup(
-                userInfo['user']['id']).group_name
+async def getAuthToken(userData: Annotated[UserModel, Depends(getCurrentUser)]):
+    if userData != 'null':
+        userInfo = {'user': getUserInfoWithGroup(userData)}
         return JSONResponse(content=userInfo, status_code=200)
     else:
         raise HTTPException(

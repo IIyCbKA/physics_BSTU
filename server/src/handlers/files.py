@@ -23,7 +23,7 @@ async def sendFilesNameListToAll(path: str):
 # Аргумент path - путь к директории папки
 @fastApiServer.get('/disk{path:path}')
 async def filesList(path: str,
-                    user: Annotated[dict, Depends(getCurrentUser)]):
+                    user: Annotated[UserModel, Depends(getCurrentUser)]):
     checkDiskPath(path)
     filesName: dict = getDiskFilesNameList(path)
     return JSONResponse(content=filesName, status_code=200)
@@ -34,15 +34,15 @@ async def filesList(path: str,
 async def filesSocket(ws: WebSocket,
                       token: str,
                       data: dict):
-    user = (await getCurrentUserS(token))['user']
-    sockets.addSocket(user['id'], user['status'], ws, data['path'])
+    user = (await getCurrentUserS(token))
+    sockets.addSocket(user.userID, user.status, ws, data['path'])
 
 # Роут на добавление папки. В параметрах:
 # data.folderName: имя создаваемой папки
 # data.path: путь к папке
 @fastApiServer.post('/api/create_folder')
 async def createFolder(data: FolderData,
-                       user: Annotated[dict, Depends(getCurrentEmployee)]):
+                       user: Annotated[UserModel, Depends(getCurrentEmployee)]):
     data.path = data.path.replace('/disk', '', 1)
     fileModel: FileModel | None = addDiskFileToDB(data.folderName,
                                               'folder',
@@ -61,7 +61,7 @@ async def createFolder(data: FolderData,
 @fastApiServer.post('/api/add_file')
 async def addFile(file: Annotated[UploadFile, File()],
                   path: Annotated[str, Form()],
-                  user: Annotated[dict, Depends(getCurrentEmployee)]):
+                  user: Annotated[UserModel, Depends(getCurrentEmployee)]):
     error: JSONResponse = JSONResponse(content={'error':
                                        'File was not added'},
                                        status_code=500)
@@ -85,7 +85,8 @@ async def addFile(file: Annotated[UploadFile, File()],
 # Роут для удаления файла
 # В параметрах filename - имя файла, path - путь к файлу
 @fastApiServer.post('/api/delete_file')
-async def deleteFile(data: DeleteFileData, user: Annotated[dict, Depends(getCurrentEmployee)]):
+async def deleteFile(data: DeleteFileData,
+                     user: Annotated[UserModel, Depends(getCurrentEmployee)]):
     try:
         fileInfo: FileModel | None = getDiskFileInfo(data.fileID)
         if fileInfo is not None:
@@ -106,7 +107,8 @@ async def deleteFile(data: DeleteFileData, user: Annotated[dict, Depends(getCurr
 
 # Роут для загрузки файла
 @fastApiServer.get('/api/disk/download/{fileID}')
-async def handleDiskFileDownloadRequest(fileID: str, user: Annotated[dict, Depends(getCurrentUser)]):
+async def handleDiskFileDownloadRequest(
+        fileID: str, user: Annotated[UserModel, Depends(getCurrentUser)]):
     async def file_iterator():
         yield data
 

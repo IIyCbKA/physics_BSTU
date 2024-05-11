@@ -16,7 +16,7 @@ export default function journalReducer(state = defaultState, action){
         case SET_GROUPS: return {...state, groups: action.payload}
         case SET_TASKS: return {...state, tasks: action.payload}
         case SET_UPDATE_TASK: return {...state, updatingTask: action.payload}
-        case ADD_TASK: return {...state, tasks: [...state.tasks, action.payload]}
+        case ADD_TASK: return {...state, tasks: [action.payload, ...state.tasks]}
         case DELETE_TASK: return {...state,
             tasks: state.tasks.filter(task => task.id !== action.payload)}
         case UPDATE_TASK: return {...state,

@@ -3,13 +3,13 @@ from src.data.db_session import db
 from src.handlers.schemas import *
 
 
-def getUser(id: int) -> tuple | None:
+def getUser(id: int) -> Users | None:
     result = db.query(Users).filter_by(user_id=id).first()
     return result if result else None
 
 
 def getUserModel(id: int) -> UserModel | None:
-    result: tuple | None = getUser(id)
+    result: Users | None = getUser(id)
     if result is None:
         return None
 

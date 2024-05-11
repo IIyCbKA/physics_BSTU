@@ -5,6 +5,8 @@ import TaskForm from "../components/account/create_task_form/task_form";
 import {useDispatch, useSelector} from "react-redux";
 import {getGroups, getTasksList} from "../actions/journal";
 import {employeeStatus} from "../reducers/user_reducer";
+import "../server_files/sockets/journal"
+import {socket} from "../server_files/sockets/socket_client";
 
 export default function Account(){
     const userStatus = useSelector(state => state.user.currentUser.status)
@@ -15,6 +17,7 @@ export default function Account(){
         const waitFunc = async () => {
             await dispatch(getGroups())
             await dispatch(getTasksList())
+            await socket.init('journal', {})
         }
         waitFunc()
     }, [dispatch]);

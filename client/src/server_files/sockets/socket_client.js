@@ -11,7 +11,7 @@ class SocketManager{
         this.routes[routeName] = routeFunc
     }
 
-    init (routeName, data) {
+    async init (routeName, data) {
         const token = localStorage.getItem('token')
         this.ws.send(JSON.stringify({routeName, token, data}))
     }

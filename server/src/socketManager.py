@@ -108,9 +108,10 @@ class SocketManager:
             self.addClient(ws, userID, status, addr)
             self.sockets[addr].rooms = self.clients[userID].roomsNames.copy()
 
-        self.clients[userID].addSocket(ws, room)
-        self.addInRoom(ws, room, addr)
-        self.sockets[addr].rooms.add(room)
+        if room is not None:
+            self.clients[userID].addSocket(ws, room)
+            self.addInRoom(ws, room, addr)
+            self.sockets[addr].rooms.add(room)
 
     def removeSocket(self, ws: WebSocket):
         addr = getFullAddr(ws)
@@ -151,8 +152,9 @@ class SocketManager:
     async def sendMessageRoom(self, routeName: str, data: dict, room: str):
         try:
             sendData = {"routeName": routeName, "data": data}
-            for info in self.rooms[room].values():
-                await info.send_json(sendData)
+            if room in self.rooms.keys():
+                for info in self.rooms[room].values():
+                    await info.send_json(sendData)
         except Exception as e:
             print('Exception:', e)
 

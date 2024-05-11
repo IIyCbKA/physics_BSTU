@@ -1,21 +1,23 @@
 from src.application import fastApiServer
 from src.data.functions.journal import *
-from src.handlers.login import getCurrentEmployee, getCurrentUser
+from src.handlers.login import (
+    getCurrentEmployee, getCurrentUser, getCurrentUserS)
 from src.storage.functions.storage import getAdditionFileObject
 from src.storage.functions.storage \
     import addFileToTaskStorage, deleteTaskFileObject
 from src.strings.strings import getFileType
 from src.handlers.schemas import DeleteTaskData
+from src.handlers.schemas import UserModel
 import json
 
 from fastapi.responses import JSONResponse, StreamingResponse
 from typing import Annotated
-from fastapi import File, UploadFile, Form, Request, Depends
+from fastapi import UploadFile, Form, Request, Depends, WebSocket
 from src.socketManager import sockets
 
 # Роут на получение списка групп
 @fastApiServer.get('/api/groups')
-async def groupsList(user: Annotated[dict, Depends(getCurrentEmployee)]):
+async def groupsList(user: Annotated[UserModel, Depends(getCurrentEmployee)]):
     groups: dict = getGroupsList()
     return JSONResponse(content=groups, status_code=200)
 
@@ -24,7 +26,7 @@ async def groupsList(user: Annotated[dict, Depends(getCurrentEmployee)]):
 # Аргумент id - идентификатор группы
 @fastApiServer.get('/api/group_students')
 async def groupStudentsList(groupID: int,
-                        user: Annotated[dict, Depends(getCurrentEmployee)]):
+                        user: Annotated[UserModel, Depends(getCurrentEmployee)]):
     groups: dict = getGroupStudentsList(groupID)
     return JSONResponse(content=groups, status_code=200)
 
@@ -60,11 +62,11 @@ def updateAdditions(task: Tasks, files: List[UploadFile], newVals: List[dict]):
     task.additions_id = oldSavedIdsLs + getIdAdditionList(additions)
 
 
-async def getUserTasks(user: dict) -> dict:
-    if user['user']['status'] == 'employee':
+async def getUserTasks(user: UserModel) -> dict:
+    if user.status == 'employee':
         tasks = getAllTasks()
-    elif user['user']['status'] == 'student':
-        tasks = getGroupTasks(getStudentGroupID(user['user']['id']))
+    elif user.status == 'student':
+        tasks = getGroupTasks(getStudentGroupID(user.userID))
     else:
         tasks = []
 
@@ -79,7 +81,7 @@ async def sendAllTasks(group_id: int):
 
 # Роут на получение списка групп
 @fastApiServer.get('/api/tasks/all')
-async def allTasks(user: Annotated[dict, Depends(getCurrentUser)],
+async def allTasks(user: Annotated[UserModel, Depends(getCurrentUser)],
                    request: Request):
     return JSONResponse(content=await getUserTasks(user), status_code=200)
 
@@ -87,7 +89,7 @@ async def allTasks(user: Annotated[dict, Depends(getCurrentUser)],
 # Роут на добавления задания
 @fastApiServer.post('/api/tasks/add')
 async def addTask(
-        user: Annotated[dict, Depends(getCurrentEmployee)],
+        user: Annotated[UserModel, Depends(getCurrentEmployee)],
         files: List[UploadFile] = [],
         title: str = Form(...),
         description: str = Form(...),
@@ -117,6 +119,9 @@ async def addTask(
         task = addTaskToDB(title, description, additions_db)
         addTaskGroups(task.task_id, groups)
 
+        taskSendData = convertDBTaskToDict(task)
+        await sockets.sendMessageGroups('addTask', taskSendData, groups)
+        await sockets.sendMessageEmpoyees('addTask', taskSendData)
 
         return JSONResponse(content={}, status_code=200)
     except Exception as e:
@@ -126,7 +131,7 @@ async def addTask(
 # Роут на изменения задания
 @fastApiServer.post('/api/tasks/update')
 async def updateTask(
-        user: Annotated[dict, Depends(getCurrentEmployee)],
+        user: Annotated[UserModel, Depends(getCurrentEmployee)],
         id: int = Form(...),
         files: List[UploadFile] = [],
         title: str = Form(...),
@@ -154,6 +159,10 @@ async def updateTask(
         task.task_name = title
         updateGroups(task.task_id, groups)
 
+        taskSendData = convertDBTaskToDict(task)
+        await sockets.sendMessageGroups('updateTask', taskSendData, groups)
+        await sockets.sendMessageEmpoyees('updateTask', taskSendData)
+
         return JSONResponse(content={}, status_code=200)
     except Exception as e:
         return JSONResponse(content={'Error': e}, status_code=500)
@@ -161,9 +170,10 @@ async def updateTask(
 
 @fastApiServer.post('/api/tasks/delete')
 async def deleteTask(data: DeleteTaskData,
-                     user: Annotated[dict, Depends(getCurrentEmployee)]):
+                     user: Annotated[UserModel, Depends(getCurrentEmployee)]):
     try:
         taskInfo = getTaskInfo(data.taskID)
+        groups = getTaskGroupsIds(data.taskID)
         if taskInfo is not None:
             for addition_id in taskInfo.additions_id:
                 addition = getAddition(addition_id)
@@ -176,6 +186,9 @@ async def deleteTask(data: DeleteTaskData,
 
             deleteTaskOnlyFromDB(taskInfo)
 
+            await sockets.sendMessageGroups('deleteTask', data.taskID, groups)
+            await sockets.sendMessageEmpoyees('deleteTask', data.taskID)
+
             return JSONResponse(content={}, status_code=200)
 
         return JSONResponse(content={'Error': 'Task not found'},
@@ -185,7 +198,8 @@ async def deleteTask(data: DeleteTaskData,
 
 
 @fastApiServer.get('/api/journal/download/{fileID}')
-async def handleJournalFileDownloadRequest(fileID: str, user: Annotated[dict, Depends(getCurrentUser)]):
+async def handleJournalFileDownloadRequest(
+        fileID: str, user: Annotated[UserModel, Depends(getCurrentUser)]):
     async def file_iterator():
         yield data
 
@@ -205,3 +219,13 @@ async def handleJournalFileDownloadRequest(fileID: str, user: Annotated[dict, De
                             status_code=404)
     except Exception as e:
         return JSONResponse(content={'Error': e}, status_code=500)
+
+
+# регистрирует пользователя в хранилище
+@sockets.onSocket('journal')
+async def journalSocket(ws: WebSocket,
+                      token: str,
+                      data: dict):
+    user = (await getCurrentUserS(token))
+    sockets.addSocket(user.userID, user.status, ws)
+
