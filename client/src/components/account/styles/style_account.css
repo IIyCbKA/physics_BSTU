@@ -4,7 +4,43 @@
     padding: 14px 20px 20px 20px
 }
 
+.account-main {
+    background-color: #FFFFFF;
+    width: calc(100vw - 40px);
+    min-height: calc(100vh - 60px - 34px);
+    min-width: 340px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    border-radius: 16px;
+}
+
+.account-root-content-inner{
+    padding: 20px;
+    min-height: calc(100vh - 60px - 34px - 16px);
+    display: flex;
+    flex-grow: 1;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.account-root-content-container{
+    flex: 0 1 100%;
+    min-width: 0;
+}
+
 @media (orientation: portrait) {
+    .account-main {
+        width: 100vw;
+        min-height: calc(100vh - 60px - 24px);
+    }
+
+    .account-root-content-inner{
+        padding: 0;
+        min-height: calc(100vh - 60px - 24px - 16px);
+    }
+
     .around-account{
         background-color: #EBF0FF;
         padding: 14px 0 10px 0
