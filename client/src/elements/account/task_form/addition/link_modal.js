@@ -44,6 +44,7 @@ export default function ModalLink(props){
             <InputLine value={link}
                        onChange={setLink}
                        placeholder='Ссылка'
+                       handleOk={handleOk}
             />
         </Modal>
     )

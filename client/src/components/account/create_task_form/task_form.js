@@ -15,7 +15,7 @@ export default function TaskForm(props){
     const [selectedGroups, setSelectedGroups] = useState([])
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
-    const isActiveCreateBtn = selectedGroups !== [] && title !== ''
+    const isActiveCreateBtn = selectedGroups.length > 0 && title.length > 0
     const [additions, setAdditions] = useState([])
     const [currentId, setCurrentId] = useState(0);
     const [taskId, setTaskId] = useState(0);
@@ -24,23 +24,39 @@ export default function TaskForm(props){
 
     useEffect(() => {
         if (Object.keys(task).length !== 0) {
-            const adds = convertRemoteAdditionsToEditFormat(task.additions)
-            setSelectedGroups(task.groups)
-            setCurrentId(getNextAdditionID(adds))
-            setTitle(task.title)
-            setDescription(task.description)
-            setAdditions(adds)
-            setTaskId(task.id)
-            setShow(true)
+            uploadForm();
         } else{
-            setSelectedGroups([])
-            setCurrentId(0)
-            setTitle('')
-            setDescription('')
-            setTaskId(0)
-            setAdditions([])
+            cleanForm();
         }
     }, [task])
+
+    useEffect(() => {
+        if (props.show){
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    }, [props.show])
+
+    const uploadForm = () => {
+        const adds = convertRemoteAdditionsToEditFormat(task.additions)
+        setSelectedGroups(task.groups)
+        setCurrentId(getNextAdditionID(adds))
+        setTitle(task.title)
+        setDescription(task.description)
+        setAdditions(adds)
+        setTaskId(task.id)
+        setShow(true)
+    }
+
+    const cleanForm = () => {
+        setSelectedGroups([])
+        setCurrentId(0)
+        setTitle('')
+        setDescription('')
+        setTaskId(0)
+        setAdditions([])
+    }
 
     const nextId = () => {
         setCurrentId(currentId + 1)
