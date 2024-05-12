@@ -26,25 +26,30 @@ export default function ModalLink(props){
     return (
         <Modal
             open={props.show}
-            title={<HeaderModal text='Добавте ссылку'
-                                handleClick={handleCancel}/>}
-            okText='Сохранить'
+            title={<HeaderModal text='Добавьте ссылку'/>}
+            okText='Добавить ссылку'
+            cancelText='Отмена'
             onOk={handleOk}
             onCancel={handleCancel}
+            cancelButtonProps={{className: 'modal-cancel-btn modal-btn-font'}}
+            okButtonProps={{className: 'modal-ok-btn modal-btn-font',
+                disabled: link.length === 0}}
             wrapClassName='modal-wrap'
-            width='380px'
+            className='modal-root'
             closable={false}
-            footer={(_, { OkBtn}) => (
+            footer={(_, { OkBtn, CancelBtn}) => (
                 <>
-                    <OkBtn />
+                    <CancelBtn />
+                    <OkBtn/>
                 </>
             )}
             centered={true}
         >
-            <InputLine value={link}
-                       onChange={setLink}
-                       placeholder='Ссылка'
-                       handleOk={handleOk}
+            <InputLine
+                value={link}
+                onChange={setLink}
+                placeholder='Ссылка'
+                handleOk={handleOk}
             />
         </Modal>
     )

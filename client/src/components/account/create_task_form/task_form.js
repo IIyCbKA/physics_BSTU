@@ -75,7 +75,8 @@ export default function TaskForm(props){
 
     const formStyle = () => {
         return {opacity: props.show ? 1 : 0,
-                visibility: props.show ? 'visible' : 'hidden'
+                visibility: props.show ? 'visible' : 'hidden',
+                height: '100%'
         }
     }
 
