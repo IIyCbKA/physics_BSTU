@@ -7,7 +7,7 @@ import Information
     from "../../../elements/account/task_form/information/information";
 import Addition
     from "../../../elements/account/task_form/addition/addition";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useSelector} from "react-redux";
 import {convertRemoteAdditionsToEditFormat, getNextAdditionID} from "../../../actions/journal";
 
@@ -20,6 +20,8 @@ export default function TaskForm(props){
     const [currentId, setCurrentId] = useState(0);
     const [taskId, setTaskId] = useState(0);
     const task = useSelector(state => state.journal.updatingTask);
+    const taskFormMainRef = useRef(null);
+    const windowHeight = useSelector(state => state.app.height)
     const {setShow} = props
 
     useEffect(() => {
@@ -37,6 +39,14 @@ export default function TaskForm(props){
             document.body.style.overflow = 'auto';
         }
     }, [props.show])
+
+    useEffect(() => {
+        if (taskFormMainRef.current){
+            taskFormMainRef.current.style.height = `${windowHeight - 65}px`
+            taskFormMainRef.current.style.overflow = 'auto'
+            taskFormMainRef.current.style.minHeight = `65px`
+        }
+    }, [taskFormMainRef, windowHeight]);
 
     const uploadForm = () => {
         const adds = convertRemoteAdditionsToEditFormat(task.additions)
@@ -79,7 +89,7 @@ export default function TaskForm(props){
                             additions={additions}
                             id={taskId}
             />
-            <div className='main-form'>
+            <div className='main-form' ref={taskFormMainRef}>
                 <SelectGroups setSelectedGroups={setSelectedGroups}
                               groups={selectedGroups}
                 />

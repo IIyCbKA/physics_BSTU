@@ -13,7 +13,4 @@
 
 .main-form{
     padding: 16px;
-    height: calc(100vh - 65px);
-    min-height: 65px;
-    overflow: auto;
 }
