@@ -9,7 +9,7 @@ import DeleteTaskModal from "./modal/delete_task_modal";
 
 export default function Task(props){
     const [isShowModal, setShowModal] = useState(false);
-    const orientation = useSelector(state => state.app.orientation)
+    const windowWidth = useSelector(state => state.app.width)
     const infoRef = useRef(null);
     const [heightInfo, setHeight] = useState(0);
     const [isHover, setHover] = useState(false);
@@ -28,7 +28,7 @@ export default function Task(props){
         if (infoRef.current){
             setHeight(infoRef.current.scrollHeight);
         }
-    }, [infoRef, heightInfo, orientation])
+    }, [infoRef, heightInfo, windowWidth, props.description, props.additions])
 
     const rootStyle = () => {
         if (props.isActive){
@@ -115,8 +115,8 @@ export default function Task(props){
                     <MoreVert style={styles.moreIconStyle}/>
                 </div>
             </div>
-            <div className='task-info-wrap' style={infoStyle()} ref={infoRef}>
-                <div className='task-info-main'>
+            <div className='task-info-wrap' style={infoStyle()}>
+                <div className='task-info-main' ref={infoRef}>
                     <span className='task-info-description'>
                         {props.description}
                     </span>
