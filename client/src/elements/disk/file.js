@@ -6,16 +6,15 @@ import {styles} from "./styles/style_disk";
 import {PORTRAIT_ORIENTATION} from "../../classes/OrientationListener";
 import {selectedFile} from "../../reducers/file_reducer";
 import {isMobile} from "react-device-detect";
-import {useEffect, useLayoutEffect, useRef, useState} from "react";
+import {useLayoutEffect, useRef, useState} from "react";
 
 export default function File(props){
-    const occupiedPortraitSpaceFileAreaIsNotText = 62;
     const width = useSelector(state => state.app.width)
     const path = useSelector(state => state.file.path)
     const orientation = useSelector(state => state.app.orientation)
     const selected_id = useSelector(state => state.file.selected_id)
     const dispatch = useDispatch()
-    const fileAreaRef = useRef(null)
+    const infoZone = useRef(null)
     const nameFieldRef = useRef(null);
     const [nameWidthPortrait, setNameWidthPortrait] = useState(width - 78)
     let timer = null;
@@ -23,17 +22,16 @@ export default function File(props){
     let touchStartX = null;
     let touchStartY = null;
 
-    useEffect(() => {
-        if (fileAreaRef.current && orientation === PORTRAIT_ORIENTATION) {
-            setNameWidthPortrait(fileAreaRef.current.offsetWidth -
-                occupiedPortraitSpaceFileAreaIsNotText);
+    useLayoutEffect(() => {
+        if (orientation === PORTRAIT_ORIENTATION) {
+            setNameWidthPortrait(infoZone.current.offsetWidth);
         }
     }, [width, orientation])
 
     useLayoutEffect(() => {
         if (orientation === PORTRAIT_ORIENTATION){
             minimizeStrPortrait(props.name, nameWidthPortrait,
-                    nameFieldRef.current)
+                nameFieldRef.current)
         } else {
             nameFieldRef.current.textContent = minimizeStr(props.name, 20, 2);
         }
@@ -108,7 +106,6 @@ export default function File(props){
              onTouchStart={handleTouchStart}
              onTouchEnd={handleTouchEnd}
              onTouchMove={handleTouchMove}
-             ref={fileAreaRef}
         >
             <div className="item-icon">
                 <div className="icon-wrapper">
@@ -123,7 +120,7 @@ export default function File(props){
                 </div>
             </div>
             <div className="item-info">
-                <div className="item-title">
+                <div className="item-title" ref={infoZone}>
                     <span
                         className="clamped-text"
                         aria-hidden={true}
