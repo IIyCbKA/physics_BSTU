@@ -1,7 +1,7 @@
 import './styles/style_task.css'
 import {styles} from './styles/style_task'
 import {AssignmentOutlined, MoreVert} from "@mui/icons-material";
-import {useState, useEffect, useRef} from "react";
+import {useState, useRef, useLayoutEffect} from "react";
 import TaskAddition from "./addition/task_addition";
 import TaskMenu from "./menu/task_menu";
 import {useSelector} from "react-redux";
@@ -24,10 +24,8 @@ export default function Task(props){
         groups: props.groups,
     }
 
-    useEffect(() => {
-        if (infoRef.current){
-            setHeight(infoRef.current.scrollHeight);
-        }
+    useLayoutEffect(() => {
+        setHeight(infoRef.current.scrollHeight);
     }, [infoRef, heightInfo, windowWidth, props.description, props.additions])
 
     const rootStyle = () => {
