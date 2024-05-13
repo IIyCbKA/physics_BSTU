@@ -77,13 +77,22 @@
     padding: 16px 24px;
 }
 
-.task-info-description{
+.task-info-text-all{
     word-break: break-word;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-family: 'Roboto', Helvetica, Arial, sans-serif;
-    font-size: 13px;
+    font-family: 'Roboto', Arial, sans-serif;
     font-weight: 400;
+}
+
+.task-info-description{
+    font-size: 13px;
     line-height: 20px;
     color: rgba(0, 0, 0, .87);
+}
+
+.task-info-absence{
+    font-size: 12px;
+    line-height: 16px;
+    color: #5F6368
 }

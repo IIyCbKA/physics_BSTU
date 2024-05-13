@@ -115,9 +115,16 @@ export default function Task(props){
             </div>
             <div className='task-info-wrap' style={infoStyle()}>
                 <div className='task-info-main' ref={infoRef}>
-                    <span className='task-info-description'>
-                        {props.description}
-                    </span>
+                    {props.description.length === 0 &&
+                     props.additions.length === 0 ?
+                        <span className='task-info-text-all task-info-absence'>
+                            Дополнительные материалы отсутствуют
+                        </span> :
+                        <span
+                            className='task-info-description task-info-text-all'>
+                            {props.description}
+                        </span>
+                    }
                     <div>
                         {props.additions.map(addition => (
                             <TaskAddition
