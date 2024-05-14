@@ -63,9 +63,15 @@ export default function File(props){
         }, 300);
     }
 
-    const handleTouchEnd = () => {
+    const handleTouchEnd = (event) => {
         const endTime = Date.now();
-        if (endTime - startTime < 300 && props.type === 'folder'){
+        const touchEndX = event.changedTouches[0].clientX;
+        const touchEndY = event.changedTouches[0].clientY;
+
+        const isNotMove = Math.abs(touchEndX - touchStartX) < 10 &&
+                          Math.abs(touchEndY - touchStartY) < 10
+
+        if (isNotMove && endTime - startTime < 300 && props.type === 'folder'){
             window.location.href = path + props.name + '\\'
         }
 
@@ -74,7 +80,7 @@ export default function File(props){
         touchStartY = null;
     }
 
-    const handleTouchMove =  (event) => {
+    const handleTouchMove = (event) => {
         const touchMoveX = event.touches[0].clientX;
         const touchMoveY = event.touches[0].clientY;
 
