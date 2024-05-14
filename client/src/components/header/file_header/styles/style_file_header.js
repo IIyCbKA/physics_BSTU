@@ -1,9 +1,11 @@
 const navbarFileHeader = {
     minWidth: '340px',
+    width: '100%',
     height: '60px',
     padding: 0,
     justifyContent: 'center',
-    position: 'sticky'
+    position: 'fixed',
+    top: 0
 }
 
 const containerHeaderAll = {

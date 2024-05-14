@@ -21,6 +21,7 @@ const customToggle = {
 
 const styleNavbar = {
     minWidth: '340px',
+    width: '100%',
     height: '60px',
     padding: 0,
     justifyContent: 'center'
