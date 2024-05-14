@@ -2,7 +2,7 @@ import DefaultHeader from "../components/header/default_header/default_header";
 import FileHeader from "../components/header/file_header/file_header";
 import {Helmet} from 'react-helmet';
 import {getFilesName} from '../actions/files'
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useLocation} from 'react-router-dom';
 import {setPath} from "../reducers/file_reducer";
 import {useDispatch, useSelector} from "react-redux";
@@ -19,6 +19,7 @@ function Home() {
         location.pathname + '/';
     const [initSuccess, setInitSuccess] = useState(false);
     const [showFileHeader, setShowFileHeader] = useState(false);
+    const headerRef = useRef(null);
 
     useEffect(() => {
         setShowFileHeader(selected_id !== null);
@@ -44,24 +45,32 @@ function Home() {
 
     const styleHeaderBlock = () => {
         return {height: '60px',
-                position: selected_id !== null ? 'sticky' : 'relative',
                 top: 0,
                 zIndex: 100
         }
     }
-    
+
+    const handleEnter = () => {
+        if (showFileHeader){
+            headerRef.current.style.position = 'sticky'
+        } else {
+            headerRef.current.style.position = 'relative'
+        }
+    }
+
     return (
         <div style={{backgroundColor: '#EBF0FF'}}>
             <Helmet>
                 <title>Хранилище</title>
             </Helmet>
-            <div style={styleHeaderBlock()}>
+            <div style={styleHeaderBlock()} ref={headerRef}>
                 <SwitchTransition mode="out-in">
                     <CSSTransition
                         key={showFileHeader ? 'fileHeader' : 'defaultHeader'}
                         in={showFileHeader}
                         timeout={200}
                         classNames="header-transition"
+                        onEnter={handleEnter}
                     >
                         {showFileHeader ? <FileHeader /> : <DefaultHeader />}
                     </CSSTransition>
