@@ -13,6 +13,8 @@ import {cleanSelectedInfo} from "../../../reducers/file_reducer";
 import {deleteFile, downloadFile} from "../../../actions/files";
 import {notification} from 'antd';
 import './styles/style_file_header.css'
+import {useLayoutEffect, useRef, useState} from "react";
+import {minimizeStrPortrait} from "../../../actions/strings";
 
 
 export default function FileHeader(){
@@ -23,7 +25,29 @@ export default function FileHeader(){
     const selected_name = useSelector(state => state.file.selected_name)
     const selected_type = useSelector(state => state.file.selected_type)
     const type_last_closed = useSelector(state => state.file.type_last_closed)
+    const [textZoneSize, setTextZoneSize] = useState(0);
+    const [iconZoneSize, setIconZoneSize] = useState(0);
+    const widthWindow = useSelector(state => state.app.width)
+    const barRightRef = useRef(null);
+    const textZoneRef = useRef(null);
+    const textWrapRef = useRef(null);
+    const textFieldRef = useRef(null);
+    const iconZoneRef = useRef(null);
     const dispatch = useDispatch();
+
+    useLayoutEffect(() => {
+        setIconZoneSize(iconZoneRef.current.offsetWidth);
+    }, [selected_id]);
+
+    useLayoutEffect(() => {
+        textZoneRef.current.style.width = `${barRightRef.current.offsetWidth - 
+        iconZoneSize}px`
+        setTextZoneSize(textWrapRef.current.offsetWidth)
+    }, [widthWindow, iconZoneSize]);
+
+    useLayoutEffect(() => {
+        minimizeStrPortrait(selected_name, textZoneSize, textFieldRef.current);
+    }, [textZoneSize, selected_name, textFieldRef]);
 
     const containerStyle = () => {
         return (orientation === PORTRAIT_ORIENTATION) ?
@@ -95,21 +119,29 @@ export default function FileHeader(){
                             <InfoCircleOutlined style={styles.iconsStyle}/>
                         </Nav.Item>
                     </div>
-                    <div className='bar-right'>
-                        {userStatus === 'employee' &&
-                            <Nav.Item style={styles.navItemStyle} onClick={onDelete}>
-                                <DeleteOutlined style={styles.iconsStyle}/>
+                    <div className='bar-right' ref={barRightRef}>
+                        <div className='bar-right-text-zone' ref={textZoneRef}>
+                            <div className='bar-text-wrap' ref={textWrapRef}>
+                                <span className='bar-text' ref={textFieldRef}>
+                            </span>
+                            </div>
+                        </div>
+                        <div className='bar-right-icons-zone' ref={iconZoneRef}>
+                            {userStatus === 'employee' &&
+                                <Nav.Item style={styles.navItemStyle} onClick={onDelete}>
+                                    <DeleteOutlined style={styles.iconsStyle}/>
+                                </Nav.Item>
+                            }
+                            {((selected_type !== 'folder' && selected_type) ||
+                                    (!selected_type && type_last_closed !== 'folder')) &&
+                                <Nav.Item style={styles.navItemStyle} onClick={onDownload}>
+                                    <DownloadOutlined style={styles.iconsStyle}/>
+                                </Nav.Item>
+                            }
+                            <Nav.Item style={styles.navItemStyle} onClick={handleClickClose}>
+                                <CloseOutlined style={styles.iconsStyle}/>
                             </Nav.Item>
-                        }
-                        {((selected_type !== 'folder' && selected_type) ||
-                            (!selected_type && type_last_closed !== 'folder')) &&
-                            <Nav.Item style={styles.navItemStyle} onClick={onDownload}>
-                                <DownloadOutlined style={styles.iconsStyle}/>
-                            </Nav.Item>
-                        }
-                        <Nav.Item style={styles.navItemStyle} onClick={handleClickClose}>
-                            <CloseOutlined style={styles.iconsStyle}/>
-                        </Nav.Item>
+                        </div>
                     </div>
                 </Nav>
                 {contextHolder}
