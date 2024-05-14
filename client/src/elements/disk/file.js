@@ -68,8 +68,8 @@ export default function File(props){
         const touchEndX = event.changedTouches[0].clientX;
         const touchEndY = event.changedTouches[0].clientY;
 
-        const isNotMove = Math.abs(touchEndX - touchStartX) < 10 &&
-                          Math.abs(touchEndY - touchStartY) < 10
+        const isNotMove = Math.abs(touchEndX - touchStartX) < 5 &&
+                          Math.abs(touchEndY - touchStartY) < 5
 
         if (isNotMove && endTime - startTime < 300 && props.type === 'folder'){
             window.location.href = path + props.name + '\\'
