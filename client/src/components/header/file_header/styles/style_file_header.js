@@ -26,7 +26,7 @@ const containerHeaderPC = {
 }
 
 const iconsStyle = {
-    fontSize: '24px',
+    fontSize: '26px',
     color: '#FFFFFF'
 }
 

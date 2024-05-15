@@ -3,12 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import {PORTRAIT_ORIENTATION} from "../../../classes/OrientationListener";
 import {styles} from "./styles/style_file_header";
 import {useDispatch, useSelector} from "react-redux";
-import {
-    CloseOutlined,
-    DeleteOutlined,
-    DownloadOutlined,
-    InfoCircleOutlined
-} from "@ant-design/icons";
+import {DeleteOutlined, FileDownloadOutlined, CloseOutlined, InfoOutlined}
+    from "@mui/icons-material"
 import {cleanSelectedInfo} from "../../../reducers/file_reducer";
 import {deleteFile, downloadFile} from "../../../actions/files";
 import {notification} from 'antd';
@@ -116,7 +112,7 @@ export default function FileHeader(){
                 <Nav style={styles.navStyle}>
                     <div className='bar-left'>
                         <Nav.Item style={styles.navItemStyle} onClick={handleInfoClick}>
-                            <InfoCircleOutlined style={styles.iconsStyle}/>
+                            <InfoOutlined style={styles.iconsStyle}/>
                         </Nav.Item>
                     </div>
                     <div className='bar-right' ref={barRightRef}>
@@ -135,7 +131,7 @@ export default function FileHeader(){
                             {((selected_type !== 'folder' && selected_type) ||
                                     (!selected_type && type_last_closed !== 'folder')) &&
                                 <Nav.Item style={styles.navItemStyle} onClick={onDownload}>
-                                    <DownloadOutlined style={styles.iconsStyle}/>
+                                    <FileDownloadOutlined style={styles.iconsStyle}/>
                                 </Nav.Item>
                             }
                             <Nav.Item style={styles.navItemStyle} onClick={handleClickClose}>
