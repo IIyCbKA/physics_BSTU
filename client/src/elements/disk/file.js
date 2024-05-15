@@ -17,6 +17,7 @@ export default function File(props){
     const infoZone = useRef(null)
     const nameFieldRef = useRef(null);
     const [nameWidthPortrait, setNameWidthPortrait] = useState(width - 78)
+    let folderTimer = null;
     let timer = null;
     let startTime = null;
     let touchStartX = null;
@@ -40,14 +41,21 @@ export default function File(props){
 
     const handleFileClick = (event) => {
         event.stopPropagation();
-        if (!isMobile && selected_id !== props.id){
-            dispatch(selectedFile(props.id, props.name, props.type))
+        if (!isMobile){
+            if (props.type === 'folder'){
+                folderTimer = setTimeout(() => {
+                    dispatch(selectedFile(props.id, props.name, props.type))
+                }, 300)
+            } else if (selected_id !== props.id){
+                dispatch(selectedFile(props.id, props.name, props.type))
+            }
         }
     }
 
     const handleDoubleClick = (event) => {
         event.preventDefault()
         if (props.type === 'folder' && !isMobile){
+            clearTimeout(folderTimer);
             window.location.href = path + props.name + '\\'
         }
     }
@@ -57,7 +65,7 @@ export default function File(props){
         touchStartY = event.touches[0].clientY;
         startTime = Date.now();
 
-        timer = setTimeout(() => {
+        folderTimer = setTimeout(() => {
             event.stopPropagation();
             dispatch(selectedFile(props.id, props.name, props.type))
         }, 300);
