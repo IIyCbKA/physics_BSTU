@@ -1,17 +1,12 @@
 import './styles/style_task.css'
-import {styles} from './styles/style_task'
-import {AssignmentOutlined, MoreVert} from "@mui/icons-material";
-import {useState, useRef, useLayoutEffect} from "react";
-import TaskAddition from "./addition/task_addition";
+import {useState} from "react";
 import TaskMenu from "./menu/task_menu";
-import {useSelector} from "react-redux";
 import DeleteTaskModal from "./modal/delete_task_modal";
+import TaskMain from "./task_main/task_main";
+import TaskInfo from "./task_info/task_info";
 
 export default function Task(props){
     const [isShowModal, setShowModal] = useState(false);
-    const windowWidth = useSelector(state => state.app.width)
-    const infoRef = useRef(null);
-    const [heightInfo, setHeight] = useState(0);
     const [isHover, setHover] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -24,10 +19,6 @@ export default function Task(props){
         groups: props.groups,
     }
 
-    useLayoutEffect(() => {
-        setHeight(infoRef.current.scrollHeight);
-    }, [infoRef, heightInfo, windowWidth, props.description, props.additions])
-
     const rootStyle = () => {
         if (props.isActive){
             return {boxShadow: '0 1px 2px 0 rgba(60,64,67,.3), ' +
@@ -38,106 +29,19 @@ export default function Task(props){
         }
     }
 
-    const mainStyle = () =>{
-        if (props.isActive){
-            return {borderBottom: 'none',
-                    backgroundColor: '#E8F0FE'
-            }
-        } else if (!props.isLast){
-            return {borderBottom: '1px solid #E0E0E0'}
-        }
-    }
-
-    const infoStyle = () => {
-        const defaultStyle = {
-            transition: 'height .4s cubic-bezier(0.4, 0, 0.2, 1)',
-            overflow: 'hidden'
-        }
-
-        if (props.isActive){
-            return {...defaultStyle,
-                height: heightInfo
-            }
-        } else{
-            return {...defaultStyle,
-                height: 0
-            }
-        }
-    }
-
-    const handleTaskClick = () => {
-        if (props.isActive){
-            props.setActiveID(null)
-        } else {
-            props.setActiveID(props.id)
-        }
-    }
-
-    const moreWrapStyle = () => {
-        const visibility = {visibility: (isHover + open ? 'visible' : "hidden")}
-        if (open){
-            return {...visibility, backgroundColor: '#D6D6D6'}
-        } else {
-            return visibility
-        }
-    }
-
-    const moreClick = (event) => {
-        event.stopPropagation();
-        setHover(false)
-        setAnchorEl(event.currentTarget);
-    }
-
     return(
         <div className='task-root'
              style={rootStyle()}
              onMouseEnter={() => {if(!isShowModal) setHover(true)}}
              onMouseLeave={() => {setHover(false)}}
         >
-            <div className='task-main'
-                 style={mainStyle()}
-                 onClick={handleTaskClick}
-            >
-                <div className='task-icon-wrap'>
-                    <AssignmentOutlined style={styles.iconStyle}/>
-                </div>
-                <div className='task-title-wrap'>
-                    <div className='task-title-text'>
-                        {props.title}
-                    </div>
-                </div>
-                <div className='task-more-btn-wrap'
-                     style={moreWrapStyle()}
-                     onClick={moreClick}
-                >
-                    <MoreVert style={styles.moreIconStyle}/>
-                </div>
-            </div>
-            <div className='task-info-wrap' style={infoStyle()}>
-                <div className='task-info-main' ref={infoRef}>
-                    {props.description.length === 0 &&
-                     props.additions.length === 0 ?
-                        <span className='task-info-text-all task-info-absence'>
-                            Дополнительные материалы отсутствуют
-                        </span> :
-                        <span
-                            className='task-info-description task-info-text-all'>
-                            {props.description}
-                        </span>
-                    }
-                    <div>
-                        {props.additions.map(addition => (
-                            <TaskAddition
-                                key={addition.id}
-                                id={addition.id}
-                                name={addition.title}
-                                type={addition.type}
-                                content={addition.content}
-                            />
-                        ))}
-                    </div>
-                </div>
-            </div>
+            <TaskMain isActive={props.isActive} setActiveID={props.setActiveID}
+            title={props.title} isLast={props.isLast} isHover={isHover}
+            setHover={setHover} setAnchorEl={setAnchorEl} open={open} id={props.id}/>
+
+            <TaskInfo isActive={props.isActive} description={props.description}
+            additions={props.additions}/>
+
             <TaskMenu
                 open={open}
                 setAnchorEl={setAnchorEl}
@@ -145,6 +49,7 @@ export default function Task(props){
                 task={task}
                 setShowModal={setShowModal}
             />
+
             {isShowModal &&
                 <DeleteTaskModal
                     taskID={props.id}
