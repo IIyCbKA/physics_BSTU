@@ -5,7 +5,7 @@ from src.data.functions.journal import getStudentGroup
 
 from fastapi import Depends, HTTPException, WebSocketException, status
 from fastapi.responses import JSONResponse
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from datetime import datetime, timedelta, timezone
 from typing import Annotated
@@ -29,6 +29,31 @@ def getUserInfoWithGroup(userData: UserModel):
         userInfo['group'] = getStudentGroup(
             userData.userID).group_name
     return userInfo
+
+
+@fastApiServer.post("/token")
+async def login(data: Annotated[OAuth2PasswordRequestForm, Depends()]):
+    login_data = {
+        'login': data.username,
+        'password': data.password
+    }
+
+    response = requests.post('https://lk.bstu.ru/api/login',
+                             data=login_data)
+
+    requestResult: dict = response.json()
+    # requestResult: dict = {'success': True}
+
+    if requestResult['success']:
+        responseData: dict = auth(requestResult)
+        responseData['access_token'] = responseData['token']
+        responseData['token_type'] = 'bearer'
+        return JSONResponse(content=responseData, status_code=200)
+
+    raise HTTPException(
+        status_code=401,
+        detail="Could not login",
+    )
 
 
 @fastApiServer.post("/api/login")
