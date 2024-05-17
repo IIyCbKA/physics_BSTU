@@ -21,7 +21,7 @@ export default function Account(){
             await socket.init('journal', {})
         }
         waitFunc()
-    }, [dispatch]);
+    }, [dispatch, userStatus]);
 
     return (
         <div style={{backgroundColor: '#EBF0FF'}}>
