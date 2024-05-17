@@ -71,13 +71,13 @@ class Works(Base):
 
     work_file_id: Column[int] = Column(Integer, primary_key=True,
                                        autoincrement=True)
-    task_id: Column[int] = Column(Integer, ForeignKey('tasks.task_id'),
+    task_id: Column[int] = Column(Integer, ForeignKey('tasks.task_id',
+                                                      ondelete='CASCADE'),
                                   nullable=False)
-    student_id: Column[int] = Column(Integer, ForeignKey('students.student_id'),
+    student_id: Column[int] = Column(Integer, ForeignKey('students.student_id',
+                                                         ondelete='CASCADE'),
                                      nullable=False)
-    __table_args__ = (
-        UniqueConstraint('student_id', 'task_id'),
-    )
+    filename: Column[str] = Column(String, nullable=False)
 
 
 class Grades(Base):
@@ -86,12 +86,15 @@ class Grades(Base):
     grade_id: Column[int] = Column(Integer, primary_key=True,
                                    autoincrement=True,
                                    nullable=False)
-    student_id: Column[int] = Column(Integer, ForeignKey('students.student_id'),
+    student_id: Column[int] = Column(Integer, ForeignKey('students.student_id',
+                                                         ondelete='CASCADE'),
                                      nullable=False)
     author_id: Column[int] = Column(Integer,
-                                    ForeignKey('employees.employee_id'),
+                                    ForeignKey('employees.employee_id',
+                                               ondelete='CASCADE'),
                                     nullable=False)
-    task_id: Column[int] = Column(Integer, ForeignKey('tasks.task_id'),
+    task_id: Column[int] = Column(Integer, ForeignKey('tasks.task_id',
+                                                      ondelete='CASCADE'),
                                   nullable=False)
     grade: Column[str] = Column(String, nullable=False)
 

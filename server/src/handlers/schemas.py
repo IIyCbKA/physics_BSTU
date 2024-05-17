@@ -47,3 +47,18 @@ class AdditionFileModel(BaseModel):
     fileID: int
     fileName: str
     fileType: str
+
+
+class StudentWorkModel(BaseModel):
+    task_id: int
+
+
+class EmployeeWorkReturnModel(BaseModel):
+    task_id: int
+    student_id: int
+
+
+class EmployeeWorkGradeModel(BaseModel):
+    task_id: int
+    student_id: int
+    grade: str

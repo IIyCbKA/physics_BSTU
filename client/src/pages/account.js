@@ -15,7 +15,8 @@ export default function Account(){
 
     useEffect(() => {
         const waitFunc = async () => {
-            await dispatch(getGroups())
+            if (userStatus === 'employee')
+                await dispatch(getGroups())
             await dispatch(getTasksList())
             await socket.init('journal', {})
         }

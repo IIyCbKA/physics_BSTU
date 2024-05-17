@@ -4,6 +4,14 @@ from src.strings.strings import getFileType
 from src.handlers.schemas import AdditionFileModel
 from sqlalchemy import desc
 
+GRADE_WORK_NONE: str = 'Назначено'
+GRADE_WORK_SEND: str = 'Сдано'
+GRADE_WORK_RETURNED: str = 'Возвращено'
+GRADE3 = '3'
+GRADE4 = '4'
+GRADE5 = '5'
+POSSIBLE_GRADES = [GRADE3, GRADE4, GRADE5]
+
 
 def getAdditionFileInfo(fileID: int) -> Additions | None:
     file = db.query(Additions).filter_by(addition_id=fileID).first()
@@ -178,6 +186,111 @@ def convertDBTaskToDict(task: Tasks):
         if addition is not None:
             result['additions'].append(convertDBAdditionToDict(addition))
     return result
+
+
+# возвращает массив, где хранятся словари с двумя ключами:
+# file_id - идентификатор файла
+# filename - имя файла
+def getTaskWorksInfo(works: list[Works]):
+    result = []
+    for work in works:
+        result.append({'file_id': work.work_file_id,
+                       'filename': work.filename})
+
+    return result
+
+
+def getAllStudentTaskWorks(student_id: int, task_id: int) -> Works:
+    return db.query(Works).filter_by(student_id=student_id,
+                                     task_id=task_id).all()
+
+
+def getGradeInfo(grade: Grades) -> dict:
+    if grade is not None:
+        return {'grade': grade.grade, 'author': grade.author_id}
+    else:
+        return {'grade': GRADE_WORK_NONE, 'author': None}
+
+
+# изменяет массив заданий tasks, добавляя информацию о работах
+# студента с идентификатором student_id
+def addWorksInfoToTasksInfo(student_id: int, tasks: list[dict]):
+    for task in tasks:
+        works = getAllStudentTaskWorks(student_id, task['id'])
+        task['works'] = getTaskWorksInfo(works)
+        grade = getStudentGrade(student_id, task['id'])
+        task['grade'] = getGradeInfo(grade)
+
+
+def addWork(student_id: int, task_id: int, filename: str) -> Works:
+    work = Works(student_id=student_id, task_id=task_id, filename=filename)
+    db.add(work)
+    db.commit()
+
+    return work
+
+
+def deleteWork(work: int | Works):
+    if isinstance(work, int):
+        work = db.query(Works).filter_by(work_file_id=work).first()
+
+    if work is not None:
+        db.delete(work)
+        db.commit()
+
+
+def deleteAllStudentTaskWorks(student_id: int, task_id: int):
+    works = getAllStudentTaskWorks(student_id, task_id)
+    db.delete(works)
+    db.commit()
+
+
+def getAllTaskWorks(task_id: int):
+    return db.query(Works).filter_by(task_id=task_id).all()
+
+
+def getWork(work_file_id: int):
+    return db.query(Works).filter_by(work_file_id=work_file_id).first()
+
+
+def getGrade(grade_id: int):
+    return db.query(Grades).filter_by(grade_id=grade_id).first()
+
+
+def addGrade(student_id: int, task_id: int,
+             author_id: int, grade: str) -> Grades:
+    grade = Grades(student_id=student_id, task_id=task_id,
+                   author_id=author_id, grade=grade)
+    db.add(grade)
+    db.commit()
+    return grade
+
+
+
+def getStudentGrade(student_id: int, task_id: int) -> Grades | None:
+    return db.query(Grades).filter_by(student_id=student_id,
+                                      task_id=task_id).first()
+
+
+# Устанавливает оценку
+# Если author_id не None, то устанавливает автора
+def setGrade(student_id: int, task_id: int, new_grade: str,
+             author_id: Grades | None = None):
+    grade = getStudentGrade(student_id, task_id)
+    if grade is None:
+        addGrade(student_id, task_id, author_id, new_grade)
+    else:
+        grade.grade = new_grade
+        if author_id is not None:
+            grade.author_id = author_id
+            if new_grade == GRADE_WORK_NONE:
+                grade.grade = GRADE_WORK_RETURNED
+
+        db.commit()
+
+
+# def getStudentWorkInfo(student_id, task_id):
+
 
 
 def convertDBTasksToDict(tasks: List[Tasks]):

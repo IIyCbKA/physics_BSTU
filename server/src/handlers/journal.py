@@ -2,17 +2,19 @@ from src.application import fastApiServer
 from src.data.functions.journal import *
 from src.handlers.login import (
     getCurrentEmployee, getCurrentUser, getCurrentUserS)
-from src.storage.functions.storage import getAdditionFileObject
 from src.storage.functions.storage \
-    import addFileToTaskStorage, deleteTaskFileObject
+    import (addFileToTaskStorage, deleteTaskFileObject, getAdditionFileObject,
+            addFileToWorkStorage, deleteWorkFileObject, getWorkFileObject)
 from src.strings.strings import getFileType
 from src.handlers.schemas import DeleteTaskData
-from src.handlers.schemas import UserModel
+from src.handlers.schemas \
+    import (UserModel, StudentWorkModel, EmployeeWorkReturnModel,
+            EmployeeWorkGradeModel)
 import json
 
 from fastapi.responses import JSONResponse, StreamingResponse
 from typing import Annotated
-from fastapi import UploadFile, Form, Request, Depends, WebSocket
+from fastapi import UploadFile, Form, Request, Depends, WebSocket, File
 from src.socketManager import sockets
 
 # Роут на получение списка групп
@@ -45,7 +47,7 @@ def updateAdditions(task: Tasks, files: List[UploadFile], newVals: List[dict]):
 
     newAdds = []
     for addition in newVals:
-        if addition['remote'] == False:
+        if not addition['remote']:
             newAdds.append(addition)
     additions = addTaskAdditionsToDB(newAdds)
 
@@ -71,8 +73,104 @@ async def getUserTasks(user: UserModel) -> dict:
         tasks = []
 
     result = convertDBTasksToDict(tasks)
+    if user.status == 'student':
+        addWorksInfoToTasksInfo(user.userID, result)
 
     return result
+
+
+# Роут на добавление файла к работе студента
+@fastApiServer.post('/api/works/add_file')
+async def addFileToWork(user: Annotated[UserModel, Depends(getCurrentUser)],
+                        file: Annotated[UploadFile, File()],
+                        task_id: Annotated[int, Form()]):
+    try:
+        if user.status == 'student':
+            work = addWork(user.userID, task_id, file.filename)
+            if not addFileToWorkStorage(
+                    file,
+                    work.work_file_id,
+                    getFileType(work.filename)):
+                deleteWork(work)
+                return JSONResponse(
+                    content={'error': 'Work not added'},
+                    status_code=500)
+
+            # добавить сокеты?
+            return JSONResponse(content={}, status_code=200)
+
+    except Exception as e:
+        return JSONResponse(content={'Error': e}, status_code=500)
+
+
+# Роут на удаление файла из работы студента
+@fastApiServer.post('/api/works/delete_file')
+async def deleteFileFromWork(user: Annotated[UserModel, Depends(getCurrentUser)],
+                             work_file_id: int):
+    try:
+        if user.status == 'student':
+            work = getWork(work_file_id)
+            if work is not None:
+                deleteWorkFileObject(work_file_id, getFileType(work.filename))
+                deleteWork(work)
+                # добавить сокеты
+                return JSONResponse(content={}, status_code=200)
+            else:
+                return JSONResponse(
+                    content={'error': 'Work not exist'},
+                    status_code=404)
+
+    except Exception as e:
+        return JSONResponse(content={'Error': e}, status_code=500)
+
+
+async def setGradeWorkCommon(user_status: str, require_status: str,
+                             student_id: int, task_id, grade: str,
+                             author_id: int | None = None):
+    try:
+        if user_status == require_status:
+            setGrade(student_id, task_id, grade, author_id)
+            return JSONResponse(content={}, status_code=200)
+        else:
+            JSONResponse(content={'Error': f'user is not a {require_status}'},
+                         status_code=403)
+    except Exception as e:
+        return JSONResponse(content={'Error': e}, status_code=500)
+
+
+@fastApiServer.post('/api/works/handIn')
+async def handInTheWork(user: Annotated[UserModel, Depends(getCurrentUser)],
+                        data: StudentWorkModel):
+    return await setGradeWorkCommon(user.status, 'student',
+                                    user.userID, data.task_id, GRADE_WORK_SEND)
+
+
+@fastApiServer.post('/api/works/return/student')
+async def returnOwnWork(user: Annotated[UserModel, Depends(getCurrentUser)],
+                        data: StudentWorkModel):
+    return await setGradeWorkCommon(user.status, 'student',
+                                    user.userID, data.task_id, GRADE_WORK_NONE)
+
+
+@fastApiServer.post('/api/works/return/employee')
+async def returnStudentWork(
+        user: Annotated[UserModel, Depends(getCurrentEmployee)],
+        data: EmployeeWorkReturnModel):
+    return await setGradeWorkCommon(
+        user.status, 'employee',
+        data.student_id, data.task_id, GRADE_WORK_NONE, user.userID)
+
+
+@fastApiServer.post('/api/works/setGrade')
+async def setStudentFinishedGrade(
+        user: Annotated[UserModel, Depends(getCurrentEmployee)],
+        data: EmployeeWorkGradeModel):
+    if data.grade not in POSSIBLE_GRADES:
+        return JSONResponse(content={'Error': 'incorrect grade'},
+                            status_code=400)
+    return await setGradeWorkCommon(
+        user.status, 'employee',
+        data.student_id, data.task_id, data.grade, user.userID)
 
 
 async def sendAllTasks(group_id: int):
@@ -192,6 +290,29 @@ async def deleteTask(data: DeleteTaskData,
             return JSONResponse(content={}, status_code=200)
 
         return JSONResponse(content={'Error': 'Task not found'},
+                            status_code=404)
+    except Exception as e:
+        return JSONResponse(content={'Error': e}, status_code=500)
+
+
+@fastApiServer.get('/api/works/download/{fileID}')
+async def handleWorkFileDownloadRequest(
+        fileID: str, user: Annotated[UserModel, Depends(getCurrentUser)]):
+    async def file_iterator():
+        yield data
+
+    try:
+        work_file_id = int(fileID)
+        work = getWork(work_file_id)
+        if work is not None:
+            # получаем файл из хранилища, проверяем, что он существует
+            file = getWorkFileObject(work_file_id, getFileType(work.filename))
+            if file is not None:
+                data = file.read()
+
+                return StreamingResponse(file_iterator())
+
+        return JSONResponse(content={'Error': 'File not found'},
                             status_code=404)
     except Exception as e:
         return JSONResponse(content={'Error': e}, status_code=500)
