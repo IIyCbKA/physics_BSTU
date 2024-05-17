@@ -15,13 +15,12 @@ export default function Account(){
 
     useEffect(() => {
         const waitFunc = async () => {
-            if (userStatus === 'employee')
-                await dispatch(getGroups())
+            await dispatch(getGroups())
             await dispatch(getTasksList())
             await socket.init('journal', {})
         }
         waitFunc()
-    }, [dispatch, userStatus]);
+    }, [dispatch]);
 
     return (
         <div style={{backgroundColor: '#EBF0FF'}}>

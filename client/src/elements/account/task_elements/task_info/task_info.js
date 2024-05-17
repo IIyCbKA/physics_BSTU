@@ -1,4 +1,4 @@
-import TaskAddition from "../addition/task_addition";
+import TaskAddition from "../../listing_tasks/task/addition/task_addition";
 import './styles/style_task_info.css'
 import {useLayoutEffect, useRef, useState} from "react";
 import {useSelector} from "react-redux";
@@ -32,26 +32,29 @@ export default function TaskInfo(props){
     return (
         <div className='task-info-wrap' style={infoStyle()}>
             <div className='task-info-main' ref={infoRef}>
-                {props.description.length === 0 &&
-                props.additions.length === 0 ?
-                    <span className='task-info-text-all task-info-absence'>
-                            Дополнительные материалы отсутствуют
-                        </span> :
-                    <span
-                        className='task-info-description task-info-text-all'>
-                            {props.description}
-                        </span>
+                {props.isTask &&
+                 props.description.length === 0 &&
+                 props.additions.length === 0 ?
+                     <span className='task-info-text-all task-info-absence'>
+                         Дополнительные материалы отсутствуют
+                     </span> :
+                 props.isTask &&
+                     <span className='task-info-description task-info-text-all'>
+                         {props.description}
+                     </span>
                 }
                 <div>
-                    {props.additions.map(addition => (
-                        <TaskAddition
-                            key={addition.id}
-                            id={addition.id}
-                            name={addition.title}
-                            type={addition.type}
-                            content={addition.content}
-                        />
-                    ))}
+                    {props.isTask &&
+                        props.additions.map(addition => (
+                                <TaskAddition
+                                    key={addition.id}
+                                    id={addition.id}
+                                    name={addition.title}
+                                    type={addition.type}
+                                    content={addition.content}
+                                />
+                        ))
+                    }
                 </div>
             </div>
         </div>

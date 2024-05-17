@@ -6,6 +6,7 @@ import TasksHead from "../listing_tasks/head/head";
 import {employeeStatus} from "../../../reducers/user_reducer";
 import {useSelector} from "react-redux";
 import UserInfo from "../user_info/user_info";
+import ListingWork from "../students/profile_listing_tasks/listing_works";
 
 
 export default function RootAccount(props){
@@ -31,6 +32,7 @@ export default function RootAccount(props){
                             </div> :
                             <div className='account-evaluation-main'>
                                 <UserInfo/>
+                                <ListingWork/>
                             </div>
                         }
                     </CSSTransition>

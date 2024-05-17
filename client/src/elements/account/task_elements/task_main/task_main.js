@@ -46,17 +46,26 @@ export default function TaskMain(props){
             <div className='task-icon-wrap'>
                 <AssignmentOutlined style={styles.iconStyle}/>
             </div>
-            <div className='task-title-wrap'>
-                <div className='task-title-text'>
+            <div className={props.isTask ? 'task-title-wrap' : 'task-title-wrap work-title-wrap'}>
+                <div className='task-title-text task-main-text-all'>
                     {props.title}
                 </div>
             </div>
-            <div className='task-more-btn-wrap'
-                 style={moreWrapStyle()}
-                 onClick={moreClick}
-            >
-                <MoreVert style={styles.moreIconStyle}/>
-            </div>
+            {props.isWork &&
+                <div className='work-grade-wrap'>
+                    <span className='task-main-text-all'>
+                        Назначено
+                    </span>
+                </div>
+            }
+            {props.isTask &&
+                <div className='task-more-btn-wrap'
+                     style={moreWrapStyle()}
+                     onClick={moreClick}
+                >
+                    <MoreVert style={styles.moreIconStyle}/>
+                </div>
+            }
         </div>
     )
 }

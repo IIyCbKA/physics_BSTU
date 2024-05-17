@@ -1,19 +1,16 @@
 import {useSelector} from "react-redux";
-import '../task_elements/styles/style_task.css'
-import Task from "./task/task";
+import '../../task_elements/styles/style_task.css'
+import Work from "./work/work";
 import {useState} from "react";
 
-export default function ListingTask(){
+export default function ListingWork(){
     const tasks = useSelector(state => state.journal.tasks);
     const [activeTaskID, setActiveTask] = useState(null)
 
     return (
         <div className='listing-task-root'>
             {tasks.map((task, index) => (
-                <Task title={task.title}
-                      description={task.description}
-                      additions={task.additions}
-                      groups={task.groups}
+                <Work title={task.title}
                       id={task.id}
                       key={task.id}
                       isLast={index === tasks.length - 1}
