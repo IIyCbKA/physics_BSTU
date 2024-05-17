@@ -24,7 +24,6 @@ class Groups(Base):
     group_id: Column[int] = Column(Integer, primary_key=True,
                                    autoincrement=True)
     group_name: Column[str] = Column(String, nullable=False)
-    task_numbers: Column[List] = Column(ARRAY(Integer))
 
 
 class Students(Base):
