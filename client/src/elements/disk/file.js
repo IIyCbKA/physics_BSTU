@@ -94,7 +94,6 @@ export default function File(props){
 
         const diffX = Math.abs(touchMoveX - touchStartX);
         const diffY = Math.abs(touchMoveY - touchStartY);
-        console.log(diffX, diffY)
         if (diffX > 10 || diffY > 10) {
             clearTimeout(timer);
         }
