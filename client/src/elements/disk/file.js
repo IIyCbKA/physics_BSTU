@@ -65,7 +65,7 @@ export default function File(props){
         touchStartY = event.touches[0].clientY;
         startTime = Date.now();
 
-        folderTimer = setTimeout(() => {
+        timer = setTimeout(() => {
             event.stopPropagation();
             dispatch(selectedFile(props.id, props.name, props.type))
         }, 300);
@@ -94,7 +94,6 @@ export default function File(props){
 
         const diffX = Math.abs(touchMoveX - touchStartX);
         const diffY = Math.abs(touchMoveY - touchStartY);
-
         if (diffX > 10 || diffY > 10) {
             clearTimeout(timer);
         }
