@@ -3,17 +3,18 @@ import {CloseOutlined} from "@ant-design/icons";
 import {styles} from "./styles/style_addition_entity";
 import AdditionEntityInfo from "./addition_entity_info";
 import {useState} from "react";
+import { deleteWorkFile } from '../../../../../actions/journal';
 
 
 export default function AdditionEntity(props){
     const [isHover, setHover] = useState(false)
 
-    const handleDeleteAddition = () => {
+    const handleDeleteAddition = async () => {
         if (props.isTaskForm){
             props.setAdditions(prevAdditions => prevAdditions.filter(
                 addition => addition.id !== props.id))
         } else if (props.isWorkFile){
-            // тут удаление (в props.id лежит id, что ты мне скидывал в works)
+            await deleteWorkFile(props.id)
         }
     }
 

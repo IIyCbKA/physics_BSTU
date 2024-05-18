@@ -169,7 +169,7 @@ export const addWorkFile = async (file, task_id) => {
 
 export const deleteWorkFile = async (work_file_id) => {
     try{
-        await $host.post('/api/delete_file', {work_file_id})
+        await $host.post('/api/works/delete_file', {work_file_id})
     }
     catch(e){
         console.log(e)

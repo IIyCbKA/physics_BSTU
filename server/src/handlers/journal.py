@@ -9,7 +9,7 @@ from src.strings.strings import getFileType
 from src.handlers.schemas import DeleteTaskData
 from src.handlers.schemas \
     import (UserModel, StudentWorkModel, EmployeeWorkReturnModel,
-            EmployeeWorkGradeModel)
+            EmployeeWorkGradeModel, WorkFileDeleteModel)
 import json
 
 from fastapi.responses import JSONResponse, StreamingResponse
@@ -106,12 +106,12 @@ async def addFileToWork(user: Annotated[UserModel, Depends(getCurrentUser)],
 # Роут на удаление файла из работы студента
 @fastApiServer.post('/api/works/delete_file')
 async def deleteFileFromWork(user: Annotated[UserModel, Depends(getCurrentUser)],
-                             work_file_id: int):
+                             data: WorkFileDeleteModel):
     try:
         if user.status == 'student':
-            work = getWork(work_file_id)
+            work = getWork(data.work_file_id)
             if work is not None:
-                deleteWorkFileObject(work_file_id, getFileType(work.filename))
+                deleteWorkFileObject(data.work_file_id, getFileType(work.filename))
                 deleteWork(work)
                 # добавить сокеты
                 return JSONResponse(content={}, status_code=200)

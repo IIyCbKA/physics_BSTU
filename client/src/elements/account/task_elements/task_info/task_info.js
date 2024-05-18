@@ -86,8 +86,8 @@ export default function TaskInfo(props){
                             type='file'
                             name={file.filename}
                             content={{fileType: getFileType(file.filename)}}
-                            id={file.id}
-                            key={file.id}
+                            id={file.file_id}
+                            key={file.file_id}
                         />
                     ))
                 }

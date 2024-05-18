@@ -53,6 +53,10 @@ class StudentWorkModel(BaseModel):
     task_id: int
 
 
+class WorkFileDeleteModel(BaseModel):
+    work_file_id: int
+
+
 class EmployeeWorkReturnModel(BaseModel):
     task_id: int
     student_id: int
