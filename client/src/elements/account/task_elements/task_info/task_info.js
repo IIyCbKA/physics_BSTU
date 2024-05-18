@@ -1,12 +1,13 @@
 import TaskAddition from "../../listing_tasks/task/addition/task_addition";
 import './styles/style_task_info.css'
-import {useLayoutEffect, useRef, useState} from "react";
+import React, {useLayoutEffect, useRef, useState} from "react";
 import {useSelector} from "react-redux";
 
 export default function TaskInfo(props){
     const [heightInfo, setHeight] = useState(0);
     const infoRef = useRef(null);
     const windowWidth = useSelector(state => state.app.width)
+    const fileInputRef = useRef(null);
 
     useLayoutEffect(() => {
         setHeight(infoRef.current.scrollHeight);
@@ -27,6 +28,22 @@ export default function TaskInfo(props){
                 height: 0
             }
         }
+    }
+
+    const handleFileSelect = async (event) => {
+        const selectedFile = event.target.files[0];
+        console.log(selectedFile)
+        try {
+            // тут кидаем его на сервак
+        } catch (error) {
+            console.log(error);
+        }
+
+        event.target.value = null;
+    }
+
+    const handleAddFileClick = () => {
+        fileInputRef.current.click();
     }
 
     return (
@@ -62,13 +79,21 @@ export default function TaskInfo(props){
                 </div>
                 {props.isWork &&
                     <div className='work-btns-wrap'>
-                        <div className='work-btns-all add-work-btn'>
-                            <div className='task-info-default-text add-work-text'>
+                        <div className='work-btns-all add-work-btn'
+                             onClick={handleAddFileClick}
+                        >
+                            <input type="file" ref={fileInputRef}
+                                   style={{display: 'none'}}
+                                   onChange={handleFileSelect}
+                            />
+                            <div
+                                className='task-info-default-text add-work-text'>
                                 Добавить файл
                             </div>
                         </div>
                         <div className='work-btns-all submit-work-btn'>
-                            <div className='task-info-default-text submit-work-text'>
+                            <div
+                                className='task-info-default-text submit-work-text'>
                                 Сдать работу
                             </div>
                         </div>
