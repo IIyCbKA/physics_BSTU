@@ -3,6 +3,8 @@ import TaskAddition from "../../listing_tasks/task/addition/task_addition";
 import './styles/style_task_info.css'
 import React, {useLayoutEffect, useRef, useState} from "react";
 import {useSelector} from "react-redux";
+import AdditionEntity from "../../task_form/addition/entity/addition_entity";
+import {getFileType} from "../../../../actions/strings";
 
 export default function TaskInfo(props){
     const [heightInfo, setHeight] = useState(0);
@@ -74,6 +76,18 @@ export default function TaskInfo(props){
                             name={addition.title}
                             type={addition.type}
                             content={addition.content}
+                        />
+                    ))
+                }
+                {props.isWork &&
+                    props.files.map(file => (
+                        <AdditionEntity
+                            isWorkFile={true}
+                            type='file'
+                            name={file.filename}
+                            content={{fileType: getFileType(file.filename)}}
+                            id={file.id}
+                            key={file.id}
                         />
                     ))
                 }

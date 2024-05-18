@@ -15,6 +15,7 @@ export default function Information(props){
                     <AdditionEntity {...addition}
                                     key={addition.id}
                                     setAdditions={props.setAdditions}
+                                    isTaskForm={true}
                     />
                 ))}
             </div>

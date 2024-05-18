@@ -9,8 +9,12 @@ export default function AdditionEntity(props){
     const [isHover, setHover] = useState(false)
 
     const handleDeleteAddition = () => {
-        props.setAdditions(prevAdditions => prevAdditions.filter(
-            addition => addition.id !== props.id))
+        if (props.isTaskForm){
+            props.setAdditions(prevAdditions => prevAdditions.filter(
+                addition => addition.id !== props.id))
+        } else if (props.isWorkFile){
+            // тут удаление (в props.id лежит id, что ты мне скидывал в works)
+        }
     }
 
     return (

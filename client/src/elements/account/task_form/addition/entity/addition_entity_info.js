@@ -4,7 +4,6 @@ import './styles/style_addition_entity.css'
 
 export default function AdditionEntityInfo(props){
     const linkTitle = 'Ссылка'
-
     const styleAdditionTitle = () => {
         if (props.type === 'link' && props.isHover){
             return styles.titleAdditionLinkHover
