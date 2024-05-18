@@ -64,19 +64,17 @@ export default function TaskInfo(props){
                          Прикрепленные файлы отсутствуют
                      </span>
                 }
-                <div>
-                    {props.isTask &&
-                        props.additions.map(addition => (
-                                <TaskAddition
-                                    key={addition.id}
-                                    id={addition.id}
-                                    name={addition.title}
-                                    type={addition.type}
-                                    content={addition.content}
-                                />
-                        ))
-                    }
-                </div>
+                {props.isTask &&
+                    props.additions.map(addition => (
+                        <TaskAddition
+                            key={addition.id}
+                            id={addition.id}
+                            name={addition.title}
+                            type={addition.type}
+                            content={addition.content}
+                        />
+                    ))
+                }
                 {props.isWork &&
                     <div className='work-btns-wrap'>
                         <div className='work-btns-all add-work-btn'
