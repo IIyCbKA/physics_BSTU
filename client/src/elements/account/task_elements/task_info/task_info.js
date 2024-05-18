@@ -1,3 +1,4 @@
+import { addWorkFile } from "../../../../actions/journal";
 import TaskAddition from "../../listing_tasks/task/addition/task_addition";
 import './styles/style_task_info.css'
 import React, {useLayoutEffect, useRef, useState} from "react";
@@ -33,8 +34,9 @@ export default function TaskInfo(props){
     const handleFileSelect = async (event) => {
         const selectedFile = event.target.files[0];
         console.log(selectedFile)
+        console.log(props.id)
         try {
-            // тут кидаем его на сервак
+            await addWorkFile(selectedFile, props.id)
         } catch (error) {
             console.log(error);
         }

@@ -41,7 +41,7 @@ export default function Task(props){
             id={props.id} isTask={true}/>
 
             <TaskInfo isActive={props.isActive} description={props.description}
-            additions={props.additions} isTask={true}/>
+            additions={props.additions} isTask={true} id={props.id}/>
 
             <TaskMenu
                 open={open}

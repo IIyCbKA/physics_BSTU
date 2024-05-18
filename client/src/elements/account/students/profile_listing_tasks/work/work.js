@@ -22,7 +22,8 @@ export default function Work(props){
                       isWork={true}
             />
 
-            <TaskInfo isActive={props.isActive} files={props.files} isWork={true}/>
+            <TaskInfo isActive={props.isActive} files={props.files} 
+            isWork={true} id={props.id}/>
         </div>
     )
 }

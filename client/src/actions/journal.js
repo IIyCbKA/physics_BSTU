@@ -150,3 +150,28 @@ export const convertRemoteAdditionsToEditFormat = (additions) => {
     })
     return result
 }
+
+export const addWorkFile = async (file, task_id) => {
+    try{
+        const formData = new FormData()
+        formData.append('file', file)
+        formData.append('task_id', task_id)
+        await $host.post('/api/works/add_file', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+    }
+    catch (e){
+        console.log(e)
+    }
+}
+
+export const deleteWorkFile = async (work_file_id) => {
+    try{
+        await $host.post('/api/delete_file', {work_file_id})
+    }
+    catch(e){
+        console.log(e)
+    }
+}
