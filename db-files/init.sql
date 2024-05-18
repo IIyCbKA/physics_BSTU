@@ -62,11 +62,14 @@ create table grades
     grade_id   serial
         primary key,
     student_id integer not null
-        references students,
-    author_id  integer not null
-        references employees,
+        references students
+            on delete cascade,
+    author_id  integer
+                       references employees
+                           on delete set null,
     task_id    integer not null
-        references tasks,
+        references tasks
+            on delete cascade,
     grade      varchar not null,
     unique (student_id, task_id)
 );
@@ -79,10 +82,12 @@ create table works
     work_file_id serial
         primary key,
     task_id      integer not null
-        references tasks,
+        references tasks
+            on delete cascade,
     student_id   integer not null
-        references students,
-    unique (student_id, task_id)
+        references students
+            on delete cascade,
+    filename     varchar not null
 );
 
 alter table works
@@ -128,3 +133,4 @@ create table tasks_groups
 
 alter table tasks_groups
     owner to admin;
+

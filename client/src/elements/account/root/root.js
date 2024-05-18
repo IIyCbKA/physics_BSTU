@@ -32,7 +32,9 @@ export default function RootAccount(props){
                             </div> :
                             <div className='account-evaluation-main'>
                                 <UserInfo/>
-                                <ListingWork/>
+                                {userStatus === 'student' &&
+                                    <ListingWork/>
+                                }
                             </div>
                         }
                     </CSSTransition>

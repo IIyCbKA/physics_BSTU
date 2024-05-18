@@ -38,9 +38,13 @@ export default function TaskInfo(props){
                      <span className='task-info-text-all task-info-absence'>
                          Дополнительные материалы отсутствуют
                      </span> :
-                 props.isTask &&
-                     <span className='task-info-description task-info-text-all'>
+                 props.isTask ?
+                     <span className='task-info-default-text task-info-text-all'>
                          {props.description}
+                     </span> :
+                 props.isWork && props.files.length === 0 &&
+                     <span className='task-info-text-all task-info-absence'>
+                         Прикрепленные файлы отсутствуют
                      </span>
                 }
                 <div>
@@ -56,6 +60,20 @@ export default function TaskInfo(props){
                         ))
                     }
                 </div>
+                {props.isWork &&
+                    <div className='work-btns-wrap'>
+                        <div className='add-work-btn'>
+                            <div className='task-info-default-text add-work-text'>
+                                Добавить файл
+                            </div>
+                        </div>
+                        <div className='submit-work-btn'>
+                            <div className='task-info-default-text submit-work-text'>
+                                Сдать работу
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     )

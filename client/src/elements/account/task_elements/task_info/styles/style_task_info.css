@@ -16,7 +16,7 @@
     font-weight: 400;
 }
 
-.task-info-description{
+.task-info-default-text{
     font-size: 13px;
     line-height: 20px;
     color: rgba(0, 0, 0, .87);
@@ -26,4 +26,48 @@
     font-size: 12px;
     line-height: 16px;
     color: #5F6368
+}
+
+.work-btns-wrap{
+    display: flex;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.add-work-btn{
+    border-radius: 6px;
+    padding: 8px;
+    cursor: pointer;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #DADCE0;
+    transition: border-color 0.25s;
+}
+
+.submit-work-btn{
+    margin-left: 12px;
+    border-radius: 6px;
+    padding: 8px;
+    cursor: pointer;
+    background-color: #1967D2;
+}
+
+.submit-work-btn:hover{
+    background-color: #144B9D;
+}
+
+.submit-work-text{
+    color: #FFFFFF
+}
+
+.add-work-btn:hover{
+    background-color: #E8F0FE;
+}
+
+.add-work-btn:active{
+    border-color: #1967D2;
+}
+
+.add-work-text{
+    color: #1967D2
 }

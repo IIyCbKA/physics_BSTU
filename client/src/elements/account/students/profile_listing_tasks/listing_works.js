@@ -9,12 +9,13 @@ export default function ListingWork(){
 
     return (
         <div className='listing-task-root'>
-            {tasks.map((task, index) => (
-                <Work title={task.title}
-                      id={task.id}
-                      key={task.id}
+            {tasks.map((work, index) => (
+                <Work title={work.title}
+                      id={work.id}
+                      key={work.id}
+                      files={work.works}
                       isLast={index === tasks.length - 1}
-                      isActive={activeTaskID === task.id}
+                      isActive={activeTaskID === work.id}
                       setActiveID={setActiveTask}
                 />
             ))}
