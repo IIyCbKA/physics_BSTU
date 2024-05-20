@@ -62,6 +62,7 @@
     display: flex;
     align-items: center;
     flex-shrink: 0;
+    user-select: none;
 }
 
 .task-main-text-all{

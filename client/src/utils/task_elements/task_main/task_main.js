@@ -2,8 +2,12 @@ import {AssignmentOutlined, MoreVert} from "@mui/icons-material";
 import {isMobile} from "react-device-detect";
 import {styles} from "./styles/style_task_main";
 import './styles/style_task_main.css'
+import {useSelector} from "react-redux";
+import {employeeStatus} from "../../../reducers/user_reducer";
 
 export default function TaskMain(props){
+    const userStatus = useSelector(state => state.user.currentUser.status)
+
     const handleTaskClick = () => {
         if (props.isActive){
             props.setActiveID(null)
@@ -58,7 +62,7 @@ export default function TaskMain(props){
                     </span>
                 </div>
             }
-            {props.isTask &&
+            {props.isTask && userStatus === employeeStatus &&
                 <div className='task-more-btn-wrap'
                      style={moreWrapStyle()}
                      onClick={moreClick}

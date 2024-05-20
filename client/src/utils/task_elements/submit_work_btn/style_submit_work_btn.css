@@ -1,0 +1,14 @@
+.submit-work-btn{
+    margin-left: 12px;
+    background-color: #1967D2;
+    border-color: #1967D2;
+}
+
+.submit-work-btn:hover{
+    background-color: #144B9D;
+    border-color: #144B9D
+}
+
+.submit-work-text{
+    color: #FFFFFF
+}

@@ -1,0 +1,16 @@
+.add-work-btn{
+    border-color: #DADCE0;
+    transition: border-color 0.25s;
+}
+
+.add-work-btn:hover{
+    background-color: #E8F0FE;
+}
+
+.add-work-btn:active{
+    border-color: #1967D2;
+}
+
+.add-work-text{
+    color: #1967D2
+}

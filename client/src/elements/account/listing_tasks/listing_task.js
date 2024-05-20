@@ -1,6 +1,6 @@
 import {useSelector} from "react-redux";
-import '../task_elements/styles/style_task.css'
-import Task from "./task/task";
+import '../common_styles/common_account_styles.css'
+import Task from "../../../utils/task/task";
 import {useState} from "react";
 
 export default function ListingTask(){

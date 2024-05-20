@@ -6,16 +6,6 @@ import './styles/style_login.css'
 
 export default function LoginBtn(props){
     const [btnIsFocused, setBtnIsFocused] = useState(false);
-    //const [isButtonShaking, setButtonShaking] = useState(false);
-
-    //function incorrectData(){
-    //    setButtonShaking(true);
-
-    //    setTimeout(() => {
-    //        setButtonShaking(false);
-    //        props.setPassword('');
-    //    }, 500);
-    //}
 
     const changeBtnActive = () => {
         setBtnIsFocused(!btnIsFocused);
@@ -30,20 +20,20 @@ export default function LoginBtn(props){
     };
 
     return (
-        <div className="btn-margin">
+        <div className="login-btn-wrap">
             <Button variant="primary"
                     type="submit"
                     style={{
                         ...styles.formButtonStyle,
                         backgroundColor: btnColor(),
-                        //animation: isButtonShaking ? "shakeButton 0.5s" : "none"
+                        animation: props.isButtonShaking ? "shakeButton 0.5s" : "none"
                     }}
                     onClick={props.onClick}
                     onMouseEnter={changeBtnActive}
                     onMouseLeave={changeBtnActive}
-                    disabled={props.value}
-                    className="form-btn">
-                <h2 className="no-margin">Продолжить</h2>
+                    disabled={props.disabled}
+            >
+                <h2 className="login-btn-text">{props.text}</h2>
             </Button>
         </div>
     )

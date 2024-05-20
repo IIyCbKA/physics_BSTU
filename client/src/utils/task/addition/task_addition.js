@@ -1,8 +1,8 @@
 import './styles/style_task_addition.css'
 import {useState} from "react";
 import AdditionEntityInfo
-    from "../../../task_form/addition/entity/addition_entity_info";
-import {downloadTaskFile} from "../../../../../actions/journal";
+    from "../../entity_addition/addition_entity_info";
+import {downloadTaskFile} from "../../../actions/journal";
 
 
 export default function TaskAddition(props){

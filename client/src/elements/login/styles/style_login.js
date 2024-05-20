@@ -1,8 +1,12 @@
 const formButtonStyle = {
     display: "block",
-    margin: "0 auto",
+    margin: "0",
     border: "None",
-    boxShadow: 'None'
+    boxShadow: 'None',
+    maxWidth: '420px',
+    width: '100%',
+    minWidth: '220px',
+    height: '65px'
 }
 
 const buttonChangeVisibilityStyle  = {
@@ -11,14 +15,14 @@ const buttonChangeVisibilityStyle  = {
 }
 
 const inputLinesStyle = {
-    height: "40px",
+    height: "46px",
     backgroundColor: "#F4F4F4",
     border: '1px solid #F4F4F4',
     transition: "background-color 0.7s, border 0.7s"
 }
 
 const focusPasswordLineStyle = {
-    height: "40px",
+    height: "46px",
     backgroundColor: "#F4F4F4",
     border: '1px solid #D0D1D2',
     borderRight: "1px solid #F4F4F4",
@@ -26,14 +30,14 @@ const focusPasswordLineStyle = {
 }
 
 const focusLoginLineStyle = {
-    height: "40px",
+    height: "46px",
     backgroundColor: "#F4F4F4",
     border: '1px solid #D0D1D2',
     transition: "background-color 0.7s, border 0.7s"
 }
 
 const focusButtonChangeVisibilityStyle = {
-    height: "40px",
+    height: "46px",
     backgroundColor: "#F4F4F4",
     border: '1px solid #D0D1D2',
     borderLeft: "1px solid #F4F4F4",

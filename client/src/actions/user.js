@@ -15,12 +15,13 @@ export const login = (email, password) => {
                 localStorage.setItem('token', response.data.token)
                 Cookies.set('refresh_token', response.data.refresh_token,
                            { expires: REFRESH_TOKEN_EXPIRE_DAYS })
+                return true
             } else {
-                console.log(response.data)
+                return false
             }
         }
         catch (e){
-            alert(e.response.data.message)
+            return false
         }
     }
 };

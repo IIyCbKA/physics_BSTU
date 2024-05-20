@@ -1,5 +1,5 @@
 import {useSelector} from "react-redux";
-import '../../task_elements/styles/style_task.css'
+import '../../common_styles/common_account_styles.css'
 import Work from "./work/work";
 import {useState} from "react";
 

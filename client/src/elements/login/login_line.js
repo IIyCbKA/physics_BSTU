@@ -23,7 +23,7 @@ export default function LoginLine(props) {
     };
 
     return (
-        <div className="inputs-margin">
+        <div className="login-input-line-wrap">
             <Form.Group
                 className="elements-form"
                 controlId="formBasicName"

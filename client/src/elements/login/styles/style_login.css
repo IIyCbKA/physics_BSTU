@@ -1,32 +1,28 @@
 .elements-form {
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    width: 80%;
+    max-width: 420px;
+    width: 100%;
+    min-width: 220px;
 }
 
-.form-btn {
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    width: 80%;
-    height: 65px;
-}
-
-.inputs-margin {
+.login-input-line-wrap {
+    display: flex;
+    justify-content: center;
     margin-bottom: 20px;
 }
 
-.btn-margin {
-    margin-top: 40px;
+.login-btn-wrap {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
 }
 
-.no-margin {
+.login-btn-text {
     margin: 0;
+    font-family: Roboto, Arial, sans-serif;
+    line-height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .btn-hide-password-style {

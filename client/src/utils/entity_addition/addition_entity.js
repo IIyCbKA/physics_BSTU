@@ -3,7 +3,7 @@ import {CloseOutlined} from "@ant-design/icons";
 import {styles} from "./styles/style_addition_entity";
 import AdditionEntityInfo from "./addition_entity_info";
 import {useState} from "react";
-import { deleteWorkFile } from '../../../../../actions/journal';
+import { deleteWorkFile } from '../../actions/journal';
 
 
 export default function AdditionEntity(props){

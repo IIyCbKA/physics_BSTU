@@ -1,8 +1,8 @@
 import {Modal} from "antd";
-import '../../../../modal/styles/style_modal.css'
+import '../../../elements/modal/styles/style_modal.css'
 import './styles/style_delete_task_modal.css'
-import HeaderModal from "../../../../modal/header_modal";
-import {deleteTask} from "../../../../../actions/journal";
+import HeaderModal from "../../../elements/modal/header_modal";
+import {deleteTask} from "../../../actions/journal";
 
 export default function DeleteTaskModal(props){
     const handleCancel = () => {

@@ -1,6 +1,6 @@
-import '../../../task_elements/styles/style_task.css'
-import TaskMain from "../../../task_elements/task_main/task_main";
-import TaskInfo from "../../../task_elements/task_info/task_info";
+import '../../../../../utils/task_elements/styles/style_task.css'
+import TaskMain from "../../../../../utils/task_elements/task_main/task_main";
+import TaskInfo from "../../../../../utils/task_elements/task_info/task_info";
 
 export default function Work(props){
     const rootStyle = () => {
