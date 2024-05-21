@@ -8,7 +8,7 @@ export default function ListingTask(){
     const [activeTaskID, setActiveTask] = useState(null)
 
     return (
-        <div className='listing-task-root'>
+        <div className='listing-account-root'>
             {tasks.map((task, index) => (
                 <Task title={task.title}
                       description={task.description}

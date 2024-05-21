@@ -1,6 +1,6 @@
 import {useSelector} from "react-redux";
 import '../../common_styles/common_account_styles.css'
-import Work from "./work/work";
+import Work from "../../../../utils/work/work";
 import {useState} from "react";
 
 export default function ListingWork(){
@@ -8,7 +8,7 @@ export default function ListingWork(){
     const [activeTaskID, setActiveTask] = useState(null)
 
     return (
-        <div className='listing-task-root'>
+        <div className='listing-account-root'>
             {tasks.map((work, index) => (
                 <Work title={work.title}
                       id={work.id}

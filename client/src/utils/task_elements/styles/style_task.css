@@ -16,9 +16,3 @@
     border-style: solid;
     border-width: 1px;
 }
-
-.task-info-default-text{
-    font-size: 13px;
-    line-height: 20px;
-    color: rgba(0, 0, 0, .87);
-}

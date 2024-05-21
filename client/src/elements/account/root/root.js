@@ -7,6 +7,7 @@ import {employeeStatus} from "../../../reducers/user_reducer";
 import {useSelector} from "react-redux";
 import UserInfo from "../user_info/user_info";
 import ListingWork from "../students/profile_listing_tasks/listing_works";
+import ListingJournals from "../employees/listing_journals/listing_journals";
 
 
 export default function RootAccount(props){
@@ -34,6 +35,9 @@ export default function RootAccount(props){
                                 <UserInfo/>
                                 {userStatus === 'student' &&
                                     <ListingWork/>
+                                }
+                                {userStatus === employeeStatus &&
+                                    <ListingJournals/>
                                 }
                             </div>
                         }

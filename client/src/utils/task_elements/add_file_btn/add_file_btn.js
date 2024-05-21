@@ -30,7 +30,7 @@ export default function AddFileBtn(props){
                    style={{display: 'none'}}
                    onChange={handleFileSelect}
             />
-            <div className='task-info-default-text add-work-text'>
+            <div className='add-work-text'>
                 Добавить файл
             </div>
         </div>
