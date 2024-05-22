@@ -1,6 +1,6 @@
 import {Container, Nav, Navbar} from "react-bootstrap";
 import {styles} from "./styles/style_header";
-import logo from "./icons/logo.png";
+import Logotype from "./icons/logotype";
 import MenuOffcanvas from "../../menu/menu";
 import React, {useState} from "react";
 import {cleanUserInfo} from "../../../actions/user";
@@ -39,13 +39,7 @@ export default function DefaultHeader(){
         >
             <Container fluid style={containerStyle()}>
                 <Navbar.Brand href='/disk/' style={styles.logotypePadding}>
-                    <img
-                        src={logo}
-                        height="30"
-                        width="200"
-                        className='d-inline-block align-top none-select'
-                        alt='Logo'
-                    />
+                    <Logotype width={'125px'} height={'30px'}/>
                 </Navbar.Brand>
                 <Navbar.Toggle
                     aria-controls="responsive-navbar-nav"

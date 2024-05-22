@@ -11,6 +11,8 @@ const headerIconsForm = {
 const logotypePadding = {
     padding: 0,
     height: '30px',
+    display: 'flex',
+    alignItems: 'center'
 }
 
 const customToggle = {
