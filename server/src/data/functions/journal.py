@@ -7,11 +7,7 @@ from sqlalchemy import desc
 GRADE_WORK_NONE: str = 'Назначено'
 GRADE_WORK_SEND: str = 'Сдано'
 GRADE_WORK_RETURNED: str = 'Возвращено'
-GRADE3 = '3'
-GRADE4 = '4'
-GRADE5 = '5'
-POSSIBLE_GRADES = [GRADE3, GRADE4, GRADE5]
-
+GRADE_FINISHED = 'Оценено'
 
 def getAdditionFileInfo(fileID: int) -> Additions | None:
     file = db.query(Additions).filter_by(addition_id=fileID).first()
@@ -207,9 +203,10 @@ def getAllStudentTaskWorks(student_id: int, task_id: int) -> Works:
 
 def getGradeInfo(grade: Grades) -> dict:
     if grade is not None:
-        return {'grade': grade.grade, 'author': grade.author_id}
+        return {'grade': grade.grade, 'author': grade.author_id,
+                'status': grade.status}
     else:
-        return {'grade': GRADE_WORK_NONE, 'author': None}
+        return {'grade': '', 'author': None, 'status': GRADE_WORK_NONE}
 
 
 # изменяет массив заданий tasks, добавляя информацию о работах
@@ -258,9 +255,12 @@ def getGrade(grade_id: int):
 
 
 def addGrade(student_id: int, task_id: int,
-             author_id: int, grade: str) -> Grades:
+             status: str, author_id: int, grade: str = None) -> Grades:
+    if grade is None:
+        grade = ''
+
     grade = Grades(student_id=student_id, task_id=task_id,
-                   author_id=author_id, grade=grade)
+                   author_id=author_id, grade=grade, status=status)
     db.add(grade)
     db.commit()
     return grade
@@ -274,23 +274,22 @@ def getStudentGrade(student_id: int, task_id: int) -> Grades | None:
 
 # Устанавливает оценку
 # Если author_id не None, то устанавливает автора
-def setGrade(student_id: int, task_id: int, new_grade: str,
-             author_id: Grades | None = None):
+def setGrade(student_id: int, task_id: int, grade_status: str,
+             author_id: Grades | None = None, new_grade: str | None = None):
     grade = getStudentGrade(student_id, task_id)
     if grade is None:
-        addGrade(student_id, task_id, author_id, new_grade)
+        grade = addGrade(student_id, task_id, grade_status, author_id, new_grade)
     else:
-        grade.grade = new_grade
+        grade.status = grade_status
         if author_id is not None:
             grade.author_id = author_id
-            if new_grade == GRADE_WORK_NONE:
+            if new_grade is not None:
+                grade.grade = new_grade
+            if grade_status == GRADE_WORK_NONE:
                 grade.grade = GRADE_WORK_RETURNED
 
         db.commit()
-
-
-# def getStudentWorkInfo(student_id, task_id):
-
+    return grade
 
 
 def convertDBTasksToDict(tasks: List[Tasks]):

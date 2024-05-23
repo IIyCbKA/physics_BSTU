@@ -96,6 +96,7 @@ class Grades(Base):
                                                       ondelete='CASCADE'),
                                   nullable=False)
     grade: Column[str] = Column(String, nullable=False)
+    status: Column[str] = Column(String, nullable=False)
 
     __table_args__ = (
         UniqueConstraint('student_id', 'task_id'),

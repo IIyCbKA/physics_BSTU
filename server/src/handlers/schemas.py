@@ -66,3 +66,4 @@ class EmployeeWorkGradeModel(BaseModel):
     task_id: int
     student_id: int
     grade: str
+    status: str

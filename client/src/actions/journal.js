@@ -175,3 +175,21 @@ export const deleteWorkFile = async (work_file_id) => {
         console.log(e)
     }
 }
+
+export const handInWork = async (task_id) => {
+    try{
+        await $host.post('/api/works/handIn', {task_id})
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+export const returnOwnWork = async (task_id) => {
+    try{
+        await $host.post('/api/works/return/student', {task_id})
+    }
+    catch(e){
+        console.log(e)
+    }
+}

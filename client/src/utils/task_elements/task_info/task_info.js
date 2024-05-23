@@ -81,7 +81,7 @@ export default function TaskInfo(props){
                     }
                     <div className='work-btns-wrap'>
                         <AddFileBtn id={props.id}/>
-                        <SubmitWorkBtn/>
+                        <SubmitWorkBtn id={props.id}/>
                     </div>
                 </div>
                 }

@@ -4,6 +4,9 @@ const SET_UPDATE_TASK = "SET_UPDATE_TASK"
 const ADD_TASK = "ADD_TASK"
 const DELETE_TASK = "DELETE_TASK"
 const UPDATE_TASK = "UPDATE_TASK"
+const ADD_WORK = "ADD_WORK"
+const DELETE_WORK = "DELETE_WORK"
+const UPDATE_GRADE = "UPDATE_GRADE"
 
 const defaultState = {
     groups: [],
@@ -22,6 +25,16 @@ export default function journalReducer(state = defaultState, action){
         case UPDATE_TASK: return {...state,
             tasks: state.tasks.map(task => task.id === action.payload.id ?
                 action.payload : task)}
+        case ADD_WORK: return {...state, 
+            tasks: state.tasks.map(task => task.id === action.payload.task_id ?
+                {...task, works: [...task.works, action.payload.work]} : task)}
+        case DELETE_WORK: return {...state, 
+            tasks: state.tasks.map(task => task.id === action.payload.task_id ?
+                {...task, works: task.works.filter(
+                    work => work.file_id !== action.payload.work.file_id)} : task)}
+        case UPDATE_GRADE: return {...state, 
+            tasks: state.tasks.map(task => task.id === action.payload.task_id ?
+                {...task, grade: action.payload.grade} : task)}
         default:
             return state
     }
@@ -33,3 +46,6 @@ export const setUpdatingTask = task => ({type: SET_UPDATE_TASK, payload: task})
 export const addTask = task => ({type: ADD_TASK, payload: task})
 export const deleteTask = taskID => ({type: DELETE_TASK, payload: taskID})
 export const updateTask = task => ({type: UPDATE_TASK, payload: task})
+export const addWork = work => ({type: ADD_WORK, payload: work})
+export const deleteWork = work => ({type: DELETE_WORK, payload: work})
+export const updateGrade = gradeInfo => ({type: UPDATE_GRADE, payload: gradeInfo})

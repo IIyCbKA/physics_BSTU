@@ -17,6 +17,8 @@ from typing import Annotated
 from fastapi import UploadFile, Form, Request, Depends, WebSocket, File
 from src.socketManager import sockets
 
+JOURNAL_SOCKET = 'journal'
+
 # Роут на получение списка групп
 @fastApiServer.get('/api/groups')
 async def groupsList(user: Annotated[UserModel, Depends(getCurrentEmployee)]):
@@ -96,7 +98,14 @@ async def addFileToWork(user: Annotated[UserModel, Depends(getCurrentUser)],
                     content={'error': 'Work not added'},
                     status_code=500)
 
-            # добавить сокеты?
+            sendData = {
+                'work': {'file_id': work.work_file_id,
+                         'filename': work.filename},
+                'task_id': work.task_id, 'student_id': work.student_id
+            }
+            await sockets.sendMessageToUser('addWork', sendData,
+                                            JOURNAL_SOCKET, user.userID)
+            # добавить сокеты для преподавателя
             return JSONResponse(content={}, status_code=200)
 
     except Exception as e:
@@ -111,9 +120,18 @@ async def deleteFileFromWork(user: Annotated[UserModel, Depends(getCurrentUser)]
         if user.status == 'student':
             work = getWork(data.work_file_id)
             if work is not None:
+                sendData = {
+                    'work': {'file_id': work.work_file_id,
+                             'filename': work.filename},
+                    'task_id': work.task_id, 'student_id': work.student_id
+                }
+
                 deleteWorkFileObject(data.work_file_id, getFileType(work.filename))
                 deleteWork(work)
-                # добавить сокеты
+
+                await sockets.sendMessageToUser('deleteWork', sendData,
+                                                JOURNAL_SOCKET, user.userID)
+                # добавить сокеты для преподавателя
                 return JSONResponse(content={}, status_code=200)
             else:
                 return JSONResponse(
@@ -125,11 +143,19 @@ async def deleteFileFromWork(user: Annotated[UserModel, Depends(getCurrentUser)]
 
 
 async def setGradeWorkCommon(user_status: str, require_status: str,
-                             student_id: int, task_id, grade: str,
-                             author_id: int | None = None):
+                             student_id: int, task_id, grade_status: str,
+                             author_id: int | None = None,
+                             grade: str | None = None):
     try:
         if user_status == require_status:
-            setGrade(student_id, task_id, grade, author_id)
+            gradeInfo = setGrade(student_id, task_id,
+                                 grade_status, author_id, grade)
+            sendData = {'task_id': task_id, 'grade': {
+                'grade': gradeInfo.grade, 'author': gradeInfo.author_id,
+                'status': gradeInfo.status
+            }}
+            await sockets.sendMessageToUser('updateGrade', sendData,
+                                            JOURNAL_SOCKET, student_id)
             return JSONResponse(content={}, status_code=200)
         else:
             JSONResponse(content={'Error': f'user is not a {require_status}'},
@@ -157,20 +183,17 @@ async def returnStudentWork(
         user: Annotated[UserModel, Depends(getCurrentEmployee)],
         data: EmployeeWorkReturnModel):
     return await setGradeWorkCommon(
-        user.status, 'employee',
-        data.student_id, data.task_id, GRADE_WORK_NONE, user.userID)
+        user.status, 'employee', data.student_id,
+        data.task_id, GRADE_WORK_NONE, user.userID)
 
 
 @fastApiServer.post('/api/works/setGrade')
 async def setStudentFinishedGrade(
         user: Annotated[UserModel, Depends(getCurrentEmployee)],
         data: EmployeeWorkGradeModel):
-    if data.grade not in POSSIBLE_GRADES:
-        return JSONResponse(content={'Error': 'incorrect grade'},
-                            status_code=400)
     return await setGradeWorkCommon(
         user.status, 'employee',
-        data.student_id, data.task_id, data.grade, user.userID)
+        data.student_id, data.task_id, GRADE_FINISHED, user.userID, data.grade)
 
 
 async def sendAllTasks(group_id: int):
@@ -343,10 +366,10 @@ async def handleJournalFileDownloadRequest(
 
 
 # регистрирует пользователя в хранилище
-@sockets.onSocket('journal')
+@sockets.onSocket(JOURNAL_SOCKET)
 async def journalSocket(ws: WebSocket,
                       token: str,
                       data: dict):
     user = (await getCurrentUserS(token))
-    sockets.addSocket(user.userID, user.status, ws)
+    sockets.addSocket(user.userID, user.status, ws, JOURNAL_SOCKET)
 
