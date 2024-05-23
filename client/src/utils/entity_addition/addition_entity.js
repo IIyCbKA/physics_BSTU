@@ -3,7 +3,7 @@ import {CloseOutlined} from "@ant-design/icons";
 import {styles} from "./styles/style_addition_entity";
 import AdditionEntityInfo from "./addition_entity_info";
 import {useState} from "react";
-import { deleteWorkFile } from '../../actions/journal';
+import {deleteWorkFile, downloadWorkFile} from '../../actions/journal';
 
 
 export default function AdditionEntity(props){
@@ -19,8 +19,14 @@ export default function AdditionEntity(props){
         }
     }
 
+    const handleClickEntity = async () => {
+        if (props.isWorkFile){
+            await downloadWorkFile(props.name, props.id)
+        }
+    }
+
     return (
-        <div className='addition-entity-wrap'>
+        <div className='addition-entity-wrap' onClick={handleClickEntity}>
             <div className='addition-entity-info-root'
                  onMouseEnter={() => setHover(true)}
                  onMouseLeave={() => setHover(false)}

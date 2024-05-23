@@ -88,4 +88,5 @@
 .addition-entity-info-root{
     display: flex;
     width: calc(100% - 64px);
+    cursor: pointer;
 }
