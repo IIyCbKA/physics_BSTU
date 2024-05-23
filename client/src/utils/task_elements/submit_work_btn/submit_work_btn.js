@@ -16,9 +16,11 @@ export default function SubmitWorkBtn({id, disabled, workInfo}){
     }
 
     return (
-        <div className={`work-btns-all submit-work-btn 
-        ${disabled ? 'disabled-submit-work-btn' : ''}`}>
-            <div className='submit-work-text' onClick={handleSubmitWorkClick}>
+        <div className={'work-btns-all submit-work-btn'
+        + (disabled ? ' work-btns-disabled' : '')}
+             onClick={handleSubmitWorkClick}
+        >
+            <div className='submit-work-text'>
                 {workInfo.status === 'Сдано' ? returnText : submitText}
             </div>
         </div>

@@ -72,6 +72,7 @@ export default function TaskInfo(props){
                     props.files.map((file) => (
                         <AdditionEntity
                             isWorkFile={true}
+                            workInfo={props.grade}
                             type='file'
                             name={file.filename}
                             content={{fileType: getFileType(file.filename)}}
@@ -82,7 +83,10 @@ export default function TaskInfo(props){
                     ))
                     }
                     <div className='work-btns-wrap'>
-                        <AddFileBtn id={props.id}/>
+                        <AddFileBtn
+                            id={props.id}
+                            workInfo={props.grade}
+                        />
                         <SubmitWorkBtn
                             id={props.id}
                             disabled={props.files.length === 0}

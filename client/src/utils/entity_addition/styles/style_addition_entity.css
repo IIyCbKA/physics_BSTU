@@ -48,6 +48,10 @@
     background-color: #F0F0F0;
 }
 
+.addition-delete-hidden{
+    visibility: hidden;
+}
+
 .addition-title-root{
     font-family: "Google Sans", Roboto, Arial, sans-serif;
     font-size: 16px;

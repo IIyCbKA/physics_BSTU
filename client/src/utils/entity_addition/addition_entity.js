@@ -8,6 +8,7 @@ import { deleteWorkFile } from '../../actions/journal';
 
 export default function AdditionEntity(props){
     const [isHover, setHover] = useState(false)
+    const deleteHidden = props.isWorkFile && props.workInfo.status === 'Сдано'
 
     const handleDeleteAddition = async () => {
         if (props.isTaskForm){
@@ -37,7 +38,8 @@ export default function AdditionEntity(props){
                                          isHover={isHover}/>)
                 }
             </div>
-            <div className='addition-entity-delete'>
+            <div className={'addition-entity-delete' +
+                (deleteHidden ? ' addition-delete-hidden' : '')}>
                 <div className='delete-zone' onClick={handleDeleteAddition}>
                     <CloseOutlined style={styles.iconClose}/>
                 </div>

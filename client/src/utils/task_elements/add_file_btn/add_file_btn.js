@@ -5,6 +5,7 @@ import '../styles/style_task.css'
 
 export default function AddFileBtn(props){
     const fileInputRef = useRef(null);
+    const disabled = props.workInfo.status === 'Сдано'
 
     const handleAddFileClick = () => {
         fileInputRef.current.click();
@@ -23,7 +24,8 @@ export default function AddFileBtn(props){
 
     return (
         <div
-            className='work-btns-all add-work-btn'
+            className={'work-btns-all add-work-btn' +
+                (disabled ? ' work-btns-disabled' : '')}
             onClick={handleAddFileClick}
         >
             <input type="file" ref={fileInputRef}

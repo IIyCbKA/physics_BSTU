@@ -58,7 +58,11 @@ export default function TaskMain(props){
             {props.isWork &&
                 <div className='work-grade-wrap'>
                     <span className='task-main-text-all'>
-                        Назначено
+                        {
+                            props.workInfo.grade ?
+                            props.workInfo.grade :
+                            props.workInfo.status
+                        }
                     </span>
                 </div>
             }

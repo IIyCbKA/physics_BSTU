@@ -19,7 +19,7 @@ export default function Work(props){
         >
             <TaskMain isActive={props.isActive} setActiveID={props.setActiveID}
                       title={props.title} isLast={props.isLast} id={props.id}
-                      isWork={true} grade={props.grade}
+                      isWork={true} workInfo={props.grade}
             />
 
             <TaskInfo isActive={props.isActive} files={props.files} 
