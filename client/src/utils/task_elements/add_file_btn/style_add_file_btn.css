@@ -14,5 +14,6 @@
 .add-work-text{
     font-size: 13px;
     line-height: 20px;
-    color: #1967D2
+    color: #1967D2;
+    user-select: none;
 }

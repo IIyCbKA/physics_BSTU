@@ -14,7 +14,8 @@ export default function TaskInfo(props){
 
     useLayoutEffect(() => {
         setHeight(infoRef.current.scrollHeight);
-    }, [infoRef, heightInfo, windowWidth, props.description, props.additions])
+    }, [infoRef, heightInfo, windowWidth, props.description,
+        props.additions, props.files])
 
     const infoStyle = () => {
         const defaultStyle = {
@@ -74,6 +75,7 @@ export default function TaskInfo(props){
                             type='file'
                             name={file.filename}
                             content={{fileType: getFileType(file.filename)}}
+                            grade={props.grade}
                             id={file.file_id}
                             key={file.file_id}
                         />
@@ -81,7 +83,11 @@ export default function TaskInfo(props){
                     }
                     <div className='work-btns-wrap'>
                         <AddFileBtn id={props.id}/>
-                        <SubmitWorkBtn id={props.id}/>
+                        <SubmitWorkBtn
+                            id={props.id}
+                            disabled={props.files.length === 0}
+                            workInfo={props.grade}
+                        />
                     </div>
                 </div>
                 }

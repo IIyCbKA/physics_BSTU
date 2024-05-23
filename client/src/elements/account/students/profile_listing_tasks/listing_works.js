@@ -14,6 +14,7 @@ export default function ListingWork(){
                       id={work.id}
                       key={work.id}
                       files={work.works}
+                      grade={work.grade}
                       isLast={index === tasks.length - 1}
                       isActive={activeTaskID === work.id}
                       setActiveID={setActiveTask}

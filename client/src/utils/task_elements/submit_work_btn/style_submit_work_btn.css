@@ -12,5 +12,11 @@
 .submit-work-text{
     font-size: 13px;
     line-height: 20px;
-    color: #FFFFFF
+    color: #FFFFFF;
+    user-select: none;
+}
+
+.disabled-submit-work-btn{
+    pointer-events: none;
+    opacity: 0.6;
 }
