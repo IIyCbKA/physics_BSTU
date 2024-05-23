@@ -115,7 +115,7 @@ def auth(data: dict) -> dict:
                                     refreshTokenExpires)
 
     return {"success": True,
-            "user": getUserInfo(userData),
+            "user": getUserInfoWithGroup(userData),
             "token": userToken,
             "refresh_token": refreshToken}
 
@@ -181,7 +181,7 @@ async def getCurrentUserRefresh(token: Annotated[str, Depends(oauth2_scheme)]):
     userToken: str = createToken({'userID': userData.userID},
                                  accessTokenExpires)
 
-    return {'user': getUserInfo(userData), 'token': userToken}
+    return {'user': getUserInfoWithGroup(userData), 'token': userToken}
 
 
 @fastApiServer.get("/api/auth_token")

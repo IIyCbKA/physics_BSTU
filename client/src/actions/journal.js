@@ -193,3 +193,14 @@ export const returnOwnWork = async (task_id) => {
         console.log(e)
     }
 }
+
+export const downloadWorkFile = async (fileName, fileID) => {
+    const url = `${SERVER}/api/works/download/${fileID}`
+
+    $host.get(url, {
+        responseType: 'blob'
+    }).then(response => {
+        const blob = new Blob([response.data]);
+        saveAs(blob, fileName);
+    }).catch(e => console.log(e));
+}
