@@ -3,7 +3,7 @@ import {styles} from './styles/style_addition'
 import {Button} from "react-bootstrap";
 import React, {useEffect, useRef, useState} from "react";
 import ModalLink from "./link_modal";
-import {getFilenameOnly, getFileType} from "../../../../actions/strings";
+import {getFilenameOnly, getFileType} from "../../../actions/strings";
 import {FileUploadOutlined, Link} from "@mui/icons-material";
 
 export default function Addition(props){

@@ -1,12 +1,12 @@
 import './styles/style_task_form.css'
 import HeaderTaskForm
-    from "../../../elements/account/task_form/header/header_task_form";
+    from "../../../utils/task_form/header/header_task_form";
 import SelectGroups
-    from "../../../elements/account/task_form/select_groups/select_groups";
+    from "../../../utils/task_form/select_groups/select_groups";
 import Information
-    from "../../../elements/account/task_form/information/information";
+    from "../../../utils/task_form/information/information";
 import Addition
-    from "../../../elements/account/task_form/addition/addition";
+    from "../../../utils/task_form/addition/addition";
 import {useEffect, useRef, useState} from "react";
 import {useSelector} from "react-redux";
 import {convertRemoteAdditionsToEditFormat, getNextAdditionID} from "../../../actions/journal";

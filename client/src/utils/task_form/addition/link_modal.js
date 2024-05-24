@@ -1,8 +1,8 @@
-import InputLine from "../../../modal/input_line";
-import HeaderModal from "../../../modal/header_modal";
+import InputLine from "../../../elements/modal/input_line";
+import HeaderModal from "../../../elements/modal/header_modal";
 import {Modal} from "antd";
 import {useState} from "react";
-import '../../../modal/styles/style_modal.css'
+import '../../../elements/modal/styles/style_modal.css'
 
 export default function ModalLink(props){
     const [link, setLink] = useState('')

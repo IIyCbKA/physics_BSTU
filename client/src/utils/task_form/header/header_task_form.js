@@ -2,10 +2,10 @@ import './styles/style_header_task_form.css'
 import {CloseOutlined} from "@ant-design/icons";
 import {styles} from './styles/style_header_task_form'
 import {Button} from "react-bootstrap";
-import {createTask, updateTask} from "../../../../actions/journal";
+import {createTask, updateTask} from "../../../actions/journal";
 import {AssignmentOutlined} from "@mui/icons-material";
 import {useDispatch, useSelector} from "react-redux";
-import {setUpdatingTask} from "../../../../reducers/journal_reducer";
+import {setUpdatingTask} from "../../../reducers/journal_reducer";
 import {useState} from "react";
 
 export default function HeaderTaskForm(props){

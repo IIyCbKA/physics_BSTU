@@ -1,7 +1,7 @@
 import './styles/styles_select_group.css'
 import { Select } from 'antd';
 import {useSelector} from "react-redux";
-import {getGroupsOptions} from "../../../../actions/journal";
+import {getGroupsOptions} from "../../../actions/journal";
 
 export default function SelectGroups(props){
     const handleChange = (value) => {
