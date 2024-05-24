@@ -30,15 +30,23 @@ def getGroupsList() -> dict:
                        'name': row[1]} for row in result]}
 
 
+def getTasksGroupDict(tasks: List[Tasks]) -> dict:
+    result = {}
+    for task in tasks:
+        result[task.task_id] = task.task_name
+    return result
+
+
 def getGroupStudentsList(groupID: int) -> dict:
     result = (db.query(Users)
               .join(Students, Users.user_id == Students.student_id)
               .filter_by(group_id=groupID)
               .order_by(Users.surname, Users.name, Users.patronymic).all())
     students = []
-    tasks = list(map(lambda x: {'id': x.task_id}, getGroupTasks(groupID)))
+    tasks = getGroupTasks(groupID)
+    studentTasks = list(map(lambda x: {'id': x.task_id}, tasks))
     for student in result:
-        works = deepcopy(tasks)
+        works = deepcopy(studentTasks)
         addWorksInfoToTasksInfo(student.user_id, works)
         studentInfo = {
             'id': student.user_id,
@@ -48,8 +56,10 @@ def getGroupStudentsList(groupID: int) -> dict:
             'works': works
         }
         students.append(studentInfo)
+    tasks = list(map(lambda x: {'id': x.task_id, 'name': x.task_name}, tasks))
     groupName = db.query(Groups).filter_by(group_id=groupID).first().group_name
-    return {'students': students, 'groupID': groupID, 'groupName': groupName}
+    return {'students': students, 'groupID': groupID, 'groupName': groupName,
+            'tasks': tasks}
 
 
 def getTaskInfo(taskNameOrID) -> Tasks | None:
