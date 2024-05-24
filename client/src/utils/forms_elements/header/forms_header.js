@@ -1,6 +1,6 @@
-import './styles/style_header_task_form.css'
+import './styles/style_forms_header.css'
 import {CloseOutlined} from "@ant-design/icons";
-import {styles} from './styles/style_header_task_form'
+import {styles} from './styles/style_forms_header'
 import {Button} from "react-bootstrap";
 import {createTask, updateTask} from "../../../actions/journal";
 import {AssignmentOutlined} from "@mui/icons-material";
@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {setUpdatingTask} from "../../../reducers/journal_reducer";
 import {useState} from "react";
 
-export default function HeaderTaskForm(props){
+export default function FormsHeader(props){
     const [isLoading, setLoading] = useState(false)
     const uTask = useSelector(state => state.journal.updatingTask)
     const dispatch = useDispatch()
@@ -16,9 +16,11 @@ export default function HeaderTaskForm(props){
     const handleCloseClick = (event) => {
         event.preventDefault()
         props.setShow(false)
-        setTimeout(() => {
-            dispatch(setUpdatingTask({}))
-        }, 500)
+        if (props.isCreateTaskForm){
+            setTimeout(() => {
+                dispatch(setUpdatingTask({}))
+            }, 500)
+        }
     }
 
     const isUpdated = Object.keys(uTask).length !== 0;
@@ -67,25 +69,30 @@ export default function HeaderTaskForm(props){
                     <CloseOutlined style={styles.iconClose}/>
                 </div>
             </div>
-            <div className='header-info'>
+            <div className={props.isCreateTaskForm ? 'header-info' : 'header-journal-info'}>
                 <div className='header-icon-wrap'>
                     <AssignmentOutlined style={styles.iconHeader}/>
                 </div>
                 <span className='header-text'>
-                    Задание
+                    {props.isCreateTaskForm ?
+                        'Задание' :
+                        'Не задание'
+                    }
                 </span>
             </div>
-            <div className='create-wrap'>
-                <div className='create-btn-wrap'>
-                    <Button style={styles.btnCreate}
-                            disabled={!props.isActiveBtn || isLoading}
-                            onClick={handleCreateTaskClick}>
+            {props.isCreateTaskForm &&
+                <div className='create-wrap'>
+                    <div className='create-btn-wrap'>
+                        <Button style={styles.btnCreate}
+                                disabled={!props.isActiveBtn || isLoading}
+                                onClick={handleCreateTaskClick}>
                         <span className='create-task-btn-text'>
                             {buttonText}
                         </span>
-                    </Button>
+                        </Button>
+                    </div>
                 </div>
-            </div>
+            }
         </div>
     )
 }

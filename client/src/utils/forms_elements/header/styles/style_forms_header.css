@@ -37,10 +37,20 @@
     width: 132px;
 }
 
+.header-journal-info{
+    width: calc(100% - 56px);
+    display: flex;
+    height: 65px;
+    align-items: center;
+}
+
 .header-text{
     font-family: "Google Sans", Roboto, Arial, sans-serif;
     font-size: 22px;
     color: #5F6368;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .header-icon-wrap{

@@ -1,12 +1,12 @@
 import './styles/style_task_form.css'
-import HeaderTaskForm
-    from "../../../utils/task_form/header/header_task_form";
+import FormsHeader
+    from "../../../utils/forms_elements/header/forms_header";
 import SelectGroups
-    from "../../../utils/task_form/select_groups/select_groups";
+    from "../../../utils/forms_elements/select_groups/select_groups";
 import Information
-    from "../../../utils/task_form/information/information";
+    from "../../../utils/forms_elements/information/information";
 import Addition
-    from "../../../utils/task_form/addition/addition";
+    from "../../../utils/forms_elements/addition/addition";
 import {useEffect, useRef, useState} from "react";
 import {useSelector} from "react-redux";
 import {convertRemoteAdditionsToEditFormat, getNextAdditionID} from "../../../actions/journal";
@@ -82,13 +82,14 @@ export default function TaskForm(props){
 
     return (
         <div className='form-wrap' style={formStyle()}>
-            <HeaderTaskForm setShow={props.setShow}
-                            isActiveBtn={isActiveCreateBtn}
-                            groups={selectedGroups}
-                            title={title}
-                            description={description}
-                            additions={additions}
-                            id={taskId}
+            <FormsHeader setShow={props.setShow}
+                         isActiveBtn={isActiveCreateBtn}
+                         groups={selectedGroups}
+                         title={title}
+                         description={description}
+                         additions={additions}
+                         id={taskId}
+                         isCreateTaskForm={true}
             />
             <div className='main-form' ref={taskFormMainRef}>
                 <SelectGroups setSelectedGroups={setSelectedGroups}
