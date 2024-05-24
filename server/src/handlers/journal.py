@@ -22,8 +22,11 @@ JOURNAL_SOCKET = 'journal'
 # Роут на получение списка групп
 @fastApiServer.get('/api/groups')
 async def groupsList(user: Annotated[UserModel, Depends(getCurrentEmployee)]):
-    groups: dict = getGroupsList()
-    return JSONResponse(content=groups, status_code=200)
+    try:
+        groups: dict = getGroupsList()
+        return JSONResponse(content=groups, status_code=200)
+    except Exception as e:
+        return JSONResponse(content={'Error': e}, status_code=500)
 
 
 # Роут на получение списка студентов группы
@@ -31,8 +34,11 @@ async def groupsList(user: Annotated[UserModel, Depends(getCurrentEmployee)]):
 @fastApiServer.get('/api/group_students')
 async def groupStudentsList(groupID: int,
                         user: Annotated[UserModel, Depends(getCurrentEmployee)]):
-    groups: dict = getGroupStudentsList(groupID)
-    return JSONResponse(content=groups, status_code=200)
+    try:
+        groups: dict = getGroupStudentsList(groupID)
+        return JSONResponse(content=groups, status_code=200)
+    except Exception as e:
+        return JSONResponse(content={'Error': e}, status_code=500)
 
 
 def updateAdditions(task: Tasks, files: List[UploadFile], newVals: List[dict]):

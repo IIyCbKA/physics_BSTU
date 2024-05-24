@@ -3,6 +3,7 @@ from src.data.db_session import db
 from src.strings.strings import getFileType
 from src.handlers.schemas import AdditionFileModel
 from sqlalchemy import desc
+from copy import deepcopy
 
 GRADE_WORK_NONE: str = 'Назначено'
 GRADE_WORK_SEND: str = 'Сдано'
@@ -30,14 +31,25 @@ def getGroupsList() -> dict:
 
 
 def getGroupStudentsList(groupID: int) -> dict:
-    result = (db.query(Users.user_id, Users.surname, Users.name, Users.patronymic)
+    result = (db.query(Users)
               .join(Students, Users.user_id == Students.student_id)
-              .filter_by(group_id=groupID).all())
-    result = sorted(result, key=lambda x: x[1] + x[2] + x[3])
-    return {'students': [{'id': row[0],
-                          'surname': row[1],
-                          'name': row[2],
-                          'patronymic': row[3]} for row in result]}
+              .filter_by(group_id=groupID)
+              .order_by(Users.surname, Users.name, Users.patronymic).all())
+    students = []
+    tasks = list(map(lambda x: {'id': x.task_id}, getGroupTasks(groupID)))
+    for student in result:
+        works = deepcopy(tasks)
+        addWorksInfoToTasksInfo(student.user_id, works)
+        studentInfo = {
+            'id': student.user_id,
+            'surname': student.surname,
+            'name': student.name,
+            'patronymic': student.patronymic,
+            'works': works
+        }
+        students.append(studentInfo)
+    groupName = db.query(Groups).filter_by(group_id=groupID).first().group_name
+    return {'students': students, 'groupID': groupID, 'groupName': groupName}
 
 
 def getTaskInfo(taskNameOrID) -> Tasks | None:

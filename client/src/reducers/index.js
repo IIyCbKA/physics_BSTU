@@ -7,6 +7,7 @@ import fileReducer from "./file_reducer";
 import appReducer from "./app_reducer";
 import journalReducer from "./journal_reducer";
 import {thunk} from "redux-thunk";
+import selectedGroupReducer from './selected_group_reducer';
 
 
 const rootReducer = combineReducers({
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     file: fileReducer,
     app: appReducer,
     journal: journalReducer,
+    selectedGroup: selectedGroupReducer
 })
 
 

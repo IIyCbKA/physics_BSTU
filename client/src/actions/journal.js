@@ -2,6 +2,7 @@ import {$host, SERVER} from "../server_files/server_connect"
 import {setGroups, setTasks} from "../reducers/journal_reducer";
 import { saveAs } from 'file-saver';
 import {getFilenameOnly} from "./strings";
+import { setSelectedGroup } from "../reducers/selected_group_reducer";
 
 export const getGroups = () =>
     async (dispatch) => {
@@ -25,10 +26,13 @@ export const getGroupsOptions = (groups) => {
     return options
 }
 
-export const getGroupStudents = async (groupID) => {
+export const getGroupStudents = (groupID) =>
+    async (dispatch) => {
     try {
         const response = await $host.get(
             '/api/group_students', {params: {groupID}});
+
+        dispatch(setSelectedGroup(response.data))
 
         return response.data.students
     } catch (e) {
