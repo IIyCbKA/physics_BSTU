@@ -13,7 +13,7 @@ export default function Journal(props){
     }
 
     const journalClick = () => {
-        console.log('Click')
+        props.setShow(true)
     }
 
     const decorWrapStyle = () => {

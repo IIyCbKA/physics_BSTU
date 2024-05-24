@@ -26,7 +26,7 @@ export default function RootAccount(props){
                         {props.onFirstSelected ?
                             <div className='account-tasks-main'>
                                 {userStatus === employeeStatus &&
-                                    <CreateTask setShow={props.setShow}/>
+                                    <CreateTask setShow={props.setShowTaskForm}/>
                                 }
                                 <TasksHead/>
                                 <ListingTask/>
@@ -37,7 +37,7 @@ export default function RootAccount(props){
                                     <ListingWork/>
                                 }
                                 {userStatus === employeeStatus &&
-                                    <ListingJournals/>
+                                    <ListingJournals setShow={props.setShowJournal}/>
                                 }
                             </div>
                         }

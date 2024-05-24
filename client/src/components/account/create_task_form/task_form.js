@@ -1,4 +1,4 @@
-import './styles/style_task_form.css'
+import '../common_styles/common_styles_account_components.css'
 import FormsHeader
     from "../../../utils/forms_elements/header/forms_header";
 import SelectGroups
@@ -81,7 +81,7 @@ export default function TaskForm(props){
     }
 
     return (
-        <div className='form-wrap' style={formStyle()}>
+        <div className='forms-wrap' style={formStyle()}>
             <FormsHeader setShow={props.setShow}
                          isActiveBtn={isActiveCreateBtn}
                          groups={selectedGroups}
@@ -91,7 +91,7 @@ export default function TaskForm(props){
                          id={taskId}
                          isCreateTaskForm={true}
             />
-            <div className='main-form' ref={taskFormMainRef}>
+            <div className='form-main' ref={taskFormMainRef}>
                 <SelectGroups setSelectedGroups={setSelectedGroups}
                               groups={selectedGroups}
                 />

@@ -30,7 +30,8 @@ export default function AccountAround(props){
                                      changeSecondSelected={changeSecondSelected}
                         />
                         <RootAccount
-                            setShow={props.setShow}
+                            setShowTaskForm={props.setShowTaskForm}
+                            setShowJournal={props.setShowJournal}
                             onFirstSelected={onFirstSelected}
                         />
                     </div>

@@ -1,4 +1,4 @@
-.form-wrap{
+.forms-wrap{
     background-color: #FFFFFF;
     min-width: 340px;
     width: 100vw;
@@ -11,6 +11,6 @@
     transition: opacity 0.3s ease 0.2s, visibility 0.3s ease 0.2s
 }
 
-.main-form{
+.form-main{
     padding: 16px;
 }

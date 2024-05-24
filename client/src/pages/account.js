@@ -7,10 +7,12 @@ import {getGroups, getTasksList} from "../actions/journal";
 import {employeeStatus} from "../reducers/user_reducer";
 import "../server_files/sockets/journal"
 import {socket} from "../server_files/sockets/socket_client";
+import JournalTable from "../components/account/journal_table/journal_table";
 
 export default function Account(){
     const userStatus = useSelector(state => state.user.currentUser.status)
     const [showTaskForm, setShowTaskForm] = useState(false)
+    const [showJournal, setShowJournal] = useState(false);
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -26,9 +28,15 @@ export default function Account(){
     return (
         <div style={{backgroundColor: '#EBF0FF'}}>
             <DefaultHeader/>
-            <AccountAround setShow={setShowTaskForm}/>
+            <AccountAround
+                setShowTaskForm={setShowTaskForm}
+                setShowJournal={setShowJournal}
+            />
             {userStatus === employeeStatus &&
-                <TaskForm show={showTaskForm} setShow={setShowTaskForm}/>
+                <React.Fragment>
+                    <TaskForm show={showTaskForm} setShow={setShowTaskForm}/>
+                    <JournalTable show={showJournal} setShow={setShowJournal}/>
+                </React.Fragment>
             }
         </div>
     )
