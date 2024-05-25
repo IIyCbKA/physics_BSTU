@@ -1,5 +1,7 @@
 import '../common_styles/common_styles_account_components.css'
 import FormsHeader from "../../../utils/forms_elements/header/forms_header";
+import MainJournal
+    from "../../../elements/account/employees/main_table/main_table";
 
 export default function JournalTable(props){
     const tableStyle = () => {
@@ -13,6 +15,7 @@ export default function JournalTable(props){
     return (
         <div className='forms-wrap' style={tableStyle()}>
             <FormsHeader setShow={props.setShow} isJournal={true}/>
+            <MainJournal/>
         </div>
     )
 }

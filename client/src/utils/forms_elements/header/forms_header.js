@@ -11,6 +11,7 @@ import {useState} from "react";
 export default function FormsHeader(props){
     const [isLoading, setLoading] = useState(false)
     const uTask = useSelector(state => state.journal.updatingTask)
+    const journalGroupName = useSelector(state => state.selectedGroup.groupName)
     const dispatch = useDispatch()
 
     const handleCloseClick = (event) => {
@@ -76,7 +77,7 @@ export default function FormsHeader(props){
                 <span className='header-text'>
                     {props.isCreateTaskForm ?
                         'Задание' :
-                        'Не задание'
+                        `${journalGroupName}`
                     }
                 </span>
             </div>

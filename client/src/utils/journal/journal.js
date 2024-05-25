@@ -2,9 +2,12 @@ import './styles/style_journal.css'
 import {Group, KeyboardArrowRight} from "@mui/icons-material";
 import {useState} from "react";
 import {isMobile} from "react-device-detect";
+import {useDispatch} from "react-redux";
+import {getGroupStudents} from "../../actions/journal";
 
 export default function Journal(props){
     const [isHover, setHover] = useState(false)
+    const dispatch = useDispatch()
 
     const mainStyle = () =>{
         if (!props.isLast){
@@ -14,6 +17,7 @@ export default function Journal(props){
 
     const journalClick = () => {
         props.setShow(true)
+        dispatch(getGroupStudents(props.id))
     }
 
     const decorWrapStyle = () => {
