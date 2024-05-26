@@ -3,7 +3,7 @@ import {CloseOutlined} from "@ant-design/icons";
 import {styles} from './styles/style_forms_header'
 import {Button} from "react-bootstrap";
 import {createTask, updateTask} from "../../../actions/journal";
-import {AssignmentOutlined} from "@mui/icons-material";
+import {AssignmentOutlined, Group} from "@mui/icons-material";
 import {useDispatch, useSelector} from "react-redux";
 import {setUpdatingTask} from "../../../reducers/journal_reducer";
 import {useState} from "react";
@@ -72,7 +72,10 @@ export default function FormsHeader(props){
             </div>
             <div className={props.isCreateTaskForm ? 'header-info' : 'header-journal-info'}>
                 <div className='header-icon-wrap'>
-                    <AssignmentOutlined style={styles.iconHeader}/>
+                    {props.isCreateTaskForm ?
+                        <AssignmentOutlined style={styles.iconHeader}/> :
+                        <Group style={styles.iconHeader}/>
+                    }
                 </div>
                 <span className='header-text'>
                     {props.isCreateTaskForm ?

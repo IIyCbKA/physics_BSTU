@@ -1,0 +1,70 @@
+.student-sticky-cell{
+    padding: 12px 16px;
+    box-shadow: 2px 0 8px #CECFD0;
+    width: 250px;
+    height: 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.task-sticky-cell{
+    padding: 12px 16px;
+    height: 106px;
+    width: 250px;
+    box-shadow: 2px 0 8px #CECFD0;
+}
+
+.default-task-ceil{
+    width: 128px;
+    height: 106px;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.default-grade-cell{
+    width: 128px;
+    height: 64px;
+    padding: 0 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.student-info-text{
+    color: #333;
+    font-family: "Google Sans", Roboto, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.journal-task-info-text{
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    color: #333;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+}
+
+.journal-grade-text{
+    color: #188038;
+    font-family: "Google Sans", Roboto, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
