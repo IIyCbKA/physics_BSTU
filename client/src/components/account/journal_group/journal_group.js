@@ -2,9 +2,11 @@ import '../common_styles/common_styles_account_components.css'
 import FormsHeader from "../../../utils/forms_elements/header/forms_header";
 import MainJournal
     from "../../../elements/account/employees/main_table/root_table";
-import {useEffect} from "react";
+import {useEffect, useRef} from "react";
 
 export default function JournalGroup(props){
+    const tableContainerRef = useRef(null)
+
     useEffect(() => {
         if (props.show){
             document.body.style.overflow = 'hidden';
@@ -23,8 +25,9 @@ export default function JournalGroup(props){
 
     return (
         <div className='forms-wrap' style={tableStyle()}>
-            <FormsHeader setShow={props.setShow} isJournal={true}/>
-            <MainJournal/>
+            <FormsHeader setShow={props.setShow} isJournal={true}
+            tableContainerRef={tableContainerRef}/>
+            <MainJournal tableContainerRef={tableContainerRef}/>
         </div>
     )
 }

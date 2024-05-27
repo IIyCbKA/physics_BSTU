@@ -21,6 +21,11 @@ export default function FormsHeader(props){
             setTimeout(() => {
                 dispatch(setUpdatingTask({}))
             }, 500)
+        } else if (props.isJournal && props.tableContainerRef.current){
+            setTimeout(() => {
+                props.tableContainerRef.current.scrollTop = 0;
+                props.tableContainerRef.current.scrollLeft = 0;
+            }, 500)
         }
     }
 
