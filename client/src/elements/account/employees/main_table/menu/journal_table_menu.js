@@ -1,25 +1,17 @@
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
-import {styles} from '../../../elements/pages_menu/styles/style_task_menu'
-import '../../../elements/pages_menu/styles/style_task_menu.css'
-import {useDispatch} from "react-redux";
-import {setUpdatingTask} from "../../../reducers/journal_reducer";
+import {styles} from '../../../../pages_menu/styles/style_task_menu'
+import '../../../../pages_menu/styles/style_task_menu.css'
 
-export default function TaskMenu(props){
-    const dispatch = useDispatch();
+
+export default function JournalMenu(props){
     const handleClose = () => {
         props.setAnchorEl(null);
     };
 
-    const handleEditClick = async () => {
-        handleClose();
-        dispatch(setUpdatingTask(props.task))
-    }
-
-    const handleDeleteClick = () => {
-        handleClose()
-        props.setShowModal(true);
+    const handleCheck = () => {
+        console.log(props.studentID, props.taskID)
     }
 
     return (
@@ -34,22 +26,32 @@ export default function TaskMenu(props){
             TransitionComponent={Fade}
         >
             <MenuItem
-                onClick={handleEditClick}
+                onClick={handleCheck}
                 style={styles.menuItem}
             >
                 <div className='default-menu-item'>
                     <div className='default-menu-item-text'>
-                        Изменить
+                        Выставить оценку
                     </div>
                 </div>
             </MenuItem>
             <MenuItem
-                onClick={handleDeleteClick}
+                onClick={handleCheck}
                 style={styles.menuItem}
             >
                 <div className='default-menu-item'>
                     <div className='default-menu-item-text'>
-                        Удалить
+                        Посмотреть работу
+                    </div>
+                </div>
+            </MenuItem>
+            <MenuItem
+                onClick={handleCheck}
+                style={styles.menuItem}
+            >
+                <div className='default-menu-item'>
+                    <div className='default-menu-item-text'>
+                        Вернуть работу
                     </div>
                 </div>
             </MenuItem>

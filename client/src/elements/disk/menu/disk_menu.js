@@ -55,8 +55,8 @@ export default function DiskMenu(props){
                     onClick={handleCreateFolderClick}
                     style={styles.menuItem}
                 >
-                    <div className='task-menu-item'>
-                        <div className='task-menu-item-text'>
+                    <div className='default-menu-item'>
+                        <div className='default-menu-item-text'>
                             Создать папку
                         </div>
                     </div>
@@ -65,8 +65,8 @@ export default function DiskMenu(props){
                     onClick={handleAddFileClick}
                     style={styles.menuItem}
                 >
-                    <div className='task-menu-item'>
-                        <div className='task-menu-item-text'>
+                    <div className='default-menu-item'>
+                        <div className='default-menu-item-text'>
                             Добавить файл
                         </div>
                     </div>

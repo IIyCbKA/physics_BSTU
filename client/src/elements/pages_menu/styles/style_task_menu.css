@@ -1,4 +1,4 @@
-.task-menu-item{
+.default-menu-item{
     height: 100%;
     width: 100%;
     padding: 0 16px;
@@ -7,11 +7,11 @@
     background-color: #FFFFFF;
 }
 
-.task-menu-item:hover{
+.default-menu-item:hover{
     background-color: #EEEEEE;
 }
 
-.task-menu-item-text{
+.default-menu-item-text{
     font-family: Roboto, Arial, sans-serif;
     font-size: 14px;
     font-weight: 400;
