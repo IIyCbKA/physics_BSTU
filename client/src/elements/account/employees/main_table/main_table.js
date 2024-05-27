@@ -73,13 +73,14 @@ export default function MainJournal(){
                             {student.works.map((work) =>
                                 <TableCell
                                     key={`${work.id}_${student.id}`}
-                                    style={work.grade.status === 'Сдано' ?
-                                        styles.completedWorkCell :
-                                        styles.defaultCell}
+                                    style={styles.defaultCell}
                                 >
-                                    <div className='default-grade-cell'>
+                                    <div className={'default-grade-cell'
+                                    + (work.grade.status === 'Сдано' ?
+                                        ' completed-grade-cell' : '')}>
                                         <div className='journal-grade-text'>
-                                            {work.grade.grade ? work.grade.grade : ''}
+                                            {work.grade.grade ?
+                                                work.grade.grade : ''}
                                         </div>
                                     </div>
                                 </TableCell>

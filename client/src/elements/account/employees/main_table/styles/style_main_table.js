@@ -16,13 +16,8 @@ const tableStyle = {
     width: 'auto'
 }
 
-const completedWorkCell = {
-    backgroundColor: '#FFEB8E'
-}
-
 export const styles = {
     stickyCell: stickyCell,
     defaultCell: defaultCell,
     tableStyle: tableStyle,
-    completedWorkCell: {...completedWorkCell, ...defaultCell}
 }
