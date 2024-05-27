@@ -149,7 +149,8 @@ async def deleteFileFromWork(user: Annotated[UserModel, Depends(getCurrentUser)]
 
 
 async def setGradeWorkCommon(user_status: str, require_status: str,
-                             student_id: int, task_id, grade_status: str,
+                             student_id: int, task_id,
+                             grade_status: str | None = None,
                              author_id: int | None = None,
                              grade: str | None = None):
     try:
@@ -199,7 +200,7 @@ async def setStudentFinishedGrade(
         data: EmployeeWorkGradeModel):
     return await setGradeWorkCommon(
         user.status, 'employee',
-        data.student_id, data.task_id, GRADE_FINISHED, user.userID, data.grade)
+        data.student_id, data.task_id, None, user.userID, data.grade)
 
 
 async def sendAllTasks(group_id: int):

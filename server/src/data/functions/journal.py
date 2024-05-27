@@ -47,7 +47,7 @@ def getGroupStudentsList(groupID: int) -> dict:
     studentTasks = list(map(lambda x: {'id': x.task_id}, tasks))
     for student in result:
         works = deepcopy(studentTasks)
-        addWorksInfoToTasksInfo(student.user_id, works)
+        addFilesInfoToWorksInfoEmployee(student.user_id, works)
         studentInfo = {
             'id': student.user_id,
             'surname': student.surname,
@@ -241,6 +241,19 @@ def addWorksInfoToTasksInfo(student_id: int, tasks: list[dict]):
         task['grade'] = getGradeInfo(grade)
 
 
+# изменяет массив заданий works, добавляя информацию о работах
+# студента с идентификатором student_id со статусом "Отправлено"
+def addFilesInfoToWorksInfoEmployee(student_id: int, tasks: list[dict]):
+    for task in tasks:
+        grade = getStudentGrade(student_id, task['id'])
+        task['grade'] = getGradeInfo(grade)
+        if (grade is not None) and (grade.status == GRADE_WORK_SEND):
+            works = getAllStudentTaskWorks(student_id, task['id'])
+            task['works'] = getTaskWorksInfo(works)
+        else:
+            task['works'] = []
+
+
 def addWork(student_id: int, task_id: int, filename: str) -> Works:
     work = Works(student_id=student_id, task_id=task_id, filename=filename)
     db.add(work)
@@ -280,6 +293,8 @@ def addGrade(student_id: int, task_id: int,
              status: str, author_id: int, grade: str = None) -> Grades:
     if grade is None:
         grade = ''
+    if status is None:
+        status = GRADE_WORK_NONE
 
     grade = Grades(student_id=student_id, task_id=task_id,
                    author_id=author_id, grade=grade, status=status)
@@ -296,19 +311,20 @@ def getStudentGrade(student_id: int, task_id: int) -> Grades | None:
 
 # Устанавливает оценку
 # Если author_id не None, то устанавливает автора
-def setGrade(student_id: int, task_id: int, grade_status: str,
+def setGrade(student_id: int, task_id: int, grade_status: str | None = None,
              author_id: Grades | None = None, new_grade: str | None = None):
     grade = getStudentGrade(student_id, task_id)
     if grade is None:
         grade = addGrade(student_id, task_id, grade_status, author_id, new_grade)
     else:
-        grade.status = grade_status
+        if grade_status is not None:
+            grade.status = grade_status
         if author_id is not None:
             grade.author_id = author_id
             if new_grade is not None:
                 grade.grade = new_grade
             if grade_status == GRADE_WORK_NONE:
-                grade.grade = GRADE_WORK_RETURNED
+                grade.status = GRADE_WORK_RETURNED
 
         db.commit()
     return grade

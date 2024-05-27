@@ -198,6 +198,26 @@ export const returnOwnWork = async (task_id) => {
     }
 }
 
+export const returnStudentWork = async (task_id, student_id) => {
+    try{
+        await $host.post('/api/works/return/employee', {task_id, student_id})
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+export const setStudentGrade = async (task_id, student_id, grade) => {
+    try{
+        await $host.post('/api/works/setGrade', {
+            task_id, student_id, grade
+        })
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
 export const downloadWorkFile = async (fileName, fileID) => {
     const url = `${SERVER}/api/works/download/${fileID}`
 
