@@ -9,19 +9,40 @@ import {
     TableRow,
     Paper,
 } from '@mui/material';
+import {useEffect, useRef, useState} from "react";
 
 
 export default function MainJournal(){
     const journalInfo = useSelector(state => state.selectedGroup)
-    const minJournalHeight = window.innerHeight - 65
+    const tableRef = useRef(null);
+    const windowHeight = window.innerHeight
+    const [tableIsScrollLeft, setTableIsScrollLeft] = useState(false);
+
+    useEffect(() => {
+        if (tableRef.current){
+            tableRef.current.style.height = `${windowHeight - 65}px`
+            tableRef.current.style.overflow = 'auto'
+            tableRef.current.style.minHeight = `65px`
+
+            tableRef.current.addEventListener('scroll', () => {
+                setTableIsScrollLeft(tableRef.current.scrollLeft > 0)
+            });
+        }
+    }, [tableRef, windowHeight]);
 
     return (
-        <TableContainer component={Paper} style={{minHeight: minJournalHeight}}>
-            <Table>
+        <TableContainer
+            component={Paper}
+            style={{boxShadow: 'None'}}
+            ref={tableRef}
+        >
+            <Table style={styles.tableStyle}>
                 <TableBody>
                     <TableRow key={'tasks'}>
                         <TableCell style={styles.stickyCell}>
-                            <div className='task-sticky-cell'/>
+                            <div className={`task-sticky-cell 
+                            ${tableIsScrollLeft ? ' sticky-cell-box-shadow' : ''
+                            }`}/>
                         </TableCell>
                         {journalInfo.tasks.map((task) =>
                             <TableCell
@@ -39,7 +60,9 @@ export default function MainJournal(){
                     {journalInfo.students.map((student) =>
                         <TableRow key={student.id}>
                             <TableCell style={styles.stickyCell}>
-                                <div className='student-sticky-cell'>
+                                <div className={`student-sticky-cell 
+                                ${tableIsScrollLeft ? 
+                                ' sticky-cell-box-shadow' : ''}`}>
                                     <div className='student-info-text'>
                                         {`${student.surname} 
                                         ${student.name} 
@@ -50,7 +73,9 @@ export default function MainJournal(){
                             {student.works.map((work) =>
                                 <TableCell
                                     key={`${work.id}_${student.id}`}
-                                    style={styles.defaultCell}
+                                    style={work.grade.status === 'Сдано' ?
+                                        styles.completedWorkCell :
+                                        styles.defaultCell}
                                 >
                                     <div className='default-grade-cell'>
                                         <div className='journal-grade-text'>

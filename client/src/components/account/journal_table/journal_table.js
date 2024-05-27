@@ -2,8 +2,17 @@ import '../common_styles/common_styles_account_components.css'
 import FormsHeader from "../../../utils/forms_elements/header/forms_header";
 import MainJournal
     from "../../../elements/account/employees/main_table/main_table";
+import {useEffect} from "react";
 
 export default function JournalTable(props){
+    useEffect(() => {
+        if (props.show){
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    }, [props.show])
+
     const tableStyle = () => {
         return {
             opacity: props.show ? 1 : 0,
