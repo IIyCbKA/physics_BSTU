@@ -1,10 +1,10 @@
 import '../common_styles/common_styles_account_components.css'
 import FormsHeader from "../../../utils/forms_elements/header/forms_header";
 import MainJournal
-    from "../../../elements/account/employees/main_table/main_table";
+    from "../../../elements/account/employees/main_table/root_table";
 import {useEffect} from "react";
 
-export default function JournalTable(props){
+export default function JournalGroup(props){
     useEffect(() => {
         if (props.show){
             document.body.style.overflow = 'hidden';

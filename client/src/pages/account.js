@@ -7,7 +7,7 @@ import {getGroups, getTasksList} from "../actions/journal";
 import {employeeStatus} from "../reducers/user_reducer";
 import "../server_files/sockets/journal"
 import {socket} from "../server_files/sockets/socket_client";
-import JournalTable from "../components/account/journal_table/journal_table";
+import JournalGroup from "../components/account/journal_group/journal_group";
 
 export default function Account(){
     const userStatus = useSelector(state => state.user.currentUser.status)
@@ -35,7 +35,7 @@ export default function Account(){
             {userStatus === employeeStatus &&
                 <React.Fragment>
                     <TaskForm show={showTaskForm} setShow={setShowTaskForm}/>
-                    <JournalTable show={showJournal} setShow={setShowJournal}/>
+                    <JournalGroup show={showJournal} setShow={setShowJournal}/>
                 </React.Fragment>
             }
         </div>
