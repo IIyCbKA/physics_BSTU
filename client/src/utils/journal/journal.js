@@ -22,7 +22,7 @@ export default function Journal(props){
         props.setShow(true)
         setTimeout(() => {
             props.setJournalLoadID(null)
-        }, 300)
+        }, 400)
     }
 
     const decorWrapStyle = () => {

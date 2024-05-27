@@ -17,7 +17,7 @@ const tableStyle = {
 }
 
 const completedWorkCell = {
-    backgroundColor: '#A8E4A0'
+    backgroundColor: '#FFEB8E'
 }
 
 export const styles = {
