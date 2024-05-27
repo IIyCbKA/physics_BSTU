@@ -1,5 +1,6 @@
 import './styles/style_journal.css'
 import {Group, KeyboardArrowRight} from "@mui/icons-material";
+import CircularProgress from '@mui/material/CircularProgress';
 import {useState} from "react";
 import {isMobile} from "react-device-detect";
 import {useDispatch} from "react-redux";
@@ -15,14 +16,18 @@ export default function Journal(props){
         }
     }
 
-    const journalClick = () => {
+    const journalClick = async () => {
+        props.setJournalLoadID(props.id)
+        await dispatch(getGroupStudents(props.id))
         props.setShow(true)
-        dispatch(getGroupStudents(props.id))
+        setTimeout(() => {
+            props.setJournalLoadID(null)
+        }, 300)
     }
 
     const decorWrapStyle = () => {
         return {visibility:
-                isHover + isMobile ? 'visible' : "hidden"}
+                props.isLoad + isHover + isMobile ? 'visible' : "hidden"}
     }
 
     return (
@@ -43,7 +48,12 @@ export default function Journal(props){
                     className='default-journal-icon-wrap decor-icon-wrap'
                     style={decorWrapStyle()}
                 >
-                    <KeyboardArrowRight style={{fontSize: '24px', color: '#161616'}}/>
+                    {props.isLoad ?
+                        <CircularProgress style={{width: '24px',
+                            height: '24px', color: '#161616'}}/> :
+                        <KeyboardArrowRight style={{fontSize: '24px',
+                            color: '#161616'}}/>
+                    }
                 </div>
             </div>
         </div>
