@@ -7,7 +7,7 @@ import JournalTable from "./table";
 export default function MainJournal(props){
     const windowHeight = window.innerHeight
     const [tableIsScrollLeft, setTableIsScrollLeft] = useState(false);
-    const [selectTaskID, setSelectTaskID] = useState(null);
+    const [selectWork, setSelectWork] = useState(null);
     const [selectStudentID, setSelectStudentID] = useState(null);
 
     const [anchorEl, setAnchorEl] = useState(null);
@@ -34,9 +34,11 @@ export default function MainJournal(props){
             >
                 <JournalTable
                     tableIsScrollLeft={tableIsScrollLeft}
-                    setSelectTaskID={setSelectTaskID}
+                    setSelectWork={setSelectWork}
                     setSelectStudentID={setSelectStudentID}
                     setAnchorEl={setAnchorEl}
+                    selectWork={selectWork}
+                    selectStudentID={selectStudentID}
                 />
             </TableContainer>
             <JournalMenu
@@ -44,9 +46,9 @@ export default function MainJournal(props){
                 setAnchorEl={setAnchorEl}
                 anchorEl={anchorEl}
                 studentID={selectStudentID}
-                taskID={selectTaskID}
-                setStudentID={setSelectStudentID}
-                setTaskID={setSelectTaskID}
+                work={selectWork}
+                setSelectStudentID={setSelectStudentID}
+                setSelectWork={setSelectWork}
             />
         </div>
     )

@@ -3,8 +3,11 @@ import {TableCell} from "@mui/material";
 import '../styles/style_main_table.css'
 
 export default function GradeCellJournal(props){
-    const handleGradeCellClick = (event, taskID, studentID) => {
-        props.setSelectTaskID(taskID);
+    const isActive = props.selectStudentID === props.studentID &&
+        props.selectWork === props.task
+
+    const handleGradeCellClick = (event, work, studentID) => {
+        props.setSelectWork(work);
         props.setSelectStudentID(studentID);
         props.setAnchorEl(event.currentTarget);
     }
@@ -13,10 +16,11 @@ export default function GradeCellJournal(props){
         <TableCell
             style={styles.defaultCell}
             onClick={(event) => handleGradeCellClick(event,
-                props.task.id, props.studentID)}
+                props.task, props.studentID)}
         >
             <div className={'default-grade-cell' + (props.task.grade.status
-            === 'Сдано' ? ' completed-grade-cell' : '')}>
+            === 'Сдано' ? ' completed-grade-cell' : '') +
+                (isActive ? ' active-cell' : '')}>
                 <div className='journal-grade-text'>
                     {props.task.grade.grade ? props.task.grade.grade : ''}
                 </div>

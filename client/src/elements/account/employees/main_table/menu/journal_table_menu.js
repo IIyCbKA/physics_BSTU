@@ -1,17 +1,17 @@
 import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
-import {styles} from '../../../../pages_menu/styles/style_task_menu'
-import '../../../../pages_menu/styles/style_task_menu.css'
+import MenuItemDefault from "../../../../pages_menu/items_pattern";
 
 
 export default function JournalMenu(props){
     const handleClose = () => {
         props.setAnchorEl(null);
+        props.setSelectStudentID(null);
+        props.setSelectWork(null);
     };
 
     const handleCheck = () => {
-        console.log(props.studentID, props.taskID)
+        console.log(props.work.works.length)
     }
 
     return (
@@ -25,36 +25,20 @@ export default function JournalMenu(props){
             onClose={handleClose}
             TransitionComponent={Fade}
         >
-            <MenuItem
+            <MenuItemDefault
                 onClick={handleCheck}
-                style={styles.menuItem}
-            >
-                <div className='default-menu-item'>
-                    <div className='default-menu-item-text'>
-                        Выставить оценку
-                    </div>
-                </div>
-            </MenuItem>
-            <MenuItem
+                text='Изменить оценку'
+            />
+            <MenuItemDefault
                 onClick={handleCheck}
-                style={styles.menuItem}
-            >
-                <div className='default-menu-item'>
-                    <div className='default-menu-item-text'>
-                        Посмотреть работу
-                    </div>
-                </div>
-            </MenuItem>
-            <MenuItem
+                text='Посмотреть работу'
+                disabled={props.work && props.work.works.length === 0}
+            />
+            <MenuItemDefault
                 onClick={handleCheck}
-                style={styles.menuItem}
-            >
-                <div className='default-menu-item'>
-                    <div className='default-menu-item-text'>
-                        Вернуть работу
-                    </div>
-                </div>
-            </MenuItem>
+                text='Вернуть работу'
+                disabled={props.work && props.work.works.length === 0}
+            />
         </Menu>
     )
 }

@@ -39,9 +39,11 @@ export default function JournalTable(props){
                                 key={`${work.id}_${student.id}`}
                                 task={work}
                                 studentID={student.id}
-                                setSelectTaskID={props.setSelectTaskID}
+                                setSelectWork={props.setSelectWork}
                                 setSelectStudentID={props.setSelectStudentID}
                                 setAnchorEl={props.setAnchorEl}
+                                selectStudentID={props.selectStudentID}
+                                selectWork={props.selectWork}
                             />
                         )}
                     </TableRow>
