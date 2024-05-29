@@ -1,11 +1,9 @@
 import Menu from "@mui/material/Menu";
 import Fade from "@mui/material/Fade";
-import MenuItem from "@mui/material/MenuItem";
-import {styles} from "../../pages_menu/styles/style_task_menu";
-import '../../pages_menu/styles/style_task_menu.css'
 import {uploadFile} from "../../../actions/files";
 import {useSelector} from "react-redux";
 import React, {useRef} from "react";
+import MenuItemDefault from "../../pages_menu/items_pattern";
 
 export default function DiskMenu(props){
     const fileInputRef = useRef(null);
@@ -51,26 +49,14 @@ export default function DiskMenu(props){
                 onClose={handleClose}
                 TransitionComponent={Fade}
             >
-                <MenuItem
+                <MenuItemDefault
                     onClick={handleCreateFolderClick}
-                    style={styles.menuItem}
-                >
-                    <div className='default-menu-item'>
-                        <div className='default-menu-item-text'>
-                            Создать папку
-                        </div>
-                    </div>
-                </MenuItem>
-                <MenuItem
+                    text='Создать папку'
+                />
+                <MenuItemDefault
                     onClick={handleAddFileClick}
-                    style={styles.menuItem}
-                >
-                    <div className='default-menu-item'>
-                        <div className='default-menu-item-text'>
-                            Добавить файл
-                        </div>
-                    </div>
-                </MenuItem>
+                    text='Добавить файл'
+                />
             </Menu>
         </div>
     )
