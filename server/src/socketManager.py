@@ -93,6 +93,12 @@ class SocketManager:
             self.rooms[room] = {}
         self.rooms[room][addr] = ws
 
+
+    def addSocketEmployeeGroup(self, userID: int, status: str, ws: WebSocket,
+                               group_id: int):
+        self.addSocket(userID, status, ws, f'eg{group_id}')
+
+
     def addClient(self, userID: int, status: str):
         user = ClientInfo(userID, status)
         self.clients[userID] = user
@@ -174,6 +180,11 @@ class SocketManager:
                                 groups: list[int]):
         await self.sendMessageRooms(routeName, data, list(map(
             lambda gr: 'g' + str(gr), groups)))
+
+    async def sendMessageEmployeeGroup(self, routeName: str, data: dict,
+                                       group_id: int):
+        await self.sendMessageRoom(routeName, data, f'eg{group_id}')
+
 
     async def sendMessageEmpoyees(self, routeName: str, data: dict):
         await self.sendMessageRoom(routeName, data, 'employee')

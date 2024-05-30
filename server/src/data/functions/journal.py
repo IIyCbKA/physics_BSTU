@@ -153,7 +153,7 @@ def getStudentGroupID(student_id: int):
         filter_by(student_id=student_id).first()[0]
 
 
-def getStudentGroup(student_id: int):
+def getStudentGroup(student_id: int) -> Groups:
     return db.query(Groups).join(Students, Students.group_id == Groups.group_id).\
         filter_by(student_id=student_id).first()
 
@@ -241,15 +241,23 @@ def addWorksInfoToTasksInfo(student_id: int, tasks: list[dict]):
         task['grade'] = getGradeInfo(grade)
 
 
+def getStudentWorkFiles(student_id: int, task_id: int,
+                        status: str | None):
+    if status == GRADE_WORK_SEND:
+        works = getAllStudentTaskWorks(student_id, task_id)
+        return getTaskWorksInfo(works)
+    else:
+        return []
+
 # изменяет массив заданий works, добавляя информацию о работах
 # студента с идентификатором student_id со статусом "Отправлено"
 def addFilesInfoToWorksInfoEmployee(student_id: int, tasks: list[dict]):
     for task in tasks:
         grade = getStudentGrade(student_id, task['id'])
         task['grade'] = getGradeInfo(grade)
-        if (grade is not None) and (grade.status == GRADE_WORK_SEND):
-            works = getAllStudentTaskWorks(student_id, task['id'])
-            task['works'] = getTaskWorksInfo(works)
+        if grade is not None:
+            task['works'] = getStudentWorkFiles(student_id, task['id'],
+                                                grade.status)
         else:
             task['works'] = []
 

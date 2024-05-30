@@ -3,6 +3,7 @@ import {setGroups, setTasks} from "../reducers/journal_reducer";
 import { saveAs } from 'file-saver';
 import {getFilenameOnly} from "./strings";
 import { setSelectedGroup } from "../reducers/selected_group_reducer";
+import {socket} from "../server_files/sockets/socket_client"
 
 export const getGroups = () =>
     async (dispatch) => {
@@ -33,6 +34,7 @@ export const getGroupStudents = (groupID) =>
             '/api/group_students', {params: {groupID}});
 
         dispatch(setSelectedGroup(response.data))
+        await socket.init('employee_group', {group_id: groupID})
 
         return response.data.students
     } catch (e) {

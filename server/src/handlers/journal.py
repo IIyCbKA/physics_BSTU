@@ -18,6 +18,7 @@ from fastapi import UploadFile, Form, Request, Depends, WebSocket, File
 from src.socketManager import sockets
 
 JOURNAL_SOCKET = 'journal'
+EMPLOYEE_GROUP_SOCKET = 'employee_group'
 
 # Роут на получение списка групп
 @fastApiServer.get('/api/groups')
@@ -157,12 +158,18 @@ async def setGradeWorkCommon(user_status: str, require_status: str,
         if user_status == require_status:
             gradeInfo = setGrade(student_id, task_id,
                                  grade_status, author_id, grade)
-            sendData = {'task_id': task_id, 'grade': {
+            group_id = getStudentGroup(student_id).group_id
+            sendData = {'task_id': task_id,
+                'student_id': student_id, 'group_id': group_id, 'grade': {
                 'grade': gradeInfo.grade, 'author': gradeInfo.author_id,
                 'status': gradeInfo.status
             }}
             await sockets.sendMessageToUser('updateGrade', sendData,
                                             JOURNAL_SOCKET, student_id)
+            sendData['work_files'] = getStudentWorkFiles(student_id,
+                                                         task_id, grade_status)
+            await sockets.sendMessageEmployeeGroup('updateGradeEmployee',
+                                                   sendData, group_id)
             return JSONResponse(content={}, status_code=200)
         else:
             JSONResponse(content={'Error': f'user is not a {require_status}'},
@@ -380,3 +387,12 @@ async def journalSocket(ws: WebSocket,
     user = (await getCurrentUserS(token))
     sockets.addSocket(user.userID, user.status, ws, JOURNAL_SOCKET)
 
+
+# регистрирует преподавателя в просмотре групп
+@sockets.onSocket(EMPLOYEE_GROUP_SOCKET)
+async def employeeGroupSocket(ws: WebSocket,
+                      token: str,
+                      data: dict):
+    user = (await getCurrentUserS(token))
+    sockets.addSocketEmployeeGroup(user.userID, user.status,
+                                   ws, data['group_id'])
