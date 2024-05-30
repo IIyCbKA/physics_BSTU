@@ -6,8 +6,13 @@ import {returnStudentWork} from "../../../../../actions/journal";
 
 export default function JournalMenu(props){
     const handleClose = () => {
-        props.selectInfoClean()
+        props.setAnchorEl(null)
     };
+
+    const handleExited = () => {
+        props.setSelectWork(null);
+        props.setSelectStudentID(null);
+    }
 
     const changeGrade = async () => {
         props.setModalGradeOpen(true)
@@ -30,6 +35,9 @@ export default function JournalMenu(props){
             open={props.open}
             onClose={handleClose}
             TransitionComponent={Fade}
+            TransitionProps={{
+                onExited: handleExited
+            }}
         >
             <MenuItemDefault
                 onClick={changeGrade}

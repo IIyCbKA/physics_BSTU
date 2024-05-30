@@ -15,7 +15,7 @@ export default function ChangeGradeModal(props){
 
     const handleOk = async () => {
         await setStudentGrade(props.work.id, props.studentID, grade)
-        props.selectInfoClean();
+        props.setAnchorEl(null)
         handleCancel()
     }
 

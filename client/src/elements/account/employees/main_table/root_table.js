@@ -14,14 +14,6 @@ export default function MainJournal(props){
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
-    const selectInfoClean = () => {
-        setAnchorEl(null);
-        setTimeout(() => {
-            setSelectWork(null);
-            setSelectStudentID(null);
-        }, 225)
-    }
-
     useEffect(() => {
         if (props.tableContainerRef.current){
             props.tableContainerRef.current.style.height = `${windowHeight - 65}px`
@@ -53,10 +45,12 @@ export default function MainJournal(props){
             <JournalMenu
                 open={open}
                 anchorEl={anchorEl}
+                setAnchorEl={setAnchorEl}
                 studentID={selectStudentID}
                 work={selectWork}
                 setModalGradeOpen={setModalGradeOpen}
-                selectInfoClean={selectInfoClean}
+                setSelectWork={setSelectWork}
+                setSelectStudentID={setSelectStudentID}
             />
             {modalGradeOpen &&
                 <ChangeGradeModal
@@ -64,7 +58,7 @@ export default function MainJournal(props){
                     setShow={setModalGradeOpen}
                     studentID={selectStudentID}
                     work={selectWork}
-                    selectInfoClean={selectInfoClean}
+                    setAnchorEl={setAnchorEl}
                 />
             }
         </div>
