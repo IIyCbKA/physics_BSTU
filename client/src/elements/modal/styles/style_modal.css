@@ -56,6 +56,13 @@
     font-family: "Google Sans", Roboto, Arial, sans-serif;
 }
 
+.modal-body-text{
+    font-size: 14px;
+    font-weight: 400;
+    font-family: Roboto, Arial, sans-serif;
+    line-height: 20px;
+}
+
 input[type="text"]::-webkit-input-placeholder {
     font-size: 14px;
     line-height: 20px;

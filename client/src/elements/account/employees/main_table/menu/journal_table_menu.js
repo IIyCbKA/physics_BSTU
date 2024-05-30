@@ -1,7 +1,6 @@
 import Menu from '@mui/material/Menu';
 import Fade from '@mui/material/Fade';
 import MenuItemDefault from "../../../../pages_menu/items_pattern";
-import {returnStudentWork} from "../../../../../actions/journal";
 
 
 export default function JournalMenu(props){
@@ -22,7 +21,7 @@ export default function JournalMenu(props){
     }
 
     const returnWork = async () => {
-        await returnStudentWork(props.work.id, props.studentID)
+        props.setModalReturnWorkOpen(true)
     }
 
     return (

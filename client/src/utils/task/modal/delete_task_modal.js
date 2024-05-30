@@ -1,6 +1,5 @@
 import {Modal} from "antd";
 import '../../../elements/modal/styles/style_modal.css'
-import './styles/style_delete_task_modal.css'
 import HeaderModal from "../../../elements/modal/header_modal";
 import {deleteTask} from "../../../actions/journal";
 
@@ -36,7 +35,7 @@ export default function DeleteTaskModal(props){
             )}
             centered={true}
         >
-            <div className='delete_task_modal_body'>
+            <div className='modal-body-text'>
                 Оценки и комментарии также будут удалены.
             </div>
         </Modal>

@@ -1,20 +1,15 @@
-import InputLine from "../../../../modal/input_line";
 import {Modal} from "antd";
-import {useState} from "react";
 import '../../../../modal/styles/style_modal.css'
 import HeaderModal from "../../../../modal/header_modal";
-import {setStudentGrade} from "../../../../../actions/journal";
+import {returnStudentWork} from "../../../../../actions/journal";
 
-export default function ChangeGradeModal(props){
-    const [grade, setGrade] = useState(props.work.grade.grade ?
-        props.work.grade.grade : '')
-
+export default function ReturnWorkModal(props){
     const handleCancel = () => {
         props.setShow(false)
     }
 
     const handleOk = async () => {
-        await setStudentGrade(props.work.id, props.studentID, grade)
+        await returnStudentWork(props.work.id, props.studentID)
         props.setAnchorEl(null)
         handleCancel()
     }
@@ -22,14 +17,13 @@ export default function ChangeGradeModal(props){
     return (
         <Modal
             open={props.show}
-            title={<HeaderModal text='Изменить оценку'/>}
-            okText='Сохранить'
+            title={<HeaderModal text='Вернуть работу?'/>}
+            okText='Вернуть'
             cancelText='Отмена'
             onOk={handleOk}
             onCancel={handleCancel}
             cancelButtonProps={{className: 'modal-cancel-btn modal-btn-font'}}
-            okButtonProps={{className: 'modal-ok-btn modal-btn-font',
-                disabled: grade.length === 0}}
+            okButtonProps={{className: 'modal-ok-btn modal-btn-font'}}
             wrapClassName='modal-wrap'
             closable={false}
             className='modal-root'
@@ -42,12 +36,9 @@ export default function ChangeGradeModal(props){
             )}
             centered={true}
         >
-            <InputLine
-                value={grade}
-                onChange={setGrade}
-                placeholder='Новая оценка'
-                handleOk={handleOk}
-            />
+            <div className='modal-body-text'>
+                Вы хотите вернуть студенту его работу?
+            </div>
         </Modal>
     )
 }

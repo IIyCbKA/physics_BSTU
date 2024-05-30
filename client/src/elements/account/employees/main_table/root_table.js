@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import JournalMenu from "./menu/journal_table_menu";
 import JournalTable from "./table";
 import ChangeGradeModal from "./modals/change_grade_modal";
+import ReturnWorkModal from "./modals/return_work_modal";
 
 export default function MainJournal(props){
     const windowHeight = window.innerHeight
@@ -11,6 +12,7 @@ export default function MainJournal(props){
     const [selectWork, setSelectWork] = useState(null);
     const [selectStudentID, setSelectStudentID] = useState(null);
     const [modalGradeOpen, setModalGradeOpen] = useState(false);
+    const [modalReturnWorkOpen, setModalReturnWorkOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
@@ -49,6 +51,7 @@ export default function MainJournal(props){
                 studentID={selectStudentID}
                 work={selectWork}
                 setModalGradeOpen={setModalGradeOpen}
+                setModalReturnWorkOpen={setModalReturnWorkOpen}
                 setSelectWork={setSelectWork}
                 setSelectStudentID={setSelectStudentID}
             />
@@ -56,6 +59,15 @@ export default function MainJournal(props){
                 <ChangeGradeModal
                     show={modalGradeOpen}
                     setShow={setModalGradeOpen}
+                    studentID={selectStudentID}
+                    work={selectWork}
+                    setAnchorEl={setAnchorEl}
+                />
+            }
+            {modalReturnWorkOpen &&
+                <ReturnWorkModal
+                    show={modalReturnWorkOpen}
+                    setShow={setModalReturnWorkOpen}
                     studentID={selectStudentID}
                     work={selectWork}
                     setAnchorEl={setAnchorEl}
