@@ -243,7 +243,9 @@ def addWorksInfoToTasksInfo(student_id: int, tasks: list[dict]):
 
 def getStudentWorkFiles(student_id: int, task_id: int,
                         status: str | None):
-    if status == GRADE_WORK_SEND:
+    if status is None:
+        return None
+    elif status == GRADE_WORK_SEND:
         works = getAllStudentTaskWorks(student_id, task_id)
         return getTaskWorksInfo(works)
     else:

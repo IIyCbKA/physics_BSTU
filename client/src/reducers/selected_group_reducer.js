@@ -25,7 +25,8 @@ export default function selectedGroupReducer(state = defaultState, action){
                 {...student, works: student.works.map(
                     work => work.id === action.payload.task_id ? 
                     {...work, grade: action.payload.grade,
-                        works: action.payload.work_files
+                        works: action.payload.work_files === null ? work.works 
+                        : action.payload.work_files
                     } : work)} : student)
         }
         default:
