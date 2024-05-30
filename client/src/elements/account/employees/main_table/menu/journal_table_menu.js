@@ -6,10 +6,7 @@ import {returnStudentWork} from "../../../../../actions/journal";
 
 export default function JournalMenu(props){
     const handleClose = () => {
-        props.setAnchorEl(null);
-        setTimeout(() => {
-            props.selectInfoClean();
-        }, 225)
+        props.selectInfoClean()
     };
 
     const changeGrade = async () => {
