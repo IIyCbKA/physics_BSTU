@@ -1,17 +1,24 @@
 import Menu from '@mui/material/Menu';
 import Fade from '@mui/material/Fade';
 import MenuItemDefault from "../../../../pages_menu/items_pattern";
+import {returnStudentWork} from "../../../../../actions/journal";
 
 
 export default function JournalMenu(props){
     const handleClose = () => {
         props.setAnchorEl(null);
-        props.setSelectStudentID(null);
-        props.setSelectWork(null);
+        props.selectInfoClean();
     };
 
-    const handleCheck = () => {
-        console.log(props.work.works.length)
+    const changeGrade = async () => {
+        props.setModalGradeOpen(true)
+    }
+
+    const viewWork = () => {
+    }
+
+    const returnWork = async () => {
+        await returnStudentWork(props.work.id, props.studentID)
     }
 
     return (
@@ -26,16 +33,16 @@ export default function JournalMenu(props){
             TransitionComponent={Fade}
         >
             <MenuItemDefault
-                onClick={handleCheck}
+                onClick={changeGrade}
                 text='Изменить оценку'
             />
             <MenuItemDefault
-                onClick={handleCheck}
+                onClick={viewWork}
                 text='Посмотреть работу'
                 disabled={props.work && props.work.works.length === 0}
             />
             <MenuItemDefault
-                onClick={handleCheck}
+                onClick={returnWork}
                 text='Вернуть работу'
                 disabled={props.work && props.work.works.length === 0}
             />

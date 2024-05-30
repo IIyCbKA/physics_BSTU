@@ -3,15 +3,21 @@ import {TableContainer, Paper} from '@mui/material';
 import {useEffect, useState} from "react";
 import JournalMenu from "./menu/journal_table_menu";
 import JournalTable from "./table";
+import ChangeGradeModal from "./modals/change_grade_modal";
 
 export default function MainJournal(props){
     const windowHeight = window.innerHeight
     const [tableIsScrollLeft, setTableIsScrollLeft] = useState(false);
     const [selectWork, setSelectWork] = useState(null);
     const [selectStudentID, setSelectStudentID] = useState(null);
-
+    const [modalGradeOpen, setModalGradeOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
+
+    const selectInfoClean = () => {
+        setSelectWork(null);
+        setSelectStudentID(null);
+    }
 
     useEffect(() => {
         if (props.tableContainerRef.current){
@@ -47,9 +53,19 @@ export default function MainJournal(props){
                 anchorEl={anchorEl}
                 studentID={selectStudentID}
                 work={selectWork}
-                setSelectStudentID={setSelectStudentID}
-                setSelectWork={setSelectWork}
+                setModalGradeOpen={setModalGradeOpen}
+                selectInfoClean={selectInfoClean}
             />
+            {modalGradeOpen &&
+                <ChangeGradeModal
+                    show={modalGradeOpen}
+                    setShow={setModalGradeOpen}
+                    studentID={selectStudentID}
+                    work={selectWork}
+                    setAnchorEl={setAnchorEl}
+                    selectInfoClean={selectInfoClean}
+                />
+            }
         </div>
     )
 }

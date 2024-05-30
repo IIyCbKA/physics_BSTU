@@ -55,3 +55,9 @@
     font-weight: 500;
     font-family: "Google Sans", Roboto, Arial, sans-serif;
 }
+
+input[type="text"]::-webkit-input-placeholder {
+    font-size: 14px;
+    line-height: 20px;
+    font-family: Roboto, Arial, sans-serif;
+}
