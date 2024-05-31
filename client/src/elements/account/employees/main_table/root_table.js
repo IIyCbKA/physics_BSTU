@@ -89,6 +89,7 @@ export default function MainJournal(props){
                     work={selectWork}
                     cleanSelectInfo={cleanSelectInfo}
                     setModatlGradeOpen={setModalGradeOpen}
+                    setModalReturnWorkOpen={setModalReturnWorkOpen}
                 />
             }
         </div>

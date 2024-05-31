@@ -2,6 +2,7 @@ import {Modal} from "antd";
 import '../../../../modal/styles/style_modal.css'
 import HeaderModal from "../../../../modal/header_modal";
 import {downloadWorkFile} from "../../../../../actions/journal";
+import FooterModalBtn from "../../../../modal/footer_button_pattern";
 
 
 export default function ViewFilesModal(props){
@@ -13,6 +14,11 @@ export default function ViewFilesModal(props){
     const handleOk = () => {
         props.setShow(false);
         props.setModatlGradeOpen(true);
+    }
+
+    const handleReturnClick = () => {
+        props.setShow(false)
+        props.setModalReturnWorkOpen(true)
     }
 
     const handleDownloadFile = async (filename, fileID) => {
@@ -36,6 +42,8 @@ export default function ViewFilesModal(props){
             footer={(_, {CancelBtn, OkBtn}) => (
                 <>
                     <CancelBtn/>
+                    <FooterModalBtn text='Вернуть' onClick={handleReturnClick}
+                                    classes='modal-return-btn'/>
                     <OkBtn />
                 </>
             )}

@@ -23,7 +23,7 @@ export default function ReturnWorkModal(props){
             onOk={handleOk}
             onCancel={handleCancel}
             cancelButtonProps={{className: 'modal-cancel-btn modal-btn-font'}}
-            okButtonProps={{className: 'modal-ok-btn modal-btn-font'}}
+            okButtonProps={{className: 'modal-ok-btn modal-btn-font modal-return-btn'}}
             wrapClassName='modal-wrap'
             closable={false}
             className='modal-root'
