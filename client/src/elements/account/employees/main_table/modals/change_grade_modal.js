@@ -8,6 +8,7 @@ import {setStudentGrade} from "../../../../../actions/journal";
 export default function ChangeGradeModal(props){
     const [grade, setGrade] = useState(props.work.grade.grade ?
         props.work.grade.grade : '')
+    const gradesIsEqual = props.work.grade.grade === grade
 
     const handleCancel = () => {
         props.setShow(false)
@@ -29,7 +30,7 @@ export default function ChangeGradeModal(props){
             onCancel={handleCancel}
             cancelButtonProps={{className: 'modal-cancel-btn modal-btn-font'}}
             okButtonProps={{className: 'modal-ok-btn modal-btn-font',
-                disabled: grade.length === 0}}
+                disabled: gradesIsEqual}}
             wrapClassName='modal-wrap'
             closable={false}
             className='modal-root'

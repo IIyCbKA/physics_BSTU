@@ -5,6 +5,8 @@ import '../styles/style_main_table.css'
 export default function GradeCellJournal(props){
     const isActive = props.selectStudentID === props.studentID &&
         props.selectWork === props.task
+    const isUnchecked = props.task.grade.status === 'Сдано' &&
+        !props.task.grade.grade
 
     const handleGradeCellClick = (event, work, studentID) => {
         props.setSelectWork(work);
@@ -18,8 +20,8 @@ export default function GradeCellJournal(props){
             onClick={(event) => handleGradeCellClick(event,
                 props.task, props.studentID)}
         >
-            <div className={'default-grade-cell' + (props.task.grade.status
-            === 'Сдано' ? ' completed-grade-cell' : '') +
+            <div className={'default-grade-cell' + (isUnchecked ?
+                    ' completed-grade-cell' : '') +
                 (isActive ? ' active-cell' : '')}>
                 <div className='journal-grade-text'>
                     {props.task.grade.grade ? props.task.grade.grade : ''}
