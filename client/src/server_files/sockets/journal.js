@@ -25,7 +25,6 @@ socket.onMessage('deleteWork', (work) => {
 
 socket.onMessage('updateGrade', (gradeInfo) => {
     const status = store.getState().user.currentUser.status
-    console.log(status)
     if (status === 'student')
         store.dispatch(updateGradeStudent(gradeInfo))
 })

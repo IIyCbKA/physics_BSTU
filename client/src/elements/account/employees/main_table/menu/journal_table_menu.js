@@ -9,12 +9,14 @@ export default function JournalMenu(props){
     };
 
     const handleExited = () => {
-        props.setSelectWork(null);
-        props.setSelectStudentID(null);
+        if (!props.isModalsOpen){
+            props.cleanSelectInfo()
+        }
     }
 
     const changeGrade = async () => {
         props.setModalGradeOpen(true)
+        handleClose();
     }
 
     const viewWork = () => {
@@ -22,6 +24,7 @@ export default function JournalMenu(props){
 
     const returnWork = async () => {
         props.setModalReturnWorkOpen(true)
+        handleClose();
     }
 
     return (
@@ -45,12 +48,12 @@ export default function JournalMenu(props){
             <MenuItemDefault
                 onClick={viewWork}
                 text='Посмотреть работу'
-                disabled={props.work && props.work.works.length === 0}
+                disabled={props.work && props.work.grade.status !== 'Сдано'}
             />
             <MenuItemDefault
                 onClick={returnWork}
                 text='Вернуть работу'
-                disabled={props.work && props.work.works.length === 0}
+                disabled={props.work && props.work.grade.status !== 'Сдано'}
             />
         </Menu>
     )

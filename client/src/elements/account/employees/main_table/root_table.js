@@ -13,8 +13,14 @@ export default function MainJournal(props){
     const [selectStudentID, setSelectStudentID] = useState(null);
     const [modalGradeOpen, setModalGradeOpen] = useState(false);
     const [modalReturnWorkOpen, setModalReturnWorkOpen] = useState(false);
+    const isModalsOpen = modalGradeOpen + modalReturnWorkOpen
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
+
+    const cleanSelectInfo = () => {
+        setSelectStudentID(null);
+        setSelectWork(null);
+    }
 
     useEffect(() => {
         if (props.tableContainerRef.current){
@@ -52,8 +58,8 @@ export default function MainJournal(props){
                 work={selectWork}
                 setModalGradeOpen={setModalGradeOpen}
                 setModalReturnWorkOpen={setModalReturnWorkOpen}
-                setSelectWork={setSelectWork}
-                setSelectStudentID={setSelectStudentID}
+                isModalsOpen={isModalsOpen}
+                cleanSelectInfo={cleanSelectInfo}
             />
             {modalGradeOpen &&
                 <ChangeGradeModal
@@ -61,7 +67,7 @@ export default function MainJournal(props){
                     setShow={setModalGradeOpen}
                     studentID={selectStudentID}
                     work={selectWork}
-                    setAnchorEl={setAnchorEl}
+                    cleanSelectInfo={cleanSelectInfo}
                 />
             }
             {modalReturnWorkOpen &&
@@ -70,7 +76,7 @@ export default function MainJournal(props){
                     setShow={setModalReturnWorkOpen}
                     studentID={selectStudentID}
                     work={selectWork}
-                    setAnchorEl={setAnchorEl}
+                    cleanSelectInfo={cleanSelectInfo}
                 />
             }
         </div>
