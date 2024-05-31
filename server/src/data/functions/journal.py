@@ -340,6 +340,10 @@ def setGrade(student_id: int, task_id: int, grade_status: str | None = None,
     return grade
 
 
+def getAllTaskGrades(task_id: int) -> List[Grades]:
+    return db.query(Grades).filter_by(task_id=task_id).all()
+
+
 def convertDBTasksToDict(tasks: List[Tasks]):
     return list(map(convertDBTaskToDict, tasks))
 

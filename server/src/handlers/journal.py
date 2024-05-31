@@ -303,6 +303,17 @@ async def updateTask(
         return JSONResponse(content={'Error': e}, status_code=500)
 
 
+def deleteAllTaskWorks(task_id: int):
+    works = getAllTaskWorks(task_id)
+    for work in works:
+        deleteWorkFileObject(work.work_file_id, getFileType(work.filename))
+        db.delete(work)
+    grades = getAllTaskGrades(task_id)
+    for grade in grades:
+        db.delete(grade)
+    db.commit()
+
+
 @fastApiServer.post('/api/tasks/delete')
 async def deleteTask(data: DeleteTaskData,
                      user: Annotated[UserModel, Depends(getCurrentEmployee)]):
@@ -310,6 +321,7 @@ async def deleteTask(data: DeleteTaskData,
         taskInfo = getTaskInfo(data.taskID)
         groups = getTaskGroupsIds(data.taskID)
         if taskInfo is not None:
+            deleteAllTaskWorks(data.taskID)
             for addition_id in taskInfo.additions_id:
                 addition = getAddition(addition_id)
                 if addition is not None:
