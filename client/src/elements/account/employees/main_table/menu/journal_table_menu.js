@@ -15,15 +15,17 @@ export default function JournalMenu(props){
     }
 
     const changeGrade = async () => {
-        props.setModalGradeOpen(true)
+        props.setModalGradeOpen(true);
         handleClose();
     }
 
     const viewWork = () => {
+        props.setModalViewFilesOpen(true);
+        handleClose();
     }
 
     const returnWork = async () => {
-        props.setModalReturnWorkOpen(true)
+        props.setModalReturnWorkOpen(true);
         handleClose();
     }
 

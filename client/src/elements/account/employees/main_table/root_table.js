@@ -5,6 +5,7 @@ import JournalMenu from "./menu/journal_table_menu";
 import JournalTable from "./table";
 import ChangeGradeModal from "./modals/change_grade_modal";
 import ReturnWorkModal from "./modals/return_work_modal";
+import ViewFilesModal from "./modals/view_files_modal";
 
 export default function MainJournal(props){
     const windowHeight = window.innerHeight
@@ -13,7 +14,8 @@ export default function MainJournal(props){
     const [selectStudentID, setSelectStudentID] = useState(null);
     const [modalGradeOpen, setModalGradeOpen] = useState(false);
     const [modalReturnWorkOpen, setModalReturnWorkOpen] = useState(false);
-    const isModalsOpen = modalGradeOpen + modalReturnWorkOpen
+    const [modalViewFilesOpen, setModalViewFilesOpen] = useState(false);
+    const isModalsOpen = modalGradeOpen + modalReturnWorkOpen + modalViewFilesOpen
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
@@ -58,6 +60,7 @@ export default function MainJournal(props){
                 work={selectWork}
                 setModalGradeOpen={setModalGradeOpen}
                 setModalReturnWorkOpen={setModalReturnWorkOpen}
+                setModalViewFilesOpen={setModalViewFilesOpen}
                 isModalsOpen={isModalsOpen}
                 cleanSelectInfo={cleanSelectInfo}
             />
@@ -77,6 +80,15 @@ export default function MainJournal(props){
                     studentID={selectStudentID}
                     work={selectWork}
                     cleanSelectInfo={cleanSelectInfo}
+                />
+            }
+            {modalViewFilesOpen &&
+                <ViewFilesModal
+                    show={modalViewFilesOpen}
+                    setShow={setModalViewFilesOpen}
+                    work={selectWork}
+                    cleanSelectInfo={cleanSelectInfo}
+                    setModatlGradeOpen={setModalGradeOpen}
                 />
             }
         </div>
