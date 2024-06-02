@@ -4,11 +4,13 @@ import {styles} from "./styles/style_addition_entity";
 import AdditionEntityInfo from "./addition_entity_info";
 import {useState} from "react";
 import {deleteWorkFile, downloadWorkFile} from '../../actions/journal';
+import {WORK_STATUS_COMPLETED} from "../../constants";
 
 
 export default function AdditionEntity(props){
     const [isHover, setHover] = useState(false)
-    const deleteHidden = props.isWorkFile && props.workInfo.status === 'Сдано'
+    const deleteHidden = props.isWorkFile &&
+        props.workInfo.status === WORK_STATUS_COMPLETED
 
     const handleDeleteAddition = async () => {
         if (props.isTaskForm){

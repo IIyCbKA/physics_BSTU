@@ -3,10 +3,18 @@ import {minimizeStr, minimizeStrPortrait} from "../../actions/strings";
 import {useDispatch, useSelector} from "react-redux";
 import {icons} from "./file_icons";
 import {styles} from "./styles/style_disk";
-import {PORTRAIT_ORIENTATION} from "../../classes/OrientationListener";
 import {selectedFile} from "../../reducers/file_reducer";
 import {isMobile} from "react-device-detect";
 import {useLayoutEffect, useRef, useState} from "react";
+import {
+    FILE_TYPE_FOLDER,
+    FILE_TYPE_OTHER,
+    PORTRAIT_ORIENTATION
+} from "../../constants";
+
+const MARGINS_PORTRAIT_ORIENTATION_WINDOW = 78
+const DEFAULT_LANDSCAPE_SYMBOLS = 20
+const DEFAULT_LANDSCAPE_AFTER_POINT_SYMBOLS = 2
 
 export default function File(props){
     const width = useSelector(state => state.app.width)
@@ -16,7 +24,8 @@ export default function File(props){
     const dispatch = useDispatch()
     const infoZone = useRef(null)
     const nameFieldRef = useRef(null);
-    const [nameWidthPortrait, setNameWidthPortrait] = useState(width - 78)
+    const [nameWidthPortrait, setNameWidthPortrait] = useState(
+        width - MARGINS_PORTRAIT_ORIENTATION_WINDOW)
     let folderTimer = null;
     let timer = null;
     let startTime = null;
@@ -34,7 +43,8 @@ export default function File(props){
             minimizeStrPortrait(props.name, nameWidthPortrait,
                 nameFieldRef.current)
         } else {
-            nameFieldRef.current.textContent = minimizeStr(props.name, 20, 2);
+            nameFieldRef.current.textContent = minimizeStr(props.name,
+            DEFAULT_LANDSCAPE_SYMBOLS, DEFAULT_LANDSCAPE_AFTER_POINT_SYMBOLS);
         }
 
     }, [nameWidthPortrait, nameFieldRef, orientation, props.name])
@@ -42,7 +52,7 @@ export default function File(props){
     const handleFileClick = (event) => {
         event.stopPropagation();
         if (!isMobile){
-            if (props.type === 'folder'){
+            if (props.type === FILE_TYPE_FOLDER){
                 folderTimer = setTimeout(() => {
                     dispatch(selectedFile(props.id, props.name, props.type))
                 }, 300)
@@ -54,7 +64,7 @@ export default function File(props){
 
     const handleDoubleClick = (event) => {
         event.preventDefault()
-        if (props.type === 'folder' && !isMobile){
+        if (props.type === FILE_TYPE_FOLDER && !isMobile){
             clearTimeout(folderTimer);
             window.location.href = path + props.name + '\\'
         }
@@ -79,8 +89,9 @@ export default function File(props){
         const isNotMove = Math.abs(touchEndX - touchStartX) < 5 &&
                           Math.abs(touchEndY - touchStartY) < 5
 
-        if (isNotMove && endTime - startTime < 300 && props.type === 'folder'){
-            window.location.href = path + props.name + '\\'
+        if (isNotMove && endTime - startTime < 300 &&
+            props.type === FILE_TYPE_FOLDER){
+                window.location.href = path + props.name + '\\'
         }
 
         clearTimeout(timer);
@@ -128,7 +139,7 @@ export default function File(props){
                     >
                         {props.type in icons ?
                             icons[props.type] :
-                            icons['other']}
+                            icons[FILE_TYPE_OTHER]}
                     </span>
                 </div>
             </div>

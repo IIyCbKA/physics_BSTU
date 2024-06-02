@@ -3,7 +3,7 @@ import {isMobile} from "react-device-detect";
 import {styles} from "./styles/style_task_main";
 import './styles/style_task_main.css'
 import {useSelector} from "react-redux";
-import {employeeStatus} from "../../../reducers/user_reducer";
+import {EMPLOYEE_USER_STATUS} from "../../../constants";
 
 export default function TaskMain(props){
     const userStatus = useSelector(state => state.user.currentUser.status)
@@ -50,7 +50,8 @@ export default function TaskMain(props){
             <div className='task-icon-wrap'>
                 <AssignmentOutlined style={styles.iconStyle}/>
             </div>
-            <div className={props.isTask ? 'task-title-wrap' : 'task-title-wrap work-title-wrap'}>
+            <div className={props.isTask ? 'task-title-wrap' :
+                'task-title-wrap work-title-wrap'}>
                 <div className='task-title-text task-main-text-all'>
                     {props.title}
                 </div>
@@ -66,7 +67,7 @@ export default function TaskMain(props){
                     </span>
                 </div>
             }
-            {props.isTask && userStatus === employeeStatus &&
+            {props.isTask && userStatus === EMPLOYEE_USER_STATUS &&
                 <div className='task-more-btn-wrap'
                      style={moreWrapStyle()}
                      onClick={moreClick}

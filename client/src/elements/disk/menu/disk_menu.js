@@ -5,6 +5,9 @@ import {useSelector} from "react-redux";
 import React, {useRef} from "react";
 import MenuItemDefault from "../../pages_menu/items_pattern";
 
+const CREATE_FOLDER_ITEM_TEXT = 'Создать папку'
+const ADD_FILE_ITEM_TEXT = 'Добавить файл'
+
 export default function DiskMenu(props){
     const fileInputRef = useRef(null);
     const path = useSelector(state => state.file.path)
@@ -51,11 +54,11 @@ export default function DiskMenu(props){
             >
                 <MenuItemDefault
                     onClick={handleCreateFolderClick}
-                    text='Создать папку'
+                    text={CREATE_FOLDER_ITEM_TEXT}
                 />
                 <MenuItemDefault
                     onClick={handleAddFileClick}
-                    text='Добавить файл'
+                    text={ADD_FILE_ITEM_TEXT}
                 />
             </Menu>
         </div>

@@ -7,6 +7,10 @@ import {useDispatch} from "react-redux";
 import {cleanUserInfo} from "../../actions/user";
 import {LogoutRounded, TaskAltOutlined, AccountCircleOutlined} from "@mui/icons-material";
 
+const TESTS_ITEM_TEXT = ' Тесты'
+const PROFILE_ITEM_TEXT = ' Профиль'
+const LOGOUT_ITEM_TEXT = ' Выйти'
+
 export function TestsElement({isHidden}) {
     return (
         <motion.div
@@ -17,10 +21,14 @@ export function TestsElement({isHidden}) {
                 duration: 0.8
             }}
         >
-            <Nav.Link href="/tests" disabled={isHidden} style={styles.navItems}>
+            <Nav.Link
+                href="/tests"
+                disabled={isHidden}
+                style={styles.navItems}
+            >
                 <TaskAltOutlined style={styles.iconStyle}/>
                 <span
-                    className="style-text-in-menu"> Тесты</span>
+                    className="style-text-in-menu">{TESTS_ITEM_TEXT}</span>
             </Nav.Link>
         </motion.div>
     )
@@ -36,10 +44,14 @@ export function ProfileElement({isHidden}) {
                 duration: 0.8
             }}
         >
-            <Nav.Link href="/account" disabled={isHidden} style={styles.navItems}>
+            <Nav.Link
+                href="/account"
+                disabled={isHidden}
+                style={styles.navItems}
+            >
                 <AccountCircleOutlined style={styles.iconStyle}/>
                 <span
-                    className="style-text-in-menu"> Профиль</span>
+                    className="style-text-in-menu">{PROFILE_ITEM_TEXT}</span>
             </Nav.Link>
         </motion.div>
     )
@@ -62,10 +74,14 @@ export function LogoutElement({isHidden}) {
                 duration: 0.8
             }}
         >
-            <Nav.Link onClick={handlerClick} disabled={isHidden} style={styles.navItems}>
+            <Nav.Link
+                onClick={handlerClick}
+                disabled={isHidden}
+                style={styles.navItems}
+            >
                 <LogoutRounded style={styles.iconStyle}/>
                 <span
-                    className="style-text-in-menu"> Выйти</span>
+                    className="style-text-in-menu">{LOGOUT_ITEM_TEXT}</span>
             </Nav.Link>
         </motion.div>
     )

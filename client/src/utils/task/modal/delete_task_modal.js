@@ -2,6 +2,11 @@ import {Modal} from "antd";
 import '../../../elements/modal/styles/style_modal.css'
 import HeaderModal from "../../../elements/modal/header_modal";
 import {deleteTask} from "../../../actions/journal";
+import {DEFAULT_MODAL_CANCEL_BTN_TEXT} from "../../../constants";
+
+const TITLE_TEXT = 'Удалить задание?'
+const OK_BTN_TEXT = 'Удалить'
+const BODY_TEXT = 'Оценки и комментарии также будут удалены.'
 
 export default function DeleteTaskModal(props){
     const handleCancel = () => {
@@ -16,10 +21,10 @@ export default function DeleteTaskModal(props){
     return (
         <Modal
             open={props.isShow}
-            title={<HeaderModal text='Удалить задание?'
+            title={<HeaderModal text={TITLE_TEXT}
                                 handleClick={handleCancel}/>}
-            okText='Удалить'
-            cancelText='Отмена'
+            okText={OK_BTN_TEXT}
+            cancelText={DEFAULT_MODAL_CANCEL_BTN_TEXT}
             onOk={handleOk}
             onCancel={handleCancel}
             cancelButtonProps={{className: 'modal-cancel-btn modal-btn-font'}}
@@ -36,7 +41,7 @@ export default function DeleteTaskModal(props){
             centered={true}
         >
             <div className='modal-body-text'>
-                Оценки и комментарии также будут удалены.
+                {BODY_TEXT}
             </div>
         </Modal>
     )

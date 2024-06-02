@@ -1,13 +1,16 @@
 import {$host} from "../server_files/server_connect";
 import {logout, setUser} from "../reducers/user_reducer";
 import Cookies from 'js-cookie';
-
-const REFRESH_TOKEN_EXPIRE_DAYS = 30
+import {
+    AUTH_BY_REFRESH_TOKEN_URL,
+    AUTH_BY_TOKEN_URL,
+    LOGIN_URL, REFRESH_TOKEN_EXPIRE_DAYS
+} from "../constants";
 
 export const login = (email, password) => {
     return async (dispatch) => {
         try{
-            const response = await $host.post('/api/login',
+            const response = await $host.post(LOGIN_URL,
                 {email, password})
 
             if (response.data.success === true){
@@ -30,7 +33,7 @@ export const login = (email, password) => {
 export const auth = () => {
     return async (dispatch) => {
         try{
-            const response = await $host.get('/api/auth_token')
+            const response = await $host.get(AUTH_BY_TOKEN_URL)
 
             if (response.status === 200){
                 dispatch(setUser(response.data.user))
@@ -45,7 +48,7 @@ export const auth = () => {
 export const refreshTokenAuth = (refreshToken) => {
     return async (dispatch) => {
         try{
-            const response = await $host.get('/api/auth_refresh_token',
+            const response = await $host.get(AUTH_BY_REFRESH_TOKEN_URL,
                 {headers: {
                         Authorization: `Bearer ${refreshToken}`}
                 })

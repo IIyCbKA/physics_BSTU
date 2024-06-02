@@ -3,6 +3,8 @@ import React, {useState} from "react";
 import {styles} from "./styles/style_modal";
 import './styles/style_modal.css'
 
+const ENTER_EVENT_KEY = 'Enter'
+
 export default function InputLine(props) {
     const [inputIsFocused, setInputIsFocused] = useState(false);
 
@@ -39,7 +41,7 @@ export default function InputLine(props) {
                         onFocus={inputOnFocus}
                         onBlur={inputOnBlur}
                         onKeyDown={e => {
-                            if (e.key === 'Enter') {
+                            if (e.key === ENTER_EVENT_KEY) {
                                 props.handleOk();
                             }}
                         }

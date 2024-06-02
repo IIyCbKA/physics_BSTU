@@ -1,6 +1,8 @@
 import './styles/description_task_input.css'
 import {Input} from "antd";
 
+const INPUT_PLACEHOLDER_TEXT = 'Инструкции'
+
 export default function DescriptionInputLine(props){
     const {TextArea} = Input;
 
@@ -12,7 +14,7 @@ export default function DescriptionInputLine(props){
         <div className='description-input-line-wrap'>
             <div className='description-input-line-root'>
                 <div className='description-input-line-main'>
-                    <TextArea placeholder="Инструкции" autoSize
+                    <TextArea placeholder={INPUT_PLACEHOLDER_TEXT} autoSize
                          style={{
                              minHeight: '140px'
                          }}

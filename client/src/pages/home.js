@@ -10,6 +10,9 @@ import Storage from "../components/storage/storage";
 import {SwitchTransition, CSSTransition} from "react-transition-group";
 import './styles/style_from_pages.css'
 import {socket} from "../server_files/sockets/socket_client";
+import {DEFAULT_PAGES_BACKGROUND_COLOR} from "../constants";
+
+const PAGE_TITLE = 'Хранилище'
 
 function Home() {
     const dispatch = useDispatch()
@@ -44,9 +47,10 @@ function Home() {
     }, [dispatch, path]);
 
     const styleHeaderBlock = () => {
-        return {height: '60px',
-                top: 0,
-                zIndex: 100
+        return {
+            height: '60px',
+            top: 0,
+            zIndex: 100
         }
     }
 
@@ -59,9 +63,9 @@ function Home() {
     }
 
     return (
-        <div style={{backgroundColor: '#EBF0FF'}}>
+        <div style={{backgroundColor: DEFAULT_PAGES_BACKGROUND_COLOR}}>
             <Helmet>
-                <title>Хранилище</title>
+                <title>{PAGE_TITLE}</title>
             </Helmet>
             <div style={styleHeaderBlock()} ref={headerRef}>
                 <SwitchTransition mode="out-in">

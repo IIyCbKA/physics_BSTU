@@ -1,16 +1,16 @@
 import RootAccount from "../../elements/account/root/root";
 import './styles/style_account.css'
 import AccountHead from "../../elements/account/head/head";
-import {employeeStatus} from "../../reducers/user_reducer";
 import React, {useState} from "react";
 import {useSelector} from "react-redux";
 import {Helmet} from "react-helmet";
+import {EMPLOYEE_USER_STATUS} from "../../constants";
 
 
 export default function AccountAround(props){
     const userStatus = useSelector(state => state.user.currentUser.status)
     const firstText = 'Задания'
-    const secondText = userStatus === employeeStatus ? 'Оценки' : 'Профиль'
+    const secondText = userStatus === EMPLOYEE_USER_STATUS ? 'Оценки' : 'Профиль'
     const [onFirstSelected, changeFirstSelected] = useState(true);
     const [onSecondSelected, changeSecondSelected] = useState(false);
 

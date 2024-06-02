@@ -4,6 +4,13 @@ import {useState} from "react";
 import '../../../../modal/styles/style_modal.css'
 import HeaderModal from "../../../../modal/header_modal";
 import {setStudentGrade} from "../../../../../actions/journal";
+import {
+    DEFAULT_MODAL_CANCEL_BTN_TEXT,
+    DEFAULT_MODAL_OK_BTN_TEXT
+} from "../../../../../constants";
+
+const TITLE_TEXT = 'Изменить оценку'
+const INPUT_PLACEHOLDER_TEXT = 'Новая оценка'
 
 export default function ChangeGradeModal(props){
     const [grade, setGrade] = useState(props.work.grade.grade ?
@@ -23,9 +30,9 @@ export default function ChangeGradeModal(props){
     return (
         <Modal
             open={props.show}
-            title={<HeaderModal text='Изменить оценку'/>}
-            okText='Сохранить'
-            cancelText='Отмена'
+            title={<HeaderModal text={TITLE_TEXT}/>}
+            okText={DEFAULT_MODAL_OK_BTN_TEXT}
+            cancelText={DEFAULT_MODAL_CANCEL_BTN_TEXT}
             onOk={handleOk}
             onCancel={handleCancel}
             cancelButtonProps={{className: 'modal-cancel-btn modal-btn-font'}}
@@ -46,7 +53,7 @@ export default function ChangeGradeModal(props){
             <InputLine
                 value={grade}
                 onChange={setGrade}
-                placeholder='Новая оценка'
+                placeholder={INPUT_PLACEHOLDER_TEXT}
                 handleOk={handleOk}
             />
         </Modal>

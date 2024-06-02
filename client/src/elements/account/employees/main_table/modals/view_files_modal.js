@@ -3,7 +3,11 @@ import '../../../../modal/styles/style_modal.css'
 import HeaderModal from "../../../../modal/header_modal";
 import {downloadWorkFile} from "../../../../../actions/journal";
 import FooterModalBtn from "../../../../modal/footer_button_pattern";
+import {DEFAULT_MODAL_CANCEL_BTN_TEXT} from "../../../../../constants";
 
+const TITLE_TEXT = 'Прикрепленные файлы'
+const OK_BTN_TEXT = 'Оценить'
+const RETURN_BTN_TEXT = 'Вернуть'
 
 export default function ViewFilesModal(props){
     const handleCancel = () => {
@@ -28,9 +32,9 @@ export default function ViewFilesModal(props){
     return (
         <Modal
             open={props.show}
-            title={<HeaderModal text='Прикрепленные файлы'/>}
-            okText='Оценить'
-            cancelText='Отмена'
+            title={<HeaderModal text={TITLE_TEXT}/>}
+            okText={OK_BTN_TEXT}
+            cancelText={DEFAULT_MODAL_CANCEL_BTN_TEXT}
             onOk={handleOk}
             onCancel={handleCancel}
             cancelButtonProps={{className: 'modal-cancel-btn modal-btn-font'}}
@@ -42,8 +46,11 @@ export default function ViewFilesModal(props){
             footer={(_, {CancelBtn, OkBtn}) => (
                 <>
                     <CancelBtn/>
-                    <FooterModalBtn text='Вернуть' onClick={handleReturnClick}
-                                    classes='modal-return-btn'/>
+                    <FooterModalBtn
+                        text={RETURN_BTN_TEXT}
+                        onClick={handleReturnClick}
+                        classes='modal-return-btn'
+                    />
                     <OkBtn />
                 </>
             )}

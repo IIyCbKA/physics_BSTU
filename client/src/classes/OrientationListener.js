@@ -1,8 +1,7 @@
 import {store} from "../reducers";
 import {setOrientation, setWidth, setHeight} from "../reducers/app_reducer";
+import {LANDSCAPE_ORIENTATION, PORTRAIT_ORIENTATION} from "../constants";
 
-export const PORTRAIT_ORIENTATION = 'portrait'
-export const LANDSCAPE_ORIENTATION = 'landscape'
 
 class OrientationListener {
     constructor() {

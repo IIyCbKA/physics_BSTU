@@ -4,11 +4,25 @@ import { saveAs } from 'file-saver';
 import {getFilenameOnly} from "./strings";
 import { setSelectedGroup } from "../reducers/selected_group_reducer";
 import {socket} from "../server_files/sockets/socket_client"
+import {
+    ADDITION_TYPE_FILE,
+    CREATE_TASK_URL,
+    DELETE_TASK_URL,
+    DELETE_WORK_FILE_URL,
+    DOWNLOAD_TASK_FILE_PATTERN,
+    GET_ALL_TASKS_URL,
+    GET_GROUP_STUDENTS_URL,
+    GET_GROUPS_URL, RETURN_STUDENT_WORK_URL,
+    RETURN_OWN_WORK_URL,
+    SUBMIT_WORK_URL,
+    UPDATE_TASK_URL,
+    UPLOAD_WORK_FILE_URL, SET_GRADE_URL, DOWNLOAD_WORK_FILE_PATTERN
+} from "../constants";
 
 export const getGroups = () =>
     async (dispatch) => {
     try {
-        const response = await $host.get('/api/groups');
+        const response = await $host.get(GET_GROUPS_URL);
         dispatch(setGroups(response.data.groups));
     } catch (e) {
         console.log(e);
@@ -31,7 +45,7 @@ export const getGroupStudents = (groupID) =>
     async (dispatch) => {
     try {
         const response = await $host.get(
-            '/api/group_students', {params: {groupID}});
+            GET_GROUP_STUDENTS_URL, {params: {groupID}});
 
         dispatch(setSelectedGroup(response.data))
         await socket.init('employee_group', {group_id: groupID})
@@ -46,7 +60,7 @@ export const getGroupStudents = (groupID) =>
 export const getTasksList = () =>
     async (dispatch) => {
         try {
-            const response = await $host.get('/api/tasks/all');
+            const response = await $host.get(GET_ALL_TASKS_URL);
             dispatch(setTasks(response.data));
         } catch (e) {
             console.log(e);
@@ -56,16 +70,11 @@ export const getTasksList = () =>
 export const deleteTask = async (task_id) => {
     try{
         console.log(task_id)
-        await $host.post('/api/tasks/delete', {taskID: task_id})
+        await $host.post(DELETE_TASK_URL, {taskID: task_id})
     }
     catch(e){
         console.log(e)
     }
-}
-
-// Возвращает информацию о задании
-export const getTaskInfo = async () => {
-
 }
 
 export const processTask = async (task, route) => {
@@ -87,7 +96,7 @@ export const processTask = async (task, route) => {
                 type: addition.type,
                 remote: addition.remote,
             };
-            if (addition.type === 'file' && !addition.remote) {
+            if (addition.type === ADDITION_TYPE_FILE && !addition.remote) {
                 formData.append('files', addition.content.file);
                 info.name = addition.content.file.name;
                 info.fileIndex = index++;
@@ -112,11 +121,11 @@ export const processTask = async (task, route) => {
 
 // Добавляет задание
 export const createTask = async (task) => {
-    return await processTask(task, '/api/tasks/add')
+    return await processTask(task, CREATE_TASK_URL)
 }
 
 export const downloadTaskFile = async (fileName, fileID) => {
-    const url = `${SERVER}/api/journal/download/${fileID}`
+    const url = `${SERVER}${DOWNLOAD_TASK_FILE_PATTERN}${fileID}`
 
     $host.get(url, {
         responseType: 'blob'
@@ -128,7 +137,7 @@ export const downloadTaskFile = async (fileName, fileID) => {
 
 // Обновляет задание
 export const updateTask = async (task) => {
-    return await processTask(task, '/api/tasks/update')
+    return await processTask(task, UPDATE_TASK_URL)
 }
 
 export const getNextAdditionID = (additions) => {
@@ -143,7 +152,7 @@ export const getNextAdditionID = (additions) => {
 export const convertRemoteAdditionsToEditFormat = (additions) => {
     const result = []
     additions.map(addition => {
-        const name = addition.type === 'file' ?
+        const name = addition.type === ADDITION_TYPE_FILE ?
             getFilenameOnly(addition.title) :
             addition.title
         return result.push({
@@ -162,7 +171,7 @@ export const addWorkFile = async (file, task_id) => {
         const formData = new FormData()
         formData.append('file', file)
         formData.append('task_id', task_id)
-        await $host.post('/api/works/add_file', formData, {
+        await $host.post(UPLOAD_WORK_FILE_URL, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -175,7 +184,7 @@ export const addWorkFile = async (file, task_id) => {
 
 export const deleteWorkFile = async (work_file_id) => {
     try{
-        await $host.post('/api/works/delete_file', {work_file_id})
+        await $host.post(DELETE_WORK_FILE_URL, {work_file_id})
     }
     catch(e){
         console.log(e)
@@ -184,7 +193,7 @@ export const deleteWorkFile = async (work_file_id) => {
 
 export const handInWork = async (task_id) => {
     try{
-        await $host.post('/api/works/handIn', {task_id})
+        await $host.post(SUBMIT_WORK_URL, {task_id})
     }
     catch(e){
         console.log(e)
@@ -193,7 +202,7 @@ export const handInWork = async (task_id) => {
 
 export const returnOwnWork = async (task_id) => {
     try{
-        await $host.post('/api/works/return/student', {task_id})
+        await $host.post(RETURN_OWN_WORK_URL, {task_id})
     }
     catch(e){
         console.log(e)
@@ -202,7 +211,7 @@ export const returnOwnWork = async (task_id) => {
 
 export const returnStudentWork = async (task_id, student_id) => {
     try{
-        await $host.post('/api/works/return/employee', {task_id, student_id})
+        await $host.post(RETURN_STUDENT_WORK_URL, {task_id, student_id})
     }
     catch(e){
         console.log(e)
@@ -211,7 +220,7 @@ export const returnStudentWork = async (task_id, student_id) => {
 
 export const setStudentGrade = async (task_id, student_id, grade) => {
     try{
-        await $host.post('/api/works/setGrade', {
+        await $host.post(SET_GRADE_URL, {
             task_id, student_id, grade
         })
     }
@@ -221,7 +230,7 @@ export const setStudentGrade = async (task_id, student_id, grade) => {
 }
 
 export const downloadWorkFile = async (fileName, fileID) => {
-    const url = `${SERVER}/api/works/download/${fileID}`
+    const url = `${SERVER}${DOWNLOAD_WORK_FILE_PATTERN}${fileID}`
 
     $host.get(url, {
         responseType: 'blob'

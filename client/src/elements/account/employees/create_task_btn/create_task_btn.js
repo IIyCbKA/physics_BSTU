@@ -3,6 +3,8 @@ import './styles/style_create_task_btn.css'
 import {styles} from './styles/style_create_task_btn'
 import {AddOutlined} from "@mui/icons-material";
 
+const BTN_TEXT = 'Создать'
+
 export default function CreateTask(props){
     const handleClick = (event) => {
         event.preventDefault()
@@ -16,7 +18,7 @@ export default function CreateTask(props){
                     <AddOutlined style={styles.plus_size}/>
                 </span>
                 <span className='create-btn-text'>
-                    Создать
+                    {BTN_TEXT}
                 </span>
             </Button>
         </div>

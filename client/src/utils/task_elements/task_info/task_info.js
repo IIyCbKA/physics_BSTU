@@ -7,6 +7,9 @@ import {getFileType} from "../../../actions/strings";
 import AddFileBtn from "../add_file_btn/add_file_btn";
 import SubmitWorkBtn from "../submit_work_btn/submit_work_btn";
 
+const TASK_INFO_ABSENCE_TEXT = 'Дополнительные материалы отсутствуют'
+const WORK_INFO_ABSENCE_TEXT = 'Прикрепленные файлы отсутствуют'
+
 export default function TaskInfo(props){
     const [heightInfo, setHeight] = useState(0);
     const infoRef = useRef(null);
@@ -42,7 +45,7 @@ export default function TaskInfo(props){
                     {props.description.length === 0 &&
                     props.additions.length === 0 ?
                         <span className='task-info-text-all task-info-absence'>
-                            Дополнительные материалы отсутствуют
+                            {TASK_INFO_ABSENCE_TEXT}
                         </span> :
                         <span className='task-info-default-text task-info-text-all'>
                             {props.description}
@@ -67,7 +70,7 @@ export default function TaskInfo(props){
                     {
                     props.files.length === 0 ?
                     <span className='task-info-text-all task-info-absence'>
-                         Прикрепленные файлы отсутствуют
+                         {WORK_INFO_ABSENCE_TEXT}
                     </span> :
                     props.files.map((file) => (
                         <AdditionEntity

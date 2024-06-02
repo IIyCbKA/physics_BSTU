@@ -3,11 +3,11 @@ import React, {useState} from "react";
 import {useSelector} from "react-redux";
 import './styles/style_disk.css'
 import {getCurrentFolderName, getLastDirectory} from "../../actions/strings";
-import {employeeStatus} from "../../reducers/user_reducer";
 import {ArrowLeftOutlined, PlusOutlined} from "@ant-design/icons";
 import {styles} from './styles/style_disk'
 import DiskMenu from "./menu/disk_menu";
 import ModalWindow from "./default_modal";
+import {EMPLOYEE_USER_STATUS} from "../../constants";
 
 export default function Disk() {
     const [isModalOpen, setModalOpen] = useState(false)
@@ -45,7 +45,7 @@ export default function Disk() {
                         <h1 className="head-text">
                             {folderName}
                         </h1>
-                        {userStatus === employeeStatus &&
+                        {userStatus === EMPLOYEE_USER_STATUS &&
                             <div className='plus-btn-div' onClick={handleAddClick}>
                                 <PlusOutlined
                                     style={styles.diskHeadIconStyle}
@@ -57,10 +57,11 @@ export default function Disk() {
                     <div className="client-listing">
                         <div className="listing-items">
                             {files.map(file => (
-                                <File name={file.name}
-                                      type={file.type}
-                                      id={file.id}
-                                      key={file.id}
+                                <File
+                                    name={file.name}
+                                    type={file.type}
+                                    id={file.id}
+                                    key={file.id}
                                 />
                             ))}
                         </div>

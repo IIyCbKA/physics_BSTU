@@ -3,6 +3,14 @@ import HeaderModal from "../../../elements/modal/header_modal";
 import {Modal} from "antd";
 import {useState} from "react";
 import '../../../elements/modal/styles/style_modal.css'
+import {
+    ADDITION_TYPE_LINK,
+    DEFAULT_MODAL_CANCEL_BTN_TEXT
+} from "../../../constants";
+
+const TITLE_TEXT = 'Добавьте ссылку'
+const OK_BTN_TEXT = 'Добавить ссылку'
+const INPUT_PLACEHOLDER_TEXT = 'Ссылка'
 
 export default function ModalLink(props){
     const [link, setLink] = useState('')
@@ -16,7 +24,7 @@ export default function ModalLink(props){
         props.setAdditions([...props.additions, {
             id: currentId,
             name: link,
-            type: 'link',
+            type: ADDITION_TYPE_LINK,
             remote: false,
             content: null
         }])
@@ -26,9 +34,9 @@ export default function ModalLink(props){
     return (
         <Modal
             open={props.show}
-            title={<HeaderModal text='Добавьте ссылку'/>}
-            okText='Добавить ссылку'
-            cancelText='Отмена'
+            title={<HeaderModal text={TITLE_TEXT}/>}
+            okText={OK_BTN_TEXT}
+            cancelText={DEFAULT_MODAL_CANCEL_BTN_TEXT}
             onOk={handleOk}
             onCancel={handleCancel}
             cancelButtonProps={{className: 'modal-cancel-btn modal-btn-font'}}
@@ -48,7 +56,7 @@ export default function ModalLink(props){
             <InputLine
                 value={link}
                 onChange={setLink}
-                placeholder='Ссылка'
+                placeholder={INPUT_PLACEHOLDER_TEXT}
                 handleOk={handleOk}
             />
         </Modal>

@@ -4,11 +4,13 @@ import Logotype from "./icons/logotype";
 import MenuOffcanvas from "../../menu/menu";
 import React, {useState} from "react";
 import {cleanUserInfo} from "../../../actions/user";
-import {PORTRAIT_ORIENTATION} from "../../../classes/OrientationListener";
 import {useDispatch, useSelector} from "react-redux";
 import './styles/style_header.css';
 import {LogoutRounded, TaskAltOutlined, AccountCircleOutlined} from "@mui/icons-material";
 import 'bootstrap/dist/css/bootstrap.min.css'
+import {PORTRAIT_ORIENTATION} from "../../../constants";
+
+const MENU_BTN_TEXT = 'Меню'
 
 export default function DefaultHeader(){
     const dispatch = useDispatch()
@@ -46,7 +48,9 @@ export default function DefaultHeader(){
                     onClick={handleOffcanvasToggle}
                     style={styles.customToggle}
                 >
-                    <span className="btn-menu-text none-select">Меню</span>
+                    <span className="btn-menu-text none-select">
+                        {MENU_BTN_TEXT}
+                    </span>
                 </Navbar.Toggle>
                 <MenuOffcanvas
                     show={offcanvasShow}

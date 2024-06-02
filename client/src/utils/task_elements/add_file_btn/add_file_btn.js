@@ -2,10 +2,13 @@ import React, {useRef} from "react";
 import {addWorkFile} from "../../../actions/journal";
 import './style_add_file_btn.css'
 import '../styles/style_task.css'
+import {WORK_STATUS_COMPLETED} from "../../../constants";
+
+const BTN_TEXT = 'Добавить файл'
 
 export default function AddFileBtn(props){
     const fileInputRef = useRef(null);
-    const disabled = props.workInfo.status === 'Сдано'
+    const disabled = props.workInfo.status === WORK_STATUS_COMPLETED
 
     const handleAddFileClick = () => {
         fileInputRef.current.click();
@@ -33,7 +36,7 @@ export default function AddFileBtn(props){
                    onChange={handleFileSelect}
             />
             <div className='add-work-text'>
-                Добавить файл
+                {BTN_TEXT}
             </div>
         </div>
     )

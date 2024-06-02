@@ -3,6 +3,8 @@ import { Select } from 'antd';
 import {useSelector} from "react-redux";
 import {getGroupsOptions} from "../../../actions/journal";
 
+const SELECT_TITLE_TEXT = 'Для кого'
+
 export default function SelectGroups(props){
     const handleChange = (value) => {
         props.setSelectedGroups(value)
@@ -15,7 +17,7 @@ export default function SelectGroups(props){
         <div className='select-form-wrap'>
             <div className='select-form'>
                 <span className='select-text'>
-                    Для кого
+                    {SELECT_TITLE_TEXT}
                 </span>
                 <div className='select-wrap'>
                     <Select

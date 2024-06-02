@@ -26,7 +26,8 @@ export default function LoginBtn(props){
                     style={{
                         ...styles.formButtonStyle,
                         backgroundColor: btnColor(),
-                        animation: props.isButtonShaking ? "shakeButton 0.5s" : "none"
+                        animation: props.isButtonShaking ?
+                            "shakeButton 0.5s" : "none"
                     }}
                     onClick={props.onClick}
                     onMouseEnter={changeBtnActive}

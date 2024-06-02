@@ -8,6 +8,8 @@ import {
 } from "../../elements/menu/menu_elements";
 import './styles/style_menu.css'
 
+const DEFAULT_MENU_TEXT = 'Меню'
+
 function MenuOffcanvas({show, handleClose}) {
     const [hidden, setHide] = useState(false);
 
@@ -31,7 +33,9 @@ function MenuOffcanvas({show, handleClose}) {
         >
             <Offcanvas.Header closeButton>
                 <Offcanvas.Title className="me-auto">
-                    <span className="style-title-offcanvas">Меню</span>
+                    <span className="style-title-offcanvas">
+                        {DEFAULT_MENU_TEXT}
+                    </span>
                 </Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>

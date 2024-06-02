@@ -5,6 +5,13 @@ import {useSelector} from "react-redux";
 import {createFolder} from "../../actions/files";
 import '../modal/styles/style_modal.css'
 import HeaderModal from "../modal/header_modal";
+import {
+    DEFAULT_MODAL_CANCEL_BTN_TEXT,
+    DEFAULT_MODAL_OK_BTN_TEXT
+} from "../../constants";
+
+const TITLE_TEXT = 'Укажите название папки'
+const INPUT_PLACEHOLDER_TEXT = 'Новая папка'
 
 export default function ModalWindow(props){
     const [folderName, setFolderName] = useState('')
@@ -23,9 +30,9 @@ export default function ModalWindow(props){
     return (
         <Modal
             open={props.show}
-            title={<HeaderModal text='Укажите название папки'/>}
-            okText='Сохранить'
-            cancelText='Отмена'
+            title={<HeaderModal text={TITLE_TEXT}/>}
+            okText={DEFAULT_MODAL_OK_BTN_TEXT}
+            cancelText={DEFAULT_MODAL_CANCEL_BTN_TEXT}
             onOk={handleOk}
             onCancel={handleCancel}
             cancelButtonProps={{className: 'modal-cancel-btn modal-btn-font'}}
@@ -46,7 +53,7 @@ export default function ModalWindow(props){
             <InputLine
                 value={folderName}
                 onChange={setFolderName}
-                placeholder='Новая папка'
+                placeholder={INPUT_PLACEHOLDER_TEXT}
                 handleOk={handleOk}
             />
         </Modal>

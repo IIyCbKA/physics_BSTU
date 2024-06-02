@@ -28,8 +28,10 @@ export const getLastDirectory = (path) => {
 }
 
 export const getCurrentFolderName = (path) => {
+    const defaultDiskTitle = 'Файлы'
+
     if (getAfterDiskPath(path) === '')
-        return 'Файлы'
+        return defaultDiskTitle
 
     return path.slice(path.lastIndexOf('/', path.length - 2) + 1, -1)
 }

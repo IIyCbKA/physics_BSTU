@@ -1,7 +1,11 @@
 import Menu from '@mui/material/Menu';
 import Fade from '@mui/material/Fade';
 import MenuItemDefault from "../../../../pages_menu/items_pattern";
+import {WORK_STATUS_COMPLETED} from "../../../../../constants";
 
+const CHANGE_GRADE_ITEM_TEXT = 'Изменить оценку'
+const VIEW_WORK_ITEM_TEXT = 'Посмотреть работу'
+const RETURN_WORK_ITEM_TEXT = 'Вернуть работу'
 
 export default function JournalMenu(props){
     const handleClose = () => {
@@ -45,17 +49,19 @@ export default function JournalMenu(props){
         >
             <MenuItemDefault
                 onClick={changeGrade}
-                text='Изменить оценку'
+                text={CHANGE_GRADE_ITEM_TEXT}
             />
             <MenuItemDefault
                 onClick={viewWork}
-                text='Посмотреть работу'
-                disabled={props.work && props.work.grade.status !== 'Сдано'}
+                text={VIEW_WORK_ITEM_TEXT}
+                disabled={props.work && props.work.grade.status !==
+                    WORK_STATUS_COMPLETED}
             />
             <MenuItemDefault
                 onClick={returnWork}
-                text='Вернуть работу'
-                disabled={props.work && props.work.grade.status !== 'Сдано'}
+                text={RETURN_WORK_ITEM_TEXT}
+                disabled={props.work && props.work.grade.status !==
+                    WORK_STATUS_COMPLETED}
             />
         </Menu>
     )

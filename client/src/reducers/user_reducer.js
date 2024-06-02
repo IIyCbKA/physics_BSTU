@@ -1,8 +1,6 @@
 const SET_USER = 'SET_USER'
 const LOGOUT = 'LOGOUT'
 
-export const employeeStatus = 'employee'
-
 const defaultState = {
     currentUser: {},
     isAuth: false

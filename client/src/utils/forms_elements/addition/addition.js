@@ -5,6 +5,11 @@ import React, {useEffect, useRef, useState} from "react";
 import ModalLink from "./link_modal";
 import {getFilenameOnly, getFileType} from "../../../actions/strings";
 import {FileUploadOutlined, Link} from "@mui/icons-material";
+import {ADDITION_TYPE_FILE} from "../../../constants";
+
+const ADDITION_TITLE_TEXT = 'Прикрепить'
+const ADD_FILE_BTN_BOTTOM_TEXT = 'Загрузить'
+const ADD_LINK_BTN_BOTTOM_TEXT = 'Ссылка'
 
 export default function Addition(props){
     const [isModalOpen, setModalOpen] = useState(false)
@@ -28,7 +33,7 @@ export default function Addition(props){
             props.setAdditions([...props.additions, {
                 id: currentId,
                 name: getFilenameOnly(selectedFile.name),
-                type: 'file',
+                type: ADDITION_TYPE_FILE,
                 remote: false,
                 content: {
                     fileType: getFileType(selectedFile.name),
@@ -48,14 +53,15 @@ export default function Addition(props){
 
     return (
         <div className='addition-wrap'>
-            <input type="file" ref={fileInputRef}
-                   style={{display: 'none'}}
-                   onChange={handleFileSelect}
+            <input
+                type="file" ref={fileInputRef}
+                style={{display: 'none'}}
+                onChange={handleFileSelect}
             />
 
             <div className='addition-form'>
                 <span className='addition-title'>
-                    Прикрепить
+                    {ADDITION_TITLE_TEXT}
                 </span>
                 <div className='addition-buttons-wrap'>
                     <div className='addition-btn-area'>
@@ -67,7 +73,7 @@ export default function Addition(props){
                             </Button>
                         </div>
                         <div className='addition-btn-text-wrap'>
-                            Загрузить
+                            {ADD_FILE_BTN_BOTTOM_TEXT}
                         </div>
                     </div>
                     <div className='addition-btn-area'>
@@ -78,7 +84,7 @@ export default function Addition(props){
                             </Button>
                         </div>
                         <div className='addition-btn-text-wrap'>
-                            Ссылка
+                            {ADD_LINK_BTN_BOTTOM_TEXT}
                         </div>
                     </div>
                 </div>

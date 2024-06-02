@@ -5,10 +5,12 @@ import {useDropzone} from "react-dropzone";
 import {useSelector} from "react-redux";
 import {socket} from "../../server_files/sockets/socket_client";
 import {cleanSelectedInfo, setFiles} from "../../reducers/file_reducer";
-import {employeeStatus} from "../../reducers/user_reducer";
 import {useDispatch} from "react-redux";
 import './styles/style_storage.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import {EMPLOYEE_USER_STATUS} from "../../constants";
+
+const DROPZONE_TEXT = 'Загрузить файлы в хранилище'
 
 export default function Storage(props){
     const dispatch = useDispatch()
@@ -26,7 +28,7 @@ export default function Storage(props){
         dispatch(setFiles(data.files))
     })
 
-    const rootProps = userStatus === employeeStatus ? getRootProps() : {};
+    const rootProps = userStatus === EMPLOYEE_USER_STATUS ? getRootProps() : {};
 
     const handlerClick = () => {
         if (selected_id !== null){
@@ -40,10 +42,10 @@ export default function Storage(props){
         >
             <div {...rootProps} className="storage">
                 <Disk orientation={props.orientation}/>
-                {isDragActive && userStatus === employeeStatus &&
+                {isDragActive && userStatus === EMPLOYEE_USER_STATUS &&
                     <div className='drop-area'>
                         <div className='drop-frame'>
-                            Загрузить файлы в хранилище
+                            {DROPZONE_TEXT}
                         </div>
                     </div>
                 }

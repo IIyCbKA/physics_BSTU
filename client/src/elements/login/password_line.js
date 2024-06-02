@@ -4,6 +4,8 @@ import {styles} from "./styles/style_login";
 import './styles/style_login.css'
 import {EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons'
 
+const INPUT_PLACEHOLDER_TEXT = 'Пароль'
+
 export default function PasswordLine(props){
     const [showPassword, setShowPassword] = useState(false);
     const [passwordIsFocused, setPasswordIsFocused] = useState(false);
@@ -45,7 +47,7 @@ export default function PasswordLine(props){
                 <InputGroup>
                     <FormControl
                         type={showPassword ? 'text' : 'password'}
-                        placeholder="Пароль"
+                        placeholder={INPUT_PLACEHOLDER_TEXT}
                         value={props.value}
                         onChange={props.onChange}
                         style={passwordLineStyle()}

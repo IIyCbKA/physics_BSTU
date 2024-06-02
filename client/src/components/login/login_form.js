@@ -9,18 +9,23 @@ import {useDispatch} from "react-redux";
 import './styles/style_login_form.css'
 import {Helmet} from "react-helmet";
 
+const DEFAULT_BTN_TEXT = 'Продолжить'
+const LOADING_BTN_TEXT = 'Подождите...'
+const TITLE_TEXT = 'Авторизация'
+
 export default function LoginForm(){
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [isButtonShaking, setButtonShaking] = useState(false);
-    const [btnText, setBtnText] = useState('Продолжить')
-    const isButtonDisabled = email === '' || password === '' || btnText !== 'Продолжить';
+    const [btnText, setBtnText] = useState(DEFAULT_BTN_TEXT)
+    const isButtonDisabled = email === '' || password === '' ||
+        btnText !== DEFAULT_BTN_TEXT;
     const windowHeight = window.innerHeight
     const dispatch = useDispatch()
 
     const onClick = async (e) => {
     	e.preventDefault()
-        setBtnText('Подождите...')
+        setBtnText(LOADING_BTN_TEXT)
     	const result = await dispatch(login(email, password))
         if (!result){
             setButtonShaking(true);
@@ -28,7 +33,7 @@ export default function LoginForm(){
             setTimeout(() => {
                 setButtonShaking(false);
                 setPassword('');
-                setBtnText('Продолжить')
+                setBtnText(DEFAULT_BTN_TEXT)
             }, 500);
         }
     }
@@ -37,7 +42,7 @@ export default function LoginForm(){
         <div className='login-form-wrap' style={{minHeight: windowHeight}}>
             <div className="form-container">
                 <Helmet>
-                    <title>Авторизация</title>
+                    <title>{TITLE_TEXT}</title>
                 </Helmet>
                 <motion.div
                     initial={{opacity: 0}}
@@ -56,7 +61,9 @@ export default function LoginForm(){
                     }}
                 >
                     <Form className="form">
-                        <h2 className="form-title">Авторизация</h2>
+                        <h2 className="form-title">
+                            {TITLE_TEXT}
+                        </h2>
                         <LoginLine
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}

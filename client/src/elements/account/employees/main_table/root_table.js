@@ -6,9 +6,10 @@ import JournalTable from "./table";
 import ChangeGradeModal from "./modals/change_grade_modal";
 import ReturnWorkModal from "./modals/return_work_modal";
 import ViewFilesModal from "./modals/view_files_modal";
+import {useSelector} from "react-redux";
 
 export default function MainJournal(props){
-    const windowHeight = window.innerHeight
+    const windowHeight = useSelector(state => state.app.height)
     const [tableIsScrollLeft, setTableIsScrollLeft] = useState(false);
     const [selectWork, setSelectWork] = useState(null);
     const [selectStudentID, setSelectStudentID] = useState(null);

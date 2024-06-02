@@ -8,6 +8,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {setUpdatingTask} from "../../../reducers/journal_reducer";
 import {useState} from "react";
 
+const BTN_LOADING_TEXT = 'В процессе...'
+const BTN_UPDATING_TEXT = 'Сохранить'
+const BTN_CREATE_TEXT = 'Создать'
+const TASK_FORM_TITLE_TEXT = 'Задание'
+
 export default function FormsHeader(props){
     const [isLoading, setLoading] = useState(false)
     const uTask = useSelector(state => state.journal.updatingTask)
@@ -31,8 +36,8 @@ export default function FormsHeader(props){
 
     const isUpdated = Object.keys(uTask).length !== 0;
 
-    const buttonText = isLoading ? 'В процессе...' : (
-        isUpdated ? 'Сохранить': 'Создать')
+    const buttonText = isLoading ? BTN_LOADING_TEXT : (
+        isUpdated ? BTN_UPDATING_TEXT: BTN_CREATE_TEXT)
 
     const handleCreateTaskClick = async (event) => {
         event.preventDefault()
@@ -75,7 +80,8 @@ export default function FormsHeader(props){
                     <CloseOutlined style={styles.iconClose}/>
                 </div>
             </div>
-            <div className={props.isCreateTaskForm ? 'header-info' : 'header-journal-info'}>
+            <div className={props.isCreateTaskForm ? 'header-info' :
+                'header-journal-info'}>
                 <div className='header-icon-wrap'>
                     {props.isCreateTaskForm ?
                         <AssignmentOutlined style={styles.iconHeader}/> :
@@ -84,8 +90,8 @@ export default function FormsHeader(props){
                 </div>
                 <span className='header-text'>
                     {props.isCreateTaskForm ?
-                        'Задание' :
-                        `${journalGroupName}`
+                        TASK_FORM_TITLE_TEXT :
+                        journalGroupName
                     }
                 </span>
             </div>

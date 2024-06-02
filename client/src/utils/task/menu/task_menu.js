@@ -4,6 +4,9 @@ import {useDispatch} from "react-redux";
 import {setUpdatingTask} from "../../../reducers/journal_reducer";
 import MenuItemDefault from "../../../elements/pages_menu/items_pattern";
 
+const CHANGE_TASK_ITEM_TEXT = 'Изменить'
+const DELETE_TASK_ITEM_TEXT = 'Удалить'
+
 export default function TaskMenu(props){
     const dispatch = useDispatch();
     const handleClose = () => {
@@ -33,11 +36,11 @@ export default function TaskMenu(props){
         >
             <MenuItemDefault
                 onClick={handleEditClick}
-                text='Изменить'
+                text={CHANGE_TASK_ITEM_TEXT}
             />
             <MenuItemDefault
                 onClick={handleDeleteClick}
-                text='Удалить'
+                text={DELETE_TASK_ITEM_TEXT}
             />
         </Menu>
     )

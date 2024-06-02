@@ -3,16 +3,17 @@ const navbarFileHeader = {
     width: '100%',
     height: '60px',
     padding: 0,
-    justifyContent: 'center',
-    position: 'fixed',
-    top: 0
+    justifyContent: 'center'
 }
 
 const containerHeaderAll = {
     height: '60px',
     minWidth: '340px',
-    backgroundColor: 'rgb(34, 34, 34)',
-    padding: 0
+    padding: 0,
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    backdropFilter: 'blur(8px)',
+    WebkitBackdropFilter: 'blur(8px)',
+    boxShadow: 'inset 0px -1px 1px #EEEBE8'
 }
 
 const containerHeaderMobile = {
@@ -26,8 +27,8 @@ const containerHeaderPC = {
 }
 
 const iconsStyle = {
-    fontSize: '26px',
-    color: '#FFFFFF'
+    fontSize: '24px',
+    color: '#161616'
 }
 
 const navStyle = {
