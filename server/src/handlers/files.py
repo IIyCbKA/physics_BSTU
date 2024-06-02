@@ -7,11 +7,13 @@ from fastapi.responses import JSONResponse, StreamingResponse
 from fastapi import File, UploadFile, Form, HTTPException, WebSocket
 from typing import Annotated
 from fastapi import Depends
-from src.handlers.login import (getCurrentUser,
-                                getCurrentEmployee,
-                                getCurrentUserS)
+from src.handlers.login import (getCurrentUser, getCurrentEmployee,
+                                getCurrentUserS, getUserFullName)
 from src.socketManager import sockets
 from src.strings.strings import getFileType
+from src.data.functions.actions import (
+    addCreateFolderAction, addAddFileAction, addDeleteFileEndAction,
+    addDeleteFileStartAction, addDeleteFolderStartAction)
 
 
 # Отправляет на клиент новый список файлов
@@ -37,6 +39,7 @@ async def filesSocket(ws: WebSocket,
     user = (await getCurrentUserS(token))
     sockets.addSocket(user.userID, user.status, ws, data['path'])
 
+
 # Роут на добавление папки. В параметрах:
 # data.folderName: имя создаваемой папки
 # data.path: путь к папке
@@ -50,6 +53,8 @@ async def createFolder(data: FolderData,
     if fileModel is None:
         return JSONResponse(content={'error': 'Folder was not added'},
                             status_code=500)
+
+    addCreateFolderAction(user, data.folderName, data.path)
 
     await sendFilesNameListToAll(data.path)
     return JSONResponse(content={}, status_code=201)
@@ -78,6 +83,7 @@ async def addFile(file: Annotated[UploadFile, File()],
         deleteDiskFileFromDB(fileModel.fileID)
         return error
 
+    addAddFileAction(user, fileName, path)
     await sendFilesNameListToAll(path)
     return JSONResponse(content={}, status_code=201)
 
@@ -91,11 +97,18 @@ async def deleteFile(data: DeleteFileData,
         fileInfo: FileModel | None = getDiskFileInfo(data.fileID)
         if fileInfo is not None:
             if fileInfo.fileType != 'folder':
+                addDeleteFileStartAction(user, fileInfo.fileName,
+                                         fileInfo.path)
                 deleteDiskFileFromDB(fileInfo.fileID)
                 deleteFileObject(fileInfo.fileID, fileInfo.fileType)
             else:
+                addDeleteFolderStartAction(user, fileInfo.fileName,
+                                           fileInfo.path)
                 searchPath: str = f"{fileInfo.path}{fileInfo.fileName}/%"
                 deleteFolderFromDB(fileInfo.fileID, searchPath)
+
+            addDeleteFileEndAction(user, fileInfo.fileName)
+
             await sendFilesNameListToAll(fileInfo.path)
             return JSONResponse(content={}, status_code=200)
 

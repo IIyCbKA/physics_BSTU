@@ -8,6 +8,10 @@ def getUser(id: int) -> Users | None:
     return result if result else None
 
 
+def getUserFullName(user: UserModel) -> str:
+    return f'{user.surname} {user.name} {user.patronymic}'
+
+
 def getUserModel(id: int) -> UserModel | None:
     result: Users | None = getUser(id)
     if result is None:

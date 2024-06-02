@@ -1,7 +1,8 @@
 from sqlalchemy import (Column, String, Integer, ARRAY, ForeignKey,
-                        UniqueConstraint)
+                        UniqueConstraint, DateTime)
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
 from typing import List
 
 Base = declarative_base()
@@ -131,3 +132,10 @@ class TasksGroups(Base):
     def __repr__(self):
         return (f"<TasksGroups(id={self.id}, "
                 f"task_id={self.task_id}, group_id={self.group_id})>")
+
+
+class Actions(Base):
+    __tablename__ = 'actions'
+    action_id = Column(Integer, primary_key=True, autoincrement=True)
+    info = Column(String)
+    created_at = Column(DateTime, default=func.now())

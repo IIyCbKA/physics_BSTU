@@ -1,11 +1,16 @@
 from src.application import fastApiServer
 from src.data.functions.journal import *
+from src.data.functions.users import getUserFullName
 from src.handlers.login import (
     getCurrentEmployee, getCurrentUser, getCurrentUserS)
 from src.storage.functions.storage \
     import (addFileToTaskStorage, deleteTaskFileObject, getAdditionFileObject,
             addFileToWorkStorage, deleteWorkFileObject, getWorkFileObject)
 from src.strings.strings import getFileType
+from src.data.functions.actions import (
+    addAction, addUpdateTaskStartAction, addUpdateTaskEndAction,
+    addAddTaskStartAction, addAddTaskEndAction,
+    addDeleteTaskStartAction, addDeleteTaskEndAction)
 from src.handlers.schemas import DeleteTaskData
 from src.handlers.schemas \
     import (UserModel, StudentWorkModel, EmployeeWorkReturnModel,
@@ -149,6 +154,8 @@ async def deleteFileFromWork(user: Annotated[UserModel, Depends(getCurrentUser)]
         return JSONResponse(content={'Error': e}, status_code=500)
 
 
+# Устанавливает у студента student_id оценку grade и статус grade_status
+# за работу task_id автором author_id
 async def setGradeWorkCommon(user_status: str, require_status: str,
                              student_id: int, task_id,
                              grade_status: str | None = None,
@@ -178,6 +185,7 @@ async def setGradeWorkCommon(user_status: str, require_status: str,
         return JSONResponse(content={'Error': e}, status_code=500)
 
 
+# Отправляет работу студента с заданием task_id на проверку
 @fastApiServer.post('/api/works/handIn')
 async def handInTheWork(user: Annotated[UserModel, Depends(getCurrentUser)],
                         data: StudentWorkModel):
@@ -185,6 +193,7 @@ async def handInTheWork(user: Annotated[UserModel, Depends(getCurrentUser)],
                                     user.userID, data.task_id, GRADE_WORK_SEND)
 
 
+# Возвращает работу студента с заданием task_id
 @fastApiServer.post('/api/works/return/student')
 async def returnOwnWork(user: Annotated[UserModel, Depends(getCurrentUser)],
                         data: StudentWorkModel):
@@ -192,6 +201,7 @@ async def returnOwnWork(user: Annotated[UserModel, Depends(getCurrentUser)],
                                     user.userID, data.task_id, GRADE_WORK_NONE)
 
 
+# Возвращает работу студента data.student_id с заданием data.task_id
 @fastApiServer.post('/api/works/return/employee')
 async def returnStudentWork(
         user: Annotated[UserModel, Depends(getCurrentEmployee)],
@@ -201,6 +211,8 @@ async def returnStudentWork(
         data.task_id, GRADE_WORK_NONE, user.userID)
 
 
+# Устанавливает у студента student_id оценку grade
+# за работу task_id автором author_id
 @fastApiServer.post('/api/works/setGrade')
 async def setStudentFinishedGrade(
         user: Annotated[UserModel, Depends(getCurrentEmployee)],
@@ -208,10 +220,6 @@ async def setStudentFinishedGrade(
     return await setGradeWorkCommon(
         user.status, 'employee',
         data.student_id, data.task_id, None, user.userID, data.grade)
-
-
-async def sendAllTasks(group_id: int):
-    tasks = getAllTasks()
 
 
 # Роут на получение списка групп
@@ -236,6 +244,8 @@ async def addTask(
                 content={'error': 'Task with this name already exist'},
                 status_code=409)
 
+        addAddTaskStartAction(user, title, description, groups, additions)
+
         groups = list(map(int, groups.split(',')))
         additions = json.loads(additions)
         additions_db = addTaskAdditionsToDB(additions)
@@ -253,6 +263,8 @@ async def addTask(
 
         task = addTaskToDB(title, description, additions_db)
         addTaskGroups(task.task_id, groups)
+
+        addAddTaskEndAction(user, task.task_id)
 
         taskSendData = convertDBTaskToDict(task)
         await sockets.sendMessageGroups('addTask', taskSendData, groups)
@@ -286,13 +298,15 @@ async def updateTask(
                     content={'error': 'Task with this name already exist'},
                     status_code=409)
 
+        addUpdateTaskStartAction(user, id, title, description, groups, additions)
+
         groups = list(map(int, groups.split(','))) if len(groups) else []
         additions = json.loads(additions)
         updateAdditions(task, files, additions)
-
         task.task_description = description
         task.task_name = title
         updateGroups(task.task_id, groups)
+        addUpdateTaskEndAction(user, id)
 
         taskSendData = convertDBTaskToDict(task)
         await sockets.sendMessageGroups('updateTask', taskSendData, groups)
@@ -320,6 +334,8 @@ async def deleteTask(data: DeleteTaskData,
     try:
         taskInfo = getTaskInfo(data.taskID)
         groups = getTaskGroupsIds(data.taskID)
+        addDeleteTaskStartAction(user, data.taskID, taskInfo.task_name)
+
         if taskInfo is not None:
             deleteAllTaskWorks(data.taskID)
             for addition_id in taskInfo.additions_id:
@@ -332,7 +348,7 @@ async def deleteTask(data: DeleteTaskData,
                     deleteAddition(addition)
 
             deleteTaskOnlyFromDB(taskInfo)
-
+            addDeleteTaskEndAction(user, data.taskID)
             await sockets.sendMessageGroups('deleteTask', data.taskID, groups)
             await sockets.sendMessageEmpoyees('deleteTask', data.taskID)
 
@@ -344,6 +360,7 @@ async def deleteTask(data: DeleteTaskData,
         return JSONResponse(content={'Error': e}, status_code=500)
 
 
+# отправляет ответом файл работы с work_file_id равным fileID
 @fastApiServer.get('/api/works/download/{fileID}')
 async def handleWorkFileDownloadRequest(
         fileID: str, user: Annotated[UserModel, Depends(getCurrentUser)]):
@@ -367,6 +384,7 @@ async def handleWorkFileDownloadRequest(
         return JSONResponse(content={'Error': e}, status_code=500)
 
 
+# отправляет ответом файл addition с addition_id равным fileID
 @fastApiServer.get('/api/journal/download/{fileID}')
 async def handleJournalFileDownloadRequest(
         fileID: str, user: Annotated[UserModel, Depends(getCurrentUser)]):
