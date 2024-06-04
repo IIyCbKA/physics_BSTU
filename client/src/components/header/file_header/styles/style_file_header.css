@@ -42,3 +42,31 @@
     line-height: 24px;
     max-width: 100%;
 }
+
+.dropdown-wrap{
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 1px 14px -3px rgba(0,0,0,.3);
+    max-width: 400px;
+}
+
+.dropdown-text-line{
+    word-wrap: break-word;
+    max-width: 100%;
+    word-break: break-word;
+    color: #161616;
+    font-size: 13px;
+    line-height: 21px;
+    display: flex;
+    flex-direction: row;
+}
+
+.dropdown-text-line-title{
+    margin-right: 3px;
+    flex-shrink: 0;
+}
+
+.dropdown-text-line-main{
+    font-weight: 500;
+}
