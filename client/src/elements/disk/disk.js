@@ -59,6 +59,7 @@ export default function Disk() {
                             {files.map(file => (
                                 <File
                                     name={file.name}
+                                    size={file.file_size}
                                     type={file.type}
                                     id={file.id}
                                     key={file.id}

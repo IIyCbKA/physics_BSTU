@@ -41,6 +41,7 @@ class FileModel(BaseModel):
     fileName: str
     fileType: str
     path: str
+    fileSize: int
 
 
 class AdditionFileModel(BaseModel):

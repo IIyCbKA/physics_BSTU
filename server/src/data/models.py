@@ -61,6 +61,7 @@ class Files(Base):
     file_name: Column[str] = Column(String, nullable=False)
     file_type: Column[str] = Column(String, nullable=False)
     path: Column[str] = Column(String, nullable=False)
+    file_size: Column[int] = Column(Integer, nullable=False, default=0)
     __table_args__ = (
         UniqueConstraint('file_name', 'path'),
     )

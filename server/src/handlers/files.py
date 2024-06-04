@@ -49,7 +49,7 @@ async def createFolder(data: FolderData,
     data.path = data.path.replace('/disk', '', 1)
     fileModel: FileModel | None = addDiskFileToDB(data.folderName,
                                               'folder',
-                                              data.path)
+                                              data.path, 0)
     if fileModel is None:
         return JSONResponse(content={'error': 'Folder was not added'},
                             status_code=500)
@@ -75,7 +75,9 @@ async def addFile(file: Annotated[UploadFile, File()],
     checkDiskPath(path)
     fileName: str = file.filename
     fileType: str = getFileType(file.filename)
-    fileModel: FileModel | None = addDiskFileToDB(fileName, fileType, path)
+    fileSize = file.size
+    fileModel: FileModel | None = addDiskFileToDB(fileName, fileType,
+                                                  path, fileSize)
     if fileModel is None:
         return error
 

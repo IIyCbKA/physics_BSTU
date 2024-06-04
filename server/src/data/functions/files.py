@@ -14,24 +14,28 @@ def getFolderByPath(path: str, folderName: str) -> list:
 
 # Возвращает список файлов и папок по текущему пути path
 def getDiskFilesNameList(path: str) -> dict:
-    result = db.query(Files.file_id, Files.file_name,
-                      Files.file_type).filter_by(path=path).all()
+    result = db.query(Files.file_id, Files.file_name, Files.file_type,
+                      Files.file_size).filter_by(path=path).all()
     result = sorted(result, key=lambda x: (x[2] != 'folder', x[1]))
     return {'files': [{'id': row[0],
                        'name': row[1],
-                       'type': row[2]} for row in result]}
+                       'type': row[2],
+                       'file_size': row[3]} for row in result]}
 
 
-def addDiskFileToDB(fileName: str, fileType: str, path: str) -> FileModel | None:
+def addDiskFileToDB(fileName: str, fileType: str, path: str,
+                    file_size: int) -> FileModel | None:
     try:
-        newFile = Files(file_name=fileName, file_type=fileType, path=path)
+        newFile = Files(file_name=fileName, file_type=fileType,
+                        path=path, file_size=file_size)
         db.add(newFile)
         db.commit()
         fileModel: FileModel = FileModel(
             fileID=newFile.file_id,
             fileName=fileName,
             fileType=fileType,
-            path=path
+            path=path,
+            fileSize=file_size
         )
         return fileModel
 

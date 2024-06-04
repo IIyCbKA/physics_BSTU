@@ -57,7 +57,7 @@ export default function File(props){
                     dispatch(selectedFile(props.id, props.name, props.type))
                 }, 300)
             } else if (selected_id !== props.id){
-                dispatch(selectedFile(props.id, props.name, props.type))
+                dispatch(selectedFile(props.id, props.name, props.type, props.size))
             }
         }
     }
@@ -77,7 +77,7 @@ export default function File(props){
 
         timer = setTimeout(() => {
             event.stopPropagation();
-            dispatch(selectedFile(props.id, props.name, props.type))
+            dispatch(selectedFile(props.id, props.name, props.type, props.size))
         }, 300);
     }
 
