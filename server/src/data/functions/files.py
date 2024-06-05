@@ -58,7 +58,8 @@ def getDiskFileInfo(fileID: int) -> FileModel | None:
             fileID=file.file_id,
             fileName=file.file_name,
             fileType=file.file_type,
-            path=file.path
+            path=file.path,
+            fileSize=file.file_size
         )
     else:
         fileInfo = None
