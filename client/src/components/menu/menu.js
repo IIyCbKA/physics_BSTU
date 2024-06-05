@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {Nav, Offcanvas} from "react-bootstrap";
 import {styles} from "./styles/style_menu";
 import {
-    TestsElement,
     ProfileElement,
     LogoutElement
 } from "../../elements/menu/menu_elements";
@@ -40,7 +39,6 @@ function MenuOffcanvas({show, handleClose}) {
             </Offcanvas.Header>
             <Offcanvas.Body>
                 <Nav>
-                    <TestsElement isHidden={hidden}/>
                     <ProfileElement isHidden={hidden}/>
                     <LogoutElement isHidden={hidden}/>
                 </Nav>

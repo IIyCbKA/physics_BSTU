@@ -6,7 +6,7 @@ import React, {useState} from "react";
 import {cleanUserInfo} from "../../../actions/user";
 import {useDispatch, useSelector} from "react-redux";
 import './styles/style_header.css';
-import {LogoutRounded, TaskAltOutlined, AccountCircleOutlined} from "@mui/icons-material";
+import {LogoutRounded, AccountCircleOutlined} from "@mui/icons-material";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {PORTRAIT_ORIENTATION} from "../../../constants";
 
@@ -61,12 +61,6 @@ export default function DefaultHeader(){
                     className="d-none d-lg-block"
                 >
                     <Nav className="ms-auto">
-                        <Nav.Link href="/tests"
-                                  style={styles.headerIconsForm}
-                                  className='main-btns-background'
-                        >
-                            <TaskAltOutlined style={styles.headerIconStyle}/>
-                        </Nav.Link>
                         <Nav.Link href="/account"
                                   style={styles.headerIconsForm}
                                   className='main-btns-background'

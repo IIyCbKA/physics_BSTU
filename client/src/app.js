@@ -1,7 +1,6 @@
 import {Route, Navigate, BrowserRouter, Routes} from 'react-router-dom';
 import Home from "./pages/home";
 import Login from './pages/login';
-import Test from "./pages/test";
 import NotFound from "./pages/not_found";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
@@ -44,7 +43,6 @@ function App() {
                     <Route path="/disk/*" element={<Home/>} />
                     <Route path="/login" element={<Navigate to="/disk/" />}/>
                     <Route path="/" element={<Navigate to="/disk/" />}/>
-                    <Route path="/tests" element={<Test/>} />
                     <Route path="/account" element={<Account/>} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
