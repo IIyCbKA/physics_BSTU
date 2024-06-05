@@ -10,7 +10,7 @@ import './styles/style_storage.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {EMPLOYEE_USER_STATUS} from "../../constants";
 
-const DROPZONE_TEXT = 'Загрузить файлы в хранилище'
+const DROPZONE_TEXT = 'Выгрузить файл в хранилище'
 
 export default function Storage(props){
     const dispatch = useDispatch()

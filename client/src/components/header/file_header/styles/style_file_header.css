@@ -23,19 +23,23 @@
 
 .bar-right-text-zone{
     display: flex;
+    flex-grow: 1;
     height: 100%;
     padding: 0 10px;
+    overflow: hidden;
 }
 
 .bar-text-wrap{
     display: flex;
     width: 100%;
+    align-items: center;
 }
 
 .bar-text{
     white-space: nowrap;
-    display: flex;
-    align-items: center;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
     color: #161616;
     font-size: 18px;
     font-family: "Google Sans", Roboto, Arial, sans-serif;

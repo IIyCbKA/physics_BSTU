@@ -61,16 +61,17 @@ create table grades
 (
     grade_id   serial
         primary key,
-    student_id integer not null
+    student_id integer                                    not null
         references students
             on delete cascade,
     author_id  integer
-                       references employees
-                           on delete set null,
-    task_id    integer not null
+                                                          references employees
+                                                              on delete set null,
+    task_id    integer                                    not null
         references tasks
             on delete cascade,
-    grade      varchar not null,
+    grade      varchar                                    not null,
+    status     varchar default 'Сдано'::character varying not null,
     unique (student_id, task_id)
 );
 
@@ -97,9 +98,10 @@ create table files
 (
     file_id   serial
         primary key,
-    file_name varchar not null,
-    file_type varchar not null,
-    path      varchar not null,
+    file_name varchar          not null,
+    file_type varchar          not null,
+    path      varchar          not null,
+    file_size bigint default 0 not null,
     unique (file_name, path)
 );
 
@@ -132,5 +134,16 @@ create table tasks_groups
 );
 
 alter table tasks_groups
+    owner to admin;
+
+create table actions
+(
+    action_id  serial
+        primary key,
+    info       text,
+    created_at timestamp default CURRENT_TIMESTAMP
+);
+
+alter table actions
     owner to admin;
 

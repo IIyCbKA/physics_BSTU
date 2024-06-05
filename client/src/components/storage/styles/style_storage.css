@@ -1,22 +1,23 @@
 .drop-area {
+    z-index: 10000;
     display: flex;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
-    background-color: rgba(22, 22, 22, 0.25);
-    width: 100%;
-    height: 100%;
+    bottom: 0;
+    right: 0;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 .drop-frame {
     display: flex;
-    position: absolute;
-    top: 2vh;
-    left: 2vh;
-    width: calc(100vw - 4vh);
-    height: calc(100vh - 4vh);
+    width: 100%;
+    height: 100%;
+    padding: 10px;
     border: 5px dashed white;
     justify-content: center;
+    text-align: center;
     align-items: center;
     font-size: 50px;
     color: white;

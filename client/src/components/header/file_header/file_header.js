@@ -7,8 +7,6 @@ import {DeleteOutlined, FileDownloadOutlined, CloseOutlined}
 import {cleanSelectedInfo} from "../../../reducers/file_reducer";
 import {deleteFile, downloadFile} from "../../../actions/files";
 import './styles/style_file_header.css'
-import {useLayoutEffect, useRef, useState} from "react";
-import {minimizeStrPortrait} from "../../../actions/strings";
 import {
     EMPLOYEE_USER_STATUS,
     FILE_TYPE_FOLDER,
@@ -24,32 +22,7 @@ export default function FileHeader(){
     const selected_name = useSelector(state => state.file.selected_name)
     const selected_type = useSelector(state => state.file.selected_type)
     const type_last_closed = useSelector(state => state.file.type_last_closed)
-    const [textZoneSize, setTextZoneSize] = useState(0);
-    const [iconZoneSize, setIconZoneSize] = useState(0);
-    const widthWindow = useSelector(state => state.app.width)
-    const barRightRef = useRef(null);
-    const textZoneRef = useRef(null);
-    const textWrapRef = useRef(null);
-    const textFieldRef = useRef(null);
-    const iconZoneRef = useRef(null);
     const dispatch = useDispatch();
-
-    useLayoutEffect(() => {
-        setIconZoneSize(iconZoneRef.current.offsetWidth);
-    }, [selected_id]);
-
-    useLayoutEffect(() => {
-        textZoneRef.current.style.width = `${barRightRef.current.offsetWidth - 
-        iconZoneSize}px`
-        setTextZoneSize(textWrapRef.current.offsetWidth)
-    }, [widthWindow, iconZoneSize]);
-
-    useLayoutEffect(() => {
-        if (selected_name !== null){
-            minimizeStrPortrait(selected_name, textZoneSize,
-                textFieldRef.current);
-        }
-    }, [textZoneSize, selected_name, textFieldRef]);
 
     const containerStyle = () => {
         return (orientation === PORTRAIT_ORIENTATION) ?
@@ -80,14 +53,15 @@ export default function FileHeader(){
                     <div className='bar-left'>
                         <DropdownFileInfo/>
                     </div>
-                    <div className='bar-right' ref={barRightRef}>
-                        <div className='bar-right-text-zone' ref={textZoneRef}>
-                            <div className='bar-text-wrap' ref={textWrapRef}>
-                                <span className='bar-text' ref={textFieldRef}>
+                    <div className='bar-right'>
+                        <div className='bar-right-text-zone'>
+                            <div className='bar-text-wrap'>
+                                <span className='bar-text'>
+                                    {selected_name}
                                 </span>
                             </div>
                         </div>
-                        <div className='bar-right-icons-zone' ref={iconZoneRef}>
+                        <div className='bar-right-icons-zone'>
                             {userStatus === EMPLOYEE_USER_STATUS &&
                                 <Nav.Item
                                     style={styles.navItemStyle}
