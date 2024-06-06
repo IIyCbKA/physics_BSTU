@@ -36,8 +36,6 @@ export default function DrawerFileInfo(){
             </Nav.Item>
             <Drawer
                 closeIcon={false}
-                title={selected_type === FILE_TYPE_FOLDER ?
-                    FOLDERS_TITLE : FILES_TITLE}
                 placement='bottom'
                 width='100vw'
                 height='auto'
@@ -46,22 +44,26 @@ export default function DrawerFileInfo(){
                 style={styles.drawerStyle}
             >
                 <div className='drawer-body-wrap'>
+                    <div className='drawer-title-line'>
+                        {selected_type === FILE_TYPE_FOLDER ?
+                        FOLDERS_TITLE : FILES_TITLE}
+                    </div>
                     <div className='drawer-body-text-line'>
-                        <div className='header-file-info-text-line-title'>
+                        <span className='header-file-info-text-line-title'>
                             {FILE_INFO_NAME_TITLE}
-                        </div>
-                        <div className='header-file-info-text-line-main'>
+                        </span>
+                        <span className='header-file-info-text-line-main'>
                             {selected_name}
-                        </div>
+                        </span>
                     </div>
                     {selected_type !== FILE_TYPE_FOLDER &&
                         <div className='drawer-body-text-line'>
-                            <div className='header-file-info-text-line-title'>
+                            <span className='header-file-info-text-line-title'>
                                 {FILE_INFO_SIZE_TITLE}
-                            </div>
-                            <div className='header-file-info-text-line-main'>
+                            </span>
+                            <span className='header-file-info-text-line-main'>
                                 {formatFileSize(selected_size)}
-                            </div>
+                            </span>
                         </div>
                     }
                 </div>

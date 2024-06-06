@@ -20,21 +20,21 @@ export default function DropdownFileInfo(){
     const customDropdown = () => (
         <div className='dropdown-wrap'>
             <div className='dropdown-text-line'>
-                <div className='header-file-info-text-line-title'>
+                <span className='header-file-info-text-line-title'>
                     {FILE_INFO_NAME_TITLE}
-                </div>
-                <div className='header-file-info-text-line-main'>
+                </span>
+                <span className='header-file-info-text-line-main'>
                     {selected_name}
-                </div>
+                </span>
             </div>
             {selected_type !== FILE_TYPE_FOLDER &&
                 <div className='dropdown-text-line'>
-                    <div className='header-file-info-text-line-title'>
+                    <span className='header-file-info-text-line-title'>
                         {FILE_INFO_SIZE_TITLE}
-                    </div>
-                    <div className='header-file-info-text-line-main'>
+                    </span>
+                    <span className='header-file-info-text-line-main'>
                         {formatFileSize(selected_size)}
-                    </div>
+                    </span>
                 </div>
             }
         </div>

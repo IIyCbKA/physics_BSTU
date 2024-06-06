@@ -62,13 +62,11 @@
     color: #161616;
     font-size: 13px;
     line-height: 21px;
-    display: flex;
-    flex-direction: row;
+    display: block;
 }
 
 .header-file-info-text-line-title{
     margin-right: 3px;
-    flex-shrink: 0;
 }
 
 .header-file-info-text-line-main{
@@ -76,8 +74,7 @@
 }
 
 .drawer-body-wrap{
-    display: flex;
-    flex-direction: column;
+    display: block;
 }
 
 .drawer-body-text-line{
@@ -86,8 +83,19 @@
     word-break: break-word;
     color: #161616;
     font-size: 16px;
+    line-height: 22px;
+    display: block;
+    margin: 20px;
+}
+
+.drawer-title-line{
+    word-wrap: break-word;
+    max-width: 100%;
+    word-break: break-word;
+    color: #161616;
+    font-size: 20px;
     line-height: 24px;
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 10px;
+    font-weight: 600;
+    display: block;
+    margin: 20px;
 }
