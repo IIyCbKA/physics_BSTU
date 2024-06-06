@@ -37,7 +37,8 @@ export default function ModalWindow(props){
             props.openNotification(NOTIFICATION_ERROR_STATUS,
                 NOTIFICATION_ERROR_DEFAULT_TITLE,
                 'При создании папки произошла ошибка. Возможно, папка с таким ' +
-                'именем уже существует. Повторите попытку позже.')
+                'именем уже существует или содержит в себе запрещенные символы. ' +
+                'Повторите попытку позже.')
         }
 
         handleCancel()
