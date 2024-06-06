@@ -11,10 +11,13 @@ import {SwitchTransition, CSSTransition} from "react-transition-group";
 import './styles/style_from_pages.css'
 import {socket} from "../server_files/sockets/socket_client";
 import {DEFAULT_PAGES_BACKGROUND_COLOR} from "../constants";
+import {notification} from 'antd';
+
 
 const PAGE_TITLE = 'Хранилище'
 
 function Home() {
+    const [api, contextHolder] = notification.useNotification();
     const dispatch = useDispatch()
     const selected_id = useSelector(state => state.file.selected_id)
     const location = useLocation();
@@ -23,6 +26,13 @@ function Home() {
     const [initSuccess, setInitSuccess] = useState(false);
     const [showFileHeader, setShowFileHeader] = useState(false);
     const headerRef = useRef(null);
+
+    const openNotification = (type, title, text) => {
+        api[type]({
+            message: title,
+            description: text
+        });
+    };
 
     useEffect(() => {
         setShowFileHeader(selected_id !== null);
@@ -64,6 +74,7 @@ function Home() {
 
     return (
         <div style={{backgroundColor: DEFAULT_PAGES_BACKGROUND_COLOR}}>
+            {contextHolder}
             <Helmet>
                 <title>{PAGE_TITLE}</title>
             </Helmet>
@@ -76,11 +87,14 @@ function Home() {
                         classNames="header-transition"
                         onEnter={handleEnter}
                     >
-                        {showFileHeader ? <FileHeader /> : <DefaultHeader />}
+                        {showFileHeader ?
+                            <FileHeader openNotification={openNotification}/> :
+                            <DefaultHeader />
+                        }
                     </CSSTransition>
                 </SwitchTransition>
             </div>
-            {initSuccess && <Storage/>}
+            {initSuccess && <Storage openNotification={openNotification}/>}
         </div>
     );
 }

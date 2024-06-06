@@ -10,14 +10,19 @@ import './styles/style_file_header.css'
 import {
     EMPLOYEE_USER_STATUS,
     FILE_TYPE_FOLDER,
+    NOTIFICATION_ERROR_DEFAULT_TITLE,
+    NOTIFICATION_ERROR_STATUS,
+    NOTIFICATION_SUCCESS_STATUS,
     PORTRAIT_ORIENTATION
 } from "../../../constants";
 import DropdownFileInfo from "./dropdown_file_info";
 import {isMobile} from "react-device-detect";
 import DrawerFileInfo from "./drawer_file_info";
 
+const SUCCESS_DELETE_STATUS = 200
+const SUCCESS_TITLE = 'Файл успешно удален'
 
-export default function FileHeader(){
+export default function FileHeader(props){
     const userStatus = useSelector(state => state.user.currentUser.status)
     const orientation = useSelector(state => state.app.orientation)
     const selected_id = useSelector(state => state.file.selected_id)
@@ -40,7 +45,17 @@ export default function FileHeader(){
     }
 
     const onDelete = async () => {
-        await deleteFile(selected_id)
+        const status = await deleteFile(selected_id)
+
+        if (status === SUCCESS_DELETE_STATUS){
+            props.openNotification(NOTIFICATION_SUCCESS_STATUS,
+                SUCCESS_TITLE,
+                `Файл '${selected_name}' успешно удален из хранилища.`)
+        } else {
+            props.openNotification(NOTIFICATION_ERROR_STATUS,
+                NOTIFICATION_ERROR_DEFAULT_TITLE, 'Произошла ошибка при ' +
+                'попытке удалить файл. Повторите попытку позже')
+        }
         dispatch(cleanSelectedInfo());
     }
 

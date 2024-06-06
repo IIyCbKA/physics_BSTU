@@ -7,11 +7,15 @@ import '../modal/styles/style_modal.css'
 import HeaderModal from "../modal/header_modal";
 import {
     DEFAULT_MODAL_CANCEL_BTN_TEXT,
-    DEFAULT_MODAL_OK_BTN_TEXT
+    DEFAULT_MODAL_OK_BTN_TEXT, NOTIFICATION_ERROR_DEFAULT_TITLE,
+    NOTIFICATION_ERROR_STATUS,
+    NOTIFICATION_SUCCESS_STATUS
 } from "../../constants";
 
 const TITLE_TEXT = 'Укажите название папки'
 const INPUT_PLACEHOLDER_TEXT = 'Новая папка'
+const SUCCESS_CREATE_STATUS = 201
+const SUCCESS_TITLE = 'Папка успешно создана'
 
 export default function ModalWindow(props){
     const [folderName, setFolderName] = useState('')
@@ -23,7 +27,19 @@ export default function ModalWindow(props){
 
     const handleOk = async () => {
         props.setAnchorEl(null);
-        await createFolder(folderName, path)
+        const status = await createFolder(folderName, path)
+
+        if (status === SUCCESS_CREATE_STATUS){
+            props.openNotification(NOTIFICATION_SUCCESS_STATUS,
+                SUCCESS_TITLE,
+                `Папка '${folderName}' была успешно создана.`)
+        } else {
+            props.openNotification(NOTIFICATION_ERROR_STATUS,
+                NOTIFICATION_ERROR_DEFAULT_TITLE,
+                'При создании папки произошла ошибка. Возможно, папка с таким ' +
+                'именем уже существует. Повторите попытку позже.')
+        }
+
         handleCancel()
     }
 

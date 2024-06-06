@@ -43,3 +43,7 @@ export const DEFAULT_PAGES_BACKGROUND_COLOR = '#EBF0FF'
 
 export const FILE_INFO_NAME_TITLE = 'Имя:'
 export const FILE_INFO_SIZE_TITLE = 'Размер:'
+
+export const NOTIFICATION_SUCCESS_STATUS = 'success'
+export const NOTIFICATION_ERROR_STATUS = 'error'
+export const NOTIFICATION_ERROR_DEFAULT_TITLE = 'Ошибка'

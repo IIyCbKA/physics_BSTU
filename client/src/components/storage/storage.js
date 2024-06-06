@@ -41,7 +41,7 @@ export default function Storage(props){
             onClick={handlerClick}
         >
             <div {...rootProps} className="storage">
-                <Disk orientation={props.orientation}/>
+                <Disk openNotification={props.openNotification}/>
                 {isDragActive && userStatus === EMPLOYEE_USER_STATUS &&
                     <div className='drop-area'>
                         <div className='drop-frame'>

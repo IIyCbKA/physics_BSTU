@@ -34,14 +34,18 @@ export const uploadFile = async (file, dir_path) => {
         const formData = new FormData()
         formData.append('file', file)
         formData.append('path', dir_path)
-        await $host.post(UPLOAD_DISK_FILE_URL, formData, {
+        const result = await $host.post(UPLOAD_DISK_FILE_URL, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         })
+
+        return result.status
     }
     catch (e){
         console.log(e)
+
+        return 500
     }
 }
 
@@ -59,19 +63,27 @@ export const downloadFile = async (fileName, fileID) => {
 
 export const createFolder = async (folderName, path) => {
     try{
-        await $host.post(CREATE_DISK_FOLDER_URL, {folderName, path})
+        const result = await $host.post(CREATE_DISK_FOLDER_URL, {folderName, path})
+
+        return result.status
     }
     catch(e){
         console.log(e)
+
+        return 500
     }
 }
 
 
 export const deleteFile = async (file_id) => {
     try{
-        await $host.post(DELETE_DISK_FILE_URL, {fileID: file_id})
+        const result = await $host.post(DELETE_DISK_FILE_URL, {fileID: file_id})
+
+        return result.status
     }
     catch(e){
         console.log(e)
+
+        return 500
     }
 }

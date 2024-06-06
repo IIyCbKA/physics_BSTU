@@ -9,7 +9,7 @@ import DiskMenu from "./menu/disk_menu";
 import ModalWindow from "./default_modal";
 import {EMPLOYEE_USER_STATUS} from "../../constants";
 
-export default function Disk() {
+export default function Disk(props) {
     const [isModalOpen, setModalOpen] = useState(false)
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -74,12 +74,14 @@ export default function Disk() {
                 setAnchorEl={setAnchorEl}
                 anchorEl={anchorEl}
                 setModalShow={setModalOpen}
+                openNotification={props.openNotification}
             />
             {isModalOpen &&
                 <ModalWindow
                     show={isModalOpen}
                     setModalOpen={setModalOpen}
                     setAnchorEl={setAnchorEl}
+                    openNotification={props.openNotification}
                 />
             }
         </div>
