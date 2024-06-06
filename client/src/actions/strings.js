@@ -84,3 +84,8 @@ export const minimizeStrPortrait = (text, maxWidth, fieldRef) => {
         fieldRef.textContent = textStart + '...' + textEnd;
     }
 }
+
+export const pathToURL = (path) => {
+    let parts = path.split('/').map(encodeURIComponent);
+    return parts.join('/');
+}

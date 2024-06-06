@@ -1,5 +1,5 @@
 import './styles/style_disk.css'
-import {minimizeStr, minimizeStrPortrait} from "../../actions/strings";
+import {minimizeStr, minimizeStrPortrait, pathToURL} from "../../actions/strings";
 import {useDispatch, useSelector} from "react-redux";
 import {icons} from "./file_icons";
 import {styles} from "./styles/style_disk";
@@ -66,7 +66,7 @@ export default function File(props){
         event.preventDefault()
         if (props.type === FILE_TYPE_FOLDER && !isMobile){
             clearTimeout(folderTimer);
-            window.location.href = path + props.name + '\\'
+            window.location.href = pathToURL(path + props.name + '/')
         }
     }
 
@@ -91,7 +91,7 @@ export default function File(props){
 
         if (isNotMove && endTime - startTime < 300 &&
             props.type === FILE_TYPE_FOLDER){
-                window.location.href = path + props.name + '\\'
+                window.location.href = pathToURL(path + props.name + '\\')
         }
 
         clearTimeout(timer);

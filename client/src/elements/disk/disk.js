@@ -2,7 +2,7 @@ import File from "./file";
 import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import './styles/style_disk.css'
-import {getCurrentFolderName, getLastDirectory} from "../../actions/strings";
+import {getCurrentFolderName, getLastDirectory, pathToURL} from "../../actions/strings";
 import {ArrowLeftOutlined, PlusOutlined} from "@ant-design/icons";
 import {styles} from './styles/style_disk'
 import DiskMenu from "./menu/disk_menu";
@@ -29,7 +29,7 @@ export default function Disk(props) {
 
     const handleGoBackClick = (event) => {
         event.stopPropagation();
-        window.location.href = backPath;
+        window.location.href = pathToURL(backPath);
     }
 
     const handleAddClick = (event) => {

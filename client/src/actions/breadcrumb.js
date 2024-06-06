@@ -1,5 +1,6 @@
 import BreadcrumbPatternItem
     from "../utils/breadcrumb_pattern_item/breadcrumb_pattern_item";
+import { pathToURL } from "./strings";
 
 const getBreadcrumbTitle = (index, parts, currentPath) => {
     // Если это последний элемент, добавляем его как простой текст
@@ -10,7 +11,7 @@ const getBreadcrumbTitle = (index, parts, currentPath) => {
         return({
             title:
                 <BreadcrumbPatternItem
-                    currentPath={currentPath}
+                    currentPath={pathToURL(currentPath)}
                     title={parts[index]}
                 />
         });
