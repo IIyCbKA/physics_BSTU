@@ -46,6 +46,9 @@ async def filesSocket(ws: WebSocket,
 @fastApiServer.post('/api/create_folder')
 async def createFolder(data: FolderData,
                        user: Annotated[UserModel, Depends(getCurrentEmployee)]):
+    if '/' in data.folderName:
+        return JSONResponse(content={'error': 'Folder name cannot contain \\'},
+                            status_code=400)
     data.path = data.path.replace('/disk', '', 1)
     fileModel: FileModel | None = addDiskFileToDB(data.folderName,
                                               'folder',
@@ -101,8 +104,13 @@ async def deleteFile(data: DeleteFileData,
             if fileInfo.fileType != 'folder':
                 addDeleteFileStartAction(user, fileInfo.fileName,
                                          fileInfo.path)
-                deleteDiskFileFromDB(fileInfo.fileID)
-                deleteFileObject(fileInfo.fileID, fileInfo.fileType)
+                if not deleteFileObject(fileInfo.fileID, fileInfo.fileType):
+                    addDiskFileToDB(fileInfo.fileName, fileInfo.fileType,
+                                    fileInfo.path, fileInfo.fileSize)
+                    return JSONResponse(
+                        content={
+                            'Error': 'File don`t delete from file storage'},
+                        status_code=500)
             else:
                 addDeleteFolderStartAction(user, fileInfo.fileName,
                                            fileInfo.path)

@@ -44,11 +44,12 @@ def addDiskFileToDB(fileName: str, fileType: str, path: str,
         return None
 
 
-def deleteDiskFileFromDB(fileID: int) -> None:
+def deleteDiskFileFromDB(fileID: int) -> Files | None:
     file = db.query(Files).filter_by(file_id=fileID).first()
     if file:
         db.delete(file)
         db.commit()
+    return file
 
 
 def getDiskFileInfo(fileID: int) -> FileModel | None:
