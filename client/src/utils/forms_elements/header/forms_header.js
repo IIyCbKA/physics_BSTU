@@ -66,14 +66,14 @@ export default function FormsHeader(props){
                     SUCCESS_UPDATE_TASK_TITLE,
                     'Задание было успешно обновлено.')
                 props.setShow(false)
+                setTimeout(() => {
+                    dispatch(setUpdatingTask({}));
+                }, 500)
             } else {
                 props.openNotification(NOTIFICATION_ERROR_STATUS,
                     NOTIFICATION_ERROR_DEFAULT_TITLE, `Задание '${task.title}' 
                     не было обновлено. Повторите попытку позже.`)
             }
-            setTimeout(() => {
-                dispatch(setUpdatingTask({}));
-            }, 500)
         } else {
             const status = await createTask(task);
             if (status === SUCCESS_TASK_FORM_STATUS){
