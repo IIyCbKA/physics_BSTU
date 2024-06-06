@@ -54,8 +54,10 @@ export default function Task(props){
             {isShowModal &&
                 <DeleteTaskModal
                     taskID={props.id}
+                    taskName={props.title}
                     isShow={isShowModal}
                     setShowModal={setShowModal}
+                    openNotification={props.openNotification}
                 />
             }
         </div>

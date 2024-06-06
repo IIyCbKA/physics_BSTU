@@ -11,12 +11,21 @@ import {
     DEFAULT_PAGES_BACKGROUND_COLOR,
     EMPLOYEE_USER_STATUS
 } from "../constants";
+import {notification} from "antd";
 
 export default function Account(){
+    const [api, contextHolder] = notification.useNotification();
     const userStatus = useSelector(state => state.user.currentUser.status)
     const [showTaskForm, setShowTaskForm] = useState(false)
     const [showJournal, setShowJournal] = useState(false);
     const dispatch = useDispatch()
+
+    const openNotification = (type, title, text) => {
+        api[type]({
+            message: title,
+            description: text
+        });
+    };
 
     useEffect(() => {
         const waitFunc = async () => {
@@ -34,12 +43,18 @@ export default function Account(){
             <AccountAround
                 setShowTaskForm={setShowTaskForm}
                 setShowJournal={setShowJournal}
+                openNotification={openNotification}
             />
             {userStatus === EMPLOYEE_USER_STATUS &&
-                <React.Fragment>
-                    <TaskForm show={showTaskForm} setShow={setShowTaskForm}/>
+                <>
+                    {contextHolder}
+                    <TaskForm
+                        show={showTaskForm}
+                        setShow={setShowTaskForm}
+                        openNotification={openNotification}
+                    />
                     <JournalGroup show={showJournal} setShow={setShowJournal}/>
-                </React.Fragment>
+                </>
             }
         </div>
     )

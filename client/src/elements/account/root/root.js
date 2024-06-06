@@ -29,7 +29,7 @@ export default function RootAccount(props){
                                     <CreateTask setShow={props.setShowTaskForm}/>
                                 }
                                 <TasksHead/>
-                                <ListingTask/>
+                                <ListingTask openNotification={props.openNotification}/>
                             </div> :
                             <div className='account-evaluation-main'>
                                 <UserInfo/>

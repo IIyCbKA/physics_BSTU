@@ -69,11 +69,11 @@ export const getTasksList = () =>
 
 export const deleteTask = async (task_id) => {
     try{
-        console.log(task_id)
-        await $host.post(DELETE_TASK_URL, {taskID: task_id})
+        const result = await $host.post(DELETE_TASK_URL, {taskID: task_id})
+        return result.status
     }
     catch(e){
-        console.log(e)
+        return 500
     }
 }
 
@@ -121,7 +121,13 @@ export const processTask = async (task, route) => {
 
 // Добавляет задание
 export const createTask = async (task) => {
-    return await processTask(task, CREATE_TASK_URL)
+    try{
+        const result = await processTask(task, CREATE_TASK_URL)
+        return result.status
+    }
+    catch(e){
+        return 500
+    }
 }
 
 export const downloadTaskFile = async (fileName, fileID) => {
@@ -137,7 +143,13 @@ export const downloadTaskFile = async (fileName, fileID) => {
 
 // Обновляет задание
 export const updateTask = async (task) => {
-    return await processTask(task, UPDATE_TASK_URL)
+    try{
+        const result = await processTask(task, UPDATE_TASK_URL)
+        return result.status
+    }
+    catch(e){
+        return 500
+    }
 }
 
 export const getNextAdditionID = (additions) => {

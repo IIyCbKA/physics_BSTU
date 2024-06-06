@@ -7,11 +7,19 @@ import {AssignmentOutlined, Group} from "@mui/icons-material";
 import {useDispatch, useSelector} from "react-redux";
 import {setUpdatingTask} from "../../../reducers/journal_reducer";
 import {useState} from "react";
+import {
+    NOTIFICATION_ERROR_DEFAULT_TITLE,
+    NOTIFICATION_ERROR_STATUS,
+    NOTIFICATION_SUCCESS_STATUS
+} from "../../../constants";
 
 const BTN_LOADING_TEXT = 'В процессе...'
 const BTN_UPDATING_TEXT = 'Сохранить'
 const BTN_CREATE_TEXT = 'Создать'
 const TASK_FORM_TITLE_TEXT = 'Задание'
+const SUCCESS_TASK_FORM_STATUS = 200
+const SUCCESS_UPDATE_TASK_TITLE = 'Задание успешно обновлено'
+const SUCCESS_CREATE_TASK_TITLE = 'Задание успешно создано'
 
 export default function FormsHeader(props){
     const [isLoading, setLoading] = useState(false)
@@ -51,20 +59,34 @@ export default function FormsHeader(props){
         }
 
         if (isUpdated){
-            const result = await updateTask(task);
-            if (result.status === 200){
+            const status = await updateTask(task);
+
+            if (status === SUCCESS_TASK_FORM_STATUS){
+                props.openNotification(NOTIFICATION_SUCCESS_STATUS,
+                    SUCCESS_UPDATE_TASK_TITLE,
+                    'Задание было успешно обновлено.')
                 props.setShow(false)
+            } else {
+                props.openNotification(NOTIFICATION_ERROR_STATUS,
+                    NOTIFICATION_ERROR_DEFAULT_TITLE, `Задание '${task.title}' 
+                    не было обновлено. Повторите попытку позже.`)
             }
             setTimeout(() => {
                 dispatch(setUpdatingTask({}));
             }, 500)
         } else {
-            const result = await createTask(task);
-            if (result.status === 200){
+            const status = await createTask(task);
+            if (status === SUCCESS_TASK_FORM_STATUS){
+                props.openNotification(NOTIFICATION_SUCCESS_STATUS,
+                    SUCCESS_CREATE_TASK_TITLE, 'Задание было успешно создано.')
                 props.setShow(false)
                 setTimeout(() => {
                     dispatch(setUpdatingTask({}))
                 }, 500)
+            } else {
+                props.openNotification(NOTIFICATION_ERROR_STATUS,
+                    NOTIFICATION_ERROR_DEFAULT_TITLE, `Задание '${task.title}' 
+                    не было создано. Повторите попытку позже.`)
             }
         }
 

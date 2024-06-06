@@ -3,7 +3,7 @@ import '../common_styles/common_account_styles.css'
 import Task from "../../../utils/task/task";
 import {useState} from "react";
 
-export default function ListingTask(){
+export default function ListingTask(props){
     const tasks = useSelector(state => state.journal.tasks);
     const [activeTaskID, setActiveTask] = useState(null)
 
@@ -19,6 +19,7 @@ export default function ListingTask(){
                       isLast={index === tasks.length - 1}
                       isActive={activeTaskID === task.id}
                       setActiveID={setActiveTask}
+                      openNotification={props.openNotification}
                 />
             ))}
         </div>

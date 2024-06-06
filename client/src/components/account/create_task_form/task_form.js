@@ -90,6 +90,7 @@ export default function TaskForm(props){
                          additions={additions}
                          id={taskId}
                          isCreateTaskForm={true}
+                         openNotification={props.openNotification}
             />
             <div className='form-main' ref={taskFormMainRef}>
                 <SelectGroups setSelectedGroups={setSelectedGroups}

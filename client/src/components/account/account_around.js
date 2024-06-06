@@ -33,6 +33,7 @@ export default function AccountAround(props){
                             setShowTaskForm={props.setShowTaskForm}
                             setShowJournal={props.setShowJournal}
                             onFirstSelected={onFirstSelected}
+                            openNotification={props.openNotification}
                         />
                     </div>
                 </div>
