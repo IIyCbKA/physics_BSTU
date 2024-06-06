@@ -1,5 +1,5 @@
 import File from "./file";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import './styles/style_disk.css'
 import {getCurrentFolderName, getLastDirectory} from "../../actions/strings";
@@ -8,6 +8,9 @@ import {styles} from './styles/style_disk'
 import DiskMenu from "./menu/disk_menu";
 import ModalWindow from "./default_modal";
 import {EMPLOYEE_USER_STATUS} from "../../constants";
+import {generateBreadcrumbItems} from "../../actions/breadcrumb";
+import {Breadcrumb} from "antd";
+import {isDesktop} from "react-device-detect";
 
 export default function Disk(props) {
     const [isModalOpen, setModalOpen] = useState(false)
@@ -18,6 +21,11 @@ export default function Disk(props) {
     const userStatus = useSelector(state => state.user.currentUser.status)
     const backPath = getLastDirectory(path)
     const folderName = getCurrentFolderName(path)
+    const [itemsBreadcrumb, setItemsBreadcrumb] = useState([])
+
+    useEffect(() => {
+        setItemsBreadcrumb(generateBreadcrumbItems(path))
+    }, [path]);
 
     const handleGoBackClick = (event) => {
         event.stopPropagation();
@@ -33,6 +41,11 @@ export default function Disk(props) {
         <div className='storage-main'>
             <div className="root-content-inner">
                 <div className="root-content-container">
+                    {isDesktop && itemsBreadcrumb.length > 1 &&
+                        <div className='breadcrumb-wrap'>
+                            <Breadcrumb items={itemsBreadcrumb} separator='>'/>
+                        </div>
+                    }
                     <div className="disk-head">
                         {backPath !== '' &&
                             <div className='go-btn-div' onClick={handleGoBackClick}>

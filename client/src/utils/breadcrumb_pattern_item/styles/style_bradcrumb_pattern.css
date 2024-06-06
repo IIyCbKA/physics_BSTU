@@ -1,0 +1,10 @@
+.breadcrumb-pattern-wrap{
+    text-decoration: none;
+    background-color: #FFFFFF !important;
+}
+
+.breadcrumb-pattern-main{
+    font-size: 14px;
+    font-family: Roboto, Arial, sans-serif;
+    line-height: 16px;
+}
