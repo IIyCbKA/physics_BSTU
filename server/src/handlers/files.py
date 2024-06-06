@@ -104,9 +104,11 @@ async def deleteFile(data: DeleteFileData,
             if fileInfo.fileType != 'folder':
                 addDeleteFileStartAction(user, fileInfo.fileName,
                                          fileInfo.path)
+                deleteDiskFileFromDB(fileInfo.fileID)
                 if not deleteFileObject(fileInfo.fileID, fileInfo.fileType):
                     addDiskFileToDB(fileInfo.fileName, fileInfo.fileType,
-                                    fileInfo.path, fileInfo.fileSize)
+                                    fileInfo.path, fileInfo.fileSize,
+                                    fileInfo.fileID)
                     return JSONResponse(
                         content={
                             'Error': 'File don`t delete from file storage'},

@@ -23,11 +23,15 @@ def getDiskFilesNameList(path: str) -> dict:
                        'file_size': row[3]} for row in result]}
 
 
-def addDiskFileToDB(fileName: str, fileType: str, path: str,
-                    file_size: int) -> FileModel | None:
+def addDiskFileToDB(fileName: str, fileType: str, path: str, file_size: int,
+                    file_id: int | None = None) -> FileModel | None:
     try:
-        newFile = Files(file_name=fileName, file_type=fileType,
-                        path=path, file_size=file_size)
+        if file_id is not None:
+            newFile = Files(file_name=fileName, file_type=fileType,
+                            path=path, file_size=file_size, file_id=file_id)
+        else:
+            newFile = Files(file_name=fileName, file_type=fileType,
+                            path=path, file_size=file_size)
         db.add(newFile)
         db.commit()
         fileModel: FileModel = FileModel(
