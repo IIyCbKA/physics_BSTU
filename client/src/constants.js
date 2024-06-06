@@ -40,3 +40,6 @@ export const DEFAULT_MODAL_CANCEL_BTN_TEXT = 'Отмена'
 export const DEFAULT_MODAL_OK_BTN_TEXT = 'Сохранить'
 
 export const DEFAULT_PAGES_BACKGROUND_COLOR = '#EBF0FF'
+
+export const FILE_INFO_NAME_TITLE = 'Имя:'
+export const FILE_INFO_SIZE_TITLE = 'Размер:'

@@ -13,6 +13,8 @@ import {
     PORTRAIT_ORIENTATION
 } from "../../../constants";
 import DropdownFileInfo from "./dropdown_file_info";
+import {isMobile} from "react-device-detect";
+import DrawerFileInfo from "./drawer_file_info";
 
 
 export default function FileHeader(){
@@ -51,7 +53,10 @@ export default function FileHeader(){
             <Container fluid style={containerStyle()}>
                 <Nav style={styles.navStyle}>
                     <div className='bar-left'>
-                        <DropdownFileInfo/>
+                        {isMobile ?
+                            <DrawerFileInfo/> :
+                            <DropdownFileInfo/>
+                        }
                     </div>
                     <div className='bar-right'>
                         <div className='bar-right-text-zone'>

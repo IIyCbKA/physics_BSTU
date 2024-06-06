@@ -50,11 +50,17 @@ const navItemStyle = {
     cursor: 'pointer'
 }
 
+const drawerStyle = {
+    borderTopLeftRadius: '15px',
+    borderTopRightRadius: '15px'
+}
+
 export const styles = {
     navbarFileHeader: navbarFileHeader,
     containerHeaderMobile: {...containerHeaderAll, ...containerHeaderMobile},
     containerHeaderPC: {...containerHeaderAll, ...containerHeaderPC},
     iconsStyle: iconsStyle,
     navStyle: navStyle,
-    navItemStyle: navItemStyle
+    navItemStyle: navItemStyle,
+    drawerStyle: drawerStyle
 }

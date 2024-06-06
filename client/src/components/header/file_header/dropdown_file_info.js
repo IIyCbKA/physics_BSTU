@@ -4,19 +4,13 @@ import {InfoOutlined} from "@mui/icons-material";
 import {Nav} from "react-bootstrap";
 import {Dropdown} from "antd";
 import './styles/style_file_header.css'
-import {FILE_TYPE_FOLDER} from "../../../constants";
+import {
+    FILE_INFO_NAME_TITLE,
+    FILE_INFO_SIZE_TITLE,
+    FILE_TYPE_FOLDER
+} from "../../../constants";
+import {formatFileSize} from "../../../actions/files";
 
-const DROPDOWN_NAME_TITLE = 'Имя:'
-const DROPDOWN_SIZE_TITLE = 'Размер:'
-
-function formatFileSize(bytes) {
-    if (bytes === 0) return '0 Байт';
-
-    const sizes = ['Байт', 'КБ', 'МБ', 'ГБ', 'ТБ'];
-    const i = Math.floor(Math.log(bytes) / Math.log(1024));
-
-    return `${(bytes / Math.pow(1024, i)).toFixed(2)} ${sizes[i]}`;
-}
 
 export default function DropdownFileInfo(){
     const selected_name = useSelector(state => state.file.selected_name)
@@ -26,19 +20,19 @@ export default function DropdownFileInfo(){
     const customDropdown = () => (
         <div className='dropdown-wrap'>
             <div className='dropdown-text-line'>
-                <div className='dropdown-text-line-title'>
-                    {DROPDOWN_NAME_TITLE}
+                <div className='header-file-info-text-line-title'>
+                    {FILE_INFO_NAME_TITLE}
                 </div>
-                <div className='dropdown-text-line-main'>
+                <div className='header-file-info-text-line-main'>
                     {selected_name}
                 </div>
             </div>
             {selected_type !== FILE_TYPE_FOLDER &&
                 <div className='dropdown-text-line'>
-                    <div className='dropdown-text-line-title'>
-                        {DROPDOWN_SIZE_TITLE}
+                    <div className='header-file-info-text-line-title'>
+                        {FILE_INFO_SIZE_TITLE}
                     </div>
-                    <div className='dropdown-text-line-main'>
+                    <div className='header-file-info-text-line-main'>
                         {formatFileSize(selected_size)}
                     </div>
                 </div>
