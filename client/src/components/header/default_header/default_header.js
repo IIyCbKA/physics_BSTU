@@ -6,7 +6,11 @@ import React, { useState } from "react";
 import { cleanUserInfo } from "../../../actions/user";
 import { useDispatch, useSelector } from "react-redux";
 import "./styles/style_header.css";
-import { LogoutRounded, AccountCircleOutlined } from "@mui/icons-material";
+import {
+  LogoutRounded,
+  AccountCircleOutlined,
+  SettingsOutlined,
+} from "@mui/icons-material";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { PORTRAIT_ORIENTATION } from "../../../constants";
 
@@ -37,6 +41,10 @@ export default function DefaultHeader() {
     <Navbar collapseOnSelect expand="lg" style={styles.styleNavbar}>
       <Container fluid style={containerStyle()}>
         <Navbar.Brand href="/disk/" style={styles.logotypePadding}>
+          <SettingsOutlined
+            style={{ fontSize: "30px", marginRight: "5px" }}
+            className="icon-spin"
+          />
           <Logotype width={"125px"} height={"30px"} />
         </Navbar.Brand>
         <Navbar.Toggle
