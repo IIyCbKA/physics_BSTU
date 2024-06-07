@@ -42,7 +42,7 @@ export default function DefaultHeader() {
       <Container fluid style={containerStyle()}>
         <Navbar.Brand href="/disk/" style={styles.logotypePadding}>
           <SettingsOutlined
-            style={{ fontSize: "30px", marginRight: "5px" }}
+            style={styles.logotypeGearIcon}
             className="icon-spin"
           />
           <Logotype width={"125px"} height={"30px"} />

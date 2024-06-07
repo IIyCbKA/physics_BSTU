@@ -15,6 +15,12 @@ const logotypePadding = {
   alignItems: "center",
 };
 
+const logotypeGearIcon = {
+  fontSize: "30px",
+  marginRight: "5px",
+  color: '#161616'
+}
+
 const customToggle = {
   height: "30px",
   boxShadow: "None",
@@ -54,4 +60,5 @@ export const styles = {
   containerHeaderMobile: { ...containerHeaderAll, ...containerHeaderMobile },
   containerHeaderPC: { ...containerHeaderAll, ...containerHeaderPC },
   headerIconStyle: headerIconStyle,
+  logotypeGearIcon: logotypeGearIcon
 };
