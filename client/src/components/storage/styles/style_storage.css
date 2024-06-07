@@ -1,41 +1,41 @@
 .drop-area {
-    z-index: 10000;
-    display: flex;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    padding: 20px;
-    background-color: rgba(0, 0, 0, 0.3);
+  z-index: 10000;
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .drop-frame {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    padding: 10px;
-    border: 5px dashed white;
-    justify-content: center;
-    text-align: center;
-    align-items: center;
-    font-size: 50px;
-    color: white;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  border: 5px dashed white;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  font-size: 50px;
+  color: white;
 }
 
-.storage{
-    display: flex;
-    outline: none;
+.storage {
+  display: flex;
+  outline: none;
 }
 
-.around-storage{
-    background-color: #EBF0FF;
-    padding: 14px 20px 20px 20px
+.around-storage {
+  background-color: #ebf0ff;
+  padding: 14px 20px 20px 20px;
 }
 
 @media (orientation: portrait) {
-    .around-storage{
-        background-color: #EBF0FF;
-        padding: 14px 0 10px 0
-    }
+  .around-storage {
+    background-color: #ebf0ff;
+    padding: 14px 0 10px 0;
+  }
 }

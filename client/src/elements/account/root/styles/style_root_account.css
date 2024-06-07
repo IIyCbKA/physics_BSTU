@@ -1,37 +1,37 @@
-.account-info-main{
-    min-width: 244px;
-    width: 100%;
-    max-width: 850px;
+.account-info-main {
+  min-width: 244px;
+  width: 100%;
+  max-width: 850px;
 }
 
-.account-info-wrap{
-    width: 100%;
-    display: flex;
-    justify-content: center;
+.account-info-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-.account-tasks-main{
-    display: block;
+.account-tasks-main {
+  display: block;
 }
 
-.account-evaluation-main{
-    display: block;
+.account-evaluation-main {
+  display: block;
 }
 
 .account-transition-enter {
-    opacity: 0;
+  opacity: 0;
 }
 
 .account-transition-enter-active {
-    opacity: 1;
-    transition: opacity 150ms linear;
+  opacity: 1;
+  transition: opacity 150ms linear;
 }
 
 .account-transition-exit {
-    opacity: 1;
+  opacity: 1;
 }
 
 .account-transition-exit-active {
-    opacity: 0;
-    transition: opacity 150ms linear;
+  opacity: 0;
+  transition: opacity 150ms linear;
 }

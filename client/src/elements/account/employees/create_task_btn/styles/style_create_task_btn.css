@@ -1,34 +1,34 @@
-.create_btn_zone{
-    display: flex;
-    align-items: center;
-    height: 60px;
-    margin-top: 10px;
+.create_btn_zone {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  margin-top: 10px;
 }
 
-.plus-wrap{
-    height: 32px;
-    width: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 5px;
+.plus-wrap {
+  height: 32px;
+  width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 5px;
 }
 
-.create-btn-text{
-    font-size: 14px;
-    font-family: "Google Sans", Roboto, Arial, sans-serif;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 7px;
-    line-height: 20px;
+.create-btn-text {
+  font-size: 14px;
+  font-family: "Google Sans", Roboto, Arial, sans-serif;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 7px;
+  line-height: 20px;
 }
 
-.btn-root{
-    background-color: #1967D2;
+.btn-root {
+  background-color: #1967d2;
 }
 
-.btn-root:hover{
-    background-color: #144B9D;
+.btn-root:hover {
+  background-color: #144b9d;
 }

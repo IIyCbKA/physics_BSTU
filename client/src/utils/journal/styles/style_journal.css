@@ -1,59 +1,61 @@
-.journal-wrap{
-    width: 100%;
-    height: 60px;
-    box-shadow: none;
-    border-radius: 8px;
+.journal-wrap {
+  width: 100%;
+  height: 60px;
+  box-shadow: none;
+  border-radius: 8px;
 }
 
-.journal-wrap:hover{
-    box-shadow: 0 1px 2px 0 rgba(60,64,67,.3), 0 2px 6px 2px rgba(60,64,67,.15);
+.journal-wrap:hover {
+  box-shadow:
+    0 1px 2px 0 rgba(60, 64, 67, 0.3),
+    0 2px 6px 2px rgba(60, 64, 67, 0.15);
 }
 
-.journal-main{
-    width: 100%;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    padding: 12px;
-    cursor: pointer;
+.journal-main {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  cursor: pointer;
 }
 
-.journal-main:hover{
-    border-bottom: none;
+.journal-main:hover {
+  border-bottom: none;
 }
 
-.default-journal-icon-wrap{
-    height: 36px;
-    width: 36px;
-    border-radius: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.default-journal-icon-wrap {
+  height: 36px;
+  width: 36px;
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.journal-icon-wrap{
-    margin-right: 12px;
-    background-color: #4285F4;
+.journal-icon-wrap {
+  margin-right: 12px;
+  background-color: #4285f4;
 }
 
-.decor-icon-wrap{
-    margin-left: 12px;
+.decor-icon-wrap {
+  margin-left: 12px;
 }
 
-.journal-title-wrap{
-    width: calc(100% - 96px);
-    height: 100%;
-    display: flex;
-    align-items: center;
+.journal-title-wrap {
+  width: calc(100% - 96px);
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 
-.journal-title-text{
-    font-family: "Google Sans", Roboto, Arial, sans-serif;
-    font-size: 14px;
-    line-height: 20px;
-    font-weight: 500;
-    word-break: break-all;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+.journal-title-text {
+  font-family: "Google Sans", Roboto, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

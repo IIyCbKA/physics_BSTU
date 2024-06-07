@@ -1,22 +1,22 @@
-import { ConfigProvider } from 'antd';
+import { ConfigProvider } from "antd";
 import App from "./app";
 
-export default function AppWithAntdConfig(){
-    return (
-        <ConfigProvider
-            theme={{
-                token:{
-                    fontFamily: 'Google Sans, Roboto, Arial, sans-serif'
-                },
+export default function AppWithAntdConfig() {
+  return (
+    <ConfigProvider
+      theme={{
+        token: {
+          fontFamily: "Google Sans, Roboto, Arial, sans-serif",
+        },
 
-                components: {
-                    Modal: {
-                        titleFontSize: '15px'
-                    }
-                },
-            }}
-        >
-            <App/>
-        </ConfigProvider>
-    )
-};
+        components: {
+          Modal: {
+            titleFontSize: "15px",
+          },
+        },
+      }}
+    >
+      <App />
+    </ConfigProvider>
+  );
+}

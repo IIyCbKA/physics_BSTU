@@ -1,33 +1,40 @@
-import {styles} from "../styles/style_main_table";
-import {TableCell} from "@mui/material";
-import '../styles/style_main_table.css'
-import {WORK_STATUS_COMPLETED} from "../../../../../constants";
+import { styles } from "../styles/style_main_table";
+import { TableCell } from "@mui/material";
+import "../styles/style_main_table.css";
+import { WORK_STATUS_COMPLETED } from "../../../../../constants";
 
-export default function GradeCellJournal(props){
-    const isActive = props.selectStudentID === props.studentID &&
-        props.selectWork === props.task
-    const isUnchecked = props.task.grade.status === WORK_STATUS_COMPLETED &&
-        !props.task.grade.grade
+export default function GradeCellJournal(props) {
+  const isActive =
+    props.selectStudentID === props.studentID &&
+    props.selectWork === props.task;
+  const isUnchecked =
+    props.task.grade.status === WORK_STATUS_COMPLETED &&
+    !props.task.grade.grade;
 
-    const handleGradeCellClick = (event, work, studentID) => {
-        props.setSelectWork(work);
-        props.setSelectStudentID(studentID);
-        props.setAnchorEl(event.currentTarget);
-    }
+  const handleGradeCellClick = (event, work, studentID) => {
+    props.setSelectWork(work);
+    props.setSelectStudentID(studentID);
+    props.setAnchorEl(event.currentTarget);
+  };
 
-    return(
-        <TableCell
-            style={styles.defaultCell}
-            onClick={(event) => handleGradeCellClick(event,
-                props.task, props.studentID)}
-        >
-            <div className={'default-grade-cell' + (isUnchecked ?
-                    ' completed-grade-cell' : '') +
-                (isActive ? ' active-cell' : '')}>
-                <div className='journal-grade-text'>
-                    {props.task.grade.grade ? props.task.grade.grade : ''}
-                </div>
-            </div>
-        </TableCell>
-    )
+  return (
+    <TableCell
+      style={styles.defaultCell}
+      onClick={(event) =>
+        handleGradeCellClick(event, props.task, props.studentID)
+      }
+    >
+      <div
+        className={
+          "default-grade-cell" +
+          (isUnchecked ? " completed-grade-cell" : "") +
+          (isActive ? " active-cell" : "")
+        }
+      >
+        <div className="journal-grade-text">
+          {props.task.grade.grade ? props.task.grade.grade : ""}
+        </div>
+      </div>
+    </TableCell>
+  );
 }

@@ -1,36 +1,36 @@
 .form-title {
-    text-align: center;
-    color: #161616;
-    margin-bottom: 40px;
-    font-family: "Google Sans", Roboto, Arial, sans-serif;
-    font-size: 32px;
-    line-height: 40px;
+  text-align: center;
+  color: #161616;
+  margin-bottom: 40px;
+  font-family: "Google Sans", Roboto, Arial, sans-serif;
+  font-size: 32px;
+  line-height: 40px;
 }
 
 .form-container {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    min-width: 340px;
-    max-width: 540px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-width: 340px;
+  max-width: 540px;
 }
 
 .form {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    width: 100%;
-    min-width: 300px;
-    padding: 40px;
-    border-radius: 10px;
-    max-width: 500px;
-    background-color: #FFFFFF;
-    box-shadow: 0 4px 7px hsla(229,5%,58%,.102);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  min-width: 300px;
+  padding: 40px;
+  border-radius: 10px;
+  max-width: 500px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 7px hsla(229, 5%, 58%, 0.102);
 }
 
-.login-form-wrap{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.login-form-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -1,19 +1,19 @@
-.description-input-line-wrap{
-    display: flex;
-    height: 140px;
-    width: 100%;
+.description-input-line-wrap {
+  display: flex;
+  height: 140px;
+  width: 100%;
 }
 
-.description-input-line-root{
-    width: 100%;
-    flex-grow: 1;
+.description-input-line-root {
+  width: 100%;
+  flex-grow: 1;
 }
 
-.description-input-line-main{
-    width: 100%;
-    display: inline-flex;
-    flex-direction: column;
-    position: relative;
-    -webkit-box-direction: normal;
-    height: 100%;
+.description-input-line-main {
+  width: 100%;
+  display: inline-flex;
+  flex-direction: column;
+  position: relative;
+  -webkit-box-direction: normal;
+  height: 100%;
 }

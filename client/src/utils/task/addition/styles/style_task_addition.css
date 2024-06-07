@@ -1,9 +1,9 @@
-.task-addition-wrap{
-    display: flex;
-    height: 72px;
-    width: 100%;
-    margin-top: 12px;
-    border: 1px solid #DADCE0;
-    border-radius: 10px;
-    cursor: pointer;
+.task-addition-wrap {
+  display: flex;
+  height: 72px;
+  width: 100%;
+  margin-top: 12px;
+  border: 1px solid #dadce0;
+  border-radius: 10px;
+  cursor: pointer;
 }

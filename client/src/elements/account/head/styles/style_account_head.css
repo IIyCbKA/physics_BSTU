@@ -1,8 +1,8 @@
-.head{
-    height: 48px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    border-bottom: 1px solid #ebebeb;
+.head {
+  height: 48px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  border-bottom: 1px solid #ebebeb;
 }

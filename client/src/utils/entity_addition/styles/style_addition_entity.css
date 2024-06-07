@@ -1,92 +1,92 @@
-.addition-entity-wrap{
-    margin-top: 12px;
-    width: 100%;
-    height: 72px;
-    border: 1px solid #DADCE0;
-    border-radius: 10px;
-    display: flex;
+.addition-entity-wrap {
+  margin-top: 12px;
+  width: 100%;
+  height: 72px;
+  border: 1px solid #dadce0;
+  border-radius: 10px;
+  display: flex;
 }
 
-.addition-entity-icon-wrap{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 96px;
-    margin-right: 16px;
-    border-right: 1px solid #DADCE0;
+.addition-entity-icon-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 96px;
+  margin-right: 16px;
+  border-right: 1px solid #dadce0;
 }
 
-.addition-entity-root{
-    width: calc(100% - 128px);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.addition-entity-root {
+  width: calc(100% - 128px);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.addition-entity-delete{
-    height: 100%;
-    width: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 8px;
+.addition-entity-delete {
+  height: 100%;
+  width: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
 }
 
-.delete-zone{
-    border-radius: 50px;
-    height: 48px;
-    width: 48px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
+.delete-zone {
+  border-radius: 50px;
+  height: 48px;
+  width: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 
-.delete-zone:hover{
-    background-color: #F0F0F0;
+.delete-zone:hover {
+  background-color: #f0f0f0;
 }
 
-.addition-delete-hidden{
-    visibility: hidden;
+.addition-delete-hidden {
+  visibility: hidden;
 }
 
-.addition-title-root{
-    font-family: "Google Sans", Roboto, Arial, sans-serif;
-    font-size: 16px;
-    font-weight: 500;
-    word-break: break-all;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+.addition-title-root {
+  font-family: "Google Sans", Roboto, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.addition-text-root{
-    font-family: Roboto, Arial, sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    color: #5F6368;
-    word-break: break-all;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+.addition-text-root {
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #5f6368;
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.addition-entity-ref-zone{
-    display: flex;
-    width: 100%;
-    text-decoration: none;
-    outline: none;
+.addition-entity-ref-zone {
+  display: flex;
+  width: 100%;
+  text-decoration: none;
+  outline: none;
 }
 
-.addition-entity-info-wrap{
-    display: flex;
-    width: 100%;
+.addition-entity-info-wrap {
+  display: flex;
+  width: 100%;
 }
 
-.addition-entity-info-root{
-    display: flex;
-    width: calc(100% - 64px);
-    cursor: pointer;
+.addition-entity-info-root {
+  display: flex;
+  width: calc(100% - 64px);
+  cursor: pointer;
 }

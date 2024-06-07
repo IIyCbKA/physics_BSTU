@@ -1,17 +1,17 @@
-.information-form-wrap{
-    width: 100%;
-    display: flex;
-    justify-content: center;
+.information-form-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-.information-form{
-    display: flex;
-    flex-direction: column;
-    min-width: 308px;
-    width: 100%;
-    max-width: 850px;
-    border: 1px solid #DADCE0;
-    padding: 20px 14px 14px 14px;
-    margin-bottom: 16px;
-    border-radius: 5px;
+.information-form {
+  display: flex;
+  flex-direction: column;
+  min-width: 308px;
+  width: 100%;
+  max-width: 850px;
+  border: 1px solid #dadce0;
+  padding: 20px 14px 14px 14px;
+  margin-bottom: 16px;
+  border-radius: 5px;
 }

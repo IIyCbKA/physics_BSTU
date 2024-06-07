@@ -1,21 +1,21 @@
-.default-menu-item{
-    height: 100%;
-    width: 100%;
-    padding: 0 16px;
-    display: flex;
-    align-items: center;
-    background-color: #FFFFFF;
+.default-menu-item {
+  height: 100%;
+  width: 100%;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
 }
 
-.default-menu-item:hover{
-    background-color: #EEEEEE;
+.default-menu-item:hover {
+  background-color: #eeeeee;
 }
 
-.default-menu-item-text{
-    font-family: Roboto, Arial, sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 32px;
-    text-overflow: ellipsis;
-    overflow: hidden;
+.default-menu-item-text {
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 32px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }

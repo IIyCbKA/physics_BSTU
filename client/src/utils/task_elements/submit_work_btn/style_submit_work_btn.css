@@ -1,17 +1,17 @@
-.submit-work-btn{
-    margin-left: 12px;
-    background-color: #1967D2;
-    border-color: #1967D2;
+.submit-work-btn {
+  margin-left: 12px;
+  background-color: #1967d2;
+  border-color: #1967d2;
 }
 
-.submit-work-btn:hover{
-    background-color: #144B9D;
-    border-color: #144B9D
+.submit-work-btn:hover {
+  background-color: #144b9d;
+  border-color: #144b9d;
 }
 
-.submit-work-text{
-    font-size: 13px;
-    line-height: 20px;
-    color: #FFFFFF;
-    user-select: none;
+.submit-work-text {
+  font-size: 13px;
+  line-height: 20px;
+  color: #ffffff;
+  user-select: none;
 }

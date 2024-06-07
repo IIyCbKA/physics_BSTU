@@ -1,24 +1,24 @@
 const iconClose = {
-    fontSize: '16px',
-    color: '#5F6368'
-}
+  fontSize: "16px",
+  color: "#5F6368",
+};
 
 const iconHeader = {
-    height: '24px',
-    width: '24px',
-    color: '#4285F4'
-}
+  height: "24px",
+  width: "24px",
+  color: "#4285F4",
+};
 
 const btnCreate = {
-    display: 'flex',
-    height: '36px',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '120px'
-}
+  display: "flex",
+  height: "36px",
+  alignItems: "center",
+  justifyContent: "center",
+  width: "120px",
+};
 
 export const styles = {
-    iconClose: iconClose,
-    iconHeader: iconHeader,
-    btnCreate: btnCreate
-}
+  iconClose: iconClose,
+  iconHeader: iconHeader,
+  btnCreate: btnCreate,
+};

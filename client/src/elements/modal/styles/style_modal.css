@@ -1,118 +1,118 @@
 .modal-input {
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    width: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 100%;
 }
 
 .inputs-margin {
-    margin: 20px 0;
+  margin: 20px 0;
 }
 
-.modal-wrap{
-    padding: 5px;
+.modal-wrap {
+  padding: 5px;
 }
 
-.modal-header-text{
-    display: flex;
-    justify-content: flex-start;
-    width: 100%;
+.modal-header-text {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
 }
 
-.modal-root{
-    min-width: 330px !important;
-    width: 90vw !important;
-    max-width: 450px !important;
+.modal-root {
+  min-width: 330px !important;
+  width: 90vw !important;
+  max-width: 450px !important;
 }
 
-.modal-cancel-btn{
-    color: #5F6368 !important;
-    border: None;
-    padding: 0 8px;
-    box-shadow: None;
+.modal-cancel-btn {
+  color: #5f6368 !important;
+  border: None;
+  padding: 0 8px;
+  box-shadow: None;
 }
 
-.modal-cancel-btn:hover{
-    background-color: rgba(95, 99, 104, .04) !important;
+.modal-cancel-btn:hover {
+  background-color: rgba(95, 99, 104, 0.04) !important;
 }
 
-.modal-ok-btn{
-    color: #1967d2 !important;
-    border: None;
-    padding: 0 8px;
-    background-color: #FFFFFF !important;
-    box-shadow: None;
+.modal-ok-btn {
+  color: #1967d2 !important;
+  border: None;
+  padding: 0 8px;
+  background-color: #ffffff !important;
+  box-shadow: None;
 }
 
-.modal-return-btn{
-    color: #ff3c3c !important;
+.modal-return-btn {
+  color: #ff3c3c !important;
 }
 
-.modal-return-btn:hover{
-    background-color: #FFF6F6;
+.modal-return-btn:hover {
+  background-color: #fff6f6;
 }
 
-.modal-ok-btn:hover{
-    background-color: #F8FAFF !important;
+.modal-ok-btn:hover {
+  background-color: #f8faff !important;
 }
 
-.modal-btn-font{
-    font-size: 14px;
-    font-weight: 500;
-    font-family: "Google Sans", Roboto, Arial, sans-serif;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    word-break: break-all;
+.modal-btn-font {
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "Google Sans", Roboto, Arial, sans-serif;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
 }
 
-.modal-body-text{
-    font-size: 14px;
-    font-weight: 400;
-    font-family: Roboto, Arial, sans-serif;
-    line-height: 20px;
+.modal-body-text {
+  font-size: 14px;
+  font-weight: 400;
+  font-family: Roboto, Arial, sans-serif;
+  line-height: 20px;
 }
 
 input[type="text"]::-webkit-input-placeholder {
-    font-size: 14px;
-    line-height: 20px;
-    font-family: Roboto, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  font-family: Roboto, Arial, sans-serif;
 }
 
-.modal-file-main{
-    width: 100%;
-    height: 32px;
-    padding: 6px 0;
-    color: #4285F4;
-    cursor: pointer;
+.modal-file-main {
+  width: 100%;
+  height: 32px;
+  padding: 6px 0;
+  color: #4285f4;
+  cursor: pointer;
 }
 
-.modal-file-main:hover{
-    color: #144B9D;
+.modal-file-main:hover {
+  color: #144b9d;
 }
 
-.modal-file-text{
-    font-size: 14px;
-    font-weight: 400;
-    font-family: "Google Sans", Roboto, Arial, sans-serif;
-    line-height: 20px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    word-break: break-all;
+.modal-file-text {
+  font-size: 14px;
+  font-weight: 400;
+  font-family: "Google Sans", Roboto, Arial, sans-serif;
+  line-height: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
 }
 
-.modal-footer-btn-wrap{
-    display: inline-flex;
-    white-space: nowrap;
-    max-width: 100px;
-    padding: 0 8px;
-    width: auto;
-    cursor: pointer;
-    height: 32px;
-    user-select: none;
-    align-items: center;
-    border-radius: 6px;
+.modal-footer-btn-wrap {
+  display: inline-flex;
+  white-space: nowrap;
+  max-width: 100px;
+  padding: 0 8px;
+  width: auto;
+  cursor: pointer;
+  height: 32px;
+  user-select: none;
+  align-items: center;
+  border-radius: 6px;
 }

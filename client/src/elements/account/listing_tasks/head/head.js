@@ -1,11 +1,7 @@
-import './styles/style_listing_task_head.css'
+import "./styles/style_listing_task_head.css";
 
-const TITLE_TEXT = 'Задания'
+const TITLE_TEXT = "Задания";
 
-export default function TasksHead(){
-    return(
-        <div className='head-main'>
-            {TITLE_TEXT}
-        </div>
-    )
+export default function TasksHead() {
+  return <div className="head-main">{TITLE_TEXT}</div>;
 }

@@ -1,26 +1,26 @@
-.select-form-wrap{
-    width: 100%;
-    display: flex;
-    justify-content: center;
+.select-form-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-.select-form{
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 16px;
-    min-width: 308px;
-    width: 100%;
-    max-width: 850px;
+.select-form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+  min-width: 308px;
+  width: 100%;
+  max-width: 850px;
 }
 
-.select-text{
-    font-size: 14px;
-    color: #5F6368;
-    font-family: "Google Sans", Roboto, Arial, sans-serif;
-    font-weight: 500;
-    margin-bottom: 8px;
+.select-text {
+  font-size: 14px;
+  color: #5f6368;
+  font-family: "Google Sans", Roboto, Arial, sans-serif;
+  font-weight: 500;
+  margin-bottom: 8px;
 }
 
-.select-wrap{
-    display: flex;
+.select-wrap {
+  display: flex;
 }

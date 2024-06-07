@@ -1,22 +1,22 @@
 .btn-menu-text {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    font-size: 14px;
-    font-weight: bold;
-    color: #161616;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 14px;
+  font-weight: bold;
+  color: #161616;
 }
 
-.none-select{
-    user-select: none;
+.none-select {
+  user-select: none;
 }
 
-.main-btns-background{
-    background-color: #EBF0FF;
-    border-radius: 8px;
+.main-btns-background {
+  background-color: #ebf0ff;
+  border-radius: 8px;
 }
 
-.main-btns-background:hover{
-    background-color: rgba(58, 66, 75, 0.07);
+.main-btns-background:hover {
+  background-color: rgba(58, 66, 75, 0.07);
 }

@@ -1,16 +1,18 @@
-.forms-wrap{
-    background-color: #FFFFFF;
-    min-width: 340px;
-    width: 100vw;
-    min-height: 100vh;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    opacity: 0;
-    transition: opacity 0.3s ease 0.2s, visibility 0.3s ease 0.2s
+.forms-wrap {
+  background-color: #ffffff;
+  min-width: 340px;
+  width: 100vw;
+  min-height: 100vh;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  transition:
+    opacity 0.3s ease 0.2s,
+    visibility 0.3s ease 0.2s;
 }
 
-.form-main{
-    padding: 16px;
+.form-main {
+  padding: 16px;
 }

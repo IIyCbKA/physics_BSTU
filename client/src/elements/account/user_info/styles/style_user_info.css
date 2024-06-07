@@ -1,15 +1,15 @@
-.user-info-wrap{
-    width: 100%;
-    padding: 16px;
-    border-bottom: 1px solid #4285F4;
+.user-info-wrap {
+  width: 100%;
+  padding: 16px;
+  border-bottom: 1px solid #4285f4;
 }
 
-.user-info-text{
-    font-family: "Google Sans", Roboto, Arial, sans-serif;
-    font-size: 28px;
-    font-weight: 400;
-    line-height: 36px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+.user-info-text {
+  font-family: "Google Sans", Roboto, Arial, sans-serif;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 36px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }

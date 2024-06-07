@@ -1,19 +1,19 @@
-.add-work-btn{
-    border-color: #DADCE0;
-    transition: border-color 0.25s;
+.add-work-btn {
+  border-color: #dadce0;
+  transition: border-color 0.25s;
 }
 
-.add-work-btn:hover{
-    background-color: #E8F0FE;
+.add-work-btn:hover {
+  background-color: #e8f0fe;
 }
 
-.add-work-btn:active{
-    border-color: #1967D2;
+.add-work-btn:active {
+  border-color: #1967d2;
 }
 
-.add-work-text{
-    font-size: 13px;
-    line-height: 20px;
-    color: #1967D2;
-    user-select: none;
+.add-work-text {
+  font-size: 13px;
+  line-height: 20px;
+  color: #1967d2;
+  user-select: none;
 }
