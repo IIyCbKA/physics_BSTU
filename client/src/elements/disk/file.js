@@ -101,7 +101,7 @@ export default function File(props) {
       endTime - startTime < 300 &&
       props.type === FILE_TYPE_FOLDER
     ) {
-      window.location.href = pathToURL(path + props.name + "\\");
+      window.location.href = pathToURL(path + props.name + "/");
     }
 
     clearTimeout(timer);
