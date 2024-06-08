@@ -58,7 +58,7 @@
   word-break: break-all;
   white-space: pre-line;
   font:
-    13px / 14px "Google Sans",
+    13px / 14px "Open Sans",
     Roboto,
     Arial,
     sans-serif;
@@ -218,7 +218,7 @@
   .clamped-text {
     display: flex;
     font:
-      15px / 16px "Google Sans",
+      15px / 16px "Open Sans",
       Roboto,
       Arial,
       sans-serif;
