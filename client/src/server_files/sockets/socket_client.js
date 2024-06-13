@@ -32,9 +32,9 @@ const address = "ws://" + SERVER_ADR + "/ws";
 
 const options = {
   maxRetries: 20,
-  minReconnectionDelay: 10,
-  maxReconnectionDelay: 300,
-  reconnectionDelayGrowFactor: 1.1,
+  minReconnectionDelay: 0,
+  maxReconnectionDelay: 800,
+  reconnectionDelayGrowFactor: 1.2,
 };
 
 const wsocket = new ReconnectingWebSocket(address, [], options);
@@ -56,10 +56,18 @@ wsocket.onopen = () => {
 //
 // }
 
-// wsocket.onclose = (event) => {
-//
-// }
+wsocket.onclose = () => {
+  // Настроим задержку для последующих переподключений
+  wsocket._minReconnectionDelay = 100;
+  wsocket._maxReconnectionDelay = 800;
+};
 
 console.log("socket url:", wsocket.url);
+
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && wsocket.readyState !== WebSocket.OPEN) {
+    wsocket.reconnect();
+  }
+});
 
 export { socket };
