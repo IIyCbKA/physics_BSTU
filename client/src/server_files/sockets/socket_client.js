@@ -30,7 +30,14 @@ class SocketManager {
 
 const address = "ws://" + SERVER_ADR + "/ws";
 
-const wsocket = new ReconnectingWebSocket(address);
+const options = {
+  maxRetries: 20,
+  minReconnectionDelay: 10,
+  maxReconnectionDelay: 300,
+  reconnectionDelayGrowFactor: 1.1,
+};
+
+const wsocket = new ReconnectingWebSocket(address, [], options);
 
 const socket = new SocketManager(address, wsocket);
 
