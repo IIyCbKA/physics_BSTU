@@ -11,7 +11,8 @@ export default function AdditionEntity(props) {
   const deleteHidden =
     props.isWorkFile && props.workInfo.status === WORK_STATUS_COMPLETED;
 
-  const handleDeleteAddition = async () => {
+  const handleDeleteAddition = async (event) => {
+    event.stopPropagation()
     if (props.isTaskForm) {
       props.setAdditions((prevAdditions) =>
         prevAdditions.filter((addition) => addition.id !== props.id),
