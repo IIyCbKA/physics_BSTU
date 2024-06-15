@@ -34,7 +34,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 132px;
+  width: 134px;
 }
 
 .header-journal-info {
@@ -65,7 +65,7 @@
 }
 
 .create-wrap {
-  width: calc(100% - 56px - 132px);
+  width: calc(100% - 56px - 134px);
   height: 65px;
   display: flex;
   align-items: center;

@@ -77,6 +77,10 @@ export default function TaskForm(props) {
       opacity: props.show ? 1 : 0,
       visibility: props.show ? "visible" : "hidden",
       height: "100%",
+      overflowX: 'auto',
+      overflowY: 'hidden',
+      width: '100vw',
+      minWidth: '1px'
     };
   };
 
