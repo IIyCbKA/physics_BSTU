@@ -4,6 +4,7 @@ from fastapi import WebSocket, WebSocketDisconnect
 from src.application import fastApiServer
 from src.data.functions.journal import getStudentGroupID
 from functools import wraps
+from jose import ExpiredSignatureError
 
 
 class SocketError(Exception):
@@ -171,6 +172,16 @@ class SocketManager:
         except Exception as e:
             print('Exception:', e)
 
+
+    @staticmethod
+    async def sendMessageWS(routeName: str, data: dict, ws: WebSocket):
+        try:
+            sendData = {"routeName": routeName, "data": data}
+            await ws.send_json(sendData)
+        except Exception as e:
+            print('Exception:', e)
+
+
     async def sendMessageRooms(self, routeName: str, data: dict,
                                rooms: list[str]):
         for room in rooms:
@@ -202,10 +213,14 @@ async def websocket_processing(websocket: WebSocket):
             data = await websocket.receive_text()
             if data is not None:
                 info = json.loads(data)
-                await sockets.receiveMessage(websocket,
-                                             info['routeName'],
-                                             info['token'],
-                                             info['data'])
+                try:
+                    await sockets.receiveMessage(websocket,
+                                                 info['routeName'],
+                                                 info['token'],
+                                                 info['data'])
+                except ExpiredSignatureError:
+                    await SocketManager.sendMessageWS(
+                        'refresh', info['data'], websocket)
     except WebSocketDisconnect:
         sockets.removeSocket(websocket)
     except Exception as e:

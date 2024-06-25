@@ -7,24 +7,38 @@ class SocketManager {
     this.address = address;
     this.ws = ws;
     this.initSockets = []
+    this.waitingSockets = []
   }
 
   onMessage(routeName, routeFunc) {
     this.routes[routeName] = routeFunc;
   }
 
+  async __sendOnly(routeName, data) {
+    const token = localStorage.getItem("token");
+      this.ws.send(JSON.stringify({ routeName, token, data}));
+  }
+
   async init(routeName, data) {
-    this.initSockets.push({routeName, data})
-    this.send(routeName, data)
+    this.initSockets.push({routeName, data});
+    if (wsocket.readyState === WebSocket.OPEN){
+      this.__sendOnly(routeName, data);
+    }
   }
 
   async send(routeName, data) {
-    const token = localStorage.getItem("token");
-    this.ws.send(JSON.stringify({ routeName, token, data}));
+    if (wsocket.readyState === WebSocket.OPEN){
+      this.__sendOnly(routeName, data);
+    } else{
+      this.waitingSockets.push({routeName, data});
+    }
   }
 
   async reconnect() {
-    this.initSockets.map(socket => this.send(socket.routeName, socket.data))
+    this.initSockets.map(socket => this.send(socket.routeName, socket.data));
+    const delSockets = this.waitingSockets;
+    this.waitingSockets = []
+    delSockets.map(socket => this.send(socket.routeName, socket.data));
   }
 }
 
@@ -32,7 +46,7 @@ const address = "ws://" + SERVER_ADR + "/ws";
 
 const options = {
   maxRetries: 20,
-  minReconnectionDelay: 0,
+  minReconnectionDelay: 10,
   maxReconnectionDelay: 800,
   reconnectionDelayGrowFactor: 1.2,
 };
@@ -43,6 +57,7 @@ const socket = new SocketManager(address, wsocket);
 
 wsocket.onmessage = (event) => {
   const data = JSON.parse(event.data);
+  console.log(data);
   socket.routes[data.routeName](data.data);
 };
 
@@ -58,7 +73,7 @@ wsocket.onopen = () => {
 
 wsocket.onclose = () => {
   // Настроим задержку для последующих переподключений
-  wsocket._minReconnectionDelay = 100;
+  wsocket._minReconnectionDelay = 10;
   wsocket._maxReconnectionDelay = 800;
 };
 

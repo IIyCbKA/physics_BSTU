@@ -12,6 +12,7 @@ import "./styles/style_from_pages.css";
 import { socket } from "../server_files/sockets/socket_client";
 import { DEFAULT_PAGES_BACKGROUND_COLOR } from "../constants";
 import { notification } from "antd";
+import "../server_files/sockets/storage"
 
 const PAGE_TITLE = "Хранилище";
 
@@ -42,15 +43,15 @@ function Home() {
     const waitFunc = async () => {
       const decode_path = decodeURIComponent(path);
       dispatch(setPath(decode_path));
-      const code = await getFilesName(path)(dispatch);
-
+      await socket.init("files", { path: decode_path.slice(5) });
+      const code = await getFilesName(path);
       if (code === 404) {
         const diskPos = decode_path.search("/disk/");
         window.location.href = decode_path.slice(0, diskPos + "/disk/".length);
       } else {
+        // await socket.init("files", { path: decode_path.slice(5) });
         setInitSuccess(true);
-      }
-      await socket.init("files", { path: decode_path.slice(5) });
+      }   
     };
     waitFunc();
   }, [dispatch, path]);

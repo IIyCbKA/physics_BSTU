@@ -21,14 +21,20 @@ async def sendFilesNameListToAll(path: str):
     await sockets.sendMessageRoom('getFilesName', getDiskFilesNameList(path), path)
 
 
+# Отправляет на клиент новый список файлов
+async def sendFilesNameListToUser(path: str, userID: int):
+    await sockets.sendMessageToUser('getFilesName', getDiskFilesNameList(path),
+                                    path, userID)
+
+
 # Роут на получение списка файлов
 # Аргумент path - путь к директории папки
 @fastApiServer.get('/disk{path:path}')
 async def filesList(path: str,
                     user: Annotated[UserModel, Depends(getCurrentUser)]):
     checkDiskPath(path)
-    filesName: dict = getDiskFilesNameList(path)
-    return JSONResponse(content=filesName, status_code=200)
+    # filesName: dict = getDiskFilesNameList(path)
+    return JSONResponse(content={}, status_code=200)
 
 
 # регистрирует пользователя в хранилище
@@ -38,6 +44,7 @@ async def filesSocket(ws: WebSocket,
                       data: dict):
     user = (await getCurrentUserS(token))
     sockets.addSocket(user.userID, user.status, ws, data['path'])
+    await sendFilesNameListToUser(data['path'], user.userID)
 
 
 # Роут на добавление папки. В параметрах:

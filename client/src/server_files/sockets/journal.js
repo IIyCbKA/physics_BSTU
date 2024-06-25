@@ -6,9 +6,17 @@ import {
   addWork,
   deleteWork,
   updateGradeStudent,
+  setTasks,
 } from "../../reducers/journal_reducer";
 import { store } from "../../reducers";
 import { updateGradeEmployee } from "../../reducers/selected_group_reducer";
+
+console.log('sockets init');
+
+socket.onMessage("allTasks", (tasks) => {
+  console.log('tasks =', tasks)
+  store.dispatch(setTasks(tasks));
+});
 
 socket.onMessage("deleteTask", (taskID) => {
   store.dispatch(deleteTask(taskID));

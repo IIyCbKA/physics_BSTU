@@ -6,7 +6,7 @@ from src.data.functions.journal import getStudentGroup
 from fastapi import Depends, HTTPException, WebSocketException, status
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from jose import JWTError, jwt
+from jose import JWTError, jwt, ExpiredSignatureError
 from datetime import datetime, timedelta, timezone
 from typing import Annotated
 import requests
@@ -80,20 +80,20 @@ async def loginBstu(data: LoginData):
 
 
 def auth(data: dict) -> dict:
-    userData: UserModel = UserModel(
-        userID=data['result']['user_info']['default_account_id'],
-        surname=data['result']['user_info']['surname'],
-        name=data['result']['user_info']['name'],
-        patronymic=data['result']['user_info']['patronymic'],
-        status=data['result']['user_info']['default_account_key']
-    )
     # userData: UserModel = UserModel(
-    #     userID=123123,
-    #     surname='surname',
-    #     name='name',
-    #     patronymic='patronymic',
-    #     status='student'
+    #     userID=data['result']['user_info']['default_account_id'],
+    #     surname=data['result']['user_info']['surname'],
+    #     name=data['result']['user_info']['name'],
+    #     patronymic=data['result']['user_info']['patronymic'],
+    #     status=data['result']['user_info']['default_account_key']
     # )
+    userData: UserModel = UserModel(
+        userID=4,
+        surname='Петров',
+        name='Пётр',
+        patronymic='Петрович',
+        status='student'
+    )
 
     if getUser(userData.userID) is None:
         addUser(userData)

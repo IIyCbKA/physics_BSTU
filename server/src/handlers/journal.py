@@ -416,6 +416,9 @@ async def journalSocket(ws: WebSocket,
                       data: dict):
     user = (await getCurrentUserS(token))
     sockets.addSocket(user.userID, user.status, ws, JOURNAL_SOCKET)
+    tasks = await getUserTasks(user)
+    await sockets.sendMessageToUser(
+        'allTasks', tasks, JOURNAL_SOCKET, user.userID)
 
 
 # регистрирует преподавателя в просмотре групп

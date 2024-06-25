@@ -1,5 +1,5 @@
 import { SERVER, $host } from "../server_files/server_connect";
-import { setFiles } from "../reducers/file_reducer";
+//import { setFiles } from "../reducers/file_reducer";
 import { saveAs } from "file-saver";
 import {
   CREATE_DISK_FOLDER_URL,
@@ -17,10 +17,10 @@ export function formatFileSize(bytes) {
   return `${(bytes / Math.pow(1024, i)).toFixed(2)} ${sizes[i]}`;
 }
 
-export const getFilesName = (path) => async (dispatch) => {
+export const getFilesName = async (path) => {
   try {
     const response = await $host.get(path);
-    dispatch(setFiles(response.data.files));
+    //dispatch(setFiles(response.data.files));
 
     return response.status;
   } catch (e) {

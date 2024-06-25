@@ -3,8 +3,7 @@ import React, { useCallback } from "react";
 import { uploadFile } from "../../actions/files";
 import { useDropzone } from "react-dropzone";
 import { useSelector } from "react-redux";
-import { socket } from "../../server_files/sockets/socket_client";
-import { cleanSelectedInfo, setFiles } from "../../reducers/file_reducer";
+import { cleanSelectedInfo } from "../../reducers/file_reducer";
 import { useDispatch } from "react-redux";
 import "./styles/style_storage.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -26,10 +25,6 @@ export default function Storage(props) {
   );
 
   const { getRootProps, isDragActive } = useDropzone({ onDrop, noClick: true });
-
-  socket.onMessage("getFilesName", (data) => {
-    dispatch(setFiles(data.files));
-  });
 
   const rootProps = userStatus === EMPLOYEE_USER_STATUS ? getRootProps() : {};
 
