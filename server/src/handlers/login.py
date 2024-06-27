@@ -26,8 +26,8 @@ def getUserInfo(userData: UserModel):
 def getUserInfoWithGroup(userData: UserModel):
     userInfo = getUserInfo(userData)
     if userData.status == 'student':
-        userInfo['group'] = getStudentGroup(
-            userData.userID).group_name
+        group = getStudentGroup(userData.userID)
+        userInfo['group'] = group.group_name
     return userInfo
 
 

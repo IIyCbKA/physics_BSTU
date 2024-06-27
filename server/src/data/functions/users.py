@@ -30,7 +30,7 @@ def getUserModel(id: int) -> UserModel | None:
 
 def getGroupID(name: str) -> int:
     result = db.query(Groups).filter_by(group_name=name).first()
-    return result[0] if result else -1
+    return result.group_id if result else -1
 
 
 def addUser(data: UserModel) -> None:
