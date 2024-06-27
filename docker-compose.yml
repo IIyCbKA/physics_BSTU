@@ -60,8 +60,6 @@ services:
       - "3000:3000"
     depends_on:
       - server
-    env_file:
-      - .env
     networks:
       - nginx-proxy-network
 
