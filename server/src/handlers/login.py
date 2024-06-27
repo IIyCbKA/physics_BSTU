@@ -80,20 +80,20 @@ async def loginBstu(data: LoginData):
 
 
 def auth(data: dict) -> dict:
-    # userData: UserModel = UserModel(
-    #     userID=data['result']['user_info']['default_account_id'],
-    #     surname=data['result']['user_info']['surname'],
-    #     name=data['result']['user_info']['name'],
-    #     patronymic=data['result']['user_info']['patronymic'],
-    #     status=data['result']['user_info']['default_account_key']
-    # )
     userData: UserModel = UserModel(
-        userID=4,
-        surname='Петров',
-        name='Пётр',
-        patronymic='Петрович',
-        status='student'
+        userID=data['result']['user_info']['default_account_id'],
+        surname=data['result']['user_info']['surname'],
+        name=data['result']['user_info']['name'],
+        patronymic=data['result']['user_info']['patronymic'],
+        status=data['result']['user_info']['default_account_key']
     )
+    # userData: UserModel = UserModel(
+    #     userID=10101010,
+    #     surname='Иванов',
+    #     name='Иван',
+    #     patronymic='Иванович',
+    #     status='employee'
+    # )
 
     if getUser(userData.userID) is None:
         addUser(userData)

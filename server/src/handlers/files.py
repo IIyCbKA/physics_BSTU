@@ -29,7 +29,7 @@ async def sendFilesNameListToUser(path: str, userID: int):
 
 # Роут на получение списка файлов
 # Аргумент path - путь к директории папки
-@fastApiServer.get('/disk{path:path}')
+@fastApiServer.get('/api/disk{path:path}')
 async def filesList(path: str,
                     user: Annotated[UserModel, Depends(getCurrentUser)]):
     checkDiskPath(path)
@@ -89,11 +89,15 @@ async def addFile(file: Annotated[UploadFile, File()],
     fileModel: FileModel | None = addDiskFileToDB(fileName, fileType,
                                                   path, fileSize)
     if fileModel is None:
-        return error
+        return JSONResponse(content={'error':
+                                       'File was not added to DB'},
+                                       status_code=500)
 
     if not addFileToStorage(file, fileModel.fileID, fileModel.fileType):
         deleteDiskFileFromDB(fileModel.fileID)
-        return error
+        return JSONResponse(content={'error':
+                                       'File was not added to storage'},
+                                       status_code=500)
 
     addAddFileAction(user, fileName, path)
     await sendFilesNameListToAll(path)

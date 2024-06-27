@@ -19,7 +19,7 @@ export function formatFileSize(bytes) {
 
 export const getFilesName = async (path) => {
   try {
-    const response = await $host.get(path);
+    const response = await $host.get('/api' + path);
     //dispatch(setFiles(response.data.files));
 
     return response.status;

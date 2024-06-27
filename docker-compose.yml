@@ -28,6 +28,17 @@ services:
     networks:
       - nginx-proxy-network
 
+  create-bucket:
+    image: minio/mc
+    depends_on:
+      - minio
+    entrypoint: sh
+    command: -c "chmod +x /create-bucket.sh && exec /create-bucket.sh"
+    volumes:
+      - ./create-bucket.sh:/create-bucket.sh
+    env_file:
+      - .env
+
   server:
     build: ./server
     restart: always
@@ -61,6 +72,8 @@ services:
     depends_on:
       - client
       - server
+      - minio
+      - db
     networks:
       - nginx-proxy-network
 

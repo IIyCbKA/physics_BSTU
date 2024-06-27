@@ -42,7 +42,14 @@ class SocketManager {
   }
 }
 
-const address = "ws://" + SERVER_ADR + "/ws";
+// Определяем протокол
+const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+
+// Определяем хост
+const host = window.location.host;
+
+// Собираем полный URL для WebSocket соединения
+const address = `${protocol}//${host}/ws/ws`;
 
 const options = {
   maxRetries: 20,

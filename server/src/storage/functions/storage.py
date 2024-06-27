@@ -14,7 +14,8 @@ def addFileToMinio(folderName: str, file: Annotated[UploadFile, File()],
         minio_client.put_object(bucketName, f"{folderName}/{fileName}",
                                 BytesIO(fileData), len(fileData))
         return True
-    except Exception:
+    except Exception as e:
+        print(e)
         return False
 
 
