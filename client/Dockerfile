@@ -1,21 +1,21 @@
-FROM node:20
+# Stage 1: Build the react app
+FROM node:20 AS build
 
-# Указываем рабочую директорию в контейнере
 WORKDIR /app
 
-# Копируем файлы package.json и package-lock.json
 COPY package*.json ./
-
-# Устанавливаем зависимости
 RUN npm install
 
-# Копируем остальные файлы проекта
 COPY . .
-
-# Собираем фронтенд-приложение
 RUN npm run build
 
-# Экспонируем порт
+# Stage 2: Serve the react app
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY --from=build /app/build /app/build
+
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["npx", "serve", "-s", "build", "-l", "3000"]

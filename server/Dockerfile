@@ -12,3 +12,6 @@ WORKDIR /app
 COPY . /app
 
 EXPOSE 5000
+
+# Запускаем сервер с gunicorn и uvicorn worker
+CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "src.application:fastApiServer", "--bind", "0.0.0.0:5000", "--workers", "4"]
