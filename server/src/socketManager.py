@@ -134,6 +134,7 @@ class SocketManager:
             for room in self.sockets[addr].rooms:
                 del self.rooms[room][addr]
             self.clients[userID].delSocket(ws)
+            del self.sockets[addr]
             if self.clients[userID].wsAmount() == 0:
                 del self.clients[userID]
 
