@@ -43,6 +43,7 @@ export default function PasswordLine(props) {
       <Form.Group className="elements-form" controlId="formBasicPassword">
         <InputGroup>
           <FormControl
+            className='input-placeholder'
             type={showPassword ? "text" : "password"}
             placeholder={INPUT_PLACEHOLDER_TEXT}
             value={props.value}

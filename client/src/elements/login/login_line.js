@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { styles } from "./styles/style_login";
 import "./styles/style_login.css";
 
+const INPUT_PLACEHOLDER_TEXT = "Email";
+
 export default function LoginLine(props) {
   const [loginIsFocused, setLoginIsFocused] = useState(false);
 
@@ -27,8 +29,9 @@ export default function LoginLine(props) {
       <Form.Group className="elements-form" controlId="formBasicName">
         <InputGroup>
           <FormControl
+            className='input-placeholder'
             type="text"
-            placeholder="Email"
+            placeholder={INPUT_PLACEHOLDER_TEXT}
             value={props.value}
             onChange={props.onChange}
             style={loginLineStyle()}
