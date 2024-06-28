@@ -154,7 +154,10 @@ export default function File(props) {
       </div>
       <div
         className="item-info"
-        style={props.type !== FILE_TYPE_FOLDER ? {padding: '8px 0px 4px'} : {}}
+        style={props.type !== FILE_TYPE_FOLDER &&
+        orientation !== PORTRAIT_ORIENTATION ?
+          {padding: '8px 0px 4px'} : {}
+        }
       >
         <div className="item-title" ref={infoZone}>
           <span
