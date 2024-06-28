@@ -13,6 +13,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 import {
   FILE_TYPE_FOLDER,
   FILE_TYPE_OTHER,
+  LANDSCAPE_ORIENTATION,
   PORTRAIT_ORIENTATION,
 } from "../../constants";
 
@@ -53,7 +54,7 @@ export default function File(props) {
         DEFAULT_LANDSCAPE_AFTER_POINT_SYMBOLS,
       );
     }
-  }, [nameWidthPortrait, nameFieldRef, orientation, props.name]);
+  }, [nameWidthPortrait, nameFieldRef.current, orientation, props.name]);
 
   const handleFileClick = (event) => {
     event.stopPropagation();
@@ -155,7 +156,7 @@ export default function File(props) {
       <div
         className="item-info"
         style={props.type !== FILE_TYPE_FOLDER &&
-        orientation !== PORTRAIT_ORIENTATION ?
+        orientation === LANDSCAPE_ORIENTATION ?
           {padding: '8px 0px 4px'} : {}
         }
       >
