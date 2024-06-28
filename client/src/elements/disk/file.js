@@ -152,7 +152,10 @@ export default function File(props) {
           </span>
         </div>
       </div>
-      <div className="item-info">
+      <div
+        className="item-info"
+        style={props.type !== FILE_TYPE_FOLDER ? {padding: '6px 0px'} : {}}
+      >
         <div className="item-title" ref={infoZone}>
           <span
             className="clamped-text"
