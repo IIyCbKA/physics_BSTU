@@ -29,9 +29,9 @@ async def sendFilesNameListToUser(path: str, userID: int):
 
 # Роут на получение списка файлов
 # Аргумент path - путь к директории папки
-@fastApiServer.get('/api/disk{path:path}')
-async def filesList(path: str,
-                    user: Annotated[UserModel, Depends(getCurrentUser)]):
+@fastApiServer.get('/api/check/disk{path:path}')
+async def checkDir(path: str,
+                   user: Annotated[UserModel, Depends(getCurrentUser)]):
     checkDiskPath(path)
     # filesName: dict = getDiskFilesNameList(path)
     return JSONResponse(content={}, status_code=200)
