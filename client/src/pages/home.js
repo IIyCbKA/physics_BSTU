@@ -83,7 +83,7 @@ function Home() {
           <CSSTransition
             key={showFileHeader ? "fileHeader" : "defaultHeader"}
             in={showFileHeader}
-            timeout={200}
+            timeout={150}
             classNames="header-transition"
             onEnter={handleEnter}
           >

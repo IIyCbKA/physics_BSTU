@@ -68,8 +68,19 @@ export default function FileHeader(props) {
     dispatch(cleanSelectedInfo());
   };
 
+  const clickHeaderZone = (event) => {
+    if(event.currentTarget === event.target && selected_id !== null){
+      dispatch(cleanSelectedInfo());
+    }
+  }
+
   return (
-    <Navbar collapseOnSelect expand="lg" style={styles.navbarFileHeader}>
+    <Navbar
+      collapseOnSelect
+      expand="lg"
+      style={styles.navbarFileHeader}
+      onClick={clickHeaderZone}
+    >
       <Container fluid style={containerStyle()}>
         <Nav style={styles.navStyle}>
           <div className="bar-left">
