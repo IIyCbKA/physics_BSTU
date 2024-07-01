@@ -1,5 +1,5 @@
 import { SERVER, $host } from "../server_files/server_connect";
-//import { setFiles } from "../reducers/file_reducer";
+import { addUploadProgress } from "../reducers/file_reducer";
 import { saveAs } from "file-saver";
 import {
   CREATE_DISK_FOLDER_URL,
@@ -7,6 +7,7 @@ import {
   DOWNLOAD_DISK_FILE_PATTERN_URL,
   UPLOAD_DISK_FILE_URL,
 } from "../constants";
+import {store} from '../reducers/index'
 
 export function formatFileSize(bytes) {
   if (bytes === 0) return "0 Байт";
@@ -37,6 +38,11 @@ export const uploadFile = async (file, dir_path) => {
     const result = await $host.post(UPLOAD_DISK_FILE_URL, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
+      },
+
+      onUploadProgress: (progressEvent) => {
+        store.dispatch(addUploadProgress(file.name,
+          {loaded: progressEvent.loaded, total: progressEvent.total}));
       },
     });
 

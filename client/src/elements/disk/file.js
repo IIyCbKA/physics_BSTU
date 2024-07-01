@@ -5,7 +5,7 @@ import {
   pathToURL,
 } from "../../actions/strings";
 import { useDispatch, useSelector } from "react-redux";
-import { icons } from "./file_icons";
+import { icons } from "../../utils/file_icons/file_icons";
 import { styles } from "./styles/style_disk";
 import { selectedFile } from "../../reducers/file_reducer";
 import { isMobile } from "react-device-detect";

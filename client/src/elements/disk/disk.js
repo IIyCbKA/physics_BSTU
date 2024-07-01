@@ -15,6 +15,7 @@ import { EMPLOYEE_USER_STATUS } from "../../constants";
 import { generateBreadcrumbItems } from "../../actions/breadcrumb";
 import { Breadcrumb } from "antd";
 import { isDesktop } from "react-device-detect";
+import UploadDrawer from "./upload_drawer/upload_drawer";
 
 export default function Disk(props) {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -99,6 +100,7 @@ export default function Disk(props) {
           openNotification={props.openNotification}
         />
       )}
+      <UploadDrawer/>
     </div>
   );
 }

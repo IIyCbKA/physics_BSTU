@@ -8,7 +8,7 @@ import {
   FileZipFilled,
   FolderFilled,
 } from "@ant-design/icons";
-import { styles } from "./styles/style_disk";
+import { styles } from "./styles/file_icons_style";
 
 export const icons = {
   folder: <FolderFilled style={styles.styleFolderIcon} />,

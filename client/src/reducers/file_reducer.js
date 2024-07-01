@@ -2,9 +2,12 @@ const SET_FILES = "SET_FILES";
 const SET_PATH = "SET_PATH";
 const SELECTED_FILE = "SELECTED_FILE";
 const CLOSE_SELECTED = "CLOSE_SELECTED";
+const ADD_DISK_UPLOAD_PROGRESS = "ADD_DISK_UPLOAD_PROGRESS";
+const CLEAN_UPLOAD_LIST = "CLEAN_UPLOAD_LIST";
 
 const defaultState = {
   files: [],
+  upload_list: {},
   path: "/",
   selected_id: null,
   selected_name: null,
@@ -36,6 +39,19 @@ export default function fileReducer(state = defaultState, action) {
         selected_type: null,
         selected_size: null,
       };
+    case ADD_DISK_UPLOAD_PROGRESS:
+      return {
+        ...state,
+        upload_list: {
+          ...state.upload_list,
+          [action.payload.fileName]: action.payload.progress,
+        },
+      };
+    case CLEAN_UPLOAD_LIST:
+      return {
+        ...state,
+        upload_list: {}
+      };
     default:
       return state;
   }
@@ -58,3 +74,8 @@ export const selectedFile = (
   },
 });
 export const cleanSelectedInfo = () => ({ type: CLOSE_SELECTED });
+export const addUploadProgress = (fileName, progress) => ({
+  type: ADD_DISK_UPLOAD_PROGRESS,
+  payload: { fileName, progress },
+});
+export const cleanUploadList = () => ({ type: CLEAN_UPLOAD_LIST });

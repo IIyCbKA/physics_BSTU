@@ -51,8 +51,8 @@ const navItemStyle = {
 };
 
 const drawerStyle = {
-  borderTopLeftRadius: "15px",
-  borderTopRightRadius: "15px",
+  borderTopLeftRadius: "12px",
+  borderTopRightRadius: "12px",
 };
 
 export const styles = {

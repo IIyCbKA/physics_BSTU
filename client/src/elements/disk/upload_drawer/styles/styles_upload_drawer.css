@@ -1,0 +1,38 @@
+.listing-upload-files{
+  padding-top: 4px;
+}
+
+.ant-drawer-content-wrapper{
+  border-top-right-radius: 12px;
+  border-top-left-radius: 12px;
+}
+
+.upload-drawer-header-wrap{
+  height: 32px;
+  display: flex;
+  flex-direction: row;
+}
+
+.upload-drawer-header-left{
+  width: calc(100% - 32px);
+  height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.upload-drawer-header-close-btn{
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.upload-drawer-header-title{
+  font-family: "Noto Sans", Roboto, Arial, sans-serif;
+  font-weight: bold;
+  font-size: 13px;
+  line-height: 16px;
+  color: #FFFFFF
+}
