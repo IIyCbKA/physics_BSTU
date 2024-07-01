@@ -1,7 +1,7 @@
 const drawerRootStylePC = {
   outline: 'none',
   width: '440px',
-  inset: 'auto 30px auto auto',
+  inset: '0px 30px 0px auto',
 }
 
 const drawerRootStyleMobile = {
