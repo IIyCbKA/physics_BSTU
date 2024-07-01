@@ -2,8 +2,12 @@ from src.data.models import *
 from src.data.db_session import db
 from src.handlers.schemas import FileModel
 from src.storage.functions.storage import *
-
 from sqlalchemy.exc import IntegrityError
+from src.socketManager import sockets
+
+# Отправляет на клиент новый список файлов
+async def sendFilesNameListToAll(path: str):
+    await sockets.sendMessageRoom('getFilesName', getDiskFilesNameList(path), path)
 
 
 def getFolderByPath(path: str, folderName: str) -> list:
@@ -80,3 +84,21 @@ def deleteFolderFromDB(folderID: int, searchPath: str):
         db.delete(item)
     deleteDiskFileFromDB(folderID)
     db.commit()
+
+
+async def makeFoldersPath(path):
+    if path == '/':
+        return
+
+    slash_inc_index = path[:-1].rfind('/') + 1
+    folder_name = path[slash_inc_index: -1]
+    folder_path = path[:slash_inc_index]
+    record = db.query(Files).filter_by(path=folder_path,
+                                       file_type='folder',
+                                       file_name=folder_name).first()
+    if record is None:
+        addDiskFileToDB(folder_name, 'folder', folder_path, 0)
+        await makeFoldersPath(folder_path)
+        await sendFilesNameListToAll(folder_path)
+
+

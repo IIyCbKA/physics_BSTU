@@ -1,6 +1,6 @@
 import Disk from "../../elements/disk/disk";
 import React, { useCallback } from "react";
-import { uploadFile } from "../../actions/files";
+import { uploadFilesAndFolders } from "../../actions/files";
 import { useDropzone } from "react-dropzone";
 import { useSelector } from "react-redux";
 import { cleanSelectedInfo } from "../../reducers/file_reducer";
@@ -19,7 +19,7 @@ export default function Storage(props) {
 
   const onDrop = useCallback(
     (acceptedFiles) => {
-      acceptedFiles.forEach((file) => uploadFile(file, path));
+      uploadFilesAndFolders(acceptedFiles, path);
     },
     [path],
   );

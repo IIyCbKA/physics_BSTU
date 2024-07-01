@@ -17,11 +17,6 @@ from src.data.functions.actions import (
 
 
 # Отправляет на клиент новый список файлов
-async def sendFilesNameListToAll(path: str):
-    await sockets.sendMessageRoom('getFilesName', getDiskFilesNameList(path), path)
-
-
-# Отправляет на клиент новый список файлов
 async def sendFilesNameListToUser(path: str, userID: int):
     await sockets.sendMessageToUser('getFilesName', getDiskFilesNameList(path),
                                     path, userID)
@@ -82,7 +77,7 @@ async def addFile(file: Annotated[UploadFile, File()],
                                        status_code=500)
 
     path = path.replace('/disk', '', 1)
-    checkDiskPath(path)
+    await makeFoldersPath(path)
     fileName: str = file.filename
     fileType: str = getFileType(file.filename)
     fileSize = file.size

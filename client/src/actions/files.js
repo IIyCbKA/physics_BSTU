@@ -9,6 +9,7 @@ import {
 } from "../constants";
 import {store} from '../reducers/index'
 import {getFileType} from "./strings";
+import { getLastDirectory } from "./strings";
 
 export function formatFileSize(bytes) {
   if (bytes === 0) return "0 Байт";
@@ -85,6 +86,24 @@ export const createFolder = async (folderName, path) => {
 
     return 500;
   }
+};
+
+
+export const uploadFilesAndFolders = async (files, basePath) => {
+  console.log('files', files)
+  files.forEach(file => {
+    let path;
+    if (file.name !== file.path){
+      path = basePath.slice(0, -1) + getLastDirectory(file.path + '/')
+    } else{
+      path = basePath
+    }
+    uploadFile(file, path)
+  })
+
+
+  // Загрузка файла
+  //await uploadFile(file, folderPath);
 };
 
 export const deleteFile = async (file_id) => {
