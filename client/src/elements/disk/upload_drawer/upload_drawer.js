@@ -88,7 +88,7 @@ export default function UploadDrawer(){
         {Object.keys(uploadList).map((fileName) => (
           <UploadFileEntity
             name={fileName}
-            type='png'
+            type={uploadList[fileName].type}
             size={uploadList[fileName].total}
           />
         ))}

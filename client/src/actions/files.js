@@ -8,6 +8,7 @@ import {
   UPLOAD_DISK_FILE_URL,
 } from "../constants";
 import {store} from '../reducers/index'
+import {getFileType} from "./strings";
 
 export function formatFileSize(bytes) {
   if (bytes === 0) return "0 Байт";
@@ -42,7 +43,10 @@ export const uploadFile = async (file, dir_path) => {
 
       onUploadProgress: (progressEvent) => {
         store.dispatch(addUploadProgress(file.name,
-          {loaded: progressEvent.loaded, total: progressEvent.total}));
+          {loaded: progressEvent.loaded,
+            total: progressEvent.total,
+            type: getFileType(file.name)
+          }));
       },
     });
 
