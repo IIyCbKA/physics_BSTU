@@ -231,14 +231,18 @@ def getGradeInfo(grade: Grades) -> dict:
         return {'grade': '', 'author': None, 'status': GRADE_WORK_NONE}
 
 
+def addWorksInfoToTaskInfo(student_id: int, task: dict):
+    works = getAllStudentTaskWorks(student_id, task['id'])
+    task['works'] = getTaskWorksInfo(works)
+    grade = getStudentGrade(student_id, task['id'])
+    task['grade'] = getGradeInfo(grade)
+
+
 # изменяет массив заданий tasks, добавляя информацию о работах
 # студента с идентификатором student_id
 def addWorksInfoToTasksInfo(student_id: int, tasks: list[dict]):
     for task in tasks:
-        works = getAllStudentTaskWorks(student_id, task['id'])
-        task['works'] = getTaskWorksInfo(works)
-        grade = getStudentGrade(student_id, task['id'])
-        task['grade'] = getGradeInfo(grade)
+        addWorksInfoToTaskInfo(student_id, task)
 
 
 def getStudentWorkFiles(student_id: int, task_id: int,

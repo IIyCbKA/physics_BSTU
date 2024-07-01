@@ -5,6 +5,7 @@ from src.application import fastApiServer
 from src.data.functions.journal import getStudentGroupID
 from functools import wraps
 from jose import ExpiredSignatureError
+from uuid import uuid4
 
 
 class SocketError(Exception):
@@ -12,12 +13,9 @@ class SocketError(Exception):
         self.detail = detail
 
 
-def getFullAddr(ws: WebSocket):
-    return ws.client.host + ':' + str(ws.client.port)
-
-
 class SocketInfo:
-    def __init__(self, ws: WebSocket, userID: int):
+    def __init__(self, ws: WebSocket, socketID: str, userID: int = None):
+        self.socketID = socketID
         self.ws: WebSocket = ws
         self.userID = userID
         self.rooms: set[str] = set()
@@ -41,36 +39,30 @@ class ClientInfo:
         # запись о комнатах отобразилась только в ClientInfo
         # позже нужно добавить сокет во все комнаты
 
-    def addRoom(self, ws: WebSocket, room: str, addr: str = None):
-        if addr is None:
-            addr = getFullAddr(ws)
-
+    def addRoom(self, ws: WebSocket, room: str, socketID: str):
         if room not in self.rooms.keys():
             self.rooms[room] = {}
 
-        self.rooms[room][addr] = ws
-        self.sockets[addr].rooms.add(room)
+        self.rooms[room][socketID] = ws
+        self.sockets[socketID].rooms.add(room)
 
-        self.rooms[room][addr] = ws
+        self.rooms[room][socketID] = ws
 
-    def addSocket(self, ws: WebSocket, room: str | None = None):
-        addr = getFullAddr(ws)
-
-        if addr not in self.sockets:
-            self.sockets[addr] = SocketInfo(ws, self.userID)
-            self.addRoom(ws, self.statusRoomName, addr)
+    def addSocket(self, ws: WebSocket, socketID: str, room: str | None = None):
+        if socketID not in self.sockets:
+            self.sockets[socketID] = SocketInfo(ws, socketID, self.userID)
+            self.addRoom(ws, self.statusRoomName, socketID)
 
         if room is not None:
-            self.addRoom(ws, room, addr)
+            self.addRoom(ws, room, socketID)
 
     # удаляет сокет
-    def delSocket(self, ws: WebSocket):
-        addr = getFullAddr(ws)
-        if addr in self.sockets.keys():
-            for room in list(self.sockets[addr].rooms):
-                del self.rooms[room][addr]
-                self.sockets[addr].rooms.remove(room)
-            del self.sockets[getFullAddr(ws)]
+    def delSocket(self, ws: WebSocket, socketID: str):
+        if socketID in self.sockets.keys():
+            for room in list(self.sockets[socketID].rooms):
+                del self.rooms[room][socketID]
+                self.sockets[socketID].rooms.remove(room)
+            del self.sockets[socketID]
 
     async def sendData(self, data: dict, room: str):
         for ws in self.rooms[room].values():
@@ -87,17 +79,17 @@ class SocketManager:
         self.rooms: dict[str, dict[str, WebSocket]] = {}
         self.routes = {}
 
-    def addInRoom(self, ws: WebSocket, room: str, addr: str | None = None):
-        if addr is None:
-            addr = getFullAddr(ws)
+    def addInRoom(self, socketID: str, room: str, ws: WebSocket | None = None):
+        if ws is None:
+            ws = self.getWS(socketID)
         if room not in self.rooms.keys():
             self.rooms[room] = {}
-        self.rooms[room][addr] = ws
+        self.rooms[room][socketID] = ws
 
 
-    def addSocketEmployeeGroup(self, userID: int, status: str, ws: WebSocket,
+    def addSocketEmployeeGroup(self, userID: int, status: str, socketID: str,
                                group_id: int):
-        self.addSocket(userID, status, ws, f'eg{group_id}')
+        self.addSocketRoute(userID, status, socketID, f'eg{group_id}')
 
 
     def addClient(self, userID: int, status: str):
@@ -107,34 +99,42 @@ class SocketManager:
     def removeClient(self, userID: int):
         del self.clients[userID]
 
-    def addSocket(self, userID: int, status: str,
-                  ws: WebSocket, room: str | None = None):
-        addr = getFullAddr(ws)
-        if addr not in self.sockets.keys():
-            self.sockets[addr] = SocketInfo(ws, userID)
-        else:
-            self.sockets[addr].ws = ws
+    def getWS(self, socketID: str):
+        return self.sockets[socketID].ws
+
+    def addSocket(self, ws: WebSocket) -> str:
+        socketID = str(uuid4())
+        self.sockets[socketID] = SocketInfo(ws, socketID)
+        return socketID
+
+    def addSocketRoute(self, userID: int, status: str, socketID: str,
+                       room: str | None = None):
+        ws = self.getWS(socketID)
+        if socketID not in self.sockets.keys():
+            raise SocketError('Socket with this id is not found')
+
+        self.sockets[socketID].userID = userID
         if userID not in self.clients.keys():
             self.addClient(userID, status)
 
         user = self.clients[userID]
-        if user.statusRoomName not in self.sockets[addr].rooms:
-            self.clients[userID].addSocket(ws, user.statusRoomName)
-            self.addInRoom(ws, user.statusRoomName, addr)
-            self.sockets[addr].rooms.add(user.statusRoomName)
+        if user.statusRoomName not in self.sockets[socketID].rooms:
+            self.clients[userID].addSocket(ws, socketID, user.statusRoomName)
+            self.addInRoom(socketID, user.statusRoomName, ws)
+            self.sockets[socketID].rooms.add(user.statusRoomName)
         if room is not None:
-            self.clients[userID].addSocket(ws, room)
-            self.addInRoom(ws, room, addr)
-            self.sockets[addr].rooms.add(room)
+            self.clients[userID].addSocket(ws, socketID, room)
+            self.addInRoom(socketID, room, ws)
+            self.sockets[socketID].rooms.add(room)
 
-    def removeSocket(self, ws: WebSocket):
-        addr = getFullAddr(ws)
-        if addr in self.sockets.keys():
-            userID = self.sockets[addr].userID
-            for room in self.sockets[addr].rooms:
-                del self.rooms[room][addr]
-            self.clients[userID].delSocket(ws)
-            del self.sockets[addr]
+    def removeSocket(self, socketID: str):
+        ws = self.getWS(socketID)
+        if socketID in self.sockets.keys():
+            userID = self.sockets[socketID].userID
+            for room in self.sockets[socketID].rooms:
+                del self.rooms[room][socketID]
+            self.clients[userID].delSocket(ws, socketID)
+            del self.sockets[socketID]
             if self.clients[userID].wsAmount() == 0:
                 del self.clients[userID]
 
@@ -149,9 +149,9 @@ class SocketManager:
 
         return decorator
 
-    async def receiveMessage(self, ws: WebSocket, routeName: str,
+    async def receiveMessage(self, socketID: str, routeName: str,
                              token: str, data: dict):
-        await self.routes[routeName](ws, token, data)
+        await self.routes[routeName](socketID, token, data)
 
     async def sendMessageToUser(self, routeName: str, data: dict,
                                 room: str, userID: int):
@@ -182,6 +182,11 @@ class SocketManager:
         except Exception as e:
             print('Exception:', e)
 
+    async def sendMessageSocketID(self, routeName: str,
+                                  data: dict, socketID: str):
+        ws = self.getWS(socketID)
+        await self.sendMessageWS(routeName, data, ws)
+
 
     async def sendMessageRooms(self, routeName: str, data: dict,
                                rooms: list[str]):
@@ -208,6 +213,7 @@ sockets = SocketManager()
 @fastApiServer.websocket("/ws")
 async def websocket_processing(websocket: WebSocket):
     await websocket.accept()
+    socketID = sockets.addSocket(websocket)
 
     try:
         while True:
@@ -215,7 +221,7 @@ async def websocket_processing(websocket: WebSocket):
             if data is not None:
                 info = json.loads(data)
                 try:
-                    await sockets.receiveMessage(websocket,
+                    await sockets.receiveMessage(socketID,
                                                  info['routeName'],
                                                  info['token'],
                                                  info['data'])
@@ -223,7 +229,7 @@ async def websocket_processing(websocket: WebSocket):
                     await SocketManager.sendMessageWS(
                         'refresh', info['data'], websocket)
     except WebSocketDisconnect:
-        sockets.removeSocket(websocket)
+        sockets.removeSocket(socketID)
     except Exception as e:
         print(e)
 

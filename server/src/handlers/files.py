@@ -39,11 +39,11 @@ async def checkDir(path: str,
 
 # регистрирует пользователя в хранилище
 @sockets.onSocket('files')
-async def filesSocket(ws: WebSocket,
+async def filesSocket(socketID: str,
                       token: str,
                       data: dict):
     user = (await getCurrentUserS(token))
-    sockets.addSocket(user.userID, user.status, ws, data['path'])
+    sockets.addSocketRoute(user.userID, user.status, socketID, data['path'])
     await sendFilesNameListToUser(data['path'], user.userID)
 
 
