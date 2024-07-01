@@ -267,8 +267,13 @@ async def addTask(
         addAddTaskEndAction(user, task.task_id)
 
         taskSendData = convertDBTaskToDict(task)
-        await sockets.sendMessageGroups('addTask', taskSendData, groups)
         await sockets.sendMessageEmpoyees('addTask', taskSendData)
+
+        taskSendData['works'] = []
+        taskSendData['grade'] = {'grade': '',
+                                 'author': None,
+                                 'status': GRADE_WORK_NONE}
+        await sockets.sendMessageGroups('addTask', taskSendData, groups)
 
         return JSONResponse(content={}, status_code=200)
     except Exception as e:
@@ -411,11 +416,11 @@ async def handleJournalFileDownloadRequest(
 
 # регистрирует пользователя в хранилище
 @sockets.onSocket(JOURNAL_SOCKET)
-async def journalSocket(ws: WebSocket,
+async def journalSocket(socketID: str,
                       token: str,
                       data: dict):
     user = (await getCurrentUserS(token))
-    sockets.addSocket(user.userID, user.status, ws, JOURNAL_SOCKET)
+    sockets.addSocketRoute(user.userID, user.status, socketID, JOURNAL_SOCKET)
     tasks = await getUserTasks(user)
     await sockets.sendMessageToUser(
         'allTasks', tasks, JOURNAL_SOCKET, user.userID)
@@ -423,9 +428,9 @@ async def journalSocket(ws: WebSocket,
 
 # регистрирует преподавателя в просмотре групп
 @sockets.onSocket(EMPLOYEE_GROUP_SOCKET)
-async def employeeGroupSocket(ws: WebSocket,
+async def employeeGroupSocket(socketID: str,
                       token: str,
                       data: dict):
     user = (await getCurrentUserS(token))
     sockets.addSocketEmployeeGroup(user.userID, user.status,
-                                   ws, data['group_id'])
+                                   socketID, data['group_id'])
