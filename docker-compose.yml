@@ -7,39 +7,21 @@ services:
     restart: always
     env_file:
       - .env
-    ports:
-      - "5433:5432"
     volumes:
       - postgresVolume:/var/lib/postgresql/data
 
   minio:
     image: minio/minio
     hostname: minio
-    ports:
-      - "9000:9000"
-      - "9001:9001"
     env_file:
       - .env
     command: server /data
     volumes:
       - /mnt/data:/data
 
-#  create-bucket:
-#    image: minio/mc
-#    depends_on:
-#      - minio
-#    entrypoint: sh
-#    command: -c "chmod +x /create-bucket.sh && exec /create-bucket.sh"
-#    volumes:
-#      - ./create-bucket.sh:/create-bucket.sh
-#    env_file:
-#      - .env
-
   server:
     build: ./server
     restart: always
-    ports:
-      - "5000:5000"
     depends_on:
       - db
       - minio
@@ -49,8 +31,6 @@ services:
   client:
     build: ./client
     restart: always
-    ports:
-      - "3000:3000"
     depends_on:
       - server
 
