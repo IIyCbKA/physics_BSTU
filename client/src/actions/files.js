@@ -1,5 +1,8 @@
 import { SERVER, $host } from "../server_files/server_connect";
-import { addUploadProgress } from "../reducers/file_reducer";
+import {
+  addUploadProgress,
+  updateUploadFileStatus
+} from "../reducers/file_reducer";
 import { saveAs } from "file-saver";
 import {
   CREATE_DISK_FOLDER_URL,
@@ -10,6 +13,10 @@ import {
 import {store} from '../reducers/index'
 import {getFileType} from "./strings";
 import { getLastDirectory } from "./strings";
+
+const UPLOADING_STATUS = 'uploading'
+const ERROR_STATUS = 'error'
+const SUCCESSFULLY_STATUS = 'successfully'
 
 export function formatFileSize(bytes) {
   if (bytes === 0) return "0 Байт";
@@ -37,6 +44,7 @@ export const uploadFile = async (file, dir_path) => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("path", dir_path);
+    const fileType = getFileType(file.name)
     const result = await $host.post(UPLOAD_DISK_FILE_URL, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -46,13 +54,17 @@ export const uploadFile = async (file, dir_path) => {
         store.dispatch(addUploadProgress(file.name,
           {loaded: progressEvent.loaded,
             total: progressEvent.total,
-            type: getFileType(file.name)
+            type: fileType,
+            status: UPLOADING_STATUS
           }));
-      },
-    });
+      }})
+    const resultStatus =
+      result.status === 201 ? SUCCESSFULLY_STATUS : ERROR_STATUS
+    store.dispatch(updateUploadFileStatus(file.name, resultStatus))
 
     return result.status;
   } catch (e) {
+    store.dispatch(updateUploadFileStatus(file.name, ERROR_STATUS))
     console.log(e);
 
     return 500;

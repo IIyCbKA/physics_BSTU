@@ -4,6 +4,7 @@ const SELECTED_FILE = "SELECTED_FILE";
 const CLOSE_SELECTED = "CLOSE_SELECTED";
 const ADD_DISK_UPLOAD_PROGRESS = "ADD_DISK_UPLOAD_PROGRESS";
 const CLEAN_UPLOAD_LIST = "CLEAN_UPLOAD_LIST";
+const UPDATE_UPLOAD_FILE_STATUS = "UPDATE_UPLOAD_FILE_STATUS";
 
 const defaultState = {
   files: [],
@@ -47,6 +48,17 @@ export default function fileReducer(state = defaultState, action) {
           [action.payload.fileName]: action.payload.info,
         },
       };
+    case UPDATE_UPLOAD_FILE_STATUS:
+      return {
+        ...state,
+        upload_list: {
+          ...state.upload_list,
+          [action.payload.fileName]: {
+            ...state.upload_list[action.payload.fileName],
+            status: action.payload.fileStatus
+          }
+        }
+      }
     case CLEAN_UPLOAD_LIST:
       return {
         ...state,
@@ -79,3 +91,7 @@ export const addUploadProgress = (fileName, info) => ({
   payload: { fileName, info },
 });
 export const cleanUploadList = () => ({ type: CLEAN_UPLOAD_LIST });
+export const updateUploadFileStatus = (fileName, fileStatus) => ({
+  type: UPDATE_UPLOAD_FILE_STATUS,
+  payload: { fileName, fileStatus }
+});

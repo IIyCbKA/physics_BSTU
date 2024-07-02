@@ -3,6 +3,9 @@ import {icons} from "../../../utils/file_icons/file_icons";
 import {FILE_TYPE_OTHER} from "../../../constants";
 import {formatFileSize} from "../../../actions/files";
 
+const SUCCESSFULLY_STATUS = 'successfully'
+const ERROR_STATUS = 'error'
+
 export default function UploadFileEntity(props){
   return(
     <div className='upload-file-entity-root'>
@@ -22,7 +25,12 @@ export default function UploadFileEntity(props){
         </div>
         <div className='upload-file-entity-right-zone'>
           <div className='upload-file-entity-result-text upload-file-entity-text'>
-            Загружено
+            {props.status === SUCCESSFULLY_STATUS &&
+              <div className='upload-file-entity-success'>Загружено</div>
+            }
+            {props.status === ERROR_STATUS &&
+              <div className='upload-file-entity-error'>Ошибка</div>
+            }
           </div>
         </div>
       </div>

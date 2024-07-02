@@ -87,9 +87,11 @@ export default function UploadDrawer(){
       <div className='listing-upload-files'>
         {Object.keys(uploadList).map((fileName) => (
           <UploadFileEntity
+            key={fileName}
             name={fileName}
             type={uploadList[fileName].type}
             size={uploadList[fileName].total}
+            status={uploadList[fileName].status}
           />
         ))}
       </div>

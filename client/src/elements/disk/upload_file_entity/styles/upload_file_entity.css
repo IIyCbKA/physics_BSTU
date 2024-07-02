@@ -55,9 +55,16 @@
 }
 
 .upload-file-entity-result-text{
-  color: green;
   line-height: 17px;
   font-size: 13px;
+}
+
+.upload-file-entity-success{
+  color: green;
+}
+
+.upload-file-entity-error{
+  color: red;
 }
 
 .upload-file-entity-text{
