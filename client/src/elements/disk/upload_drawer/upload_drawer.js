@@ -10,15 +10,15 @@ import { cleanUploadList } from "../../../reducers/file_reducer";
 
 const TITLE_PROCESS_TEXT = 'Загрузка'
 const TITLE_FINAL_TEXT = 'Все файлы загружены'
+const UPLOADING_FILE_STATUS = 'uploading'
 
-function UploadDrawerHeader({closeHandler, progress}){
+function UploadDrawerHeader({closeHandler, progress, allUploaded}){
   return(
     <div className='upload-drawer-header-wrap'>
       <div className='upload-drawer-header-left'>
         <span className='upload-drawer-header-title'>
-          {
-            progress < 100 ? `${TITLE_PROCESS_TEXT} ${progress}%` :
-            TITLE_FINAL_TEXT
+          {allUploaded ? TITLE_FINAL_TEXT :
+            `${TITLE_PROCESS_TEXT} ${progress}%`
           }
         </span>
       </div>
@@ -34,6 +34,7 @@ export default function UploadDrawer(){
   const uploadList = useSelector((state) => state.file.upload_list)
   const windowHeight = useSelector((state) => state.app.height)
   const [progress, setProgress] = useState(0);
+  const [allUploaded, setAllUploaded] = useState(false)
   const [open, setOpen] = useState(false)
   const dispatch = useDispatch();
 
@@ -45,11 +46,14 @@ export default function UploadDrawer(){
 
       let actLoaded = null;
       let actTotal = null;
+      let uploadedCheck = true;
       for (const ind in uploadList){
         actLoaded += uploadList[ind].loaded;
         actTotal += uploadList[ind].total;
+        uploadedCheck *= uploadList[ind].status !== UPLOADING_FILE_STATUS
       }
 
+      setAllUploaded(uploadedCheck)
       setProgress(Math.round((actLoaded / actTotal) * 100))
     }
   }, [uploadList, open]);
@@ -73,7 +77,11 @@ export default function UploadDrawer(){
         styles.drawerRootStyleMobile :
         styles.drawerRootStylePC
       }
-      title={<UploadDrawerHeader closeHandler={onClose} progress={progress}/>}
+      title={<UploadDrawerHeader
+        closeHandler={onClose}
+        progress={progress}
+        allUploaded={allUploaded}
+      />}
       placement='bottom'
       closable={false}
       onClose={onClose}
@@ -92,6 +100,7 @@ export default function UploadDrawer(){
             type={uploadList[fileName].type}
             size={uploadList[fileName].total}
             status={uploadList[fileName].status}
+            loaded={uploadList[fileName].loaded}
           />
         ))}
       </div>
